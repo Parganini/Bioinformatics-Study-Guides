@@ -1,0 +1,17 @@
+{
+  "name": "bioinformatics-unibo-study-guide",
+  "private": true,
+  "version": "2.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config StudyGuide-src/vite.config.js",
+    "build": "vite build --config StudyGuide-src/vite.config.js",
+    "preview": "vite preview --config StudyGuide-src/vite.config.js"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

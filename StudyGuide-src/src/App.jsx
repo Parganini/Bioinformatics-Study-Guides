@@ -203,6 +203,7 @@ const PHYLO_SLIDE_LINKS = {
 
 const PHYLO_ALL_SLIDES_LINK = "https://drive.google.com/file/d/1yzDWi9XNii3FSHTrr0vxcP4DGayv7OGJ/view?usp=drivesdk";
 const PHYLO_RECORDINGS_LINK = "https://www.youtube.com/playlist?list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe";
+const PHYLO_TRANSCRIPTIONS_FOLDER_LINK = "https://drive.google.com/drive/folders/1Q-_pO01iT7Ii7GN_ja0_sJievTLAcZvH";
 
 // null means that this lesson does not have an individual recording available yet.
 const PHYLO_RECORDING_LINKS = {
@@ -775,7 +776,7 @@ function MPResourcesPanel({ lang }) {
       </div>
       <div className="grid gap-4 md:grid-cols-4">
         <ResourceCard title={copy.allSlides} description={copy.allSlidesDesc} href={PHYLO_ALL_SLIDES_LINK} action={copy.open} />
-        <ResourceCard title={copy.transcripts} description={copy.transcriptDesc} href={null} action={copy.comingSoon} disabled />
+        <ResourceCard title={copy.transcripts} description={copy.transcriptDesc} href={PHYLO_TRANSCRIPTIONS_FOLDER_LINK} action={copy.open} />
         <ResourceCard title={copy.recordings} description={copy.recordingsDesc} href={PHYLO_RECORDINGS_LINK} action={copy.open} />
         <ResourceCard title={phyloPracticalCopy(lang).title} description={phyloPracticalCopy(lang).repoDesc} href={PHYLO_PRACTICAL_REPO_LINK} action={copy.open} />
       </div>

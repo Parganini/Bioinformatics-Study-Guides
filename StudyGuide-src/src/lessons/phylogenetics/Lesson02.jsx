@@ -868,3 +868,822 @@ function TreeThinkingLesson({ lang, t, isDone, toggle, lessonNo, titles, shared 
 }
 
 export default TreeThinkingLesson;
+
+export const lesson02Quiz = {
+  "en": [
+    {
+      "kind": "theory",
+      "question": "Which character type is the strongest evidence for defining a clade?",
+      "options": [
+        "Autapomorphy",
+        "Synapomorphy",
+        "Symplesiomorphy",
+        "Plesiomorphy"
+      ],
+      "answer": 1,
+      "explanation": "Synapomorphies are shared derived traits inherited from the most recent common ancestor; this is why they define clades.",
+      "optionExplanations": [
+        "An autapomorphy is derived but unique to one taxon; it diagnoses that lineage but does not link multiple taxa into a clade.",
+        "Correct. A synapomorphy is both shared and derived, so it identifies common ancestry within the focal group.",
+        "A symplesiomorphy is shared but ancestral; it can group taxa by old similarities rather than close relationship.",
+        "A plesiomorphy is an ancestral state. It gives context, but it is not the strongest evidence for a focal clade."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "Why are autapomorphies less useful than synapomorphies for reconstructing relationships among multiple taxa?",
+      "options": [
+        "They are never inherited",
+        "They are unique to one taxon",
+        "They always represent environmental noise",
+        "They are only found in fossils"
+      ],
+      "answer": 1,
+      "explanation": "Autapomorphies can identify a lineage, but because they are unique, they do not reveal shared ancestry among several taxa.",
+      "optionExplanations": [
+        "Autapomorphies are inherited derived traits; the problem is not inheritance but lack of sharing across taxa.",
+        "Correct. A unique trait can diagnose one lineage, but it cannot connect several taxa through a shared derived state.",
+        "A trait can be biological and still be an autapomorphy; it is not automatically environmental noise.",
+        "Autapomorphies can occur in living or fossil taxa; the key feature is uniqueness."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "Which hierarchy best matches the relationship among systematics, phylogenetics, and cladistics?",
+      "options": [
+        "Cladistics > Systematics > Phylogenetics",
+        "Systematics > Phylogenetics > Cladistics",
+        "Phylogenetics > Taxonomy > Systematics",
+        "Taxonomy > Cladistics > Systematics"
+      ],
+      "answer": 1,
+      "explanation": "Systematics is the broad field; phylogenetics is within systematics; cladistics is an approach within phylogenetics.",
+      "optionExplanations": [
+        "This reverses the hierarchy: cladistics is not broader than systematics.",
+        "Correct. Systematics is the broadest umbrella, phylogenetics reconstructs evolutionary relationships, and cladistics focuses on shared derived traits.",
+        "Taxonomy is part of systematics, but it is not the container for all phylogenetics.",
+        "Taxonomy names and classifies organisms; it is not broader than systematics."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "A monophyletic group includes:",
+      "options": [
+        "Only adjacent tips in a drawing",
+        "A common ancestor and some descendants",
+        "The most recent common ancestor and all descendants",
+        "Unrelated lineages with similar traits"
+      ],
+      "answer": 2,
+      "explanation": "Monophyly means the group contains its most recent common ancestor and every descendant of that ancestor.",
+      "optionExplanations": [
+        "Adjacent tips can be a visual artifact; tip order does not define monophyly.",
+        "A common ancestor plus only some descendants describes paraphyly, not monophyly.",
+        "Correct. A monophyletic group is a clade: ancestor plus all descendants.",
+        "Unrelated lineages grouped by similarity describe polyphyly, often due to convergence."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "What is the difference between paraphyly and polyphyly?",
+      "options": [
+        "Paraphyly excludes some descendants; polyphyly joins separate lineages without their proper common ancestor",
+        "Paraphyly has no ancestor; polyphyly has all descendants",
+        "Paraphyly is always molecular; polyphyly is always morphological",
+        "They are synonyms"
+      ],
+      "answer": 0,
+      "explanation": "Paraphyly keeps the ancestor but leaves out part of its descendant diversity; polyphyly combines separate lineages in a non-natural grouping.",
+      "optionExplanations": [
+        "Correct. Paraphyly is ancestor plus only some descendants; polyphyly assembles separate groups and excludes lineages needed for a natural clade.",
+        "Paraphyletic groups do include a common ancestor; they simply omit some descendants.",
+        "These terms describe tree relationships, not whether data are molecular or morphological.",
+        "They are not synonyms; they describe different ways a grouping fails to be a clade."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "What is the role of an outgroup in tree interpretation?",
+      "options": [
+        "It makes the tree visually balanced",
+        "It helps root the tree and gives direction",
+        "It automatically resolves all polytomies",
+        "It is always the most primitive taxon"
+      ],
+      "answer": 1,
+      "explanation": "An outgroup is chosen outside the focal clade and helps orient the tree by placing the root.",
+      "optionExplanations": [
+        "A balanced drawing is aesthetic and can be changed by rotating nodes; it is not the biological role of an outgroup.",
+        "Correct. The outgroup provides an external reference that helps infer direction from root to tips.",
+        "An outgroup can orient a tree, but it does not automatically resolve insufficient signal or hard polytomies.",
+        "Calling a taxon primitive is ladder-thinking; outgroups are simply outside the ingroup."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "Which statement best distinguishes tips from internal nodes?",
+      "options": [
+        "Tips are inferred ancestors; internal nodes are sampled data",
+        "Tips are sampled terminal units; internal nodes are inferred ancestors or splits",
+        "Tips always represent extinct species; internal nodes always represent living species",
+        "There is no difference"
+      ],
+      "answer": 1,
+      "explanation": "Tips are the sequences or taxa sampled for the analysis, while internal nodes are inferred ancestral points or bipartitions.",
+      "optionExplanations": [
+        "This reverses the interpretation: tips are usually observed/sampled, internal nodes are inferred.",
+        "Correct. Tips are terminal observations, often OTUs; internal nodes represent inferred ancestors or splits.",
+        "Tips can be living or sampled historical sequences; internal nodes are not living species sampled today.",
+        "The distinction matters because tips and internal nodes have different epistemic status: observed vs inferred."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "What does rotating an internal node change?",
+      "options": [
+        "The topology",
+        "Only the drawing and tip order",
+        "The genetic distance matrix",
+        "The age of the root"
+      ],
+      "answer": 1,
+      "explanation": "Rotation changes the visual layout, not the branching relationships. The same topology can be drawn in several ways.",
+      "optionExplanations": [
+        "Topology is the branching pattern; rotating a node preserves that pattern.",
+        "Correct. The tree can be redrawn with different tip orders while representing the same relationships.",
+        "The distance matrix is input or derived data; rotating a drawn node does not alter it.",
+        "Root age is not changed by a graphical rotation."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "Which pairing is correct?",
+      "options": [
+        "Cladogram = topology only; phylogram = amount of change; chronogram = time",
+        "Cladogram = time; phylogram = no branch meaning; chronogram = number of taxa",
+        "Cladogram = molecular clock; phylogram = taxonomy; chronogram = outgroup",
+        "All three terms mean the same thing"
+      ],
+      "answer": 0,
+      "explanation": "All three trees show topology, but they differ in what branch lengths mean: nothing, change, or time.",
+      "optionExplanations": [
+        "Correct. Cladograms show branching pattern only; phylograms scale branches by evolutionary change; chronograms scale branches by time.",
+        "This swaps the meanings. Time is chronogram; no branch-length meaning is cladogram.",
+        "These are unrelated concepts. Molecular clocks and outgroups can be used in analyses but do not define these tree types.",
+        "They are not synonyms because branch lengths carry different information."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "Why is it wrong to say that a lineage near the bottom of a tree is more advanced?",
+      "options": [
+        "Because vertical position is usually a layout choice, not an evolutionary ranking",
+        "Because bottom tips are always extinct",
+        "Because all lower tips are outgroups",
+        "Because advancement is measured by branch color"
+      ],
+      "answer": 0,
+      "explanation": "Trees are not ladders. Up/down placement in the figure does not imply progress, superiority, or primitiveness.",
+      "optionExplanations": [
+        "Correct. The professor emphasized that tree drawings should not be read as scala naturae or evolutionary ladders.",
+        "A bottom tip can be an extant sampled taxon; position on the page does not tell extinction status.",
+        "Outgroup status depends on experimental design, not vertical position.",
+        "Colors may be labels or highlights, but they do not measure evolutionary advancement."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "In the Lesson 02 notebook, if two drawings differ only by rotating an internal node, what should you conclude?",
+      "options": [
+        "They are different evolutionary hypotheses",
+        "They represent the same topology",
+        "One must be a chronogram and the other a cladogram",
+        "The alignment has been changed"
+      ],
+      "answer": 1,
+      "explanation": "The practical reinforces that node rotation can change the order of tips in the plot while preserving the same relationships.",
+      "optionExplanations": [
+        "Different evolutionary hypotheses require different branching relationships, not just different orientation.",
+        "Correct. Rotation changes the visualization, not the topology.",
+        "Cladogram vs chronogram depends on branch-length meaning, not on whether a node was rotated.",
+        "The alignment is the sequence data; rotating a tree drawing does not modify the data."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "In practical tree notation, an internal branch can often be represented as a:",
+      "options": [
+        "Bipartition or split",
+        "Protein domain",
+        "FASTQ quality score",
+        "Sequencing adapter"
+      ],
+      "answer": 0,
+      "explanation": "The practical links nodes/internal branches to splits: a branch separates the taxa into two sets.",
+      "optionExplanations": [
+        "Correct. A bipartition is a way to write the split induced by an internal branch.",
+        "A protein domain is a region of a protein sequence, not a tree split.",
+        "FASTQ quality scores belong to raw sequencing reads, not tree topology.",
+        "Adapters are sequencing artifacts handled during preprocessing, not tree notation."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "Why are quartets important in the practical part of tree thinking?",
+      "options": [
+        "They are the smallest unrooted trees with alternative topologies",
+        "They are the only trees that can be drawn by hand",
+        "They remove the need for rooting",
+        "They prove that all trees are ladders"
+      ],
+      "answer": 0,
+      "explanation": "With four taxa, alternative unrooted resolutions appear; this makes quartets a useful entry point for tree-space complexity.",
+      "optionExplanations": [
+        "Correct. Three unrooted taxa are not ambiguous in the same way; four taxa already produce alternative topologies.",
+        "Larger trees can also be drawn or represented textually; quartets are important because they reveal the first ambiguity.",
+        "Quartets can be rooted or unrooted; they do not remove the rooting problem.",
+        "They show branching alternatives, not ladder-like progress."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "In the notebook, why does the number of possible trees quickly become a computational problem?",
+      "options": [
+        "Because every taxon must have a different color",
+        "Because tree space grows extremely fast as taxa are added",
+        "Because branch labels are too long to print",
+        "Because trees cannot be stored as text"
+      ],
+      "answer": 1,
+      "explanation": "The practical shows that even small numbers of taxa generate multiple possible topologies; with many taxa, exhaustive search becomes impractical.",
+      "optionExplanations": [
+        "Colors help visualization but do not determine computational difficulty.",
+        "Correct. Tree space increases explosively with the number of taxa, motivating algorithms and heuristics.",
+        "Label length is a formatting issue, not the core computational challenge.",
+        "Trees can be stored textually, for example as Newick strings; the challenge is searching among possibilities."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "When rooting an unrooted tree in the practical, what changes most directly?",
+      "options": [
+        "The direction of evolutionary interpretation",
+        "The raw sequences",
+        "The names of the taxa",
+        "The number of sampled tips"
+      ],
+      "answer": 0,
+      "explanation": "Rooting places the ancestor of the sampled taxa and lets you interpret direction from ancestor to descendants.",
+      "optionExplanations": [
+        "Correct. Rooting gives direction; it changes how relationships are interpreted through time.",
+        "Rooting does not edit the DNA or protein sequences.",
+        "Taxon names do not change when a root is placed.",
+        "Rooting does not add or remove sampled tips."
+      ]
+    }
+  ],
+  "es": [
+    {
+      "kind": "theory",
+      "question": "¿Qué tipo de carácter es la evidencia más fuerte para definir un clado?",
+      "options": [
+        "Autapomorfía",
+        "Sinapomorfía",
+        "Simplesiomorfía",
+        "Plesiomorfía"
+      ],
+      "answer": 1,
+      "explanation": "Las sinapomorfías son caracteres derivados compartidos heredados del ancestro común más reciente; por eso definen clados.",
+      "optionExplanations": [
+        "Una autapomorfía es derivada pero única de un taxón; diagnostica ese linaje, pero no une varios taxa en un clado.",
+        "Correcto. Una sinapomorfía es compartida y derivada, por lo que identifica ascendencia común dentro del grupo focal.",
+        "Una simplesiomorfía es compartida pero ancestral; puede agrupar taxa por similitudes antiguas, no por relación cercana.",
+        "Una plesiomorfía es un estado ancestral. Da contexto, pero no es la evidencia más fuerte para un clado focal."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "¿Por qué las autapomorfías son menos útiles que las sinapomorfías para reconstruir relaciones entre varios taxa?",
+      "options": [
+        "Porque nunca se heredan",
+        "Porque son únicas de un taxón",
+        "Porque siempre son ruido ambiental",
+        "Porque solo aparecen en fósiles"
+      ],
+      "answer": 1,
+      "explanation": "Las autapomorfías pueden identificar un linaje, pero al ser únicas no revelan ascendencia compartida entre varios taxa.",
+      "optionExplanations": [
+        "Las autapomorfías sí pueden ser heredadas; el problema es que no están compartidas entre varios taxa.",
+        "Correcto. Un rasgo único diagnostica un linaje, pero no conecta varios taxa mediante un estado derivado compartido.",
+        "Un rasgo puede ser biológico y aun así ser una autapomorfía; no es automáticamente ruido ambiental.",
+        "Las autapomorfías pueden aparecer en taxa vivos o fósiles; lo clave es que son únicas."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "¿Qué jerarquía describe mejor la relación entre sistemática, filogenética y cladística?",
+      "options": [
+        "Cladística > Sistemática > Filogenética",
+        "Sistemática > Filogenética > Cladística",
+        "Filogenética > Taxonomía > Sistemática",
+        "Taxonomía > Cladística > Sistemática"
+      ],
+      "answer": 1,
+      "explanation": "La sistemática es el campo amplio; la filogenética está dentro de la sistemática; la cladística es un enfoque dentro de la filogenética.",
+      "optionExplanations": [
+        "Esto invierte la jerarquía: la cladística no es más amplia que la sistemática.",
+        "Correcto. La sistemática es el paraguas; la filogenética reconstruye relaciones evolutivas; la cladística se centra en caracteres derivados compartidos.",
+        "La taxonomía forma parte de la sistemática, pero no contiene toda la filogenética.",
+        "La taxonomía nombra y clasifica organismos; no es más amplia que la sistemática."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "Un grupo monofilético incluye:",
+      "options": [
+        "Solo tips adyacentes en el dibujo",
+        "Un ancestro común y algunos descendientes",
+        "El ancestro común más reciente y todos sus descendientes",
+        "Linajes no relacionados con rasgos similares"
+      ],
+      "answer": 2,
+      "explanation": "Monofilia significa que el grupo contiene su ancestro común más reciente y todos los descendientes de ese ancestro.",
+      "optionExplanations": [
+        "La adyacencia de tips puede ser un artefacto visual; el orden de tips no define monofilia.",
+        "Un ancestro común con solo algunos descendientes describe parafilia, no monofilia.",
+        "Correcto. Un grupo monofilético es un clado: ancestro más todos sus descendientes.",
+        "Linajes no relacionados agrupados por similitud describen polifilia, a menudo por convergencia."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "¿Cuál es la diferencia entre parafilia y polifilia?",
+      "options": [
+        "La parafilia excluye algunos descendientes; la polifilia une linajes separados sin su ancestro común apropiado",
+        "La parafilia no tiene ancestro; la polifilia tiene todos los descendientes",
+        "La parafilia siempre es molecular; la polifilia siempre es morfológica",
+        "Son sinónimos"
+      ],
+      "answer": 0,
+      "explanation": "La parafilia conserva el ancestro pero deja fuera parte de sus descendientes; la polifilia combina linajes separados en una agrupación no natural.",
+      "optionExplanations": [
+        "Correcto. Parafilia es ancestro más solo algunos descendientes; polifilia ensambla grupos separados y excluye linajes necesarios para un clado natural.",
+        "Los grupos parafiléticos sí incluyen un ancestro común; simplemente omiten algunos descendientes.",
+        "Estos términos describen relaciones en el árbol, no el tipo de datos usado.",
+        "No son sinónimos; son formas distintas de fallar en ser un clado."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "¿Cuál es el rol de un outgroup en la interpretación de árboles?",
+      "options": [
+        "Hacer que el árbol se vea equilibrado",
+        "Ayudar a enraizar el árbol y darle dirección",
+        "Resolver automáticamente todas las politomías",
+        "Ser siempre el taxón más primitivo"
+      ],
+      "answer": 1,
+      "explanation": "Un outgroup se elige fuera del clado focal y ayuda a orientar el árbol ubicando la raíz.",
+      "optionExplanations": [
+        "Un dibujo equilibrado es estético y puede cambiar al rotar nodos; no es el rol biológico del outgroup.",
+        "Correcto. El outgroup funciona como referencia externa para inferir dirección desde la raíz hacia los tips.",
+        "Un outgroup puede orientar el árbol, pero no resuelve automáticamente falta de señal o politomías duras.",
+        "Llamar primitivo a un taxón es ladder-thinking; el outgroup simplemente está fuera del ingroup."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "¿Qué afirmación distingue mejor tips y nodos internos?",
+      "options": [
+        "Los tips son ancestros inferidos; los nodos internos son datos muestreados",
+        "Los tips son unidades terminales muestreadas; los nodos internos son ancestros inferidos o splits",
+        "Los tips siempre son especies extintas; los nodos internos siempre son especies vivas",
+        "No hay diferencia"
+      ],
+      "answer": 1,
+      "explanation": "Los tips son las secuencias o taxa muestreados; los nodos internos son puntos ancestrales inferidos o biparticiones.",
+      "optionExplanations": [
+        "Esto invierte la interpretación: los tips suelen ser observados/muestreados y los nodos internos inferidos.",
+        "Correcto. Los tips son observaciones terminales, a menudo OTUs; los nodos internos representan ancestros inferidos o splits.",
+        "Los tips pueden ser vivos o históricos; los nodos internos no son especies vivas muestreadas hoy.",
+        "La diferencia importa porque tips y nodos internos tienen distinto estatus: observado vs inferido."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "¿Qué cambia al rotar un nodo interno?",
+      "options": [
+        "La topología",
+        "Solo el dibujo y el orden de los tips",
+        "La matriz de distancias genéticas",
+        "La edad de la raíz"
+      ],
+      "answer": 1,
+      "explanation": "La rotación cambia el layout visual, no las relaciones de ramificación. La misma topología puede dibujarse de varias formas.",
+      "optionExplanations": [
+        "La topología es el patrón de ramificación; rotar un nodo conserva ese patrón.",
+        "Correcto. El árbol puede redibujarse con distinto orden de tips sin cambiar las relaciones.",
+        "La matriz de distancias es un dato de entrada o derivado; rotar un nodo dibujado no la altera.",
+        "La edad de la raíz no cambia por una rotación gráfica."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "¿Qué emparejamiento es correcto?",
+      "options": [
+        "Cladograma = solo topología; filograma = cantidad de cambio; cronograma = tiempo",
+        "Cladograma = tiempo; filograma = ramas sin significado; cronograma = número de taxa",
+        "Cladograma = reloj molecular; filograma = taxonomía; cronograma = outgroup",
+        "Los tres términos significan lo mismo"
+      ],
+      "answer": 0,
+      "explanation": "Los tres muestran topología, pero difieren en lo que significan las longitudes de ramas: nada, cambio o tiempo.",
+      "optionExplanations": [
+        "Correcto. El cladograma muestra patrón de ramificación; el filograma escala por cambio evolutivo; el cronograma escala por tiempo.",
+        "Esto intercambia los significados. El tiempo corresponde al cronograma; ramas sin significado al cladograma.",
+        "Son conceptos distintos. Relojes moleculares y outgroups pueden usarse en análisis, pero no definen estos tipos de árbol.",
+        "No son sinónimos porque las longitudes de rama transmiten información distinta."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "¿Por qué es incorrecto decir que un linaje en la parte baja del árbol es más avanzado?",
+      "options": [
+        "Porque la posición vertical suele ser una decisión de layout, no un ranking evolutivo",
+        "Porque los tips de abajo siempre están extintos",
+        "Porque todos los tips inferiores son outgroups",
+        "Porque el avance se mide por el color de las ramas"
+      ],
+      "answer": 0,
+      "explanation": "Los árboles no son escaleras. La posición arriba/abajo en la figura no implica progreso, superioridad ni primitividad.",
+      "optionExplanations": [
+        "Correcto. El profesor enfatizó que los árboles no deben leerse como scala naturae o escaleras evolutivas.",
+        "Un tip inferior puede ser un taxón actual muestreado; la posición en la página no indica extinción.",
+        "El estatus de outgroup depende del diseño experimental, no de la posición vertical.",
+        "Los colores pueden ser etiquetas o resaltados, pero no miden avance evolutivo."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "En el notebook de la Lección 02, si dos dibujos solo difieren por rotar un nodo interno, ¿qué deberías concluir?",
+      "options": [
+        "Son hipótesis evolutivas distintas",
+        "Representan la misma topología",
+        "Uno debe ser cronograma y el otro cladograma",
+        "El alineamiento cambió"
+      ],
+      "answer": 1,
+      "explanation": "La práctica refuerza que rotar nodos puede cambiar el orden de tips en el dibujo sin cambiar las relaciones.",
+      "optionExplanations": [
+        "Para que sean hipótesis distintas debe cambiar el patrón de ramificación, no solo la orientación.",
+        "Correcto. La rotación cambia la visualización, no la topología.",
+        "Cladograma vs cronograma depende del significado de las longitudes de rama, no de una rotación.",
+        "El alineamiento son los datos de secuencia; rotar un árbol dibujado no modifica los datos."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "En la notación práctica de árboles, una rama interna puede representarse como:",
+      "options": [
+        "Una bipartición o split",
+        "Un dominio proteico",
+        "Un score de calidad FASTQ",
+        "Un adaptador de secuenciación"
+      ],
+      "answer": 0,
+      "explanation": "La práctica conecta nodos/ramas internas con splits: una rama separa los taxa en dos conjuntos.",
+      "optionExplanations": [
+        "Correcto. Una bipartición es una forma de escribir el split inducido por una rama interna.",
+        "Un dominio proteico es una región de una proteína, no un split del árbol.",
+        "Los scores FASTQ pertenecen a lecturas de secuenciación crudas, no a la topología del árbol.",
+        "Los adaptadores son artefactos de secuenciación tratados en preprocessing, no notación de árboles."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "¿Por qué los cuartetos son importantes en la parte práctica de tree thinking?",
+      "options": [
+        "Son los árboles no enraizados más pequeños con topologías alternativas",
+        "Son los únicos árboles que pueden dibujarse a mano",
+        "Eliminan la necesidad de enraizar",
+        "Demuestran que todos los árboles son escaleras"
+      ],
+      "answer": 0,
+      "explanation": "Con cuatro taxa aparecen resoluciones no enraizadas alternativas; por eso los cuartetos introducen la complejidad del espacio de árboles.",
+      "optionExplanations": [
+        "Correcto. Tres taxa no enraizados no son ambiguos de la misma manera; cuatro taxa ya producen topologías alternativas.",
+        "También pueden dibujarse árboles más grandes; los cuartetos importan porque muestran la primera ambigüedad.",
+        "Los cuartetos pueden estar enraizados o no; no eliminan el problema del enraizamiento.",
+        "Muestran alternativas de ramificación, no progreso tipo escalera."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "En el notebook, ¿por qué el número de árboles posibles se vuelve rápidamente un problema computacional?",
+      "options": [
+        "Porque cada taxón debe tener un color distinto",
+        "Porque el espacio de árboles crece extremadamente rápido al añadir taxa",
+        "Porque las etiquetas son demasiado largas para imprimirse",
+        "Porque los árboles no pueden almacenarse como texto"
+      ],
+      "answer": 1,
+      "explanation": "La práctica muestra que incluso pocos taxa generan varias topologías posibles; con muchos taxa, una búsqueda exhaustiva se vuelve impracticable.",
+      "optionExplanations": [
+        "Los colores ayudan a visualizar, pero no determinan la dificultad computacional.",
+        "Correcto. El espacio de árboles aumenta explosivamente con el número de taxa, lo que motiva algoritmos y heurísticas.",
+        "La longitud de etiquetas es un problema de formato, no el reto computacional principal.",
+        "Los árboles pueden almacenarse en texto, por ejemplo en formato Newick; el reto es buscar entre posibilidades."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "Al enraizar un árbol no enraizado en la práctica, ¿qué cambia de manera más directa?",
+      "options": [
+        "La dirección de la interpretación evolutiva",
+        "Las secuencias crudas",
+        "Los nombres de los taxa",
+        "El número de tips muestreados"
+      ],
+      "answer": 0,
+      "explanation": "Enraizar ubica el ancestro de los taxa muestreados y permite interpretar dirección desde ancestro hacia descendientes.",
+      "optionExplanations": [
+        "Correcto. El enraizamiento da dirección; cambia cómo se interpretan las relaciones a través del tiempo.",
+        "Enraizar no edita secuencias de DNA o proteína.",
+        "Los nombres de taxa no cambian cuando se coloca una raíz.",
+        "Enraizar no añade ni elimina tips muestreados."
+      ]
+    }
+  ],
+  "fa": [
+    {
+      "kind": "theory",
+      "question": "کدام نوع کاراکتر قوی‌ترین شاهد برای تعریف یک کلاد است؟",
+      "options": [
+        "اتاپومورفی",
+        "سیناپومورفی",
+        "سیمپلزیومورفی",
+        "پلزیومورفی"
+      ],
+      "answer": 1,
+      "explanation": "سیناپومورفی‌ها صفات مشتق مشترکی هستند که از نزدیک‌ترین نیای مشترک به ارث رسیده‌اند؛ بنابراین کلادها را تعریف می‌کنند.",
+      "optionExplanations": [
+        "اتاپومورفی مشتق است اما فقط برای یک تاکسون است؛ آن دودمان را تشخیص می‌دهد ولی چند تاکسون را به یک کلاد وصل نمی‌کند.",
+        "درست است. سیناپومورفی هم مشترک است و هم مشتق، پس نشانهٔ نیای مشترک در گروه کانونی است.",
+        "سیمپلزیومورفی مشترک اما اجدادی است؛ می‌تواند شباهت‌های قدیمی را نشان دهد نه رابطهٔ نزدیک.",
+        "پلزیومورفی حالت اجدادی است و به‌تنهایی شاهد قوی برای یک کلاد کانونی نیست."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "چرا اتاپومورفی‌ها برای بازسازی روابط میان چند تاکسون کمتر از سیناپومورفی‌ها مفیدند؟",
+      "options": [
+        "چون هرگز به ارث نمی‌رسند",
+        "چون فقط در یک تاکسون دیده می‌شوند",
+        "چون همیشه نویز محیطی‌اند",
+        "چون فقط در فسیل‌ها دیده می‌شوند"
+      ],
+      "answer": 1,
+      "explanation": "اتاپومورفی می‌تواند یک دودمان را مشخص کند، اما چون منحصر به همان دودمان است، نیای مشترک میان چند تاکسون را نشان نمی‌دهد.",
+      "optionExplanations": [
+        "اتاپومورفی‌ها می‌توانند ارثی باشند؛ مشکل این است که میان چند تاکسون مشترک نیستند.",
+        "درست است. صفت یکتا یک دودمان را تشخیص می‌دهد اما چند تاکسون را با یک حالت مشتق مشترک مرتبط نمی‌کند.",
+        "یک صفت می‌تواند زیستی باشد و همچنان اتاپومورفی باشد؛ الزاماً نویز محیطی نیست.",
+        "اتاپومورفی می‌تواند در تاکسون‌های زنده یا فسیلی باشد؛ ویژگی کلیدی یکتا بودن است."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "کدام سلسله‌مراتب رابطهٔ میان سیستماتیک، تبارزایی و کلادیستیک را بهتر نشان می‌دهد؟",
+      "options": [
+        "کلادیستیک > سیستماتیک > تبارزایی",
+        "سیستماتیک > تبارزایی > کلادیستیک",
+        "تبارزایی > رده‌بندی > سیستماتیک",
+        "رده‌بندی > کلادیستیک > سیستماتیک"
+      ],
+      "answer": 1,
+      "explanation": "سیستماتیک حوزهٔ گسترده‌تر است؛ تبارزایی درون سیستماتیک قرار می‌گیرد؛ کلادیستیک رویکردی درون تبارزایی است.",
+      "optionExplanations": [
+        "این ترتیب برعکس است؛ کلادیستیک از سیستماتیک گسترده‌تر نیست.",
+        "درست است. سیستماتیک چتر کلی است، تبارزایی روابط تکاملی را بازسازی می‌کند، و کلادیستیک بر صفات مشتق مشترک تمرکز دارد.",
+        "رده‌بندی بخشی از سیستماتیک است، اما همهٔ تبارزایی را دربر نمی‌گیرد.",
+        "رده‌بندی نام‌گذاری و طبقه‌بندی می‌کند؛ از سیستماتیک گسترده‌تر نیست."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "یک گروه تک‌تبار شامل چیست؟",
+      "options": [
+        "فقط نوک‌های کنار هم در تصویر",
+        "یک نیای مشترک و بخشی از نوادگان",
+        "نزدیک‌ترین نیای مشترک و همهٔ نوادگان آن",
+        "دودمان‌های نامرتبط با صفات مشابه"
+      ],
+      "answer": 2,
+      "explanation": "تک‌تبارگی یعنی گروه شامل نزدیک‌ترین نیای مشترک و همهٔ نوادگان آن نیا باشد.",
+      "optionExplanations": [
+        "کنار هم بودن نوک‌ها می‌تواند فقط حاصل رسم باشد؛ ترتیب نوک‌ها تک‌تبارگی را تعریف نمی‌کند.",
+        "نیای مشترک همراه با فقط بخشی از نوادگان، پیراتبارگی است نه تک‌تبارگی.",
+        "درست است. گروه تک‌تبار یک کلاد است: نیا به‌علاوهٔ همهٔ نوادگان.",
+        "دودمان‌های نامرتبط با شباهت ظاهری چندتبارگی را نشان می‌دهند، اغلب به‌دلیل همگرایی."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "تفاوت پیراتبارگی و چندتبارگی چیست؟",
+      "options": [
+        "پیراتبارگی برخی نوادگان را حذف می‌کند؛ چندتبارگی دودمان‌های جدا را بدون نیای مشترک مناسب کنار هم می‌گذارد",
+        "پیراتبارگی نیا ندارد؛ چندتبارگی همهٔ نوادگان را دارد",
+        "پیراتبارگی همیشه مولکولی است؛ چندتبارگی همیشه ریخت‌شناختی است",
+        "این دو مترادف‌اند"
+      ],
+      "answer": 0,
+      "explanation": "پیراتبارگی نیا را نگه می‌دارد اما بخشی از نوادگان را حذف می‌کند؛ چندتبارگی دودمان‌های جدا را به‌صورت گروه غیرطبیعی ترکیب می‌کند.",
+      "optionExplanations": [
+        "درست است. پیراتبارگی یعنی نیا به‌علاوهٔ فقط برخی نوادگان؛ چندتبارگی گروه‌های جدا را بدون همهٔ شاخه‌های لازم برای یک کلاد طبیعی جمع می‌کند.",
+        "گروه‌های پیراتبار نیای مشترک دارند؛ فقط برخی نوادگان را کنار می‌گذارند.",
+        "این اصطلاحات روابط درخت را توصیف می‌کنند، نه نوع داده را.",
+        "مترادف نیستند؛ دو روش متفاوت برای کلاد نبودن‌اند."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "نقش برون‌گروه در تفسیر درخت چیست؟",
+      "options": [
+        "متعادل‌کردن ظاهر درخت",
+        "کمک به ریشه‌گذاری و جهت‌دهی درخت",
+        "حل خودکار همهٔ پلی‌تومی‌ها",
+        "همیشه ابتدایی‌ترین تاکسون بودن"
+      ],
+      "answer": 1,
+      "explanation": "برون‌گروه بیرون از کلاد کانونی انتخاب می‌شود و با قرار دادن ریشه به جهت‌دهی درخت کمک می‌کند.",
+      "optionExplanations": [
+        "تعادل ظاهری فقط مسئلهٔ رسم است و با چرخاندن گره‌ها عوض می‌شود؛ نقش زیستی برون‌گروه نیست.",
+        "درست است. برون‌گروه یک مرجع بیرونی است که جهت از ریشه به نوک‌ها را مشخص می‌کند.",
+        "برون‌گروه می‌تواند درخت را جهت دهد، اما کمبود سیگنال یا پلی‌تومی سخت را خودکار حل نمی‌کند.",
+        "ابتدایی نامیدن تاکسون‌ها تفکر نردبانی است؛ برون‌گروه فقط بیرون از درون‌گروه است."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "کدام عبارت tips را از گره‌های داخلی بهتر جدا می‌کند؟",
+      "options": [
+        "tips نیاهای استنباط‌شده‌اند؛ گره‌های داخلی دادهٔ نمونه‌برداری‌شده‌اند",
+        "tips واحدهای انتهایی نمونه‌برداری‌شده‌اند؛ گره‌های داخلی نیاهای استنباطی یا split هستند",
+        "tips همیشه گونه‌های منقرض‌اند؛ گره‌های داخلی همیشه گونه‌های زنده‌اند",
+        "هیچ تفاوتی ندارند"
+      ],
+      "answer": 1,
+      "explanation": "tips توالی‌ها یا تاکسون‌های نمونه‌برداری‌شده‌اند، درحالی‌که گره‌های داخلی نقاط نیایی استنباطی یا bipartition هستند.",
+      "optionExplanations": [
+        "این تفسیر برعکس است: tips معمولاً مشاهده/نمونه‌برداری شده‌اند و گره‌های داخلی استنباطی‌اند.",
+        "درست است. tips مشاهدات انتهایی‌اند، اغلب OTU؛ گره‌های داخلی نیاهای استنباطی یا split را نشان می‌دهند.",
+        "tips می‌توانند زنده یا تاریخی باشند؛ گره‌های داخلی گونهٔ زندهٔ نمونه‌برداری‌شده نیستند.",
+        "این تفاوت مهم است چون tips و گره‌های داخلی وضعیت متفاوتی دارند: مشاهده‌شده در برابر استنباط‌شده."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "چرخاندن یک گرهٔ داخلی چه چیزی را تغییر می‌دهد؟",
+      "options": [
+        "توپولوژی",
+        "فقط شکل رسم و ترتیب نوک‌ها",
+        "ماتریس فاصلهٔ ژنتیکی",
+        "سن ریشه"
+      ],
+      "answer": 1,
+      "explanation": "چرخاندن، چیدمان بصری را عوض می‌کند نه روابط انشعابی را. یک توپولوژی می‌تواند به شکل‌های مختلف رسم شود.",
+      "optionExplanations": [
+        "توپولوژی الگوی انشعاب است؛ چرخاندن گره آن را حفظ می‌کند.",
+        "درست است. درخت می‌تواند با ترتیب متفاوت tips رسم شود اما همان روابط را نشان دهد.",
+        "ماتریس فاصله دادهٔ ورودی یا مشتق‌شده است؛ چرخاندن گره رسم‌شده آن را عوض نمی‌کند.",
+        "سن ریشه با چرخش گرافیکی تغییر نمی‌کند."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "کدام جفت‌سازی درست است؟",
+      "options": [
+        "کلادوگرام = فقط توپولوژی؛ فیلوگرام = مقدار تغییر؛ کرونوگرام = زمان",
+        "کلادوگرام = زمان؛ فیلوگرام = بدون معنای طول شاخه؛ کرونوگرام = تعداد تاکسون",
+        "کلادوگرام = ساعت مولکولی؛ فیلوگرام = رده‌بندی؛ کرونوگرام = برون‌گروه",
+        "هر سه اصطلاح یک معنی دارند"
+      ],
+      "answer": 0,
+      "explanation": "هر سه توپولوژی را نشان می‌دهند، اما معنای طول شاخه در آن‌ها فرق دارد: هیچ، تغییر، یا زمان.",
+      "optionExplanations": [
+        "درست است. کلادوگرام فقط الگوی انشعاب را نشان می‌دهد؛ فیلوگرام شاخه‌ها را با تغییر تکاملی مقیاس می‌کند؛ کرونوگرام با زمان.",
+        "این گزینه معناها را جابه‌جا کرده است. زمان مربوط به کرونوگرام است؛ بی‌معنایی طول شاخه مربوط به کلادوگرام.",
+        "این‌ها مفاهیم جدا هستند. ساعت مولکولی و برون‌گروه در تحلیل‌ها استفاده می‌شوند اما این نوع درخت‌ها را تعریف نمی‌کنند.",
+        "مترادف نیستند چون طول شاخه‌ها اطلاعات متفاوتی حمل می‌کند."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "چرا گفتن اینکه دودمان پایین‌تر درخت پیشرفته‌تر است اشتباه است؟",
+      "options": [
+        "چون جایگاه عمودی معمولاً انتخاب رسم است، نه رتبه‌بندی تکاملی",
+        "چون tips پایین همیشه منقرض‌اند",
+        "چون همهٔ tips پایین برون‌گروه‌اند",
+        "چون پیشرفت با رنگ شاخه اندازه‌گیری می‌شود"
+      ],
+      "answer": 0,
+      "explanation": "درخت‌ها نردبان نیستند. بالا/پایین بودن در شکل به معنی پیشرفت، برتری یا ابتدایی بودن نیست.",
+      "optionExplanations": [
+        "درست است. استاد تأکید کرد که درخت‌ها نباید مانند scala naturae یا نردبان تکاملی خوانده شوند.",
+        "یک tip پایین می‌تواند تاکسون زندهٔ نمونه‌برداری‌شده باشد؛ جایگاه صفحه وضعیت انقراض را نشان نمی‌دهد.",
+        "برون‌گروه بودن به طراحی تحلیل بستگی دارد، نه جایگاه عمودی.",
+        "رنگ‌ها ممکن است برچسب یا هایلایت باشند، اما پیشرفت تکاملی را اندازه نمی‌گیرند."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "در notebook درس ۰۲، اگر دو رسم فقط با چرخاندن یک گرهٔ داخلی فرق داشته باشند، چه نتیجه‌ای باید گرفت؟",
+      "options": [
+        "فرضیه‌های تکاملی متفاوت‌اند",
+        "همان توپولوژی را نشان می‌دهند",
+        "یکی کرونوگرام و دیگری کلادوگرام است",
+        "هم‌ترازسازی تغییر کرده است"
+      ],
+      "answer": 1,
+      "explanation": "تمرین نشان می‌دهد چرخاندن گره‌ها ترتیب نوک‌ها را در رسم عوض می‌کند، نه روابط را.",
+      "optionExplanations": [
+        "فرضیهٔ متفاوت نیاز به الگوی انشعاب متفاوت دارد، نه فقط جهت‌گیری متفاوت.",
+        "درست است. چرخاندن، نمایش را عوض می‌کند نه توپولوژی را.",
+        "کلادوگرام یا کرونوگرام بودن به معنای طول شاخه بستگی دارد، نه چرخش گره.",
+        "هم‌ترازسازی دادهٔ توالی است؛ چرخاندن رسم درخت داده‌ها را تغییر نمی‌دهد."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "در نشانه‌گذاری عملی درخت‌ها، یک شاخهٔ داخلی اغلب به چه صورت نمایش داده می‌شود؟",
+      "options": [
+        "یک bipartition یا split",
+        "یک دامنهٔ پروتئینی",
+        "یک نمرهٔ کیفیت FASTQ",
+        "یک آداپتور توالی‌یابی"
+      ],
+      "answer": 0,
+      "explanation": "تمرین گره‌ها/شاخه‌های داخلی را به split وصل می‌کند: شاخه taxa را به دو مجموعه جدا می‌کند.",
+      "optionExplanations": [
+        "درست است. bipartition روشی برای نوشتن split ناشی از شاخهٔ داخلی است.",
+        "دامنهٔ پروتئینی بخشی از توالی پروتئین است، نه split درخت.",
+        "نمره‌های کیفیت FASTQ مربوط به خوانش‌های خام توالی‌یابی‌اند، نه توپولوژی درخت.",
+        "آداپتورها artefact توالی‌یابی‌اند و به preprocessing مربوط می‌شوند، نه نشانه‌گذاری درخت."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "چرا کوارتت‌ها در بخش عملی tree thinking مهم‌اند؟",
+      "options": [
+        "کوچک‌ترین درخت‌های بی‌ریشه با توپولوژی‌های جایگزین‌اند",
+        "تنها درخت‌هایی‌اند که می‌توان با دست کشید",
+        "نیاز به ریشه‌گذاری را حذف می‌کنند",
+        "ثابت می‌کنند همهٔ درخت‌ها نردبان‌اند"
+      ],
+      "answer": 0,
+      "explanation": "با چهار تاکسون، حل‌های بی‌ریشهٔ جایگزین ظاهر می‌شوند؛ بنابراین کوارتت‌ها نقطهٔ ورود به پیچیدگی فضای درخت‌اند.",
+      "optionExplanations": [
+        "درست است. سه تاکسون بی‌ریشه به همان شکل مبهم نیستند؛ چهار تاکسون توپولوژی‌های جایگزین ایجاد می‌کند.",
+        "درخت‌های بزرگ‌تر هم می‌توانند رسم شوند؛ اهمیت کوارتت‌ها در اولین ابهام توپولوژیک است.",
+        "کوارتت‌ها می‌توانند ریشه‌دار یا بی‌ریشه باشند؛ مشکل ریشه‌گذاری را حذف نمی‌کنند.",
+        "آن‌ها گزینه‌های انشعاب را نشان می‌دهند، نه پیشرفت نردبانی."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "در notebook، چرا تعداد درخت‌های ممکن سریعاً به یک مسئلهٔ محاسباتی تبدیل می‌شود؟",
+      "options": [
+        "چون هر تاکسون باید رنگ متفاوتی داشته باشد",
+        "چون فضای درخت با اضافه‌شدن تاکسون‌ها بسیار سریع رشد می‌کند",
+        "چون برچسب‌ها برای چاپ خیلی بلندند",
+        "چون درخت‌ها نمی‌توانند به‌صورت متن ذخیره شوند"
+      ],
+      "answer": 1,
+      "explanation": "تمرین نشان می‌دهد حتی تعداد کمی تاکسون چندین توپولوژی ممکن ایجاد می‌کند؛ با تاکسون‌های زیاد جستجوی کامل عملی نیست.",
+      "optionExplanations": [
+        "رنگ‌ها به نمایش کمک می‌کنند اما دشواری محاسباتی را تعیین نمی‌کنند.",
+        "درست است. فضای درخت با تعداد تاکسون‌ها انفجاری رشد می‌کند و همین الگوریتم‌ها و heuristicها را ضروری می‌کند.",
+        "طول برچسب مسئلهٔ قالب‌بندی است، نه چالش اصلی محاسباتی.",
+        "درخت‌ها می‌توانند متنی ذخیره شوند، مثلاً با Newick؛ چالش جستجو میان حالت‌های ممکن است."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "هنگام ریشه‌گذاری یک درخت بی‌ریشه در تمرین، چه چیزی مستقیم‌تر تغییر می‌کند؟",
+      "options": [
+        "جهت تفسیر تکاملی",
+        "توالی‌های خام",
+        "نام‌های تاکسون‌ها",
+        "تعداد tips نمونه‌برداری‌شده"
+      ],
+      "answer": 0,
+      "explanation": "ریشه‌گذاری جای نیای تاکسون‌های نمونه‌برداری‌شده را مشخص می‌کند و جهت از نیا به نوادگان را ممکن می‌سازد.",
+      "optionExplanations": [
+        "درست است. ریشه‌گذاری جهت می‌دهد و نحوهٔ تفسیر روابط در زمان را تغییر می‌دهد.",
+        "ریشه‌گذاری توالی‌های DNA یا پروتئین را ویرایش نمی‌کند.",
+        "نام تاکسون‌ها با قرار دادن ریشه تغییر نمی‌کند.",
+        "ریشه‌گذاری tips را اضافه یا حذف نمی‌کند."
+      ]
+    }
+  ]
+};

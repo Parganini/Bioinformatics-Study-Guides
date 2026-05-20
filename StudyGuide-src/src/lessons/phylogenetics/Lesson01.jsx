@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function CourseIntroLesson({ lang, t, isDone, toggle, lessonNo, titles, shared }) {
-  const { LessonNavigation, LessonResources, LessonPractical, LessonQuiz } = shared;
+  const { LessonNavigation, LessonResources, LessonPractical } = shared;
   const copy = {
     en: {
       eyebrow: "Lesson 01 · Course introduction & setup",
@@ -59,6 +59,7 @@ export default function CourseIntroLesson({ lang, t, isDone, toggle, lessonNo, t
     <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
       <LessonNavigation lang={lang} lessonNo={lessonNo} titles={titles} isDone={isDone} toggle={toggle} />
       <LessonResources lang={lang} lessonNo={lessonNo} />
+      <LessonPractical lang={lang} lessonNo={lessonNo} />
 
       <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5">
         <div className="grid gap-0 lg:grid-cols-[1.08fr_0.92fr]">
@@ -89,9 +90,286 @@ export default function CourseIntroLesson({ lang, t, isDone, toggle, lessonNo, t
 
       <section className="mt-8 rounded-[2rem] border border-stone-200 bg-stone-950 p-6 text-white shadow-sm"><div className="mb-4 text-xs font-black uppercase tracking-[0.22em] text-red-200">{copy.sections.checklist[0]}</div><div className="grid gap-3 md:grid-cols-2">{copy.sections.checklist[1].map(item => <label key={item} className="flex items-start gap-3 rounded-2xl bg-white/5 p-4 text-sm font-bold leading-6 text-stone-100"><input type="checkbox" className="mt-1 h-4 w-4 accent-red-700"/><span>{item}</span></label>)}</div></section>
 
-      <LessonPractical lang={lang} lessonNo={lessonNo} />
-      <LessonQuiz lang={lang} lessonNo={lessonNo} />
       <LessonNavigation lang={lang} lessonNo={lessonNo} titles={titles} isDone={isDone} toggle={toggle} placement="bottom" />
     </main>
   );
 }
+
+export const lesson01Quiz = {
+  "en": [
+    {
+      "kind": "theory",
+      "question": "What is the basic structure of the Molecular Phylogenetics course?",
+      "options": [
+        "8 classes of 6 hours",
+        "16 classes of 3 hours",
+        "12 classes of 4 hours",
+        "Only independent practicals"
+      ],
+      "answer": 1,
+      "explanation": "The course has 48 total hours organized as 16 classes of 3 hours each.",
+      "optionExplanations": [
+        "Eight six-hour meetings would also total 48 hours, but that is not the schedule described for this course.",
+        "Correct. The course is organized as 16 classes of 3 hours, for 48 hours total.",
+        "Twelve four-hour meetings would be a different format; the slides specify 16 classes of 3 hours.",
+        "The course includes practical work, but it is not only independent practicals; it also has lectures and guided sessions."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "What is the intended focus of studying this course?",
+      "options": [
+        "Memorizing software commands",
+        "Interpreting phylogenetic inferences and workflows",
+        "Only reading historical taxonomy",
+        "Avoiding practical sessions"
+      ],
+      "answer": 1,
+      "explanation": "Commands matter only as part of a workflow. The key goal is understanding how biological data become defensible phylogenetic interpretations.",
+      "optionExplanations": [
+        "Software commands are used in the practicals, but they are tools, not the main learning objective.",
+        "Correct. The goal is to understand workflows and interpret phylogenetic results in a biologically meaningful way.",
+        "Historical taxonomy appears in the background, but the course is broader and focuses on molecular phylogenetic inference.",
+        "Practicals are part of how the course connects concepts to real analysis, so avoiding them would miss a key component."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "Which description matches the exam format presented in the course introduction?",
+      "options": [
+        "Only oral questions",
+        "22 multiple choice questions plus 2 open-ended synthesis questions",
+        "Only code exercises",
+        "A long essay without predefined length"
+      ],
+      "answer": 1,
+      "explanation": "The exam combines multiple choice questions with open-ended questions that test synthesis and interpretation.",
+      "optionExplanations": [
+        "The exam was not presented as an oral-only assessment.",
+        "Correct. The format combines 22 multiple choice questions with 2 open-ended synthesis questions.",
+        "Coding tools appear in practicals, but the exam is not only code exercises.",
+        "The open questions have a predefined length and focus on synthesis, not an unrestricted long essay."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "What is the main purpose of the Lesson 01 practical notebook?",
+      "options": [
+        "To infer a final phylogenetic tree",
+        "To set up the software environment and course toolkit",
+        "To estimate divergence times",
+        "To test selection using dN/dS"
+      ],
+      "answer": 1,
+      "explanation": "The first practical is about software installation and preparing the tools that will be used later.",
+      "optionExplanations": [
+        "Inferring final trees comes later; Lesson 01 is about getting the working environment ready.",
+        "Correct. The first notebook focuses on software installation and preparing the course toolkit.",
+        "Divergence-time analysis is a later application, not the purpose of the setup notebook.",
+        "dN/dS and selection are covered later; they are not the aim of the first practical."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "How should the practical sessions be studied?",
+      "options": [
+        "As command lists to memorize",
+        "As workflows connected to biological questions",
+        "As optional material unrelated to the exam",
+        "As replacements for the lecture slides"
+      ],
+      "answer": 1,
+      "explanation": "The practicals are meant to connect methods and outputs to biological interpretation, not to be memorized as isolated commands.",
+      "optionExplanations": [
+        "Commands are useful, but memorizing them without context misses the logic of the analysis.",
+        "Correct. Practicals should be studied as workflows that answer biological questions.",
+        "Practicals are relevant because they show how theory becomes analysis and interpretation.",
+        "Slides and practicals complement each other; the notebook does not replace the lecture material."
+      ]
+    }
+  ],
+  "es": [
+    {
+      "kind": "theory",
+      "question": "¿Cuál es la estructura básica del curso de Filogenética Molecular?",
+      "options": [
+        "8 clases de 6 horas",
+        "16 clases de 3 horas",
+        "12 clases de 4 horas",
+        "Solo prácticas independientes"
+      ],
+      "answer": 1,
+      "explanation": "El curso tiene 48 horas totales organizadas como 16 clases de 3 horas cada una.",
+      "optionExplanations": [
+        "Ocho clases de seis horas también sumarían 48 horas, pero no es el formato descrito para el curso.",
+        "Correcto. El curso se organiza en 16 clases de 3 horas, para un total de 48 horas.",
+        "Doce clases de cuatro horas sería otro formato; las slides especifican 16 clases de 3 horas.",
+        "El curso incluye prácticas, pero no son prácticas independientes únicamente: también hay explicación teórica y sesiones guiadas."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "¿Cuál es el enfoque correcto para estudiar esta materia?",
+      "options": [
+        "Memorizar comandos de software",
+        "Interpretar inferencias filogenéticas y flujos de trabajo",
+        "Leer solo taxonomía histórica",
+        "Evitar las prácticas"
+      ],
+      "answer": 1,
+      "explanation": "Los comandos importan solo dentro de un flujo de análisis. La clave es entender cómo los datos biológicos se convierten en interpretaciones filogenéticas defendibles.",
+      "optionExplanations": [
+        "Los comandos se usan en las prácticas, pero son herramientas; no son el objetivo principal del curso.",
+        "Correcto. La idea es entender los flujos de análisis e interpretar resultados filogenéticos con sentido biológico.",
+        "La taxonomía histórica aparece como contexto, pero el curso es más amplio y se centra en inferencia filogenética molecular.",
+        "Las prácticas conectan los conceptos con análisis reales; evitarlas dejaría fuera una parte clave del curso."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "¿Qué formato de examen se presentó en la introducción?",
+      "options": [
+        "Solo preguntas orales",
+        "22 preguntas multiple choice + 2 preguntas abiertas de síntesis",
+        "Solo ejercicios de código",
+        "Un ensayo largo sin longitud definida"
+      ],
+      "answer": 1,
+      "explanation": "El examen combina preguntas multiple choice con preguntas abiertas que evalúan síntesis e interpretación.",
+      "optionExplanations": [
+        "El examen no fue presentado como una evaluación solo oral.",
+        "Correcto. El formato combina 22 preguntas multiple choice con 2 preguntas abiertas de síntesis.",
+        "El código y las herramientas aparecen en prácticas, pero el examen no es solo de programación.",
+        "Las preguntas abiertas tienen longitud predefinida y buscan síntesis, no un ensayo largo sin límite."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "¿Cuál es el objetivo principal del notebook práctico de la Lección 01?",
+      "options": [
+        "Inferir el árbol filogenético final",
+        "Preparar el entorno de software y el toolkit del curso",
+        "Estimar tiempos de divergencia",
+        "Inferir selección con dN/dS"
+      ],
+      "answer": 1,
+      "explanation": "La primera práctica se centra en instalación y preparación de las herramientas que se usarán después.",
+      "optionExplanations": [
+        "Inferir árboles finales ocurre más adelante; la Lección 01 prepara el entorno de trabajo.",
+        "Correcto. El primer notebook se centra en instalar y preparar las herramientas del curso.",
+        "Los tiempos de divergencia se trabajan en una aplicación posterior, no en el notebook de setup.",
+        "dN/dS y selección aparecen más adelante; no son el objetivo de la primera práctica."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "¿Cómo conviene estudiar las prácticas?",
+      "options": [
+        "Como listas de comandos para memorizar",
+        "Como flujos conectados con preguntas biológicas",
+        "Como material opcional sin relación con el examen",
+        "Como reemplazo de las slides"
+      ],
+      "answer": 1,
+      "explanation": "Las prácticas conectan métodos y outputs con interpretación biológica; no son comandos aislados.",
+      "optionExplanations": [
+        "Los comandos sirven, pero memorizarlos sin contexto no ayuda a entender la lógica del análisis.",
+        "Correcto. Las prácticas deben estudiarse como flujos de trabajo conectados con preguntas biológicas.",
+        "Las prácticas sí son relevantes porque muestran cómo la teoría se convierte en análisis e interpretación.",
+        "Las slides y las prácticas se complementan; el notebook no reemplaza el material teórico."
+      ]
+    }
+  ],
+  "fa": [
+    {
+      "kind": "theory",
+      "question": "ساختار اصلی درس تبارزایی مولکولی چیست؟",
+      "options": [
+        "۸ جلسهٔ ۶ ساعته",
+        "۱۶ جلسهٔ ۳ ساعته",
+        "۱۲ جلسهٔ ۴ ساعته",
+        "فقط تمرین‌های مستقل"
+      ],
+      "answer": 1,
+      "explanation": "این درس ۴۸ ساعت است و در قالب ۱۶ جلسهٔ ۳ ساعته برگزار می‌شود.",
+      "optionExplanations": [
+        "۸ جلسهٔ ۶ ساعته هم ۴۸ ساعت می‌شود، اما قالب اعلام‌شدهٔ این درس نیست.",
+        "درست است. درس در قالب ۱۶ جلسهٔ ۳ ساعته، در مجموع ۴۸ ساعت، برگزار می‌شود.",
+        "۱۲ جلسهٔ ۴ ساعته قالب دیگری است؛ در اسلایدها ۱۶ جلسهٔ ۳ ساعته آمده است.",
+        "درس بخش عملی دارد، اما فقط تمرین مستقل نیست؛ توضیح نظری و جلسهٔ هدایت‌شده هم دارد."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "تمرکز درست در مطالعهٔ این درس چیست؟",
+      "options": [
+        "حفظ دستورهای نرم‌افزاری",
+        "تفسیر استنباط‌های تبارزایی و جریان تحلیل",
+        "فقط خواندن تاریخچهٔ رده‌بندی",
+        "نادیده‌گرفتن بخش عملی"
+      ],
+      "answer": 1,
+      "explanation": "دستورها فقط درون جریان تحلیل معنا دارند؛ هدف فهم تبدیل دادهٔ زیستی به تفسیر تبارزایی قابل دفاع است.",
+      "optionExplanations": [
+        "دستورهای نرم‌افزاری ابزارند، نه هدف اصلی یادگیری.",
+        "درست است. هدف فهم جریان تحلیل و تفسیر نتایج تبارزایی با معنای زیستی است.",
+        "تاریخچهٔ رده‌بندی فقط بخشی از زمینه است؛ درس گسترده‌تر و دربارهٔ استنباط تبارزایی مولکولی است.",
+        "بخش عملی مفاهیم را به تحلیل واقعی وصل می‌کند، بنابراین نادیده‌گرفتن آن درست نیست."
+      ]
+    },
+    {
+      "kind": "theory",
+      "question": "ساختار امتحان چگونه معرفی شد؟",
+      "options": [
+        "فقط پرسش شفاهی",
+        "۲۲ سؤال چندگزینه‌ای + ۲ سؤال باز ترکیبی",
+        "فقط تمرین کدنویسی",
+        "یک مقالهٔ بلند بدون طول مشخص"
+      ],
+      "answer": 1,
+      "explanation": "امتحان ترکیبی از سؤال‌های چندگزینه‌ای و سؤال‌های باز برای سنجش ترکیب و تفسیر است.",
+      "optionExplanations": [
+        "امتحان به‌صورت فقط شفاهی معرفی نشد.",
+        "درست است. امتحان شامل ۲۲ سؤال چندگزینه‌ای و ۲ سؤال باز ترکیبی است.",
+        "ابزارها در تمرین‌ها استفاده می‌شوند، اما امتحان فقط تمرین کدنویسی نیست.",
+        "پرسش‌های باز طول مشخص دارند و بر ترکیب و تفسیر تمرکز می‌کنند، نه مقالهٔ نامحدود."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "هدف اصلی notebook عملی درس ۰۱ چیست؟",
+      "options": [
+        "استنباط درخت نهایی",
+        "آماده‌سازی محیط نرم‌افزاری و ابزارهای درس",
+        "برآورد زمان واگرایی",
+        "استنباط انتخاب با dN/dS"
+      ],
+      "answer": 1,
+      "explanation": "تمرین اول دربارهٔ نصب و آماده‌سازی ابزارهایی است که بعداً استفاده می‌شوند.",
+      "optionExplanations": [
+        "استنباط درخت نهایی در درس‌های بعدی می‌آید؛ درس ۰۱ محیط کار را آماده می‌کند.",
+        "درست است. اولین notebook روی نصب و آماده‌سازی ابزارهای درس تمرکز دارد.",
+        "برآورد زمان واگرایی کاربردی مربوط به درس‌های بعدی است، نه notebook نصب.",
+        "dN/dS و انتخاب بعداً مطرح می‌شوند و هدف تمرین اول نیستند."
+      ]
+    },
+    {
+      "kind": "practical",
+      "question": "بخش‌های عملی را چگونه باید مطالعه کرد؟",
+      "options": [
+        "به‌عنوان فهرست دستورها برای حفظ‌کردن",
+        "به‌عنوان جریان تحلیل مرتبط با پرسش زیستی",
+        "به‌عنوان محتوای اختیاری نامرتبط با امتحان",
+        "به‌عنوان جایگزین اسلایدها"
+      ],
+      "answer": 1,
+      "explanation": "تمرین‌ها روش‌ها و خروجی‌ها را به تفسیر زیستی وصل می‌کنند، نه اینکه فقط چند دستور جداگانه باشند.",
+      "optionExplanations": [
+        "حفظ دستورها بدون زمینه، منطق تحلیل را نشان نمی‌دهد.",
+        "درست است. تمرین‌ها باید به‌عنوان جریان تحلیل مرتبط با پرسش زیستی مطالعه شوند.",
+        "تمرین‌ها مرتبط‌اند، چون نشان می‌دهند نظریه چگونه به تحلیل و تفسیر تبدیل می‌شود.",
+        "اسلایدها و notebook مکمل هم هستند؛ notebook جایگزین کامل اسلایدها نیست."
+      ]
+    }
+  ]
+};

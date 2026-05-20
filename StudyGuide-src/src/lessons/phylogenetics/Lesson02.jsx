@@ -659,7 +659,7 @@ function QuartetFigure({ labels }) {
 }
 
 function TreeThinkingLesson({ lang, t, isDone, toggle, lessonNo, titles, shared }) {
-  const { LessonNavigation, LessonResources } = shared;
+  const { LessonNavigation, LessonResources, LessonPractical, LessonQuiz } = shared;
   const c = copy[lang] || copy.es;
   const sections = c.sections;
   const [focus, setFocus] = useState("root");
@@ -838,6 +838,8 @@ function TreeThinkingLesson({ lang, t, isDone, toggle, lessonNo, titles, shared 
         <div className="grid gap-3 md:grid-cols-2">{sections.checklist[1].map(item => <label key={item} className="flex items-start gap-3 rounded-2xl bg-white/5 p-4 text-sm font-bold leading-6 text-stone-100"><input type="checkbox" className="mt-1 h-4 w-4 accent-red-700"/><span>{item}</span></label>)}</div>
       </section>
 
+      <LessonPractical lang={lang} lessonNo={lessonNo} />
+      <LessonQuiz lang={lang} lessonNo={lessonNo} />
       <LessonNavigation lang={lang} lessonNo={lessonNo} titles={titles} isDone={isDone} toggle={toggle} placement="bottom" />
     </main>
   );

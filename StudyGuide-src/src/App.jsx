@@ -244,6 +244,364 @@ const PHYLO_TRANSCRIPT_LINKS = {
   16: "https://docs.google.com/document/d/1t6VnEXxrR1GrEGuu8srlFByxDS0rYWku2Av-lbUr_sk/edit?usp=drivesdk",
 };
 
+
+const PHYLO_PRACTICAL_REPO_LINK = "https://github.com/for-giobbe/MP26/tree/main/practicals";
+
+const PHYLO_PRACTICAL_LINKS = {
+  1: { title: "Software installation instruction", url: "https://colab.research.google.com/drive/10CPzMCgrVtzOxxN817Cgd77uMrify-Rs", focus: ["setup", "conda", "course toolkit"] },
+  2: { title: "Phylogenetics 101 - Trees", url: "https://colab.research.google.com/drive/1Kz3JtR7jk0-zpk3x7uAJhnSlskPNrZFw", focus: ["tree thinking", "topology", "rooting"] },
+  3: { title: "Phylogenetics 101 - Sequences", url: "https://colab.research.google.com/drive/1QvwTMBDta-4nUu3a_d2dHbZhyXDMv5uW", focus: ["sequences", "characters", "genetic distance"] },
+  4: { title: "Orthology inference and taxon sampling", url: "https://colab.research.google.com/drive/19fjr_jHedgQCahDu_3Q42S03t-DogAH2", focus: ["orthology", "taxon sampling", "orthogroups"] },
+  5: { title: "Sequence alignment and filtering", url: "https://colab.research.google.com/drive/1EnvCqlGSW_t1EhMZteRNm6PECAenRUIg", focus: ["alignment", "homologous sites", "filtering"] },
+  6: { title: "Distance-based versus character-based algorithms", url: "https://colab.research.google.com/drive/1tWZc_M_aeUaIpmWVMBsnIEVqmS99_FwQ", focus: ["UPGMA", "Neighbor Joining", "tree scoring"] },
+  7: { title: "Mk models of molecular evolution", url: "https://colab.research.google.com/drive/1IZqukwg0Nn9WqDzJu7uL2JbXfWdLZl4a", focus: ["substitution models", "transition matrix", "model parameters"] },
+  8: { title: "Maximum Likelihood (ML)", url: "https://colab.research.google.com/drive/1Tq-FGfrCLXXdeL249yr3KXVc4rUh05Ob", focus: ["likelihood", "tree search", "model fit"] },
+  9: { title: "Bayesian Inference (BI)", url: "https://colab.research.google.com/drive/1hdn22WmkoJo3Pep7JFAeT8_mhSRK4ZSZ", focus: ["Bayes theorem", "MCMC", "posterior probability"] },
+  10: { title: "Support metrics", url: "https://colab.research.google.com/drive/1fcE293WmMAHRD4NAxhGKvpamx8FSV09r", focus: ["bootstrap", "aLRT", "concordance factors"] },
+  11: { title: "Complex substitution models", url: "https://colab.research.google.com/drive/1MYmGXVEswjumnwGSTDmsu5VwWsOsBpPB", focus: ["partition models", "mixture models", "heterogeneity"] },
+  12: { title: "Discordance, ILS and the coalescent", url: "https://colab.research.google.com/drive/1IgCCDc0cAq_5yjqp5BFMmCCEH3aR9ly2", focus: ["gene trees", "species trees", "ILS"] },
+  13: { title: "Stochastic and systematic bias", url: "https://colab.research.google.com/drive/1AB2h91BinefbiHi4_XAV9oJI2u3-X3V-", focus: ["stochastic bias", "systematic bias", "model violations"] },
+  14: { title: "Divergence time analyses", url: "https://colab.research.google.com/drive/1G0csTXWpz0TXv-2HPUkiax0_XD1KycGb", focus: ["molecular clock", "calibration", "dating"] },
+  15: { title: "Inferring selection", url: "https://colab.research.google.com/drive/1VRiqGY_HSEbLPezVH-79fUwJmabpSrFk", focus: ["codons", "dN/dS", "selection"] },
+  16: { title: "Modelling trait evolution on phylogenies", url: "https://colab.research.google.com/drive/1n0L04tPVZKu6CNQySwpg01O7kt9WCNEt", focus: ["comparative methods", "Mk model", "trait evolution"] },
+};
+
+function phyloPracticalCopy(lang) {
+  return {
+    en: {
+      eyebrow: "Practical session",
+      title: "Hands-on notebook",
+      openNotebook: "Open Colab notebook",
+      openRepo: "Open practicals repository",
+      focus: "Focus",
+      body: "Use the practical as the bridge between the lecture concepts and the analysis workflow. The goal is not to memorize commands, but to understand what each step does, why it is needed, and how its output should be interpreted.",
+      unavailable: "No practical notebook available for this lesson yet.",
+      repoDesc: "The notebooks are based on the course practicals repository.",
+    },
+    es: {
+      eyebrow: "Parte práctica",
+      title: "Notebook de práctica",
+      openNotebook: "Abrir notebook en Colab",
+      openRepo: "Abrir repositorio de prácticas",
+      focus: "Enfoque",
+      body: "Usa la práctica como puente entre los conceptos de la clase y el flujo de análisis. El objetivo no es memorizar comandos, sino entender qué hace cada paso, por qué se necesita y cómo interpretar su resultado.",
+      unavailable: "Todavía no hay notebook práctico disponible para esta lección.",
+      repoDesc: "Los notebooks están basados en el repositorio de prácticas del curso.",
+    },
+    fa: {
+      eyebrow: "بخش عملی",
+      title: "دفترچهٔ عملی",
+      openNotebook: "باز کردن notebook در Colab",
+      openRepo: "باز کردن مخزن تمرین‌ها",
+      focus: "تمرکز",
+      body: "بخش عملی پلی میان مفاهیم درس و جریان تحلیل است. هدف حفظ دستورها نیست؛ باید بفهمید هر گام چه کاری انجام می‌دهد، چرا لازم است و خروجی آن چگونه تفسیر می‌شود.",
+      unavailable: "برای این درس هنوز notebook عملی در دسترس نیست.",
+      repoDesc: "این notebookها بر پایهٔ مخزن تمرین‌های درس ساخته شده‌اند.",
+    },
+  }[lang] || {};
+}
+
+
+function phyloQuizCopy(lang) {
+  return {
+    en: {
+      eyebrow: "Self-check",
+      title: "Theory + practical quiz",
+      body: "Choose an answer and use the short explanation to check whether you understood both the lecture and the practical session.",
+      theory: "Theory",
+      practical: "Practical",
+      correct: "Correct",
+      incorrect: "Not quite",
+      select: "Select an answer",
+      score: "Score",
+      selectedCorrect: "Correct — you selected the right answer.",
+      selectedIncorrectPrefix: "Your selected answer is not correct. The correct answer is",
+      comingSoon: "Quiz coming soon",
+      comingSoonBody: "This lesson is ready for a quiz once its theory page is expanded.",
+    },
+    es: {
+      eyebrow: "Autoevaluación",
+      title: "Quiz de teoría + práctica",
+      body: "Elige una respuesta y usa la explicación breve para comprobar si entendiste tanto la clase teórica como la parte práctica.",
+      theory: "Teoría",
+      practical: "Práctica",
+      correct: "Correcto",
+      incorrect: "No exactamente",
+      select: "Selecciona una respuesta",
+      score: "Puntaje",
+      selectedCorrect: "Correcto — seleccionaste la respuesta adecuada.",
+      selectedIncorrectPrefix: "Tu respuesta seleccionada no es correcta. La respuesta correcta es",
+      comingSoon: "Quiz próximamente",
+      comingSoonBody: "Esta lección quedará lista para quiz cuando ampliemos su página teórica.",
+    },
+    fa: {
+      eyebrow: "خودآزمایی",
+      title: "آزمونک نظری + عملی",
+      body: "یک پاسخ انتخاب کنید و با توضیح کوتاه بررسی کنید که هم بخش نظری و هم بخش عملی را فهمیده‌اید یا نه.",
+      theory: "نظری",
+      practical: "عملی",
+      correct: "درست",
+      incorrect: "نه دقیقاً",
+      select: "یک پاسخ انتخاب کنید",
+      score: "امتیاز",
+      selectedCorrect: "درست — پاسخ مناسب را انتخاب کردید.",
+      selectedIncorrectPrefix: "پاسخ انتخابی شما درست نیست. پاسخ درست",
+      comingSoon: "آزمونک به‌زودی",
+      comingSoonBody: "پس از کامل‌شدن صفحهٔ نظری این درس، آزمونک آن هم اضافه می‌شود.",
+    },
+  }[lang] || {};
+}
+
+const PHYLO_QUIZ_QUESTIONS = {
+  1: {
+    en: [
+      {
+        kind: "theory",
+        question: "What is the basic structure of the Molecular Phylogenetics course?",
+        options: ["8 classes of 6 hours", "16 classes of 3 hours", "12 classes of 4 hours", "Only independent practicals"],
+        answer: 1,
+        explanation: "The course has 48 total hours organized as 16 classes of 3 hours each.",
+      },
+      {
+        kind: "theory",
+        question: "What is the intended focus of studying this course?",
+        options: ["Memorizing software commands", "Interpreting phylogenetic inferences and workflows", "Only reading historical taxonomy", "Avoiding practical sessions"],
+        answer: 1,
+        explanation: "Commands matter only as part of a workflow. The key goal is understanding how biological data become defensible phylogenetic interpretations.",
+      },
+      {
+        kind: "theory",
+        question: "Which description matches the exam format presented in the course introduction?",
+        options: ["Only oral questions", "22 multiple choice questions plus 2 open-ended synthesis questions", "Only code exercises", "A long essay without predefined length"],
+        answer: 1,
+        explanation: "The exam combines multiple choice questions with open-ended questions that test synthesis and interpretation.",
+      },
+      {
+        kind: "practical",
+        question: "What is the main purpose of the Lesson 01 practical notebook?",
+        options: ["To infer a final phylogenetic tree", "To set up the software environment and course toolkit", "To estimate divergence times", "To test selection using dN/dS"],
+        answer: 1,
+        explanation: "The first practical is about software installation and preparing the tools that will be used later.",
+      },
+      {
+        kind: "practical",
+        question: "How should the practical sessions be studied?",
+        options: ["As command lists to memorize", "As workflows connected to biological questions", "As optional material unrelated to the exam", "As replacements for the lecture slides"],
+        answer: 1,
+        explanation: "The practicals are meant to connect methods and outputs to biological interpretation, not to be memorized as isolated commands.",
+      },
+    ],
+    es: [
+      {
+        kind: "theory",
+        question: "¿Cuál es la estructura básica del curso de Filogenética Molecular?",
+        options: ["8 clases de 6 horas", "16 clases de 3 horas", "12 clases de 4 horas", "Solo prácticas independientes"],
+        answer: 1,
+        explanation: "El curso tiene 48 horas totales organizadas como 16 clases de 3 horas cada una.",
+      },
+      {
+        kind: "theory",
+        question: "¿Cuál es el enfoque correcto para estudiar esta materia?",
+        options: ["Memorizar comandos de software", "Interpretar inferencias filogenéticas y flujos de trabajo", "Leer solo taxonomía histórica", "Evitar las prácticas"],
+        answer: 1,
+        explanation: "Los comandos importan solo dentro de un flujo de análisis. La clave es entender cómo los datos biológicos se convierten en interpretaciones filogenéticas defendibles.",
+      },
+      {
+        kind: "theory",
+        question: "¿Qué formato de examen se presentó en la introducción?",
+        options: ["Solo preguntas orales", "22 preguntas multiple choice + 2 preguntas abiertas de síntesis", "Solo ejercicios de código", "Un ensayo largo sin longitud definida"],
+        answer: 1,
+        explanation: "El examen combina preguntas multiple choice con preguntas abiertas que evalúan síntesis e interpretación.",
+      },
+      {
+        kind: "practical",
+        question: "¿Cuál es el objetivo principal del notebook práctico de la Lección 01?",
+        options: ["Inferir el árbol filogenético final", "Preparar el entorno de software y el toolkit del curso", "Estimar tiempos de divergencia", "Inferir selección con dN/dS"],
+        answer: 1,
+        explanation: "La primera práctica se centra en instalación y preparación de las herramientas que se usarán después.",
+      },
+      {
+        kind: "practical",
+        question: "¿Cómo conviene estudiar las prácticas?",
+        options: ["Como listas de comandos para memorizar", "Como flujos conectados con preguntas biológicas", "Como material opcional sin relación con el examen", "Como reemplazo de las slides"],
+        answer: 1,
+        explanation: "Las prácticas conectan métodos y outputs con interpretación biológica; no son comandos aislados.",
+      },
+    ],
+    fa: [
+      {
+        kind: "theory",
+        question: "ساختار اصلی درس تبارزایی مولکولی چیست؟",
+        options: ["۸ جلسهٔ ۶ ساعته", "۱۶ جلسهٔ ۳ ساعته", "۱۲ جلسهٔ ۴ ساعته", "فقط تمرین‌های مستقل"],
+        answer: 1,
+        explanation: "این درس ۴۸ ساعت است و در قالب ۱۶ جلسهٔ ۳ ساعته برگزار می‌شود.",
+      },
+      {
+        kind: "theory",
+        question: "تمرکز درست در مطالعهٔ این درس چیست؟",
+        options: ["حفظ دستورهای نرم‌افزاری", "تفسیر استنباط‌های تبارزایی و جریان تحلیل", "فقط خواندن تاریخچهٔ رده‌بندی", "نادیده‌گرفتن بخش عملی"],
+        answer: 1,
+        explanation: "دستورها فقط درون جریان تحلیل معنا دارند؛ هدف فهم تبدیل دادهٔ زیستی به تفسیر تبارزایی قابل دفاع است.",
+      },
+      {
+        kind: "theory",
+        question: "ساختار امتحان چگونه معرفی شد؟",
+        options: ["فقط پرسش شفاهی", "۲۲ سؤال چندگزینه‌ای + ۲ سؤال باز ترکیبی", "فقط تمرین کدنویسی", "یک مقالهٔ بلند بدون طول مشخص"],
+        answer: 1,
+        explanation: "امتحان ترکیبی از سؤال‌های چندگزینه‌ای و سؤال‌های باز برای سنجش ترکیب و تفسیر است.",
+      },
+      {
+        kind: "practical",
+        question: "هدف اصلی notebook عملی درس ۰۱ چیست؟",
+        options: ["استنباط درخت نهایی", "آماده‌سازی محیط نرم‌افزاری و ابزارهای درس", "برآورد زمان واگرایی", "استنباط انتخاب با dN/dS"],
+        answer: 1,
+        explanation: "تمرین اول دربارهٔ نصب و آماده‌سازی ابزارهایی است که بعداً استفاده می‌شوند.",
+      },
+      {
+        kind: "practical",
+        question: "بخش‌های عملی را چگونه باید مطالعه کرد؟",
+        options: ["به‌عنوان فهرست دستورها برای حفظ‌کردن", "به‌عنوان جریان تحلیل مرتبط با پرسش زیستی", "به‌عنوان محتوای اختیاری نامرتبط با امتحان", "به‌عنوان جایگزین اسلایدها"],
+        answer: 1,
+        explanation: "تمرین‌ها روش‌ها و خروجی‌ها را به تفسیر زیستی وصل می‌کنند، نه اینکه فقط چند دستور جداگانه باشند.",
+      },
+    ],
+  },
+  2: {
+    en: [
+      {
+        kind: "theory",
+        question: "Which type of character is strongest for defining a clade?",
+        options: ["Autapomorphy", "Synapomorphy", "Symplesiomorphy", "Any ancestral trait"],
+        answer: 1,
+        explanation: "A synapomorphy is a shared derived trait inherited from the most recent common ancestor of a group; it is strong evidence for a clade.",
+      },
+      {
+        kind: "theory",
+        question: "How do you decide which two tips are more closely related?",
+        options: ["They are drawn next to each other", "They share the most recent common ancestor", "They are closer to the top of the page", "They have shorter labels"],
+        answer: 1,
+        explanation: "Relatedness is read from the branching pattern and the MRCA, not from visual adjacency or vertical position.",
+      },
+      {
+        kind: "theory",
+        question: "What does a monophyletic group include?",
+        options: ["Only visually adjacent taxa", "A common ancestor and some descendants", "A most recent common ancestor and all descendants", "Unrelated lineages with similar traits"],
+        answer: 2,
+        explanation: "Monophyly means the group contains its most recent common ancestor and all descendants of that ancestor.",
+      },
+      {
+        kind: "theory",
+        question: "What does a cladogram show?",
+        options: ["Only branching pattern", "Time calibrated branch lengths", "Substitutions per site", "Selection pressure"],
+        answer: 0,
+        explanation: "A cladogram shows topology only; branch lengths do not represent time or amount of change.",
+      },
+      {
+        kind: "practical",
+        question: "In the tree-thinking practical, what does rotating an internal node change?",
+        options: ["The evolutionary relationships", "Only the drawing / tip order", "The root age", "The DNA alignment"],
+        answer: 1,
+        explanation: "Rotating a node changes the visual order of tips, but the topology and relationships remain the same.",
+      },
+      {
+        kind: "practical",
+        question: "What is the practical purpose of using an outgroup?",
+        options: ["To make the tree look balanced", "To help root the tree and give direction", "To remove all polytomies automatically", "To increase the number of mutations"],
+        answer: 1,
+        explanation: "An outgroup is outside the focal clade and helps place the root, giving evolutionary direction to the tree.",
+      },
+    ],
+    es: [
+      {
+        kind: "theory",
+        question: "¿Qué tipo de carácter es más fuerte para definir un clado?",
+        options: ["Autapomorphy", "Synapomorphy", "Symplesiomorphy", "Cualquier carácter ancestral"],
+        answer: 1,
+        explanation: "Una synapomorphy es un carácter derivado compartido heredado del ancestro común más reciente del grupo; por eso es evidencia fuerte de clado.",
+      },
+      {
+        kind: "theory",
+        question: "¿Cómo decides qué dos tips están más relacionados?",
+        options: ["Porque están dibujados juntos", "Porque comparten el ancestro común más reciente", "Porque están más arriba en la página", "Porque tienen etiquetas más cortas"],
+        answer: 1,
+        explanation: "La relación se lee desde el patrón de ramificación y el MRCA, no desde la adyacencia visual ni la posición vertical.",
+      },
+      {
+        kind: "theory",
+        question: "¿Qué incluye un grupo monofilético?",
+        options: ["Solo taxones visualmente adyacentes", "Un ancestro común y algunos descendientes", "El ancestro común más reciente y todos sus descendientes", "Linajes no relacionados con rasgos similares"],
+        answer: 2,
+        explanation: "Monofilia significa que el grupo contiene al ancestro común más reciente y todos sus descendientes.",
+      },
+      {
+        kind: "theory",
+        question: "¿Qué muestra un cladograma?",
+        options: ["Solo el patrón de ramificación", "Longitudes calibradas en tiempo", "Sustituciones por sitio", "Presión de selección"],
+        answer: 0,
+        explanation: "Un cladograma muestra solo la topología; las longitudes de rama no representan tiempo ni cantidad de cambio.",
+      },
+      {
+        kind: "practical",
+        question: "En la práctica de tree thinking, ¿qué cambia al rotar un nodo interno?",
+        options: ["Las relaciones evolutivas", "Solo el dibujo / orden de los tips", "La edad de la raíz", "El alineamiento de DNA"],
+        answer: 1,
+        explanation: "Rotar un nodo cambia el orden visual de las etiquetas, pero la topología y las relaciones siguen siendo las mismas.",
+      },
+      {
+        kind: "practical",
+        question: "¿Para qué sirve usar un outgroup en la práctica?",
+        options: ["Para que el árbol se vea equilibrado", "Para ayudar a enraizar el árbol y darle dirección", "Para eliminar automáticamente todas las politomías", "Para aumentar el número de mutaciones"],
+        answer: 1,
+        explanation: "El outgroup está fuera del clado focal y ayuda a ubicar la raíz, dando dirección evolutiva al árbol.",
+      },
+    ],
+    fa: [
+      {
+        kind: "theory",
+        question: "کدام نوع کاراکتر برای تعریف یک کلاد قوی‌تر است؟",
+        options: ["اتاپومورفی", "سیناپومورفی", "سیمپلزیومورفی", "هر صفت اجدادی"],
+        answer: 1,
+        explanation: "سیناپومورفی صفت مشتق مشترکی است که از نزدیک‌ترین نیای مشترک گروه به ارث رسیده و شواهد قوی برای کلاد است.",
+      },
+      {
+        kind: "theory",
+        question: "چگونه تشخیص می‌دهیم کدام دو نوک خویشاوندترند؟",
+        options: ["چون کنار هم رسم شده‌اند", "چون نزدیک‌ترین نیای مشترک را دارند", "چون بالاتر در صفحه هستند", "چون برچسب کوتاه‌تری دارند"],
+        answer: 1,
+        explanation: "خویشاوندی از الگوی انشعاب و MRCA خوانده می‌شود، نه از کنار هم بودن یا جایگاه عمودی.",
+      },
+      {
+        kind: "theory",
+        question: "یک گروه تک‌تبار چه چیزی را شامل می‌شود؟",
+        options: ["فقط تاکسون‌های کنار هم در تصویر", "یک نیای مشترک و برخی نوادگان", "نزدیک‌ترین نیای مشترک و همهٔ نوادگان", "دودمان‌های نامرتبط با صفات مشابه"],
+        answer: 2,
+        explanation: "تک‌تبارگی یعنی گروه شامل نزدیک‌ترین نیای مشترک و همهٔ نوادگان آن باشد.",
+      },
+      {
+        kind: "theory",
+        question: "کلادوگرام چه چیزی را نشان می‌دهد؟",
+        options: ["فقط الگوی انشعاب", "طول شاخه با مقیاس زمان", "جانشینی در هر سایت", "فشار انتخاب"],
+        answer: 0,
+        explanation: "کلادوگرام فقط توپولوژی را نشان می‌دهد؛ طول شاخه زمان یا مقدار تغییر را نشان نمی‌دهد.",
+      },
+      {
+        kind: "practical",
+        question: "در تمرین تفکر درختی، چرخاندن یک گرهٔ داخلی چه چیزی را عوض می‌کند؟",
+        options: ["روابط تکاملی", "فقط شکل رسم / ترتیب نوک‌ها", "سن ریشه", "هم‌ترازسازی DNA"],
+        answer: 1,
+        explanation: "چرخاندن گره فقط ترتیب دیداری نوک‌ها را تغییر می‌دهد؛ توپولوژی و روابط همان می‌مانند.",
+      },
+      {
+        kind: "practical",
+        question: "کاربرد عملی برون‌گروه چیست؟",
+        options: ["متعادل‌تر کردن ظاهر درخت", "کمک به ریشه‌گذاری و جهت‌دادن به درخت", "حذف خودکار همهٔ پلی‌تومی‌ها", "افزایش تعداد جهش‌ها"],
+        answer: 1,
+        explanation: "برون‌گروه بیرون از کلاد کانونی است و به جای‌گذاری ریشه و دادن جهت تکاملی کمک می‌کند.",
+      },
+    ],
+  },
+};
+
 function phyloResourceCopy(lang) {
   return {
     en: {
@@ -484,6 +842,382 @@ function LessonResources({ lang, lessonNo }) {
   );
 }
 
+
+function LessonPractical({ lang, lessonNo }) {
+  const copy = phyloPracticalCopy(lang);
+  const practical = PHYLO_PRACTICAL_LINKS[lessonNo];
+  const focusItems = practical?.focus || [];
+  if (!practical) {
+    return (
+      <section className="mb-8 rounded-[2rem] border border-stone-200 bg-stone-50 p-5 shadow-sm md:p-6">
+        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.eyebrow}</div>
+        <h2 className="mt-2 text-2xl font-black text-stone-950">{copy.title}</h2>
+        <p className="mt-3 text-sm font-semibold leading-6 text-stone-500">{copy.unavailable}</p>
+      </section>
+    );
+  }
+  return (
+    <section className="mb-8 overflow-hidden rounded-[2rem] border border-stone-200 bg-white/90 shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="p-5 md:p-6">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.eyebrow}</div>
+          <h2 className="mt-2 text-2xl font-black tracking-tight text-stone-950">{copy.title}: {practical.title}</h2>
+          <p className="mt-3 leading-7 text-stone-600">{copy.body}</p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <a href={practical.url} target="_blank" rel="noreferrer" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">
+              {copy.openNotebook}
+            </a>
+            <a href={PHYLO_PRACTICAL_REPO_LINK} target="_blank" rel="noreferrer" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">
+              {copy.openRepo}
+            </a>
+          </div>
+        </div>
+        <div className="border-t border-stone-200 bg-stone-50 p-5 lg:border-l lg:border-t-0 md:p-6">
+          <div className="rounded-3xl bg-stone-950 p-5 text-white">
+            <div className="text-xs font-black uppercase tracking-[0.22em] text-red-200">{copy.focus}</div>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {focusItems.map(item => <span key={item} className="rounded-full bg-white/10 px-3 py-1.5 text-xs font-black text-white">{item}</span>)}
+            </div>
+          </div>
+          <p className="mt-4 text-sm font-semibold leading-6 text-stone-600">{copy.repoDesc}</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+const PHYLO_QUIZ_OPTION_EXPLANATIONS = {
+  "en": {
+    "What is the basic structure of the Molecular Phylogenetics course?": [
+      "Eight six-hour meetings would also total 48 hours, but that is not the schedule described for this course.",
+      "Correct. The course is organized as 16 classes of 3 hours, for 48 hours total.",
+      "Twelve four-hour meetings would be a different format; the slides specify 16 classes of 3 hours.",
+      "The course includes practical work, but it is not only independent practicals; it also has lectures and guided sessions."
+    ],
+    "What is the intended focus of studying this course?": [
+      "Software commands are used in the practicals, but they are tools, not the main learning objective.",
+      "Correct. The goal is to understand workflows and interpret phylogenetic results in a biologically meaningful way.",
+      "Historical taxonomy appears in the background, but the course is broader and focuses on molecular phylogenetic inference.",
+      "Practicals are part of how the course connects concepts to real analysis, so avoiding them would miss a key component."
+    ],
+    "Which description matches the exam format presented in the course introduction?": [
+      "The exam was not presented as an oral-only assessment.",
+      "Correct. The format combines 22 multiple choice questions with 2 open-ended synthesis questions.",
+      "Coding tools appear in practicals, but the exam is not only code exercises.",
+      "The open questions have a predefined length and focus on synthesis, not an unrestricted long essay."
+    ],
+    "What is the main purpose of the Lesson 01 practical notebook?": [
+      "Inferring final trees comes later; Lesson 01 is about getting the working environment ready.",
+      "Correct. The first notebook focuses on software installation and preparing the course toolkit.",
+      "Divergence-time analysis is a later application, not the purpose of the setup notebook.",
+      "dN/dS and selection are covered later; they are not the aim of the first practical."
+    ],
+    "How should the practical sessions be studied?": [
+      "Commands are useful, but memorizing them without context misses the logic of the analysis.",
+      "Correct. Practicals should be studied as workflows that answer biological questions.",
+      "Practicals are relevant because they show how theory becomes analysis and interpretation.",
+      "Slides and practicals complement each other; the notebook does not replace the lecture material."
+    ],
+    "Which type of character is strongest for defining a clade?": [
+      "An autapomorphy is unique to one lineage; it helps identify that lineage but does not define a shared clade.",
+      "Correct. A synapomorphy is a shared derived character inherited from the most recent common ancestor of a group.",
+      "A symplesiomorphy is shared and ancestral; it can group taxa by old traits rather than close ancestry.",
+      "An ancestral trait alone is not enough to define a clade because it may be shared more broadly outside the focal group."
+    ],
+    "How do you decide which two tips are more closely related?": [
+      "Adjacent tips can simply be a drawing choice; node rotation can change their order without changing relationships.",
+      "Correct. The key is the most recent common ancestor shared by the tips.",
+      "Vertical position is a layout feature, not an evolutionary ranking or measure of relatedness.",
+      "Label length is irrelevant; relatedness comes from the branching pattern."
+    ],
+    "What does a monophyletic group include?": [
+      "Visual adjacency does not define biological groups; the branching pattern and ancestry do.",
+      "A common ancestor plus only some descendants describes paraphyly, not monophyly.",
+      "Correct. A monophyletic group includes the most recent common ancestor and all of its descendants.",
+      "Unrelated lineages with similar traits describe a polyphyletic grouping, often caused by convergence."
+    ],
+    "What does a cladogram show?": [
+      "Correct. A cladogram represents branching pattern or topology only.",
+      "Time-calibrated branch lengths describe a chronogram, not a cladogram.",
+      "Substitutions per site are represented by a phylogram scale, not by a basic cladogram.",
+      "Selection pressure is inferred with other analyses; it is not what a cladogram directly shows."
+    ],
+    "In the tree-thinking practical, what does rotating an internal node change?": [
+      "Evolutionary relationships do not change when a node is rotated; the topology is the same.",
+      "Correct. Rotation changes the drawing and tip order, not the relationships.",
+      "The root age is not altered by rotating a node in the drawing.",
+      "The DNA alignment is an input dataset; rotating a tree node does not modify it."
+    ],
+    "What is the practical purpose of using an outgroup?": [
+      "A balanced-looking tree is only a visual matter; that is not the purpose of an outgroup.",
+      "Correct. An outgroup helps place the root and gives direction to evolutionary interpretation.",
+      "Outgroups do not automatically resolve polytomies; they mainly orient the tree.",
+      "The outgroup does not increase mutations; it provides an external reference point for rooting."
+    ]
+  },
+  "es": {
+    "¿Cuál es la estructura básica del curso de Filogenética Molecular?": [
+      "Ocho clases de seis horas también sumarían 48 horas, pero no es el formato descrito para el curso.",
+      "Correcto. El curso se organiza en 16 clases de 3 horas, para un total de 48 horas.",
+      "Doce clases de cuatro horas sería otro formato; las slides especifican 16 clases de 3 horas.",
+      "El curso incluye prácticas, pero no son prácticas independientes únicamente: también hay explicación teórica y sesiones guiadas."
+    ],
+    "¿Cuál es el enfoque correcto para estudiar esta materia?": [
+      "Los comandos se usan en las prácticas, pero son herramientas; no son el objetivo principal del curso.",
+      "Correcto. La idea es entender los flujos de análisis e interpretar resultados filogenéticos con sentido biológico.",
+      "La taxonomía histórica aparece como contexto, pero el curso es más amplio y se centra en inferencia filogenética molecular.",
+      "Las prácticas conectan los conceptos con análisis reales; evitarlas dejaría fuera una parte clave del curso."
+    ],
+    "¿Qué formato de examen se presentó en la introducción?": [
+      "El examen no fue presentado como una evaluación solo oral.",
+      "Correcto. El formato combina 22 preguntas multiple choice con 2 preguntas abiertas de síntesis.",
+      "El código y las herramientas aparecen en prácticas, pero el examen no es solo de programación.",
+      "Las preguntas abiertas tienen longitud predefinida y buscan síntesis, no un ensayo largo sin límite."
+    ],
+    "¿Cuál es el objetivo principal del notebook práctico de la Lección 01?": [
+      "Inferir árboles finales ocurre más adelante; la Lección 01 prepara el entorno de trabajo.",
+      "Correcto. El primer notebook se centra en instalar y preparar las herramientas del curso.",
+      "Los tiempos de divergencia se trabajan en una aplicación posterior, no en el notebook de setup.",
+      "dN/dS y selección aparecen más adelante; no son el objetivo de la primera práctica."
+    ],
+    "¿Cómo conviene estudiar las prácticas?": [
+      "Los comandos sirven, pero memorizarlos sin contexto no ayuda a entender la lógica del análisis.",
+      "Correcto. Las prácticas deben estudiarse como flujos de trabajo conectados con preguntas biológicas.",
+      "Las prácticas sí son relevantes porque muestran cómo la teoría se convierte en análisis e interpretación.",
+      "Las slides y las prácticas se complementan; el notebook no reemplaza el material teórico."
+    ],
+    "¿Qué tipo de carácter es más fuerte para definir un clado?": [
+      "Una autapomorfía es única de un linaje; ayuda a distinguirlo, pero no define un clado compartido.",
+      "Correcto. Una synapomorphy es un carácter derivado compartido heredado del ancestro común más reciente del grupo.",
+      "Una symplesiomorphy es compartida pero ancestral; puede agrupar taxa por rasgos antiguos, no por cercanía evolutiva.",
+      "Un carácter ancestral cualquiera puede estar distribuido más ampliamente y no basta para definir un clado focal."
+    ],
+    "¿Cómo decides qué dos tips están más relacionados?": [
+      "Estar juntos puede ser solo una decisión de dibujo; rotar nodos cambia el orden sin cambiar las relaciones.",
+      "Correcto. La cercanía se decide por el ancestro común más reciente que comparten los tips.",
+      "La posición vertical es parte del layout, no una jerarquía evolutiva ni una medida de parentesco.",
+      "La longitud de las etiquetas no tiene relación con la filogenia; importa el patrón de ramificación."
+    ],
+    "¿Qué incluye un grupo monofilético?": [
+      "La adyacencia visual no define grupos biológicos; lo hacen la ascendencia y la topología.",
+      "Un ancestro común con solo algunos descendientes describe parafilia, no monofilia.",
+      "Correcto. Un grupo monofilético incluye al ancestro común más reciente y a todos sus descendientes.",
+      "Linajes no relacionados con rasgos similares describen polifilia, a menudo por convergencia."
+    ],
+    "¿Qué muestra un cladograma?": [
+      "Correcto. Un cladograma representa solo el patrón de ramificación o topología.",
+      "Las longitudes calibradas en tiempo corresponden a un cronograma, no a un cladograma.",
+      "Las sustituciones por sitio corresponden a una escala de filograma, no a un cladograma básico.",
+      "La presión de selección se infiere con otros análisis; un cladograma no la muestra directamente."
+    ],
+    "En la práctica de tree thinking, ¿qué cambia al rotar un nodo interno?": [
+      "Las relaciones evolutivas no cambian al rotar un nodo; la topología sigue siendo la misma.",
+      "Correcto. La rotación cambia el dibujo y el orden de los tips, no las relaciones.",
+      "La edad de la raíz no cambia por rotar un nodo en el dibujo.",
+      "El alineamiento de DNA es un dato de entrada; rotar un nodo del árbol no lo modifica."
+    ],
+    "¿Para qué sirve usar un outgroup en la práctica?": [
+      "Que el árbol se vea equilibrado es solo una cuestión visual; no es la función del outgroup.",
+      "Correcto. El outgroup ayuda a ubicar la raíz y da dirección a la interpretación evolutiva.",
+      "Un outgroup no elimina automáticamente las politomías; principalmente orienta el árbol.",
+      "El outgroup no aumenta mutaciones; funciona como referencia externa para enraizar."
+    ]
+  },
+  "fa": {
+    "ساختار اصلی درس تبارزایی مولکولی چیست؟": [
+      "۸ جلسهٔ ۶ ساعته هم ۴۸ ساعت می‌شود، اما قالب اعلام‌شدهٔ این درس نیست.",
+      "درست است. درس در قالب ۱۶ جلسهٔ ۳ ساعته، در مجموع ۴۸ ساعت، برگزار می‌شود.",
+      "۱۲ جلسهٔ ۴ ساعته قالب دیگری است؛ در اسلایدها ۱۶ جلسهٔ ۳ ساعته آمده است.",
+      "درس بخش عملی دارد، اما فقط تمرین مستقل نیست؛ توضیح نظری و جلسهٔ هدایت‌شده هم دارد."
+    ],
+    "تمرکز درست در مطالعهٔ این درس چیست؟": [
+      "دستورهای نرم‌افزاری ابزارند، نه هدف اصلی یادگیری.",
+      "درست است. هدف فهم جریان تحلیل و تفسیر نتایج تبارزایی با معنای زیستی است.",
+      "تاریخچهٔ رده‌بندی فقط بخشی از زمینه است؛ درس گسترده‌تر و دربارهٔ استنباط تبارزایی مولکولی است.",
+      "بخش عملی مفاهیم را به تحلیل واقعی وصل می‌کند، بنابراین نادیده‌گرفتن آن درست نیست."
+    ],
+    "ساختار امتحان چگونه معرفی شد؟": [
+      "امتحان به‌صورت فقط شفاهی معرفی نشد.",
+      "درست است. امتحان شامل ۲۲ سؤال چندگزینه‌ای و ۲ سؤال باز ترکیبی است.",
+      "ابزارها در تمرین‌ها استفاده می‌شوند، اما امتحان فقط تمرین کدنویسی نیست.",
+      "پرسش‌های باز طول مشخص دارند و بر ترکیب و تفسیر تمرکز می‌کنند، نه مقالهٔ نامحدود."
+    ],
+    "هدف اصلی notebook عملی درس ۰۱ چیست؟": [
+      "استنباط درخت نهایی در درس‌های بعدی می‌آید؛ درس ۰۱ محیط کار را آماده می‌کند.",
+      "درست است. اولین notebook روی نصب و آماده‌سازی ابزارهای درس تمرکز دارد.",
+      "برآورد زمان واگرایی کاربردی مربوط به درس‌های بعدی است، نه notebook نصب.",
+      "dN/dS و انتخاب بعداً مطرح می‌شوند و هدف تمرین اول نیستند."
+    ],
+    "بخش‌های عملی را چگونه باید مطالعه کرد؟": [
+      "حفظ دستورها بدون زمینه، منطق تحلیل را نشان نمی‌دهد.",
+      "درست است. تمرین‌ها باید به‌عنوان جریان تحلیل مرتبط با پرسش زیستی مطالعه شوند.",
+      "تمرین‌ها مرتبط‌اند، چون نشان می‌دهند نظریه چگونه به تحلیل و تفسیر تبدیل می‌شود.",
+      "اسلایدها و notebook مکمل هم هستند؛ notebook جایگزین کامل اسلایدها نیست."
+    ],
+    "کدام نوع کاراکتر برای تعریف یک کلاد قوی‌تر است؟": [
+      "اتاپومورفی برای یک دودمان خاص است و کلاد مشترک را تعریف نمی‌کند.",
+      "درست است. سیناپومورفی صفت مشتق مشترک است که از نیای مشترک جدید گروه به ارث رسیده است.",
+      "سیمپلزیومورفی صفت مشترک اما اجدادی است و می‌تواند رابطهٔ نزدیک را گمراه کند.",
+      "هر صفت اجدادی ممکن است بیرون از گروه هم وجود داشته باشد و برای تعریف کلاد کافی نیست."
+    ],
+    "چگونه تشخیص می‌دهیم کدام دو نوک خویشاوندترند؟": [
+      "کنار هم بودن ممکن است فقط حاصل رسم باشد؛ چرخاندن گره ترتیب نوک‌ها را عوض می‌کند.",
+      "درست است. خویشاوندی با نزدیک‌ترین نیای مشترک تعیین می‌شود.",
+      "بالا یا پایین بودن در صفحه معنای تکاملی ندارد.",
+      "طول برچسب‌ها هیچ ارتباطی با خویشاوندی ندارد؛ الگوی انشعاب مهم است."
+    ],
+    "یک گروه تک‌تبار چه چیزی را شامل می‌شود؟": [
+      "کنار هم بودن در تصویر گروه زیستی را تعریف نمی‌کند.",
+      "نیای مشترک همراه با فقط بخشی از نوادگان، پیراتبارگی است نه تک‌تبارگی.",
+      "درست است. گروه تک‌تبار نزدیک‌ترین نیای مشترک و همهٔ نوادگانش را شامل می‌شود.",
+      "دودمان‌های نامرتبط با صفات مشابه چندتبارگی را نشان می‌دهند، معمولاً به‌دلیل همگرایی."
+    ],
+    "کلادوگرام چه چیزی را نشان می‌دهد؟": [
+      "درست است. کلادوگرام فقط الگوی انشعاب یا توپولوژی را نشان می‌دهد.",
+      "طول شاخه با مقیاس زمان مربوط به کرونوگرام است، نه کلادوگرام.",
+      "جانشینی در هر سایت مربوط به فیلوگرام است، نه کلادوگرام ساده.",
+      "فشار انتخاب با تحلیل‌های دیگر بررسی می‌شود؛ کلادوگرام آن را مستقیم نشان نمی‌دهد."
+    ],
+    "در تمرین تفکر درختی، چرخاندن یک گرهٔ داخلی چه چیزی را عوض می‌کند؟": [
+      "روابط تکاملی با چرخاندن گره عوض نمی‌شوند؛ توپولوژی همان است.",
+      "درست است. چرخاندن گره فقط شکل رسم و ترتیب نوک‌ها را تغییر می‌دهد.",
+      "سن ریشه با چرخاندن گره تغییر نمی‌کند.",
+      "هم‌ترازسازی DNA دادهٔ ورودی است و با چرخاندن گره تغییر نمی‌کند."
+    ],
+    "کاربرد عملی برون‌گروه چیست؟": [
+      "متعادل‌تر شدن ظاهر درخت هدف برون‌گروه نیست.",
+      "درست است. برون‌گروه به ریشه‌گذاری و جهت‌دهی تفسیر تکاملی کمک می‌کند.",
+      "برون‌گروه پلی‌تومی‌ها را خودکار حل نمی‌کند؛ نقش اصلی آن جهت‌دهی است.",
+      "برون‌گروه تعداد جهش‌ها را زیاد نمی‌کند؛ مرجع بیرونی برای ریشه‌گذاری است."
+    ]
+  }
+};
+
+function QuizQuestionCard({ question, index, selected, onSelect, copy }) {
+  const answered = selected !== undefined;
+  const isCorrect = answered && selected === question.answer;
+  const kindLabel = question.kind === "practical" ? copy.practical : copy.theory;
+  const answerLetter = String.fromCharCode(65 + question.answer);
+
+  function optionFeedback(optionIndex) {
+    const mapped = PHYLO_QUIZ_OPTION_EXPLANATIONS?.[question.question]?.[optionIndex]
+      || PHYLO_QUIZ_OPTION_EXPLANATIONS?.es?.[question.question]?.[optionIndex];
+    if (mapped) return mapped;
+    if (Array.isArray(question.optionExplanations)) return question.optionExplanations[optionIndex];
+    if (Array.isArray(question.explanations)) return question.explanations[optionIndex];
+    if (question.feedback && typeof question.feedback === "object") return question.feedback[optionIndex];
+    return optionIndex === question.answer
+      ? question.explanation
+      : copy.genericIncorrect || question.explanation;
+  }
+
+  return (
+    <article className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="flex items-center gap-3">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-stone-950 text-sm font-black text-white">{index + 1}</span>
+          <span className={`rounded-full px-3 py-1 text-xs font-black ${question.kind === "practical" ? "bg-sky-50 text-sky-800 border border-sky-200" : "bg-red-50 text-red-800 border border-red-200"}`}>{kindLabel}</span>
+        </div>
+        {answered && (
+          <span className={`rounded-full px-3 py-1 text-xs font-black ${isCorrect ? "bg-emerald-50 text-emerald-800 border border-emerald-200" : "bg-amber-50 text-amber-800 border border-amber-200"}`}>
+            {isCorrect ? copy.correct : copy.incorrect}
+          </span>
+        )}
+      </div>
+
+      <h3 className="mt-4 text-lg font-black leading-7 text-stone-950">{question.question}</h3>
+
+      <div className="mt-4 grid gap-2">
+        {question.options.map((option, optionIndex) => {
+          const isSelected = selected === optionIndex;
+          const isAnswer = question.answer === optionIndex;
+          const stateClass = !answered
+            ? "border-stone-200 bg-stone-50 text-stone-700 hover:bg-white hover:shadow-sm"
+            : isAnswer
+              ? "border-emerald-300 bg-emerald-50 text-emerald-900"
+              : isSelected
+                ? "border-amber-300 bg-amber-50 text-amber-900"
+                : "border-stone-200 bg-stone-50 text-stone-600";
+          const iconClass = isAnswer ? "text-emerald-700" : isSelected ? "text-amber-700" : "text-stone-400";
+          return (
+            <button
+              key={option}
+              type="button"
+              onClick={() => onSelect(optionIndex)}
+              className={`rounded-2xl border px-4 py-3 text-start text-sm leading-6 transition ${stateClass}`}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <span className="me-2 font-black">{String.fromCharCode(65 + optionIndex)}.</span>
+                  <span className="font-black">{option}</span>
+                </div>
+                {answered && <span className={`shrink-0 text-lg font-black ${iconClass}`}>{isAnswer ? "✓" : "×"}</span>}
+              </div>
+              {answered && (
+                <p className={`mt-3 ps-7 text-sm font-semibold leading-6 ${isAnswer ? "text-emerald-900/80" : isSelected ? "text-amber-900/85" : "text-stone-600"}`}>
+                  {optionFeedback(optionIndex)}
+                </p>
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {answered ? (
+        <p className={`mt-4 rounded-2xl p-4 text-sm font-black leading-6 ${isCorrect ? "border border-emerald-200 bg-emerald-50 text-emerald-800" : "border border-amber-200 bg-amber-50 text-amber-900"}`}>
+          {isCorrect ? `✓ ${copy.selectedCorrect || copy.correct}` : `× ${copy.selectedIncorrectPrefix || copy.incorrect} ${answerLetter}.`}
+        </p>
+      ) : (
+        <p className="mt-4 text-sm font-semibold text-stone-400">{copy.select}</p>
+      )}
+    </article>
+  );
+}
+
+function LessonQuiz({ lang, lessonNo }) {
+  const copy = phyloQuizCopy(lang);
+  const questions = (PHYLO_QUIZ_QUESTIONS[lessonNo]?.[lang] || PHYLO_QUIZ_QUESTIONS[lessonNo]?.es || []);
+  const [answers, setAnswers] = useState({});
+  const answeredCount = Object.keys(answers).length;
+  const correctCount = questions.reduce((total, question, index) => total + (answers[index] === question.answer ? 1 : 0), 0);
+  if (!questions.length) {
+    return (
+      <section className="mt-8 rounded-[2rem] border border-stone-200 bg-stone-50 p-5 shadow-sm md:p-6">
+        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.eyebrow}</div>
+        <h2 className="mt-2 text-2xl font-black text-stone-950">{copy.comingSoon}</h2>
+        <p className="mt-3 text-sm font-semibold leading-6 text-stone-500">{copy.comingSoonBody}</p>
+      </section>
+    );
+  }
+  return (
+    <section className="mt-8 rounded-[2.5rem] border border-stone-200 bg-white/75 p-5 shadow-sm md:p-6">
+      <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <div>
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.eyebrow}</div>
+          <h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950">{copy.title}</h2>
+          <p className="mt-2 max-w-2xl text-sm font-semibold leading-6 text-stone-600">{copy.body}</p>
+        </div>
+        <div className="rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-black text-stone-700 shadow-sm">
+          {copy.score}: {correctCount}/{questions.length} · {answeredCount}/{questions.length}
+        </div>
+      </div>
+      <div className="grid gap-4 lg:grid-cols-2">
+        {questions.map((question, index) => (
+          <QuizQuestionCard
+            key={`${lessonNo}-${index}-${question.question}`}
+            question={question}
+            index={index}
+            selected={answers[index]}
+            onSelect={(optionIndex) => setAnswers(prev => ({ ...prev, [index]: optionIndex }))}
+            copy={copy}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function MPResourcesPanel({ lang }) {
   const copy = phyloResourceCopy(lang);
   return (
@@ -492,10 +1226,11 @@ function MPResourcesPanel({ lang }) {
         <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.dashboardTitle}</div>
         <p className="max-w-2xl leading-7 text-stone-600">{copy.dashboardBody}</p>
       </div>
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-4">
         <ResourceCard title={copy.allSlides} description={copy.allSlidesDesc} href={PHYLO_ALL_SLIDES_LINK} action={copy.open} />
         <ResourceCard title={copy.transcripts} description={copy.transcriptDesc} href={null} action={copy.comingSoon} disabled />
         <ResourceCard title={copy.recordings} description={copy.recordingsDesc} href={PHYLO_RECORDINGS_LINK} action={copy.open} />
+        <ResourceCard title={phyloPracticalCopy(lang).title} description={phyloPracticalCopy(lang).repoDesc} href={PHYLO_PRACTICAL_REPO_LINK} action={copy.open} />
       </div>
     </section>
   );
@@ -633,7 +1368,7 @@ function MPLessonPage({ lang, lessonNo, progress, save, t }) {
   const id = `lesson${String(lessonNo).padStart(2,"0")}`;
   const isDone = !!progress[id];
   const toggle = () => save({ ...progress, [id]: !isDone });
-  const lessonShared = { LessonNavigation, LessonResources, MiniTreeIcon };
+  const lessonShared = { LessonNavigation, LessonResources, LessonPractical, LessonQuiz, MiniTreeIcon };
   if (lessonNo === 1) return <CourseIntroLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
   if (lessonNo === 2) return <TreeThinkingLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
   return (
@@ -645,6 +1380,8 @@ function MPLessonPage({ lang, lessonNo, progress, save, t }) {
         <h1 className="mt-2 text-4xl font-black tracking-tight text-stone-950">{titles[lessonNo-1]}</h1>
         <p className="mt-4 text-lg leading-8 text-stone-600">This page is ready to be filled using the same study-guide template: summary, key concepts, common traps, flashcards, quiz and checklist.</p>
       </div>
+      <LessonPractical lang={lang} lessonNo={lessonNo} />
+      <LessonQuiz lang={lang} lessonNo={lessonNo} />
       <LessonNavigation lang={lang} lessonNo={lessonNo} titles={titles} isDone={isDone} toggle={toggle} placement="bottom" />
     </main>
   );

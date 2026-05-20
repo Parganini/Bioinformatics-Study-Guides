@@ -28,6 +28,14 @@ const copy = {
       ["4", "Scale", "What do branch lengths mean in different tree types?"],
       ["5", "Interpretation", "How do we avoid common tree-reading traps?"],
     ],
+    emphasisTitle: "What the professor stressed",
+    emphasis: [
+      ["Synapomorphies define clades", "The lecture explicitly frames synapomorphies as the most important evidence in this part: shared + derived is the combination that supports a clade.", "green"],
+      ["Monophyly / paraphyly / polyphyly", "These definitions feel simple, but the professor warns they often need repeated sanity checks. Treat them as exam vocabulary.", "red"],
+      ["Tip order can fool you", "A node can be rotated without changing the tree. Always read the branching pattern, not the order of labels.", "amber"],
+      ["Trees are hypotheses", "Tips are sampled data, but internal nodes and ancestors are inferred. New data can revise the tree.", "sky"],
+      ["Quartets reveal complexity", "With four taxa, alternative tree resolutions already appear; tree space grows extremely fast and becomes computationally important.", "purple"],
+    ],
     visual: {
       root: "Root",
       node: "Internal node",
@@ -183,6 +191,14 @@ const copy = {
       ["3", "Anatomía", "¿Qué significan raíz, nodos, tips, ramas y splits?"],
       ["4", "Escala", "¿Qué significan las longitudes de rama en cada tipo de árbol?"],
       ["5", "Interpretación", "¿Cómo evitamos las trampas comunes al leer árboles?"],
+    ],
+    emphasisTitle: "Lo que el profe remarcó",
+    emphasis: [
+      ["Las synapomorphies definen clados", "La clase presenta esta idea como la evidencia central: compartido + derivado es la combinación que sostiene un clado.", "green"],
+      ["Monofilia / parafilia / polifilia", "Estas definiciones parecen fáciles, pero el profesor advierte que requieren volver a revisarlas. Trátalas como vocabulario de examen.", "red"],
+      ["El orden de los tips engaña", "Un nodo puede rotarse sin cambiar el árbol. Lee siempre el patrón de ramificación, no el orden de las etiquetas.", "amber"],
+      ["Los árboles son hipótesis", "Los tips son datos muestreados, pero los nodos internos y ancestros son inferidos. Nueva evidencia puede cambiar el árbol.", "sky"],
+      ["Los cuartetos muestran la complejidad", "Con cuatro taxones ya aparecen resoluciones alternativas; el espacio de árboles crece muy rápido y se vuelve un problema computacional.", "purple"],
     ],
     visual: {
       root: "Raíz",
@@ -709,6 +725,12 @@ function TreeThinkingLesson({ lang, t, isDone, toggle, lessonNo, titles, shared 
           ))}
         </div>
       </section>
+
+      <Section eyebrow={c.emphasisTitle} className="mt-8">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+          {c.emphasis.map(([title, body, tone]) => <InfoCard key={title} title={title} body={body} tone={tone} />)}
+        </div>
+      </Section>
 
       <Section eyebrow={sections.big[0]}>
         <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">

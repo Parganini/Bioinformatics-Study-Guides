@@ -4,6 +4,18 @@ import CourseIntroLesson, { lesson01Quiz } from "./lessons/phylogenetics/Lesson0
 import TreeThinkingLesson, { lesson02Quiz } from "./lessons/phylogenetics/Lesson02.jsx";
 import MolecularPhylogeneticsLesson, { lesson03Quiz } from "./lessons/phylogenetics/Lesson03.jsx";
 import OrthologyTaxonSamplingLesson, { lesson04Quiz } from "./lessons/phylogenetics/Lesson04.jsx";
+import SequenceAlignmentFilteringLesson, { lesson05Quiz } from "./lessons/phylogenetics/Lesson05.jsx";
+import DistanceCharacterMethodsLesson, { lesson06Quiz } from "./lessons/phylogenetics/Lesson06.jsx";
+import ModelsSequenceEvolutionLesson, { lesson07Quiz } from "./lessons/phylogenetics/Lesson07.jsx";
+import MaximumLikelihoodLesson, { lesson08Quiz } from "./lessons/phylogenetics/Lesson08.jsx";
+import BayesianInferenceLesson, { lesson09Quiz } from "./lessons/phylogenetics/Lesson09.jsx";
+import SupportMetricsLesson, { lesson10Quiz } from "./lessons/phylogenetics/Lesson10.jsx";
+import ComplexModelsLesson, { lesson11Quiz } from "./lessons/phylogenetics/Lesson11.jsx";
+import DiscordanceILSLesson, { lesson12Quiz } from "./lessons/phylogenetics/Lesson12.jsx";
+import BiasesPhylogeneticsLesson, { lesson13Quiz } from "./lessons/phylogenetics/Lesson13.jsx";
+import DivergenceTimeLesson, { lesson14Quiz } from "./lessons/phylogenetics/Lesson14.jsx";
+import InferringSelectionLesson, { lesson15Quiz } from "./lessons/phylogenetics/Lesson15.jsx";
+import TraitEvolutionLesson, { lesson16Quiz } from "./lessons/phylogenetics/Lesson16.jsx";
 
 
 const LANGS = [
@@ -360,6 +372,18 @@ const PHYLO_QUIZ_QUESTIONS = {
   2: lesson02Quiz,
   3: lesson03Quiz,
   4: lesson04Quiz,
+  5: lesson05Quiz,
+  6: lesson06Quiz,
+  7: lesson07Quiz,
+  8: lesson08Quiz,
+  9: lesson09Quiz,
+  10: lesson10Quiz,
+  11: lesson11Quiz,
+  12: lesson12Quiz,
+  13: lesson13Quiz,
+  14: lesson14Quiz,
+  15: lesson15Quiz,
+  16: lesson16Quiz,
 };
 
 function phyloResourceCopy(lang) {
@@ -923,6 +947,18 @@ function MPLessonPage({ lang, lessonNo, progress, save, t }) {
   if (lessonNo === 2) return <TreeThinkingLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
   if (lessonNo === 3) return <MolecularPhylogeneticsLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
   if (lessonNo === 4) return <OrthologyTaxonSamplingLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 5) return <SequenceAlignmentFilteringLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 6) return <DistanceCharacterMethodsLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 7) return <ModelsSequenceEvolutionLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 8) return <MaximumLikelihoodLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 9) return <BayesianInferenceLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 10) return <SupportMetricsLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 11) return <ComplexModelsLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 12) return <DiscordanceILSLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 13) return <BiasesPhylogeneticsLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 14) return <DivergenceTimeLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 15) return <InferringSelectionLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 16) return <TraitEvolutionLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
   return (
     <main className="mx-auto w-[min(980px,calc(100%-24px))] pb-16 pt-8">
       <LessonNavigation lang={lang} lessonNo={lessonNo} titles={titles} isDone={isDone} toggle={toggle} />

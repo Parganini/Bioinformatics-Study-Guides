@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import CourseIntroLesson, { lesson01Quiz } from "./lessons/phylogenetics/Lesson01.jsx";
 import TreeThinkingLesson, { lesson02Quiz } from "./lessons/phylogenetics/Lesson02.jsx";
 import MolecularPhylogeneticsLesson, { lesson03Quiz } from "./lessons/phylogenetics/Lesson03.jsx";
+import OrthologyTaxonSamplingLesson, { lesson04Quiz } from "./lessons/phylogenetics/Lesson04.jsx";
 
 
 const LANGS = [
@@ -358,6 +359,7 @@ const PHYLO_QUIZ_QUESTIONS = {
   1: lesson01Quiz,
   2: lesson02Quiz,
   3: lesson03Quiz,
+  4: lesson04Quiz,
 };
 
 function phyloResourceCopy(lang) {
@@ -920,6 +922,7 @@ function MPLessonPage({ lang, lessonNo, progress, save, t }) {
   if (lessonNo === 1) return <CourseIntroLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
   if (lessonNo === 2) return <TreeThinkingLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
   if (lessonNo === 3) return <MolecularPhylogeneticsLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 4) return <OrthologyTaxonSamplingLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
   return (
     <main className="mx-auto w-[min(980px,calc(100%-24px))] pb-16 pt-8">
       <LessonNavigation lang={lang} lessonNo={lessonNo} titles={titles} isDone={isDone} toggle={toggle} />

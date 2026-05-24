@@ -886,13 +886,13 @@ function MPExamPanel({ lang }) {
           <article key={exam.id} className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
             <div className="flex items-center justify-between gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-stone-950 text-sm font-black text-white">{exam.id}</span>
-              <span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">27 + 1</span>
+              <span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{exam.questions?.length || 0}{exam.openEnded ? " + 1" : ""}</span>
             </div>
             <h3 className="mt-4 text-2xl font-black tracking-tight text-stone-950">{exam.title}</h3>
             <p className="mt-2 min-h-[4.5rem] text-sm font-semibold leading-6 text-stone-600">{exam.subtitle}</p>
             <div className="mt-5 flex flex-wrap gap-2">
               <a href={`#/mock-exam/${exam.id}`} className="rounded-full bg-red-700 px-4 py-2 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{copy.open}</a>
-              {exam.sourcePdf && <a href={exam.sourcePdf} target="_blank" rel="noreferrer" className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:shadow-md">{copy.openPdf}</a>}
+              {(exam.sourcePdf || exam.sourceFile) && <a href={exam.sourcePdf || exam.sourceFile} target="_blank" rel="noreferrer" className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:shadow-md">{exam.sourceLabel || copy.openPdf}</a>}
             </div>
           </article>
         ))}
@@ -933,7 +933,7 @@ function MPMockExamPage({ lang, examNo }) {
             <div className="text-xs font-black uppercase tracking-[0.22em] text-stone-400">{quizCopy.score}</div>
             <div className="mt-2 text-4xl font-black text-stone-950">{correctCount}/{questions.length}</div>
             <p className="mt-2 text-sm font-semibold text-stone-500">{answeredCount}/{questions.length} {lang === "es" ? "respondidas" : lang === "fa" ? "پاسخ‌داده‌شده" : "answered"}</p>
-            {exam.sourcePdf && <a href={exam.sourcePdf} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:shadow-md">{copy.openPdf}</a>}
+            {(exam.sourcePdf || exam.sourceFile) && <a href={exam.sourcePdf || exam.sourceFile} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:shadow-md">{exam.sourceLabel || copy.openPdf}</a>}
           </div>
         </div>
       </section>
@@ -957,14 +957,16 @@ function MPMockExamPage({ lang, examNo }) {
         </div>
       </section>
 
-      <section className="mt-8 rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm md:p-8">
-        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.openQuestion}</div>
-        <h2 className="mt-3 text-2xl font-black leading-8 text-stone-950">{exam.openEnded?.prompt}</h2>
-        <div className="mt-5 rounded-3xl border border-emerald-200 bg-emerald-50 p-5">
-          <div className="text-xs font-black uppercase tracking-[0.22em] text-emerald-800">{copy.modelAnswer}</div>
-          <p className="mt-3 text-sm font-semibold leading-7 text-emerald-950">{exam.openEnded?.sampleAnswer}</p>
-        </div>
-      </section>
+      {exam.openEnded && (
+        <section className="mt-8 rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm md:p-8">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.openQuestion}</div>
+          <h2 className="mt-3 text-2xl font-black leading-8 text-stone-950">{exam.openEnded.prompt}</h2>
+          <div className="mt-5 rounded-3xl border border-emerald-200 bg-emerald-50 p-5">
+            <div className="text-xs font-black uppercase tracking-[0.22em] text-emerald-800">{copy.modelAnswer}</div>
+            <p className="mt-3 text-sm font-semibold leading-7 text-emerald-950">{exam.openEnded.sampleAnswer}</p>
+          </div>
+        </section>
+      )}
     </main>
   );
 }

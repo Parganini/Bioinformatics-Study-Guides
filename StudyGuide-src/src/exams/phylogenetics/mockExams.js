@@ -1415,4 +1415,1562 @@ export const PHYLO_MOCK_EXAMS = [
       "sampleAnswer": "Heterotachy is variation in the evolutionary rate of the same site across different branches or time periods. If an ML model assumes site rates are constant across lineages, it can misinterpret rate shifts as shared ancestry and reconstruct biased or incorrect topologies, including long-branch-attraction-like errors."
     }
   }
+,
+{
+  "id": "04",
+  "title": "Mock Exam 4 — Extra Set 1",
+  "subtitle": "Additional 30-question set covering tree thinking, orthology, alignment, distance/character methods and substitution models.",
+  "sourceFile": "mock-exams/Phylo_Exam_All_Sets.txt",
+  "sourceLabel": "Open question set",
+  "questions": [
+    {
+      "kind": "exam",
+      "question": "Which of the following best defines a synapomorphy?",
+      "options": [
+        "A unique trait in a single taxon",
+        "An ancestral trait shared by multiple taxa",
+        "A shared derived trait inherited from the most recent common ancestor",
+        "A trait that arose independently by convergence"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to A unique trait in a single taxon, but the question is targeting A shared derived trait inherited from the most recent common ancestor.",
+        "This option points to An ancestral trait shared by multiple taxa, but the question is targeting A shared derived trait inherited from the most recent common ancestor.",
+        "Correct — A shared derived trait inherited from the most recent common ancestor is the concept or relationship tested by this question.",
+        "This option points to A trait that arose independently by convergence, but the question is targeting A shared derived trait inherited from the most recent common ancestor."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "An autapomorphy is:",
+      "options": [
+        "A shared derived trait among taxa",
+        "A unique derived trait in one lineage",
+        "An ancestral trait shared by a clade",
+        "A hypothetical ancestral character"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to A shared derived trait among taxa, but the question is targeting A unique derived trait in one lineage.",
+        "Correct — A unique derived trait in one lineage is the concept or relationship tested by this question.",
+        "This option points to An ancestral trait shared by a clade, but the question is targeting A unique derived trait in one lineage.",
+        "This option points to A hypothetical ancestral character, but the question is targeting A unique derived trait in one lineage."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "A symplesiomorphy refers to:",
+      "options": [
+        "A shared ancestral trait that does *not* define a specific clade",
+        "A shared derived trait that defines a clade",
+        "A unique derived trait in one taxon",
+        "A trait resulting from convergent evolution"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — A shared ancestral trait that does *not* define a specific clade is the concept or relationship tested by this question.",
+        "This option points to A shared derived trait that defines a clade, but the question is targeting A shared ancestral trait that does *not* define a specific clade.",
+        "This option points to A unique derived trait in one taxon, but the question is targeting A shared ancestral trait that does *not* define a specific clade.",
+        "This option points to A trait resulting from convergent evolution, but the question is targeting A shared ancestral trait that does *not* define a specific clade."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "A monophyletic group must include:",
+      "options": [
+        "Its most recent common ancestor and *all* of its descendants",
+        "Its ancestor but only some descendants",
+        "Taxa from separate ancestors with similar traits",
+        "Any set of taxa sharing a character state"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Its most recent common ancestor and *all* of its descendants is the concept or relationship tested by this question.",
+        "This option points to Its ancestor but only some descendants, but the question is targeting Its most recent common ancestor and *all* of its descendants.",
+        "This option points to Taxa from separate ancestors with similar traits, but the question is targeting Its most recent common ancestor and *all* of its descendants.",
+        "This option points to Any set of taxa sharing a character state, but the question is targeting Its most recent common ancestor and *all* of its descendants."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Polyphyletic groups are characterized by:",
+      "options": [
+        "Including the common ancestor and all its descendants",
+        "Including taxa that lack their most recent common ancestor",
+        "Including only one lineage",
+        "Always being fully resolved in a cladogram"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Including the common ancestor and all its descendants, but the question is targeting Including taxa that lack their most recent common ancestor.",
+        "Correct — Including taxa that lack their most recent common ancestor is the concept or relationship tested by this question.",
+        "This option points to Including only one lineage, but the question is targeting Including taxa that lack their most recent common ancestor.",
+        "This option points to Always being fully resolved in a cladogram, but the question is targeting Including taxa that lack their most recent common ancestor."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Paraphyletic groups exclude:",
+      "options": [
+        "No descendants-include all lineages",
+        "Some descendants of their most recent common ancestor",
+        "All taxa outside the focal clade",
+        "Only outgroup taxa"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to No descendants-include all lineages, but the question is targeting Some descendants of their most recent common ancestor.",
+        "Correct — Some descendants of their most recent common ancestor is the concept or relationship tested by this question.",
+        "This option points to All taxa outside the focal clade, but the question is targeting Some descendants of their most recent common ancestor.",
+        "This option points to Only outgroup taxa, but the question is targeting Some descendants of their most recent common ancestor."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "In a rooted phylogenetic tree, the root represents:",
+      "options": [
+        "The most recent common ancestor of all tips",
+        "A terminal (leaf) taxon",
+        "A hypothetical midpoint of a branch",
+        "The fastest-evolving lineage"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — The most recent common ancestor of all tips is the concept or relationship tested by this question.",
+        "This option points to A terminal (leaf) taxon, but the question is targeting The most recent common ancestor of all tips.",
+        "This option points to A hypothetical midpoint of a branch, but the question is targeting The most recent common ancestor of all tips.",
+        "This option points to The fastest-evolving lineage, but the question is targeting The most recent common ancestor of all tips."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "What is the primary purpose of an outgroup in phylogenetic analysis?",
+      "options": [
+        "To estimate branch-lengths in substitutions",
+        "To provide a calibration for molecular clock analyses",
+        "To root the tree and polarize character changes",
+        "To define operational taxonomic units (OTUs)"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to To estimate branch-lengths in substitutions, but the question is targeting To root the tree and polarize character changes.",
+        "This option points to To provide a calibration for molecular clock analyses, but the question is targeting To root the tree and polarize character changes.",
+        "Correct — To root the tree and polarize character changes is the concept or relationship tested by this question.",
+        "This option points to To define operational taxonomic units (OTUs), but the question is targeting To root the tree and polarize character changes."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Ingroup taxa are the:",
+      "options": [
+        "Lineages assumed outside the focal clade",
+        "Taxa used to root the tree",
+        "Focus of the phylogenetic analysis",
+        "Hypothetical ancestors"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to Lineages assumed outside the focal clade, but the question is targeting Focus of the phylogenetic analysis.",
+        "This option points to Taxa used to root the tree, but the question is targeting Focus of the phylogenetic analysis.",
+        "Correct — Focus of the phylogenetic analysis is the concept or relationship tested by this question.",
+        "This option points to Hypothetical ancestors, but the question is targeting Focus of the phylogenetic analysis."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Which diagram only shows branching order (topology) without meaningful branch lengths?",
+      "options": [
+        "Phylogram",
+        "Chronogram",
+        "Cladogram",
+        "Distance matrix"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to Phylogram, but the question is targeting Cladogram.",
+        "This option points to Chronogram, but the question is targeting Cladogram.",
+        "Correct — Cladogram is the concept or relationship tested by this question.",
+        "This option points to Distance matrix, but the question is targeting Cladogram."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "In a phylogram, branch lengths typically represent:",
+      "options": [
+        "Time since divergence",
+        "Amount of character change (e.g., substitutions)",
+        "Number of taxa in each clade",
+        "Bootstrap support values"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Time since divergence, but the question is targeting Amount of character change (e.g., substitutions).",
+        "Correct — Amount of character change (e.g., substitutions) is the concept or relationship tested by this question.",
+        "This option points to Number of taxa in each clade, but the question is targeting Amount of character change (e.g., substitutions).",
+        "This option points to Bootstrap support values, but the question is targeting Amount of character change (e.g., substitutions)."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "In a chronogram (timetree), branch lengths indicate:",
+      "options": [
+        "Number of nucleotide changes",
+        "Relative divergence times",
+        "Bootstrap support",
+        "Topological distance"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Number of nucleotide changes, but the question is targeting Relative divergence times.",
+        "Correct — Relative divergence times is the concept or relationship tested by this question.",
+        "This option points to Bootstrap support, but the question is targeting Relative divergence times.",
+        "This option points to Topological distance, but the question is targeting Relative divergence times."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "The Neutral Theory of Molecular Evolution (Kimura) posits that:",
+      "options": [
+        "Natural selection drives most molecular changes",
+        "Most changes are neutral or nearly neutral and fixed by drift",
+        "Mutation rates vary unpredictably across genes",
+        "Molecular clocks never deviate"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Natural selection drives most molecular changes, but the question is targeting Most changes are neutral or nearly neutral and fixed by drift.",
+        "Correct — Most changes are neutral or nearly neutral and fixed by drift is the concept or relationship tested by this question.",
+        "This option points to Mutation rates vary unpredictably across genes, but the question is targeting Most changes are neutral or nearly neutral and fixed by drift.",
+        "This option points to Molecular clocks never deviate, but the question is targeting Most changes are neutral or nearly neutral and fixed by drift."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "The molecular clock hypothesis suggests that:",
+      "options": [
+        "Substitutions accumulate at a roughly constant rate over time",
+        "Evolution proceeds in rapid bursts only",
+        "All sites in a gene evolve at the same rate",
+        "Clock-like behavior holds only for morphological traits"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Substitutions accumulate at a roughly constant rate over time is the concept or relationship tested by this question.",
+        "This option points to Evolution proceeds in rapid bursts only, but the question is targeting Substitutions accumulate at a roughly constant rate over time.",
+        "This option points to All sites in a gene evolve at the same rate, but the question is targeting Substitutions accumulate at a roughly constant rate over time.",
+        "This option points to Clock-like behavior holds only for morphological traits, but the question is targeting Substitutions accumulate at a roughly constant rate over time."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Orthologous genes are those that:",
+      "options": [
+        "Arise by gene duplication within a species",
+        "Diverge by speciation and retain the same function",
+        "Perform similar functions but have different ancestry",
+        "Are defined by reciprocal best BLAST hits"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Arise by gene duplication within a species, but the question is targeting Diverge by speciation and retain the same function.",
+        "Correct — Diverge by speciation and retain the same function is the concept or relationship tested by this question.",
+        "This option points to Perform similar functions but have different ancestry, but the question is targeting Diverge by speciation and retain the same function.",
+        "This option points to Are defined by reciprocal best BLAST hits, but the question is targeting Diverge by speciation and retain the same function."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Paralogous genes originate from:",
+      "options": [
+        "Speciation events",
+        "Gene duplication events",
+        "Convergent evolution",
+        "Horizontal gene transfer"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Speciation events, but the question is targeting Gene duplication events.",
+        "Correct — Gene duplication events is the concept or relationship tested by this question.",
+        "This option points to Convergent evolution, but the question is targeting Gene duplication events.",
+        "This option points to Horizontal gene transfer, but the question is targeting Gene duplication events."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Reciprocal Best BLAST Hit (RBH) infers orthology by:",
+      "options": [
+        "Phylogenetic reconciliation of gene trees",
+        "Identifying bidirectional top BLAST matches between two genomes",
+        "Clustering all-vs-all sequences into orthogroups",
+        "Comparing gene synteny exclusively"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Phylogenetic reconciliation of gene trees, but the question is targeting Identifying bidirectional top BLAST matches between two genomes.",
+        "Correct — Identifying bidirectional top BLAST matches between two genomes is the concept or relationship tested by this question.",
+        "This option points to Clustering all-vs-all sequences into orthogroups, but the question is targeting Identifying bidirectional top BLAST matches between two genomes.",
+        "This option points to Comparing gene synteny exclusively, but the question is targeting Identifying bidirectional top BLAST matches between two genomes."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "The Needleman-Wunsch algorithm is used for:",
+      "options": [
+        "Global (end-to-end) pairwise alignment",
+        "Local alignment",
+        "Multiple sequence alignment",
+        "Neighbor-Joining tree estimation"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Global (end-to-end) pairwise alignment is the concept or relationship tested by this question.",
+        "This option points to Local alignment, but the question is targeting Global (end-to-end) pairwise alignment.",
+        "This option points to Multiple sequence alignment, but the question is targeting Global (end-to-end) pairwise alignment.",
+        "This option points to Neighbor-Joining tree estimation, but the question is targeting Global (end-to-end) pairwise alignment."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "The Smith-Waterman algorithm performs:",
+      "options": [
+        "Global alignment",
+        "Local alignment of high-scoring regions",
+        "Construction of guide trees",
+        "Neighbor-Joining tree estimation"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Global alignment, but the question is targeting Local alignment of high-scoring regions.",
+        "Correct — Local alignment of high-scoring regions is the concept or relationship tested by this question.",
+        "This option points to Construction of guide trees, but the question is targeting Local alignment of high-scoring regions.",
+        "This option points to Neighbor-Joining tree estimation, but the question is targeting Local alignment of high-scoring regions."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "An affine gap penalty scoring scheme is:",
+      "options": [
+        "c = -d * g (linear cost)",
+        "No gap cost",
+        "c = -d - (g - 1)e (gap open d, extension e)",
+        "c = -d * g (constant cost)"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to c = -d * g (linear cost), but the question is targeting c = -d - (g - 1)e (gap open d, extension e).",
+        "This option points to No gap cost, but the question is targeting c = -d - (g - 1)e (gap open d, extension e).",
+        "Correct — c = -d - (g - 1)e (gap open d, extension e) is the concept or relationship tested by this question.",
+        "This option points to c = -d * g (constant cost), but the question is targeting c = -d - (g - 1)e (gap open d, extension e)."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "UPGMA builds trees under the assumption of:",
+      "options": [
+        "A strict molecular clock (ultrametric distances)",
+        "No molecular clock",
+        "Minimum-evolution criterion",
+        "Unrooted output"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — A strict molecular clock (ultrametric distances) is the concept or relationship tested by this question.",
+        "This option points to No molecular clock, but the question is targeting A strict molecular clock (ultrametric distances).",
+        "This option points to Minimum-evolution criterion, but the question is targeting A strict molecular clock (ultrametric distances).",
+        "This option points to Unrooted output, but the question is targeting A strict molecular clock (ultrametric distances)."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Neighbor-Joining differs from UPGMA by:",
+      "options": [
+        "Requiring ultrametric data",
+        "Producing rooted trees",
+        "Not assuming equal rates (no molecular clock)",
+        "Using bootstrapping in tree building"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option describes Requiring ultrametric data; in this question it is not the exception, so it is not the selected answer.",
+        "This option describes Producing rooted trees; in this question it is not the exception, so it is not the selected answer.",
+        "Correct — this is the exception asked for here: Not assuming equal rates (no molecular clock).",
+        "This option describes Using bootstrapping in tree building; in this question it is not the exception, so it is not the selected answer."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Maximum Parsimony seeks the tree that:",
+      "options": [
+        "Maximizes likelihood under a model",
+        "Minimizes total number of character changes",
+        "Balances branch lengths equally",
+        "Optimizes posterior probability"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Maximizes likelihood under a model, but the question is targeting Minimizes total number of character changes.",
+        "Correct — Minimizes total number of character changes is the concept or relationship tested by this question.",
+        "This option points to Balances branch lengths equally, but the question is targeting Minimizes total number of character changes.",
+        "This option points to Optimizes posterior probability, but the question is targeting Minimizes total number of character changes."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Jukes-Cantor (JC69) nucleotide model assumes:",
+      "options": [
+        "Different rates for transitions vs. transversions",
+        "Equal base frequencies and equal substitution rates",
+        "Variable site-rate heterogeneity",
+        "Stationarity only for amino acids"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Different rates for transitions vs. transversions, but the question is targeting Equal base frequencies and equal substitution rates.",
+        "Correct — Equal base frequencies and equal substitution rates is the concept or relationship tested by this question.",
+        "This option points to Variable site-rate heterogeneity, but the question is targeting Equal base frequencies and equal substitution rates.",
+        "This option points to Stationarity only for amino acids, but the question is targeting Equal base frequencies and equal substitution rates."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Kimura 2-Parameter (K80) distinguishes between:",
+      "options": [
+        "Codon and amino acid changes",
+        "Transitions and transversions",
+        "Gamma-distributed rates",
+        "Local vs. global alignment"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Codon and amino acid changes, but the question is targeting Transitions and transversions.",
+        "Correct — Transitions and transversions is the concept or relationship tested by this question.",
+        "This option points to Gamma-distributed rates, but the question is targeting Transitions and transversions.",
+        "This option points to Local vs. global alignment, but the question is targeting Transitions and transversions."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Felsenstein 1981 (F81) extends JC69 by:",
+      "options": [
+        "Adding a transition/transversion bias",
+        "Allowing unequal equilibrium base frequencies",
+        "Modeling invariable sites",
+        "Incorporating codon models"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Adding a transition/transversion bias, but the question is targeting Allowing unequal equilibrium base frequencies.",
+        "Correct — Allowing unequal equilibrium base frequencies is the concept or relationship tested by this question.",
+        "This option points to Modeling invariable sites, but the question is targeting Allowing unequal equilibrium base frequencies.",
+        "This option points to Incorporating codon models, but the question is targeting Allowing unequal equilibrium base frequencies."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "The General Time Reversible (GTR) model includes:",
+      "options": [
+        "One rate parameter",
+        "Six distinct substitution rates and base frequencies",
+        "Only transition rates",
+        "Codon position weighting"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to One rate parameter, but the question is targeting Six distinct substitution rates and base frequencies.",
+        "Correct — Six distinct substitution rates and base frequencies is the concept or relationship tested by this question.",
+        "This option points to Only transition rates, but the question is targeting Six distinct substitution rates and base frequencies.",
+        "This option points to Codon position weighting, but the question is targeting Six distinct substitution rates and base frequencies."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Among-site rate heterogeneity is commonly modeled with:",
+      "options": [
+        "Uniform rates across sites",
+        "A gamma distribution (+Γ)",
+        "Only invariant sites (+I)",
+        "Bootstrap resampling"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Uniform rates across sites, but the question is targeting A gamma distribution (+Γ).",
+        "Correct — A gamma distribution (+Γ) is the concept or relationship tested by this question.",
+        "This option points to Only invariant sites (+I), but the question is targeting A gamma distribution (+Γ).",
+        "This option points to Bootstrap resampling, but the question is targeting A gamma distribution (+Γ)."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "In Maximum Likelihood, “likelihood” is defined as:",
+      "options": [
+        "P(data | model)",
+        "P(model | data)",
+        "P(tree)",
+        "P(prior)"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — P(data | model) is the concept or relationship tested by this question.",
+        "This option points to P(model | data), but the question is targeting P(data | model).",
+        "This option points to P(tree), but the question is targeting P(data | model).",
+        "This option points to P(prior), but the question is targeting P(data | model)."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "In Bayesian phylogenetics, the posterior probability P(model | data) is proportional to:",
+      "options": [
+        "Likelihood × Prior / Marginal likelihood",
+        "Likelihood / Prior",
+        "Prior / Likelihood",
+        "Marginal likelihood × Prior"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Likelihood × Prior / Marginal likelihood is the concept or relationship tested by this question.",
+        "This option points to Likelihood / Prior, but the question is targeting Likelihood × Prior / Marginal likelihood.",
+        "This option points to Prior / Likelihood, but the question is targeting Likelihood × Prior / Marginal likelihood.",
+        "This option points to Marginal likelihood × Prior, but the question is targeting Likelihood × Prior / Marginal likelihood."
+      ]
+    }
+  ]
+},
+{
+  "id": "05",
+  "title": "Mock Exam 5 — Extra Set 2",
+  "subtitle": "Additional 30-question set emphasizing homology, homoplasy, orthogroups, alignment, distance methods and substitution models.",
+  "sourceFile": "mock-exams/Phylo_Exam_All_Sets.txt",
+  "sourceLabel": "Open question set",
+  "questions": [
+    {
+      "kind": "exam",
+      "question": "In phylogenetic context, homology refers to:",
+      "options": [
+        "Similarity due to shared ancestry",
+        "Similarity of function but not ancestry",
+        "Similarity by chance",
+        "Similarity due to selection pressures"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Similarity due to shared ancestry is the concept or relationship tested by this question.",
+        "This option points to Similarity of function but not ancestry, but the question is targeting Similarity due to shared ancestry.",
+        "This option points to Similarity by chance, but the question is targeting Similarity due to shared ancestry.",
+        "This option points to Similarity due to selection pressures, but the question is targeting Similarity due to shared ancestry."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Analogy in character analysis means:",
+      "options": [
+        "Common ancestry of structures",
+        "Similar function without common ancestry",
+        "Shared derived traits",
+        "Same gene order"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Common ancestry of structures, but the question is targeting Similar function without common ancestry.",
+        "Correct — Similar function without common ancestry is the concept or relationship tested by this question.",
+        "This option points to Shared derived traits, but the question is targeting Similar function without common ancestry.",
+        "This option points to Same gene order, but the question is targeting Similar function without common ancestry."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Which of the following is NOT a desirable criterion for a phylogenetic character?",
+      "options": [
+        "Homologous across taxa",
+        "Heritable",
+        "Independent",
+        "Correlated with other characters"
+      ],
+      "answer": 3,
+      "optionExplanations": [
+        "This option describes Homologous across taxa; in this question it is not the exception, so it is not the selected answer.",
+        "This option describes Heritable; in this question it is not the exception, so it is not the selected answer.",
+        "This option describes Independent; in this question it is not the exception, so it is not the selected answer.",
+        "Correct — this is the exception asked for here: Correlated with other characters."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Homoplasy refers to:",
+      "options": [
+        "Similarity not due to common ancestry",
+        "Similarity inherited from a common ancestor",
+        "Gap penalties in alignment",
+        "A measure of tree length"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Similarity not due to common ancestry is the concept or relationship tested by this question.",
+        "This option points to Similarity inherited from a common ancestor, but the question is targeting Similarity not due to common ancestry.",
+        "This option points to Gap penalties in alignment, but the question is targeting Similarity not due to common ancestry.",
+        "This option points to A measure of tree length, but the question is targeting Similarity not due to common ancestry."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Which of these is an example of convergent evolution?",
+      "options": [
+        "Feathers in birds",
+        "Camera-type eyes in octopus and vertebrates",
+        "Four-limbed tetrapods",
+        "Vertebrae in mammals"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Feathers in birds, but the question is targeting Camera-type eyes in octopus and vertebrates.",
+        "Correct — Camera-type eyes in octopus and vertebrates is the concept or relationship tested by this question.",
+        "This option points to Four-limbed tetrapods, but the question is targeting Camera-type eyes in octopus and vertebrates.",
+        "This option points to Vertebrae in mammals, but the question is targeting Camera-type eyes in octopus and vertebrates."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "The Neutral Theory implies:",
+      "options": [
+        "Most molecular changes are adaptive",
+        "Many changes are neutral and fixed by drift",
+        "Selection is the sole driver of evolution",
+        "Morphological traits evolve neutrally"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Most molecular changes are adaptive, but the question is targeting Many changes are neutral and fixed by drift.",
+        "Correct — Many changes are neutral and fixed by drift is the concept or relationship tested by this question.",
+        "This option points to Selection is the sole driver of evolution, but the question is targeting Many changes are neutral and fixed by drift.",
+        "This option points to Morphological traits evolve neutrally, but the question is targeting Many changes are neutral and fixed by drift."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "An orthogroup is:",
+      "options": [
+        "Pairs of orthologs between two species",
+        "Genes derived from a single duplication event",
+        "A set of orthologs descending from a common ancestor",
+        "A cluster of paralogs"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to Pairs of orthologs between two species, but the question is targeting A set of orthologs descending from a common ancestor.",
+        "This option points to Genes derived from a single duplication event, but the question is targeting A set of orthologs descending from a common ancestor.",
+        "Correct — A set of orthologs descending from a common ancestor is the concept or relationship tested by this question.",
+        "This option points to A cluster of paralogs, but the question is targeting A set of orthologs descending from a common ancestor."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "One-to-many orthologs arise when:",
+      "options": [
+        "Gene duplication occurs before speciation",
+        "Duplication follows a speciation event in one lineage",
+        "Genes lose function in one species",
+        "HGT introduces extra copies"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Gene duplication occurs before speciation, but the question is targeting Duplication follows a speciation event in one lineage.",
+        "Correct — Duplication follows a speciation event in one lineage is the concept or relationship tested by this question.",
+        "This option points to Genes lose function in one species, but the question is targeting Duplication follows a speciation event in one lineage.",
+        "This option points to HGT introduces extra copies, but the question is targeting Duplication follows a speciation event in one lineage."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Out-paralogs are paralogous genes that:",
+      "options": [
+        "Originate after a speciation event",
+        "Originate within a lineage post-speciation",
+        "Originate before a speciation event",
+        "Are co-orthologs in many-to-many"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to Originate after a speciation event, but the question is targeting Originate before a speciation event.",
+        "This option points to Originate within a lineage post-speciation, but the question is targeting Originate before a speciation event.",
+        "Correct — Originate before a speciation event is the concept or relationship tested by this question.",
+        "This option points to Are co-orthologs in many-to-many, but the question is targeting Originate before a speciation event."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "In-paralogs are paralogs that:",
+      "options": [
+        "Arise after a given speciation event",
+        "Arise before speciation",
+        "Derive from horizontal transfer",
+        "Are one-to-one orthologs"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Arise after a given speciation event is the concept or relationship tested by this question.",
+        "This option points to Arise before speciation, but the question is targeting Arise after a given speciation event.",
+        "This option points to Derive from horizontal transfer, but the question is targeting Arise after a given speciation event.",
+        "This option points to Are one-to-one orthologs, but the question is targeting Arise after a given speciation event."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "A major limitation of RBH is that it:",
+      "options": [
+        "Fails to detect one-to-one orthologs",
+        "Cannot handle genome synteny",
+        "Only works for proteins",
+        "Misses one-to-many or many-to-many orthologs"
+      ],
+      "answer": 3,
+      "optionExplanations": [
+        "This option points to Fails to detect one-to-one orthologs, but the question is targeting Misses one-to-many or many-to-many orthologs.",
+        "This option points to Cannot handle genome synteny, but the question is targeting Misses one-to-many or many-to-many orthologs.",
+        "This option points to Only works for proteins, but the question is targeting Misses one-to-many or many-to-many orthologs.",
+        "Correct — Misses one-to-many or many-to-many orthologs is the concept or relationship tested by this question."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "After identifying orthogroups, the next step in phylogenomic pipeline is:",
+      "options": [
+        "Tree reconciliation",
+        "Sequence alignment",
+        "Distance matrix calculation",
+        "Partitioning analysis"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Tree reconciliation, but the question is targeting Sequence alignment.",
+        "Correct — Sequence alignment is the concept or relationship tested by this question.",
+        "This option points to Distance matrix calculation, but the question is targeting Sequence alignment.",
+        "This option points to Partitioning analysis, but the question is targeting Sequence alignment."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "The primary goal of sequence alignment is to:",
+      "options": [
+        "Identify orthologous positions with shared history",
+        "Maximize overall percent identity",
+        "Cluster sequences by length",
+        "Annotate coding regions"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Identify orthologous positions with shared history is the concept or relationship tested by this question.",
+        "This option points to Maximize overall percent identity, but the question is targeting Identify orthologous positions with shared history.",
+        "This option points to Cluster sequences by length, but the question is targeting Identify orthologous positions with shared history.",
+        "This option points to Annotate coding regions, but the question is targeting Identify orthologous positions with shared history."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Which tool is commonly used to trim poorly aligned regions?",
+      "options": [
+        "Gblocks",
+        "ClustalW",
+        "MAFFT",
+        "BLAST"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Gblocks is the concept or relationship tested by this question.",
+        "This option points to ClustalW, but the question is targeting Gblocks.",
+        "This option points to MAFFT, but the question is targeting Gblocks.",
+        "This option points to BLAST, but the question is targeting Gblocks."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Needleman-Wunsch algorithm is:",
+      "options": [
+        "A global alignment method",
+        "A local alignment method",
+        "A progressive multiple alignment",
+        "A tree-building algorithm"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — A global alignment method is the concept or relationship tested by this question.",
+        "This option points to A local alignment method, but the question is targeting A global alignment method.",
+        "This option points to A progressive multiple alignment, but the question is targeting A global alignment method.",
+        "This option points to A tree-building algorithm, but the question is targeting A global alignment method."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Smith-Waterman algorithm is:",
+      "options": [
+        "Global alignment",
+        "Local alignment",
+        "Phylogenetic tree construction",
+        "Profile HMM search"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Global alignment, but the question is targeting Local alignment.",
+        "Correct — Local alignment is the concept or relationship tested by this question.",
+        "This option points to Phylogenetic tree construction, but the question is targeting Local alignment.",
+        "This option points to Profile HMM search, but the question is targeting Local alignment."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "An affine gap penalty is defined by:",
+      "options": [
+        "c = -d * g (linear)",
+        "c = -d",
+        "c = -d - (g - 1)e",
+        "c = -(d + g*e)"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to c = -d * g (linear), but the question is targeting c = -d - (g - 1)e.",
+        "This option points to c = -d, but the question is targeting c = -d - (g - 1)e.",
+        "Correct — c = -d - (g - 1)e is the concept or relationship tested by this question.",
+        "This option points to c = -(d + g*e), but the question is targeting c = -d - (g - 1)e."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Distance-based methods compute:",
+      "options": [
+        "Pairwise distances from alignments",
+        "Character states per site",
+        "Likelihood scores",
+        "Posterior probabilities"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Pairwise distances from alignments is the concept or relationship tested by this question.",
+        "This option points to Character states per site, but the question is targeting Pairwise distances from alignments.",
+        "This option points to Likelihood scores, but the question is targeting Pairwise distances from alignments.",
+        "This option points to Posterior probabilities, but the question is targeting Pairwise distances from alignments."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "A p-distance matrix uses:",
+      "options": [
+        "Raw proportion of differences",
+        "Model-corrected distances",
+        "Weighted character changes",
+        "Bayesian estimates"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Raw proportion of differences is the concept or relationship tested by this question.",
+        "This option points to Model-corrected distances, but the question is targeting Raw proportion of differences.",
+        "This option points to Weighted character changes, but the question is targeting Raw proportion of differences.",
+        "This option points to Bayesian estimates, but the question is targeting Raw proportion of differences."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "UPGMA uses:",
+      "options": [
+        "Average linkage clustering",
+        "Minimum-evolution criterion",
+        "Maximum likelihood estimates",
+        "Random joining"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Average linkage clustering is the concept or relationship tested by this question.",
+        "This option points to Minimum-evolution criterion, but the question is targeting Average linkage clustering.",
+        "This option points to Maximum likelihood estimates, but the question is targeting Average linkage clustering.",
+        "This option points to Random joining, but the question is targeting Average linkage clustering."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Neighbor-Joining optimizes:",
+      "options": [
+        "Ultrametricity",
+        "Minimum-evolution criterion without clock",
+        "Maximum parsimony",
+        "Profile alignment"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Ultrametricity, but the question is targeting Minimum-evolution criterion without clock.",
+        "Correct — Minimum-evolution criterion without clock is the concept or relationship tested by this question.",
+        "This option points to Maximum parsimony, but the question is targeting Minimum-evolution criterion without clock.",
+        "This option points to Profile alignment, but the question is targeting Minimum-evolution criterion without clock."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Parsimony informative sites must:",
+      "options": [
+        "Have at least two states each in ≥2 taxa",
+        "Be invariant",
+        "Include singleton states",
+        "Be unique to one taxon"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Have at least two states each in ≥2 taxa is the concept or relationship tested by this question.",
+        "This option points to Be invariant, but the question is targeting Have at least two states each in ≥2 taxa.",
+        "This option points to Include singleton states, but the question is targeting Have at least two states each in ≥2 taxa.",
+        "This option points to Be unique to one taxon, but the question is targeting Have at least two states each in ≥2 taxa."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Parsimony tree length is the:",
+      "options": [
+        "Number of taxa",
+        "Sum of character-state changes",
+        "Total branch-length units",
+        "Model likelihood"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Number of taxa is the concept or relationship tested by this question.",
+        "This option points to Sum of character-state changes, but the question is targeting Number of taxa.",
+        "This option points to Total branch-length units, but the question is targeting Number of taxa.",
+        "This option points to Model likelihood, but the question is targeting Number of taxa."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Rate variation (+Γ) accounts for:",
+      "options": [
+        "Equal rates across sites",
+        "Gamma-distributed site rates",
+        "Invariant sites only",
+        "Bootstrapping"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Equal rates across sites, but the question is targeting Gamma-distributed site rates.",
+        "Correct — Gamma-distributed site rates is the concept or relationship tested by this question.",
+        "This option points to Invariant sites only, but the question is targeting Gamma-distributed site rates.",
+        "This option points to Bootstrapping, but the question is targeting Gamma-distributed site rates."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Invariant sites (+I) model:",
+      "options": [
+        "Gamma-distribution of rates",
+        "Codon-based substitution",
+        "Explicit site profiles",
+        "A proportion of sites unchanging"
+      ],
+      "answer": 3,
+      "optionExplanations": [
+        "This option points to Gamma-distribution of rates, but the question is targeting A proportion of sites unchanging.",
+        "This option points to Codon-based substitution, but the question is targeting A proportion of sites unchanging.",
+        "This option points to Explicit site profiles, but the question is targeting A proportion of sites unchanging.",
+        "Correct — A proportion of sites unchanging is the concept or relationship tested by this question."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Substitution models are:",
+      "options": [
+        "Deterministic",
+        "Markov chains with state transitions",
+        "Parsimony criteria",
+        "Alignment algorithms"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Deterministic, but the question is targeting Markov chains with state transitions.",
+        "Correct — Markov chains with state transitions is the concept or relationship tested by this question.",
+        "This option points to Parsimony criteria, but the question is targeting Markov chains with state transitions.",
+        "This option points to Alignment algorithms, but the question is targeting Markov chains with state transitions."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "GTR model is:",
+      "options": [
+        "Non-reversible",
+        "Time-reversible",
+        "Transition-only",
+        "Codon-explicit"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Non-reversible, but the question is targeting Time-reversible.",
+        "Correct — Time-reversible is the concept or relationship tested by this question.",
+        "This option points to Transition-only, but the question is targeting Time-reversible.",
+        "This option points to Codon-explicit, but the question is targeting Time-reversible."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "F81 model allows:",
+      "options": [
+        "Transition/transversion bias",
+        "Unequal base frequencies",
+        "Invariable sites",
+        "Codon assignments"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Transition/transversion bias, but the question is targeting Unequal base frequencies.",
+        "Correct — Unequal base frequencies is the concept or relationship tested by this question.",
+        "This option points to Invariable sites, but the question is targeting Unequal base frequencies.",
+        "This option points to Codon assignments, but the question is targeting Unequal base frequencies."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "K80 model distinguishes:",
+      "options": [
+        "Codon changes",
+        "Transitions vs transversions",
+        "Rate heterogeneity",
+        "Global vs local alignment"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Codon changes, but the question is targeting Transitions vs transversions.",
+        "Correct — Transitions vs transversions is the concept or relationship tested by this question.",
+        "This option points to Rate heterogeneity, but the question is targeting Transitions vs transversions.",
+        "This option points to Global vs local alignment, but the question is targeting Transitions vs transversions."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "TN93 model includes:",
+      "options": [
+        "One rate for all changes",
+        "Two distinct transition rates and one transversion rate",
+        "Codon-based parameters",
+        "Only gamma distribution"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to One rate for all changes, but the question is targeting Two distinct transition rates and one transversion rate.",
+        "Correct — Two distinct transition rates and one transversion rate is the concept or relationship tested by this question.",
+        "This option points to Codon-based parameters, but the question is targeting Two distinct transition rates and one transversion rate.",
+        "This option points to Only gamma distribution, but the question is targeting Two distinct transition rates and one transversion rate."
+      ]
+    }
+  ]
+},
+{
+  "id": "06",
+  "title": "Mock Exam 6 — Extra Set 3",
+  "subtitle": "Additional 30-question set on ML/BI, MCMC, codon models, protein matrices, supermatrices, partitioning and support.",
+  "sourceFile": "mock-exams/Phylo_Exam_All_Sets.txt",
+  "sourceLabel": "Open question set",
+  "questions": [
+    {
+      "kind": "exam",
+      "question": "Maximum Likelihood phylogenetic inference maximizes:",
+      "options": [
+        "P(data | model)",
+        "P(model | data)",
+        "P(tree)",
+        "P(prior)"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — P(data | model) is the concept or relationship tested by this question.",
+        "This option points to P(model | data), but the question is targeting P(data | model).",
+        "This option points to P(tree), but the question is targeting P(data | model).",
+        "This option points to P(prior), but the question is targeting P(data | model)."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Bayesian inference estimates:",
+      "options": [
+        "P(data | model)",
+        "P(model | data)",
+        "P(tree)",
+        "P(prior)"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to P(data | model), but the question is targeting P(model | data).",
+        "Correct — P(model | data) is the concept or relationship tested by this question.",
+        "This option points to P(tree), but the question is targeting P(model | data).",
+        "This option points to P(prior), but the question is targeting P(model | data)."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Felsenstein’s tree-pruning algorithm is used to:",
+      "options": [
+        "Build distance matrices",
+        "Compute conditional likelihoods at internal nodes",
+        "Perform sequence alignment",
+        "Infer orthology"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Build distance matrices, but the question is targeting Compute conditional likelihoods at internal nodes.",
+        "Correct — Compute conditional likelihoods at internal nodes is the concept or relationship tested by this question.",
+        "This option points to Perform sequence alignment, but the question is targeting Compute conditional likelihoods at internal nodes.",
+        "This option points to Infer orthology, but the question is targeting Compute conditional likelihoods at internal nodes."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "ML assumes that sites:",
+      "options": [
+        "Evolve independently",
+        "Are correlated",
+        "Share the same state at root",
+        "Are uninformative"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Evolve independently is the concept or relationship tested by this question.",
+        "This option points to Are correlated, but the question is targeting Evolve independently.",
+        "This option points to Share the same state at root, but the question is targeting Evolve independently.",
+        "This option points to Are uninformative, but the question is targeting Evolve independently."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Log-likelihood is preferred because it:",
+      "options": [
+        "Ensures numerical stability and converts products to sums",
+        "Is faster to compute than likelihood",
+        "Avoids the need for priors",
+        "Is only used in Bayesian methods"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Ensures numerical stability and converts products to sums is the concept or relationship tested by this question.",
+        "This option points to Is faster to compute than likelihood, but the question is targeting Ensures numerical stability and converts products to sums.",
+        "This option points to Avoids the need for priors, but the question is targeting Ensures numerical stability and converts products to sums.",
+        "This option points to Is only used in Bayesian methods, but the question is targeting Ensures numerical stability and converts products to sums."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Among NNI, SPR, and TBR, the simplest tree rearrangement is:",
+      "options": [
+        "NNI (Nearest Neighbor Interchange)",
+        "SPR (Subtree Pruning & Regrafting)",
+        "TBR (Tree Bisection & Reconnection)",
+        "None of the above"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — NNI (Nearest Neighbor Interchange) is the concept or relationship tested by this question.",
+        "This option points to SPR (Subtree Pruning & Regrafting), but the question is targeting NNI (Nearest Neighbor Interchange).",
+        "This option points to TBR (Tree Bisection & Reconnection), but the question is targeting NNI (Nearest Neighbor Interchange).",
+        "This option points to None of the above, but the question is targeting NNI (Nearest Neighbor Interchange)."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "In Bayesian MCMC, the posterior ∝:",
+      "options": [
+        "Prior / Likelihood",
+        "Likelihood × Prior",
+        "Likelihood / Prior",
+        "Marginal Likelihood × Prior"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Prior / Likelihood, but the question is targeting Likelihood × Prior.",
+        "Correct — Likelihood × Prior is the concept or relationship tested by this question.",
+        "This option points to Likelihood / Prior, but the question is targeting Likelihood × Prior.",
+        "This option points to Marginal Likelihood × Prior, but the question is targeting Likelihood × Prior."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "The Metropolis criterion in MCMC:",
+      "options": [
+        "Always rejects worse proposals",
+        "Accepts all proposals",
+        "Accepts worse proposals with probability ratio of likelihoods",
+        "Only accepts proposals with higher prior"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to Always rejects worse proposals, but the question is targeting Accepts worse proposals with probability ratio of likelihoods.",
+        "This option points to Accepts all proposals, but the question is targeting Accepts worse proposals with probability ratio of likelihoods.",
+        "Correct — Accepts worse proposals with probability ratio of likelihoods is the concept or relationship tested by this question.",
+        "This option points to Only accepts proposals with higher prior, but the question is targeting Accepts worse proposals with probability ratio of likelihoods."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "The “prior” in Bayesian analysis represents:",
+      "options": [
+        "Initial beliefs before seeing data",
+        "Likelihood function",
+        "Posterior distribution",
+        "Marginal likelihood"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Initial beliefs before seeing data is the concept or relationship tested by this question.",
+        "This option points to Likelihood function, but the question is targeting Initial beliefs before seeing data.",
+        "This option points to Posterior distribution, but the question is targeting Initial beliefs before seeing data.",
+        "This option points to Marginal likelihood, but the question is targeting Initial beliefs before seeing data."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Posterior probability of a clade indicates:",
+      "options": [
+        "Its bootstrap frequency",
+        "Its probability of being correct given model and data",
+        "The number of changes on that branch",
+        "The distance to outgroup"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Its bootstrap frequency, but the question is targeting Its probability of being correct given model and data.",
+        "Correct — Its probability of being correct given model and data is the concept or relationship tested by this question.",
+        "This option points to The number of changes on that branch, but the question is targeting Its probability of being correct given model and data.",
+        "This option points to The distance to outgroup, but the question is targeting Its probability of being correct given model and data."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "GY94 codon model parameter ω equals:",
+      "options": [
+        "dN/dS ratio",
+        "dS/dN ratio",
+        "dN + dS",
+        "Number of codons"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — dN/dS ratio is the concept or relationship tested by this question.",
+        "This option points to dS/dN ratio, but the question is targeting dN/dS ratio.",
+        "This option points to dN + dS, but the question is targeting dN/dS ratio.",
+        "This option points to Number of codons, but the question is targeting dN/dS ratio."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "MG94 codon model includes:",
+      "options": [
+        "One overall substitution rate",
+        "Separate synonymous (dS) and nonsynonymous (dN) rates",
+        "Three rate categories",
+        "No selection parameters"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to One overall substitution rate, but the question is targeting Separate synonymous (dS) and nonsynonymous (dN) rates.",
+        "Correct — Separate synonymous (dS) and nonsynonymous (dN) rates is the concept or relationship tested by this question.",
+        "This option points to Three rate categories, but the question is targeting Separate synonymous (dS) and nonsynonymous (dN) rates.",
+        "This option points to No selection parameters, but the question is targeting Separate synonymous (dS) and nonsynonymous (dN) rates."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Site-specific models allow ω to vary:",
+      "options": [
+        "Across branches only",
+        "Across codon positions only",
+        "Across sites",
+        "Across taxa"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to Across branches only, but the question is targeting Across sites.",
+        "This option points to Across codon positions only, but the question is targeting Across sites.",
+        "Correct — Across sites is the concept or relationship tested by this question.",
+        "This option points to Across taxa, but the question is targeting Across sites."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Branch-site models detect:",
+      "options": [
+        "Selection across all sites equally",
+        "Selection on entire tree",
+        "Neutral evolution only",
+        "Positive selection at specific sites on certain lineages"
+      ],
+      "answer": 3,
+      "optionExplanations": [
+        "This option points to Selection across all sites equally, but the question is targeting Positive selection at specific sites on certain lineages.",
+        "This option points to Selection on entire tree, but the question is targeting Positive selection at specific sites on certain lineages.",
+        "This option points to Neutral evolution only, but the question is targeting Positive selection at specific sites on certain lineages.",
+        "Correct — Positive selection at specific sites on certain lineages is the concept or relationship tested by this question."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Dayhoff’s PAM matrices were derived from:",
+      "options": [
+        "Closely related proteins (>85% identity)",
+        "Codon usage tables",
+        "Genome-wide alignments",
+        "Amino acid physicochemical properties"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Closely related proteins (>85% identity) is the concept or relationship tested by this question.",
+        "This option points to Codon usage tables, but the question is targeting Closely related proteins (>85% identity).",
+        "This option points to Genome-wide alignments, but the question is targeting Closely related proteins (>85% identity).",
+        "This option points to Amino acid physicochemical properties, but the question is targeting Closely related proteins (>85% identity)."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "JTT model improved PAM by:",
+      "options": [
+        "Using only mitochondrial proteins",
+        "Expanding to a larger, more diverse protein dataset",
+        "Incorporating codon bias",
+        "Modeling invariant sites"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Using only mitochondrial proteins, but the question is targeting Expanding to a larger, more diverse protein dataset.",
+        "Correct — Expanding to a larger, more diverse protein dataset is the concept or relationship tested by this question.",
+        "This option points to Incorporating codon bias, but the question is targeting Expanding to a larger, more diverse protein dataset.",
+        "This option points to Modeling invariant sites, but the question is targeting Expanding to a larger, more diverse protein dataset."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "WAG model was derived by:",
+      "options": [
+        "Manual curation",
+        "Observed counts only",
+        "Maximum Likelihood optimization",
+        "Clustering methods"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to Manual curation, but the question is targeting Maximum Likelihood optimization.",
+        "This option points to Observed counts only, but the question is targeting Maximum Likelihood optimization.",
+        "Correct — Maximum Likelihood optimization is the concept or relationship tested by this question.",
+        "This option points to Clustering methods, but the question is targeting Maximum Likelihood optimization."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "BLOSUM matrices are:",
+      "options": [
+        "Empirical models for phylogenetics",
+        "Codon-based substitution matrices",
+        "Derived from conserved ungapped blocks",
+        "Time-reversible models"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to Empirical models for phylogenetics, but the question is targeting Derived from conserved ungapped blocks.",
+        "This option points to Codon-based substitution matrices, but the question is targeting Derived from conserved ungapped blocks.",
+        "Correct — Derived from conserved ungapped blocks is the concept or relationship tested by this question.",
+        "This option points to Time-reversible models, but the question is targeting Derived from conserved ungapped blocks."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "The +Γ+I modifier means:",
+      "options": [
+        "Gamma variation only",
+        "Invariant sites only",
+        "Both gamma-distributed rates and a proportion of invariable sites",
+        "Bootstrap and jackknife"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to Gamma variation only, but the question is targeting Both gamma-distributed rates and a proportion of invariable sites.",
+        "This option points to Invariant sites only, but the question is targeting Both gamma-distributed rates and a proportion of invariable sites.",
+        "Correct — Both gamma-distributed rates and a proportion of invariable sites is the concept or relationship tested by this question.",
+        "This option points to Bootstrap and jackknife, but the question is targeting Both gamma-distributed rates and a proportion of invariable sites."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "The “supermatrix” approach refers to:",
+      "options": [
+        "Concatenating multiple gene alignments",
+        "Coalescent-based species tree inference",
+        "Bootstrap resampling across genes",
+        "Partition analysis only"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Concatenating multiple gene alignments is the concept or relationship tested by this question.",
+        "This option points to Coalescent-based species tree inference, but the question is targeting Concatenating multiple gene alignments.",
+        "This option points to Bootstrap resampling across genes, but the question is targeting Concatenating multiple gene alignments.",
+        "This option points to Partition analysis only, but the question is targeting Concatenating multiple gene alignments."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "A key drawback of concatenation is:",
+      "options": [
+        "Increased stochastic error",
+        "Gene tree incongruence due to ILS and other processes",
+        "Lack of phylogenetic signal",
+        "Inability to model rate variation"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Increased stochastic error, but the question is targeting Gene tree incongruence due to ILS and other processes.",
+        "Correct — Gene tree incongruence due to ILS and other processes is the concept or relationship tested by this question.",
+        "This option points to Lack of phylogenetic signal, but the question is targeting Gene tree incongruence due to ILS and other processes.",
+        "This option points to Inability to model rate variation, but the question is targeting Gene tree incongruence due to ILS and other processes."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Coalescent-based methods address:",
+      "options": [
+        "Alignment uncertainty",
+        "Model misspecification",
+        "Gene tree discordance",
+        "Invariable sites"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to Alignment uncertainty, but the question is targeting Gene tree discordance.",
+        "This option points to Model misspecification, but the question is targeting Gene tree discordance.",
+        "Correct — Gene tree discordance is the concept or relationship tested by this question.",
+        "This option points to Invariable sites, but the question is targeting Gene tree discordance."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Partitioning alignments helps:",
+      "options": [
+        "Avoid overparameterization by grouping similar genes",
+        "Increase computational complexity",
+        "Merge all genes into one model",
+        "Fix branch lengths"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Avoid overparameterization by grouping similar genes is the concept or relationship tested by this question.",
+        "This option points to Increase computational complexity, but the question is targeting Avoid overparameterization by grouping similar genes.",
+        "This option points to Merge all genes into one model, but the question is targeting Avoid overparameterization by grouping similar genes.",
+        "This option points to Fix branch lengths, but the question is targeting Avoid overparameterization by grouping similar genes."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "AIC and BIC are used to:",
+      "options": [
+        "Compare models balancing fit and complexity",
+        "Estimate tree topology",
+        "Infer orthology",
+        "Perform sequence alignment"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Compare models balancing fit and complexity is the concept or relationship tested by this question.",
+        "This option points to Estimate tree topology, but the question is targeting Compare models balancing fit and complexity.",
+        "This option points to Infer orthology, but the question is targeting Compare models balancing fit and complexity.",
+        "This option points to Perform sequence alignment, but the question is targeting Compare models balancing fit and complexity."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "In MCMC, “burn-in” refers to:",
+      "options": [
+        "Samples used for final estimates",
+        "Entire chain length",
+        "Convergence diagnostics",
+        "Initial samples discarded before stationarity"
+      ],
+      "answer": 3,
+      "optionExplanations": [
+        "This option points to Samples used for final estimates, but the question is targeting Initial samples discarded before stationarity.",
+        "This option points to Entire chain length, but the question is targeting Initial samples discarded before stationarity.",
+        "This option points to Convergence diagnostics, but the question is targeting Initial samples discarded before stationarity.",
+        "Correct — Initial samples discarded before stationarity is the concept or relationship tested by this question."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "ESS (Effective Sample Size) measures:",
+      "options": [
+        "Total iterations",
+        "Expected sum of squares",
+        "Independent information in posterior samples",
+        "Error sum of squares"
+      ],
+      "answer": 2,
+      "optionExplanations": [
+        "This option points to Total iterations, but the question is targeting Independent information in posterior samples.",
+        "This option points to Expected sum of squares, but the question is targeting Independent information in posterior samples.",
+        "Correct — Independent information in posterior samples is the concept or relationship tested by this question.",
+        "This option points to Error sum of squares, but the question is targeting Independent information in posterior samples."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Bootstrap support differs from posterior probability in that:",
+      "options": [
+        "Bootstrap reflects resampling frequency; posterior is probability given model",
+        "Both measure the same thing",
+        "Posterior uses resampling; bootstrap uses priors",
+        "Neither is used in phylogenetics"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — this is the exception asked for here: Bootstrap reflects resampling frequency; posterior is probability given model.",
+        "This option describes Both measure the same thing; in this question it is not the exception, so it is not the selected answer.",
+        "This option describes Posterior uses resampling; bootstrap uses priors; in this question it is not the exception, so it is not the selected answer.",
+        "This option describes Neither is used in phylogenetics; in this question it is not the exception, so it is not the selected answer."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Empirical amino acid substitution models:",
+      "options": [
+        "Use fixed rate matrices estimated from large datasets",
+        "Estimate rates from the current dataset only",
+        "Are codon-based",
+        "Are alignment algorithms"
+      ],
+      "answer": 0,
+      "optionExplanations": [
+        "Correct — Use fixed rate matrices estimated from large datasets is the concept or relationship tested by this question.",
+        "This option points to Estimate rates from the current dataset only, but the question is targeting Use fixed rate matrices estimated from large datasets.",
+        "This option points to Are codon-based, but the question is targeting Use fixed rate matrices estimated from large datasets.",
+        "This option points to Are alignment algorithms, but the question is targeting Use fixed rate matrices estimated from large datasets."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "Mechanistic codon models incorporate:",
+      "options": [
+        "Rate matrices only",
+        "Biological parameters like selection pressure",
+        "Empirical counts",
+        "Gap penalties"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Rate matrices only, but the question is targeting Biological parameters like selection pressure.",
+        "Correct — Biological parameters like selection pressure is the concept or relationship tested by this question.",
+        "This option points to Empirical counts, but the question is targeting Biological parameters like selection pressure.",
+        "This option points to Gap penalties, but the question is targeting Biological parameters like selection pressure."
+      ]
+    },
+    {
+      "kind": "exam",
+      "question": "OTU stands for:",
+      "options": [
+        "Observed Taxonomic Unit",
+        "Operational Taxonomic Unit",
+        "Ordered Transversion Unit",
+        "Orthologous Tree Unit"
+      ],
+      "answer": 1,
+      "optionExplanations": [
+        "This option points to Observed Taxonomic Unit, but the question is targeting Operational Taxonomic Unit.",
+        "Correct — Operational Taxonomic Unit is the concept or relationship tested by this question.",
+        "This option points to Ordered Transversion Unit, but the question is targeting Operational Taxonomic Unit.",
+        "This option points to Orthologous Tree Unit, but the question is targeting Operational Taxonomic Unit."
+      ]
+    }
+  ]
+}
 ];

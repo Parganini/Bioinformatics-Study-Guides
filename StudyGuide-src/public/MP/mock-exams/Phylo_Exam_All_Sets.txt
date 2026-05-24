@@ -1,0 +1,573 @@
+
+Molecular Phylogenetics Exam – Sets 1–3
+
+--- Page 1 ---
+
+## Set 1 – Questions
+
+1. Which of the following best defines a synapomorphy?
+   A. A unique trait in a single taxon
+   B. An ancestral trait shared by multiple taxa
+   C. A shared derived trait inherited from the most recent common ancestor
+   D. A trait that arose independently by convergence
+
+2. An autapomorphy is:
+   A. A shared derived trait among taxa
+   B. A unique derived trait in one lineage
+   C. An ancestral trait shared by a clade
+   D. A hypothetical ancestral character
+
+3. A symplesiomorphy refers to:
+   A. A shared ancestral trait that does *not* define a specific clade
+   B. A shared derived trait that defines a clade
+   C. A unique derived trait in one taxon
+   D. A trait resulting from convergent evolution
+
+4. A monophyletic group must include:
+   A. Its most recent common ancestor and *all* of its descendants
+   B. Its ancestor but only some descendants
+   C. Taxa from separate ancestors with similar traits
+   D. Any set of taxa sharing a character state
+
+5. Polyphyletic groups are characterized by:
+   A. Including the common ancestor and all its descendants
+   B. Including taxa that lack their most recent common ancestor
+   C. Including only one lineage
+   D. Always being fully resolved in a cladogram
+
+6. Paraphyletic groups exclude:
+   A. No descendants—include all lineages
+   B. Some descendants of their most recent common ancestor
+   C. All taxa outside the focal clade
+   D. Only outgroup taxa
+
+7. In a rooted phylogenetic tree, the root represents:
+   A. The most recent common ancestor of all tips
+   B. A terminal (leaf) taxon
+   C. A hypothetical midpoint of a branch
+   D. The fastest‐evolving lineage
+
+8. What is the primary purpose of an outgroup in phylogenetic analysis?
+   A. To estimate branch‐lengths in substitutions
+   B. To provide a calibration for molecular clock analyses
+   C. To root the tree and polarize character changes
+   D. To define operational taxonomic units (OTUs)
+
+9. Ingroup taxa are the:
+   A. Lineages assumed outside the focal clade
+   B. Taxa used to root the tree
+   C. Focus of the phylogenetic analysis
+   D. Hypothetical ancestors
+
+10. Which diagram only shows branching order (topology) without meaningful branch lengths?
+    A. Phylogram
+    B. Chronogram
+    C. Cladogram
+    D. Distance matrix
+
+11. In a phylogram, branch lengths typically represent:
+    A. Time since divergence
+    B. Amount of character change (e.g., substitutions)
+    C. Number of taxa in each clade
+    D. Bootstrap support values
+
+12. In a chronogram (timetree), branch lengths indicate:
+    A. Number of nucleotide changes
+    B. Relative divergence times
+    C. Bootstrap support
+    D. Topological distance
+
+13. The Neutral Theory of Molecular Evolution (Kimura) posits that:
+    A. Natural selection drives most molecular changes
+    B. Most changes are neutral or nearly neutral and fixed by drift
+    C. Mutation rates vary unpredictably across genes
+    D. Molecular clocks never deviate
+
+14. The molecular clock hypothesis suggests that:
+    A. Substitutions accumulate at a roughly constant rate over time
+    B. Evolution proceeds in rapid bursts only
+    C. All sites in a gene evolve at the same rate
+    D. Clock‐like behavior holds only for morphological traits
+
+15. Orthologous genes are those that:
+    A. Arise by gene duplication within a species
+    B. Diverge by speciation and retain the same function
+    C. Perform similar functions but have different ancestry
+    D. Are defined by reciprocal best BLAST hits
+
+16. Paralogous genes originate from:
+    A. Speciation events
+    B. Gene duplication events
+    C. Convergent evolution
+    D. Horizontal gene transfer
+
+17. Reciprocal Best BLAST Hit (RBH) infers orthology by:
+    A. Phylogenetic reconciliation of gene trees
+    B. Identifying bidirectional top BLAST matches between two genomes
+    C. Clustering all‐vs‐all sequences into orthogroups
+    D. Comparing gene synteny exclusively
+
+18. The Needleman–Wunsch algorithm is used for:
+    A. Global (end‐to‐end) pairwise alignment
+    B. Local alignment
+    C. Multiple sequence alignment
+    D. Neighbor‐Joining tree estimation
+
+19. The Smith–Waterman algorithm performs:
+    A. Global alignment
+    B. Local alignment of high‐scoring regions
+    C. Construction of guide trees
+    D. Neighbor-Joining tree estimation
+
+20. An affine gap penalty scoring scheme is:
+    A. c = -d * g (linear cost)
+    B. No gap cost
+    C. c = -d - (g - 1)e (gap open d, extension e)
+    D. c = -d * g (constant cost)
+
+21. UPGMA builds trees under the assumption of:
+    A. A strict molecular clock (ultrametric distances)
+    B. No molecular clock
+    C. Minimum‐evolution criterion
+    D. Unrooted output
+
+22. Neighbor‐Joining differs from UPGMA by:
+    A. Requiring ultrametric data
+    B. Producing rooted trees
+    C. Not assuming equal rates (no molecular clock)
+    D. Using bootstrapping in tree building
+
+23. Maximum Parsimony seeks the tree that:
+    A. Maximizes likelihood under a model
+    B. Minimizes total number of character changes
+    C. Balances branch lengths equally
+    D. Optimizes posterior probability
+
+24. Jukes–Cantor (JC69) nucleotide model assumes:
+    A. Different rates for transitions vs. transversions
+    B. Equal base frequencies and equal substitution rates
+    C. Variable site‐rate heterogeneity
+    D. Stationarity only for amino acids
+
+25. Kimura 2‐Parameter (K80) distinguishes between:
+    A. Codon and amino acid changes
+    B. Transitions and transversions
+    C. Gamma‐distributed rates
+    D. Local vs. global alignment
+
+26. Felsenstein 1981 (F81) extends JC69 by:
+    A. Adding a transition/transversion bias
+    B. Allowing unequal equilibrium base frequencies
+    C. Modeling invariable sites
+    D. Incorporating codon models
+
+27. The General Time Reversible (GTR) model includes:
+    A. One rate parameter
+    B. Six distinct substitution rates and base frequencies
+    C. Only transition rates
+    D. Codon position weighting
+
+28. Among‐site rate heterogeneity is commonly modeled with:
+    A. Uniform rates across sites
+    B. A gamma distribution (+Γ)
+    C. Only invariant sites (+I)
+    D. Bootstrap resampling
+
+29. In Maximum Likelihood, “likelihood” is defined as:
+    A. P(data | model)
+    B. P(model | data)
+    C. P(tree)
+    D. P(prior)
+
+30. In Bayesian phylogenetics, the posterior probability P(model | data) is proportional to:
+    A. Likelihood × Prior / Marginal likelihood
+    B. Likelihood / Prior
+    C. Prior / Likelihood
+    D. Marginal likelihood × Prior
+
+--- Page 2 ---
+
+## Set 2 – Questions
+
+1. In phylogenetic context, homology refers to:
+   A. Similarity due to shared ancestry
+   B. Similarity of function but not ancestry
+   C. Similarity by chance
+   D. Similarity due to selection pressures
+
+2. Analogy in character analysis means:
+   A. Common ancestry of structures
+   B. Similar function without common ancestry
+   C. Shared derived traits
+   D. Same gene order
+
+3. Which of the following is NOT a desirable criterion for a phylogenetic character?
+   A. Homologous across taxa
+   B. Heritable
+   C. Independent
+   D. Correlated with other characters
+
+4. Homoplasy refers to:
+   A. Similarity not due to common ancestry
+   B. Similarity inherited from a common ancestor
+   C. Gap penalties in alignment
+   D. A measure of tree length
+
+5. Which of these is an example of convergent evolution?
+   A. Feathers in birds
+   B. Camera‐type eyes in octopus and vertebrates
+   C. Four-limbed tetrapods
+   D. Vertebrae in mammals
+
+6. The Neutral Theory implies:
+   A. Most molecular changes are adaptive
+   B. Many changes are neutral and fixed by drift
+   C. Selection is the sole driver of evolution
+   D. Morphological traits evolve neutrally
+
+7. An orthogroup is:
+   A. Pairs of orthologs between two species
+   B. Genes derived from a single duplication event
+   C. A set of orthologs descending from a common ancestor
+   D. A cluster of paralogs
+
+8. One‐to‐many orthologs arise when:
+   A. Gene duplication occurs before speciation
+   B. Duplication follows a speciation event in one lineage
+   C. Genes lose function in one species
+   D. HGT introduces extra copies
+
+9. Out‐paralogs are paralogous genes that:
+   A. Originate after a speciation event
+   B. Originate within a lineage post-speciation
+   C. Originate before a speciation event
+   D. Are co-orthologs in many-to-many
+
+10. In‐paralogs are paralogs that:
+    A. Arise after a given speciation event
+    B. Arise before speciation
+    C. Derive from horizontal transfer
+    D. Are one-to-one orthologs
+
+11. A major limitation of RBH is that it:
+    A. Fails to detect one‐to‐one orthologs
+    B. Cannot handle genome synteny
+    C. Only works for proteins
+    D. Misses one-to-many or many-to-many orthologs
+
+12. After identifying orthogroups, the next step in phylogenomic pipeline is:
+    A. Tree reconciliation
+    B. Sequence alignment
+    C. Distance matrix calculation
+    D. Partitioning analysis
+
+13. The primary goal of sequence alignment is to:
+    A. Identify orthologous positions with shared history
+    B. Maximize overall percent identity
+    C. Cluster sequences by length
+    D. Annotate coding regions
+
+14. Which tool is commonly used to trim poorly aligned regions?
+    A. Gblocks
+    B. ClustalW
+    C. MAFFT
+    D. BLAST
+
+15. Needleman‐Wunsch algorithm is:
+    A. A global alignment method
+    B. A local alignment method
+    C. A progressive multiple alignment
+    D. A tree-building algorithm
+
+16. Smith‐Waterman algorithm is:
+    A. Global alignment
+    B. Local alignment
+    C. Phylogenetic tree construction
+    D. Profile HMM search
+
+17. An affine gap penalty is defined by:
+    A. c = -d * g (linear)
+    B. c = -d
+    C. c = -d - (g - 1)e
+    D. c = -(d + g*e)
+
+18. Distance-based methods compute:
+    A. Pairwise distances from alignments
+    B. Character states per site
+    C. Likelihood scores
+    D. Posterior probabilities
+
+19. A p-distance matrix uses:
+    A. Raw proportion of differences
+    B. Model‐corrected distances
+    C. Weighted character changes
+    D. Bayesian estimates
+
+20. UPGMA uses:
+    A. Average linkage clustering
+    B. Minimum‐evolution criterion
+    C. Maximum likelihood estimates
+    D. Random joining
+
+21. Neighbor‐Joining optimizes:
+    A. Ultrametricity
+    B. Minimum‐evolution criterion without clock
+    C. Maximum parsimony
+    D. Profile alignment
+
+22. Parsimony informative sites must:
+    A. Have at least two states each in ≥2 taxa
+    B. Be invariant
+    C. Include singleton states
+    D. Be unique to one taxon
+
+23. Parsimony tree length is the:
+    A. Number of taxa
+    B. Sum of character-state changes
+    C. Total branch‐length units
+    D. Model likelihood
+
+24. Rate variation (+Γ) accounts for:
+    A. Equal rates across sites
+    B. Gamma-distributed site rates
+    C. Invariant sites only
+    D. Bootstrapping
+
+25. Invariant sites (+I) model:
+    A. Gamma-distribution of rates
+    B. Codon-based substitution
+    C. Explicit site profiles
+    D. A proportion of sites unchanging
+
+26. Substitution models are:
+    A. Deterministic
+    B. Markov chains with state transitions
+    C. Parsimony criteria
+    D. Alignment algorithms
+
+27. GTR model is:
+    A. Non-reversible
+    B. Time-reversible
+    C. Transition-only
+    D. Codon-explicit
+
+28. F81 model allows:
+    A. Transition/transversion bias
+    B. Unequal base frequencies
+    C. Invariable sites
+    D. Codon assignments
+
+29. K80 model distinguishes:
+    A. Codon changes
+    B. Transitions vs transversions
+    C. Rate heterogeneity
+    D. Global vs local alignment
+
+30. TN93 model includes:
+    A. One rate for all changes
+    B. Two distinct transition rates and one transversion rate
+    C. Codon-based parameters
+    D. Only gamma distribution
+
+--- Page 3 ---
+
+## Set 3 – Questions
+
+1. Maximum Likelihood phylogenetic inference maximizes:
+   A. P(data | model)
+   B. P(model | data)
+   C. P(tree)
+   D. P(prior)
+
+2. Bayesian inference estimates:
+   A. P(data | model)
+   B. P(model | data)
+   C. P(tree)
+   D. P(prior)
+
+3. Felsenstein’s tree-pruning algorithm is used to:
+   A. Build distance matrices
+   B. Compute conditional likelihoods at internal nodes
+   C. Perform sequence alignment
+   D. Infer orthology
+
+4. ML assumes that sites:
+   A. Evolve independently
+   B. Are correlated
+   C. Share the same state at root
+   D. Are uninformative
+
+5. Log‐likelihood is preferred because it:
+   A. Ensures numerical stability and converts products to sums
+   B. Is faster to compute than likelihood
+   C. Avoids the need for priors
+   D. Is only used in Bayesian methods
+
+6. Among NNI, SPR, and TBR, the simplest tree rearrangement is:
+   A. NNI (Nearest Neighbor Interchange)
+   B. SPR (Subtree Pruning & Regrafting)
+   C. TBR (Tree Bisection & Reconnection)
+   D. None of the above
+
+7. In Bayesian MCMC, the posterior ∝:
+   A. Prior / Likelihood
+   B. Likelihood × Prior
+   C. Likelihood / Prior
+   D. Marginal Likelihood × Prior
+
+8. The Metropolis criterion in MCMC:
+   A. Always rejects worse proposals
+   B. Accepts all proposals
+   C. Accepts worse proposals with probability ratio of likelihoods
+   D. Only accepts proposals with higher prior
+
+9. The “prior” in Bayesian analysis represents:
+   A. Initial beliefs before seeing data
+   B. Likelihood function
+   C. Posterior distribution
+   D. Marginal likelihood
+
+10. Posterior probability of a clade indicates:
+    A. Its bootstrap frequency
+    B. Its probability of being correct given model and data
+    C. The number of changes on that branch
+    D. The distance to outgroup
+
+11. GY94 codon model parameter ω equals:
+    A. dN/dS ratio
+    B. dS/dN ratio
+    C. dN + dS
+    D. Number of codons
+
+12. MG94 codon model includes:
+    A. One overall substitution rate
+    B. Separate synonymous (dS) and nonsynonymous (dN) rates
+    C. Three rate categories
+    D. No selection parameters
+
+13. Site-specific models allow ω to vary:
+    A. Across branches only
+    B. Across codon positions only
+    C. Across sites
+    D. Across taxa
+
+14. Branch‐site models detect:
+    A. Selection across all sites equally
+    B. Selection on entire tree
+    C. Neutral evolution only
+    D. Positive selection at specific sites on certain lineages
+
+15. Dayhoff’s PAM matrices were derived from:
+    A. Closely related proteins (>85% identity)
+    B. Codon usage tables
+    C. Genome-wide alignments
+    D. Amino acid physicochemical properties
+
+16. JTT model improved PAM by:
+    A. Using only mitochondrial proteins
+    B. Expanding to a larger, more diverse protein dataset
+    C. Incorporating codon bias
+    D. Modeling invariant sites
+
+17. WAG model was derived by:
+    A. Manual curation
+    B. Observed counts only
+    C. Maximum Likelihood optimization
+    D. Clustering methods
+
+18. BLOSUM matrices are:
+    A. Empirical models for phylogenetics
+    B. Codon-based substitution matrices
+    C. Derived from conserved ungapped blocks
+    D. Time-reversible models
+
+19. The +Γ+I modifier means:
+    A. Gamma variation only
+    B. Invariant sites only
+    C. Both gamma-distributed rates and a proportion of invariable sites
+    D. Bootstrap and jackknife
+
+20. The “supermatrix” approach refers to:
+    A. Concatenating multiple gene alignments
+    B. Coalescent-based species tree inference
+    C. Bootstrap resampling across genes
+    D. Partition analysis only
+
+21. A key drawback of concatenation is:
+    A. Increased stochastic error
+    B. Gene tree incongruence due to ILS and other processes
+    C. Lack of phylogenetic signal
+    D. Inability to model rate variation
+
+22. Coalescent‐based methods address:
+    A. Alignment uncertainty
+    B. Model misspecification
+    C. Gene tree discordance
+    D. Invariable sites
+
+23. Partitioning alignments helps:
+    A. Avoid overparameterization by grouping similar genes
+    B. Increase computational complexity
+    C. Merge all genes into one model
+    D. Fix branch lengths
+
+24. AIC and BIC are used to:
+    A. Compare models balancing fit and complexity
+    B. Estimate tree topology
+    C. Infer orthology
+    D. Perform sequence alignment
+
+25. In MCMC, “burn‐in” refers to:
+    A. Samples used for final estimates
+    B. Entire chain length
+    C. Convergence diagnostics
+    D. Initial samples discarded before stationarity
+
+26. ESS (Effective Sample Size) measures:
+    A. Total iterations
+    B. Expected sum of squares
+    C. Independent information in posterior samples
+    D. Error sum of squares
+
+27. Bootstrap support differs from posterior probability in that:
+    A. Bootstrap reflects resampling frequency; posterior is probability given model
+    B. Both measure the same thing
+    C. Posterior uses resampling; bootstrap uses priors
+    D. Neither is used in phylogenetics
+
+28. Empirical amino acid substitution models:
+    A. Use fixed rate matrices estimated from large datasets
+    B. Estimate rates from the current dataset only
+    C. Are codon-based
+    D. Are alignment algorithms
+
+29. Mechanistic codon models incorporate:
+    A. Rate matrices only
+    B. Biological parameters like selection pressure
+    C. Empirical counts
+    D. Gap penalties
+
+30. OTU stands for:
+    A. Observed Taxonomic Unit
+    B. Operational Taxonomic Unit
+    C. Ordered Transversion Unit
+    D. Orthologous Tree Unit
+
+--- Page 4 ---
+
+## Answer Key
+
+**Set 1:**  
+1. C  2. B  3. A  4. A  5. B  6. B  7. A  8. C  9. C  10. C  
+11. B  12. B  13. B  14. A  15. B  16. B  17. B  18. A  19. B  20. C  
+21. A  22. C  23. B  24. B  25. B  26. B  27. B  28. B  29. A  30. A
+
+**Set 2:**  
+1. A  2. B  3. D  4. A  5. B  6. B  7. C  8. B  9. C  10. A  
+11. D  12. B  13. A  14. A  15. A  16. B  17. C  18. A  19. A  20. A  
+21. B  22. C  23. A  24. B  25. D  26. D  27. B  28. B  29. B  30. B
+
+**Set 3:**  
+1. A  2. B  3. B  4. A  5. C  6. A  7. B  8. C  9. A  10. B  
+11. A  12. B  13. C  14. D  15. A  16. B  17. C  18. D  19. C  20. A  
+21. B  22. C  23. A  24. A  25. D  26. C  27. A  28. A  29. B  30. B

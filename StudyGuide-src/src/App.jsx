@@ -718,17 +718,40 @@ function LessonPractical({ lang, lessonNo }) {
   );
 }
 
+function quizSeedFromString(value) {
+  let hash = 2166136261;
+  for (let i = 0; i < value.length; i += 1) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function shuffledQuizOptions(question, index) {
+  const options = question.options.map((text, originalIndex) => ({ text, originalIndex }));
+  let seed = quizSeedFromString(`${index + 1}-${question.question}-${question.options.join("|")}`);
+  for (let i = options.length - 1; i > 0; i -= 1) {
+    seed = Math.imul(seed ^ (seed >>> 16), 2246822507) >>> 0;
+    seed = Math.imul(seed ^ (seed >>> 13), 3266489909) >>> 0;
+    const j = seed % (i + 1);
+    [options[i], options[j]] = [options[j], options[i]];
+  }
+  return options;
+}
+
 
 function QuizQuestionCard({ question, index, selected, onSelect, copy }) {
   const answered = selected !== undefined;
   const isCorrect = answered && selected === question.answer;
+  const shuffledOptions = shuffledQuizOptions(question, index);
+  const answerDisplayIndex = Math.max(0, shuffledOptions.findIndex(option => option.originalIndex === question.answer));
   const kindLabel = question.kind === "practical" ? copy.practical : question.kind === "exam" ? (copy.exam || "Mock exam") : copy.theory;
   const kindClass = question.kind === "practical"
     ? "bg-sky-50 text-sky-800 border border-sky-200"
     : question.kind === "exam"
       ? "bg-stone-100 text-stone-800 border border-stone-200"
       : "bg-red-50 text-red-800 border border-red-200";
-  const answerLetter = String.fromCharCode(65 + question.answer);
+  const answerLetter = String.fromCharCode(65 + answerDisplayIndex);
 
   function optionFeedback(optionIndex) {
     if (Array.isArray(question.optionExplanations)) return question.optionExplanations[optionIndex];
@@ -756,7 +779,8 @@ function QuizQuestionCard({ question, index, selected, onSelect, copy }) {
       <h3 className="mt-4 text-lg font-black leading-7 text-stone-950">{question.question}</h3>
 
       <div className="mt-4 grid gap-2">
-        {question.options.map((option, optionIndex) => {
+        {shuffledOptions.map((option, displayIndex) => {
+          const optionIndex = option.originalIndex;
           const isSelected = selected === optionIndex;
           const isAnswer = question.answer === optionIndex;
           const stateClass = !answered
@@ -769,15 +793,15 @@ function QuizQuestionCard({ question, index, selected, onSelect, copy }) {
           const iconClass = isAnswer ? "text-emerald-700" : isSelected ? "text-amber-700" : "text-stone-400";
           return (
             <button
-              key={option}
+              key={`${option.originalIndex}-${option.text}`}
               type="button"
               onClick={() => onSelect(optionIndex)}
               className={`rounded-2xl border px-4 py-3 text-start text-sm leading-6 transition ${stateClass}`}
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <span className="me-2 font-black">{String.fromCharCode(65 + optionIndex)}.</span>
-                  <span className="font-black">{option}</span>
+                  <span className="me-2 font-black">{String.fromCharCode(65 + displayIndex)}.</span>
+                  <span className="font-black">{option.text}</span>
                 </div>
                 {answered && <span className={`shrink-0 text-lg font-black ${iconClass}`}>{isAnswer ? "✓" : "×"}</span>}
               </div>

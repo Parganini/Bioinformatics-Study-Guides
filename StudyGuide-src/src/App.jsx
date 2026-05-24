@@ -16,6 +16,7 @@ import BiasesPhylogeneticsLesson, { lesson13Quiz } from "./lessons/phylogenetics
 import DivergenceTimeLesson, { lesson14Quiz } from "./lessons/phylogenetics/Lesson14.jsx";
 import InferringSelectionLesson, { lesson15Quiz } from "./lessons/phylogenetics/Lesson15.jsx";
 import TraitEvolutionLesson, { lesson16Quiz } from "./lessons/phylogenetics/Lesson16.jsx";
+import { PHYLO_MOCK_EXAMS } from "./exams/phylogenetics/mockExams.js";
 
 
 const LANGS = [
@@ -325,6 +326,7 @@ function phyloQuizCopy(lang) {
       body: "Choose an answer and use the short explanation to check whether you understood both the lecture and the practical session.",
       theory: "Theory",
       practical: "Practical",
+      exam: "Mock exam",
       correct: "Correct",
       incorrect: "Not quite",
       select: "Select an answer",
@@ -340,6 +342,7 @@ function phyloQuizCopy(lang) {
       body: "Elige una respuesta y usa la explicación breve para comprobar si entendiste tanto la clase teórica como la parte práctica.",
       theory: "Teoría",
       practical: "Práctica",
+      exam: "Mock exam",
       correct: "Correcto",
       incorrect: "No exactamente",
       select: "Selecciona una respuesta",
@@ -355,6 +358,7 @@ function phyloQuizCopy(lang) {
       body: "یک پاسخ انتخاب کنید و با توضیح کوتاه بررسی کنید که هم بخش نظری و هم بخش عملی را فهمیده‌اید یا نه.",
       theory: "نظری",
       practical: "عملی",
+      exam: "آزمون آزمایشی",
       correct: "درست",
       incorrect: "نه دقیقاً",
       select: "یک پاسخ انتخاب کنید",
@@ -363,6 +367,50 @@ function phyloQuizCopy(lang) {
       selectedIncorrectPrefix: "پاسخ انتخابی شما درست نیست. پاسخ درست",
       comingSoon: "آزمونک به‌زودی",
       comingSoonBody: "پس از کامل‌شدن صفحهٔ نظری این درس، آزمونک آن هم اضافه می‌شود.",
+    },
+  }[lang] || {};
+}
+
+function phyloMockExamCopy(lang) {
+  return {
+    en: {
+      eyebrow: "Exam practice",
+      title: "Mock exams",
+      body: "Interactive versions of the uploaded mock exams. Closed questions use the same feedback style as the lesson quizzes; the open question includes a model answer for self-review.",
+      open: "Open exam",
+      openPdf: "Open original PDF",
+      back: "Back to dashboard",
+      closed: "Closed questions",
+      openQuestion: "Open-ended question",
+      modelAnswer: "Model answer",
+      source: "Original PDF",
+      notFound: "Mock exam not found",
+    },
+    es: {
+      eyebrow: "Práctica de examen",
+      title: "Mock exams",
+      body: "Versiones interactivas de los mock exams que subiste. Las preguntas cerradas usan el mismo feedback de los quizzes; la pregunta abierta incluye una respuesta modelo para autoevaluarte.",
+      open: "Abrir examen",
+      openPdf: "Abrir PDF original",
+      back: "Volver al dashboard",
+      closed: "Preguntas cerradas",
+      openQuestion: "Pregunta abierta",
+      modelAnswer: "Respuesta modelo",
+      source: "PDF original",
+      notFound: "Mock exam no encontrado",
+    },
+    fa: {
+      eyebrow: "تمرین امتحان",
+      title: "آزمون‌های آزمایشی",
+      body: "نسخه‌های تعاملی mock examهای بارگذاری‌شده. پرسش‌های بسته همان سبک بازخورد آزمونک‌های درس را دارند و پرسش باز یک پاسخ نمونه برای خودارزیابی دارد.",
+      open: "باز کردن آزمون",
+      openPdf: "باز کردن PDF اصلی",
+      back: "بازگشت به داشبورد",
+      closed: "پرسش‌های بسته",
+      openQuestion: "پرسش باز",
+      modelAnswer: "پاسخ نمونه",
+      source: "PDF اصلی",
+      notFound: "آزمون آزمایشی پیدا نشد",
     },
   }[lang] || {};
 }
@@ -674,7 +722,12 @@ function LessonPractical({ lang, lessonNo }) {
 function QuizQuestionCard({ question, index, selected, onSelect, copy }) {
   const answered = selected !== undefined;
   const isCorrect = answered && selected === question.answer;
-  const kindLabel = question.kind === "practical" ? copy.practical : copy.theory;
+  const kindLabel = question.kind === "practical" ? copy.practical : question.kind === "exam" ? (copy.exam || "Mock exam") : copy.theory;
+  const kindClass = question.kind === "practical"
+    ? "bg-sky-50 text-sky-800 border border-sky-200"
+    : question.kind === "exam"
+      ? "bg-stone-100 text-stone-800 border border-stone-200"
+      : "bg-red-50 text-red-800 border border-red-200";
   const answerLetter = String.fromCharCode(65 + question.answer);
 
   function optionFeedback(optionIndex) {
@@ -691,7 +744,7 @@ function QuizQuestionCard({ question, index, selected, onSelect, copy }) {
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex items-center gap-3">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-stone-950 text-sm font-black text-white">{index + 1}</span>
-          <span className={`rounded-full px-3 py-1 text-xs font-black ${question.kind === "practical" ? "bg-sky-50 text-sky-800 border border-sky-200" : "bg-red-50 text-red-800 border border-red-200"}`}>{kindLabel}</span>
+          <span className={`rounded-full px-3 py-1 text-xs font-black ${kindClass}`}>{kindLabel}</span>
         </div>
         {answered && (
           <span className={`rounded-full px-3 py-1 text-xs font-black ${isCorrect ? "bg-emerald-50 text-emerald-800 border border-emerald-200" : "bg-amber-50 text-amber-800 border border-amber-200"}`}>
@@ -792,6 +845,106 @@ function LessonQuiz({ lang, lessonNo }) {
   );
 }
 
+
+function MPExamPanel({ lang }) {
+  const copy = phyloMockExamCopy(lang);
+  return (
+    <section id="mock-exams" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/75 p-6 shadow-sm md:p-8">
+      <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <div>
+          <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.eyebrow}</div>
+          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{copy.title}</h2>
+          <p className="mt-2 max-w-3xl leading-7 text-stone-600">{copy.body}</p>
+        </div>
+      </div>
+      <div className="grid gap-4 md:grid-cols-3">
+        {PHYLO_MOCK_EXAMS.map((exam) => (
+          <article key={exam.id} className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
+            <div className="flex items-center justify-between gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-stone-950 text-sm font-black text-white">{exam.id}</span>
+              <span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">27 + 1</span>
+            </div>
+            <h3 className="mt-4 text-2xl font-black tracking-tight text-stone-950">{exam.title}</h3>
+            <p className="mt-2 min-h-[4.5rem] text-sm font-semibold leading-6 text-stone-600">{exam.subtitle}</p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              <a href={`#/mock-exam/${exam.id}`} className="rounded-full bg-red-700 px-4 py-2 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{copy.open}</a>
+              {exam.sourcePdf && <a href={exam.sourcePdf} target="_blank" rel="noreferrer" className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:shadow-md">{copy.openPdf}</a>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function MPMockExamPage({ lang, examNo }) {
+  const copy = phyloMockExamCopy(lang);
+  const quizCopy = phyloQuizCopy(lang);
+  const exam = PHYLO_MOCK_EXAMS.find(item => item.id === String(examNo).padStart(2, "0"));
+  const [answers, setAnswers] = useState({});
+  if (!exam) {
+    return (
+      <main className="mx-auto w-[min(980px,calc(100%-24px))] pb-16 pt-8">
+        <a href="#/" className="text-sm font-black text-red-700">← {copy.back}</a>
+        <section className="mt-6 rounded-[2rem] border border-stone-200 bg-white p-8 shadow-sm">
+          <h1 className="text-3xl font-black text-stone-950">{copy.notFound}</h1>
+        </section>
+      </main>
+    );
+  }
+  const questions = exam.questions || [];
+  const answeredCount = Object.keys(answers).length;
+  const correctCount = questions.reduce((total, question, index) => total + (answers[index] === question.answer ? 1 : 0), 0);
+  return (
+    <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
+      <section className="rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+        <a href="#/" className="text-sm font-black text-red-700">← {copy.back}</a>
+        <div className="mt-5 grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+          <div>
+            <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.eyebrow}</div>
+            <h1 className="mt-2 text-4xl font-black tracking-tight text-stone-950 md:text-6xl">{exam.title}</h1>
+            <p className="mt-4 max-w-3xl text-lg font-semibold leading-8 text-stone-600">{exam.subtitle}</p>
+          </div>
+          <div className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5">
+            <div className="text-xs font-black uppercase tracking-[0.22em] text-stone-400">{quizCopy.score}</div>
+            <div className="mt-2 text-4xl font-black text-stone-950">{correctCount}/{questions.length}</div>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{answeredCount}/{questions.length} {lang === "es" ? "respondidas" : lang === "fa" ? "پاسخ‌داده‌شده" : "answered"}</p>
+            {exam.sourcePdf && <a href={exam.sourcePdf} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:shadow-md">{copy.openPdf}</a>}
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-8 rounded-[2.5rem] border border-stone-200 bg-white/75 p-5 shadow-sm md:p-6">
+        <div className="mb-5">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.closed}</div>
+          <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-stone-600">{quizCopy.body}</p>
+        </div>
+        <div className="grid gap-4 lg:grid-cols-2">
+          {questions.map((question, index) => (
+            <QuizQuestionCard
+              key={`${exam.id}-${index}-${question.question}`}
+              question={question}
+              index={index}
+              selected={answers[index]}
+              onSelect={(optionIndex) => setAnswers(prev => ({ ...prev, [index]: optionIndex }))}
+              copy={quizCopy}
+            />
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-8 rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm md:p-8">
+        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.openQuestion}</div>
+        <h2 className="mt-3 text-2xl font-black leading-8 text-stone-950">{exam.openEnded?.prompt}</h2>
+        <div className="mt-5 rounded-3xl border border-emerald-200 bg-emerald-50 p-5">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-emerald-800">{copy.modelAnswer}</div>
+          <p className="mt-3 text-sm font-semibold leading-7 text-emerald-950">{exam.openEnded?.sampleAnswer}</p>
+        </div>
+      </section>
+    </main>
+  );
+}
+
 function MPResourcesPanel({ lang }) {
   const copy = phyloResourceCopy(lang);
   return (
@@ -814,8 +967,11 @@ function MPApp({ t, lang, hash }) {
   const [progress, setProgress] = useState(() => getJSON("phylo_progress_v2", {}));
   const [query, setQuery] = useState("");
   const match = hash.match(/^#\/lesson\/(\d+)/);
+  const examMatch = hash.match(/^#\/mock-exam\/(\d+)/);
   const lessonNo = match ? Number(match[1]) : null;
+  const examNo = examMatch ? Number(examMatch[1]) : null;
   const save = (next) => { setProgress(next); setJSON("phylo_progress_v2", next); };
+  if (examNo) return <MPMockExamPage lang={lang} examNo={examNo}/>;
   if (lessonNo) return <MPLessonPage lang={lang} lessonNo={lessonNo} progress={progress} save={save} t={t}/>;
   const titles = PHYLO_TITLES[lang] || PHYLO_TITLES.es;
   const modules = PHYLO_MODULES[lang] || PHYLO_MODULES.es;
@@ -824,8 +980,9 @@ function MPApp({ t, lang, hash }) {
   const activeLesson = Array.from({ length: 16 }, (_, i) => i + 1).find(n => !progress[`lesson${String(n).padStart(2,"0")}`]) || 1;
   const q = query.trim().toLowerCase();
   const filtered = q ? modules.map(m => ({ m, lessons: m[3].filter(n => `${n} ${titles[n-1]} ${m[1]} ${m[2]} ${m[4].join(" ")}`.toLowerCase().includes(q)) })).filter(x => x.lessons.length) : modules.map(m => ({ m, lessons: m[3] }));
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.phylo} title={<>{t.phylo} <span className="text-red-700">Study Guide</span></>} subtitle={t.phyloDesc} actions={<><a href={`#/lesson/${String(activeLesson).padStart(2,"0")}`} className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{t.continue}: {String(activeLesson).padStart(2,"0")}</a><a href="#/tools" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{t.quickReview}</a></>} visual={<div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.progress}</div><div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div><p className="mt-2 text-sm font-semibold text-stone-500">{count} / 16 {t.completed.toLowerCase()}</p><div className="mt-5"><ProgressBar value={percent}/></div><div className="mt-6 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyPath}</div><p className="mt-2 text-lg font-bold leading-7">data → alignment → model → tree → support → interpretation</p></div></div>} />
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.phylo} title={<>{t.phylo} <span className="text-red-700">Study Guide</span></>} subtitle={t.phyloDesc} actions={<><a href={`#/lesson/${String(activeLesson).padStart(2,"0")}`} className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{t.continue}: {String(activeLesson).padStart(2,"0")}</a><a href="#mock-exams" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{phyloMockExamCopy(lang).title}</a><a href="#/tools" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{t.quickReview}</a></>} visual={<div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.progress}</div><div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div><p className="mt-2 text-sm font-semibold text-stone-500">{count} / 16 {t.completed.toLowerCase()}</p><div className="mt-5"><ProgressBar value={percent}/></div><div className="mt-6 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyPath}</div><p className="mt-2 text-lg font-bold leading-7">data → alignment → model → tree → support → interpretation</p></div></div>} />
     <MPResourcesPanel lang={lang} />
+    <MPExamPanel lang={lang} />
     <section className="mt-10"><div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.modules}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.phylo}</h2></div><input value={query} onChange={e => setQuery(e.target.value)} placeholder={t.search} className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-stone-700 outline-none transition placeholder:text-stone-400 focus:border-red-300 focus:ring-4 focus:ring-red-100 md:w-80"/></div><div className="space-y-5">{filtered.map(({m, lessons}) => <MPModule key={m[0]} module={m} lessonNumbers={lessons} titles={titles} progress={progress} save={save} t={t} activeLesson={activeLesson}/>)}</div></section></main>;
 }
 function MPModule({ module, lessonNumbers, titles, progress, save, t, activeLesson }) {

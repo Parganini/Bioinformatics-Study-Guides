@@ -17,6 +17,7 @@ import DivergenceTimeLesson, { lesson14Quiz } from "./lessons/phylogenetics/Less
 import InferringSelectionLesson, { lesson15Quiz } from "./lessons/phylogenetics/Lesson15.jsx";
 import TraitEvolutionLesson, { lesson16Quiz } from "./lessons/phylogenetics/Lesson16.jsx";
 import { PHYLO_MOCK_EXAMS } from "./exams/phylogenetics/mockExams.js";
+import { PHYLO_WRITTEN_PRACTICE } from "./exams/phylogenetics/writtenPractice.js";
 
 
 const LANGS = [
@@ -411,6 +412,75 @@ function phyloMockExamCopy(lang) {
       modelAnswer: "پاسخ نمونه",
       source: "PDF اصلی",
       notFound: "آزمون آزمایشی پیدا نشد",
+    },
+  }[lang] || {};
+}
+
+
+function phyloWrittenPracticeCopy(lang) {
+  return {
+    en: {
+      eyebrow: "Written exam practice",
+      title: "Fill-in + open questions",
+      body: "Practice the written part of the exam with short fill-in prompts and longer open questions. Try answering first, then reveal the answer or model response.",
+      open: "Open written practice",
+      back: "Back to dashboard",
+      fillTitle: "Fill-in-the-blank",
+      fillBody: "Type the missing term, then check or reveal the answer.",
+      openTitle: "Open questions",
+      openBody: "Write your answer in your own words, then compare it with the model answer and checklist.",
+      yourAnswer: "Your answer",
+      check: "Check",
+      reveal: "Reveal answer",
+      hide: "Hide answer",
+      correct: "Looks good",
+      review: "Review this one",
+      modelAnswer: "Model answer",
+      checklist: "Self-check checklist",
+      summary: "25 fill-in prompts + 10 open questions",
+      tip: "Use this after the quizzes: these prompts test whether you can explain the concept without answer choices.",
+    },
+    es: {
+      eyebrow: "Práctica escrita de examen",
+      title: "Rellenar espacios + preguntas abiertas",
+      body: "Practica la parte escrita del examen con preguntas cortas de rellenar y preguntas abiertas. Responde primero y luego revela la respuesta o el modelo.",
+      open: "Abrir práctica escrita",
+      back: "Volver al dashboard",
+      fillTitle: "Rellenar los espacios",
+      fillBody: "Escribe el término que falta y luego comprueba o revela la respuesta.",
+      openTitle: "Preguntas abiertas",
+      openBody: "Escribe tu respuesta con tus propias palabras y luego compárala con la respuesta modelo y la checklist.",
+      yourAnswer: "Tu respuesta",
+      check: "Comprobar",
+      reveal: "Mostrar respuesta",
+      hide: "Ocultar respuesta",
+      correct: "Se ve bien",
+      review: "Revisa esta",
+      modelAnswer: "Respuesta modelo",
+      checklist: "Checklist de autoevaluación",
+      summary: "25 preguntas de rellenar + 10 preguntas abiertas",
+      tip: "Úsalo después de los quizzes: estas preguntas comprueban si puedes explicar el concepto sin opciones de respuesta.",
+    },
+    fa: {
+      eyebrow: "تمرین نوشتاری امتحان",
+      title: "جای‌خالی + پرسش‌های باز",
+      body: "بخش نوشتاری امتحان را با پرسش‌های کوتاه جای‌خالی و پرسش‌های باز تمرین کنید. اول پاسخ دهید و بعد پاسخ یا نمونهٔ پاسخ را ببینید.",
+      open: "باز کردن تمرین نوشتاری",
+      back: "بازگشت به داشبورد",
+      fillTitle: "پرسش‌های جای‌خالی",
+      fillBody: "واژهٔ گمشده را بنویسید و سپس پاسخ را بررسی یا آشکار کنید.",
+      openTitle: "پرسش‌های باز",
+      openBody: "پاسخ را با واژه‌های خودتان بنویسید و سپس با پاسخ نمونه و چک‌لیست مقایسه کنید.",
+      yourAnswer: "پاسخ شما",
+      check: "بررسی",
+      reveal: "نمایش پاسخ",
+      hide: "پنهان کردن پاسخ",
+      correct: "خوب است",
+      review: "این را مرور کنید",
+      modelAnswer: "پاسخ نمونه",
+      checklist: "چک‌لیست خودارزیابی",
+      summary: "۲۵ جای‌خالی + ۱۰ پرسش باز",
+      tip: "بعد از آزمونک‌ها استفاده کنید: این پرسش‌ها می‌سنجند آیا می‌توانید مفهوم را بدون گزینه توضیح دهید یا نه.",
     },
   }[lang] || {};
 }
@@ -971,6 +1041,159 @@ function MPMockExamPage({ lang, examNo }) {
   );
 }
 
+
+function normalizeWrittenAnswer(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[ω]/g, "omega")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function MPWrittenPracticePanel({ lang }) {
+  const copy = phyloWrittenPracticeCopy(lang);
+  return (
+    <section id="written-practice" className="mt-10 overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white/75 shadow-sm">
+      <div className="grid gap-0 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="p-6 md:p-8">
+          <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.eyebrow}</div>
+          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{copy.title}</h2>
+          <p className="mt-2 max-w-3xl leading-7 text-stone-600">{copy.body}</p>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <a href="#/written-practice" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{copy.open}</a>
+            <a href="#mock-exams" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-700 transition hover:shadow-md">{phyloMockExamCopy(lang).title}</a>
+          </div>
+        </div>
+        <div className="border-t border-stone-200 bg-stone-50 p-6 lg:border-l lg:border-t-0 md:p-8">
+          <div className="rounded-3xl bg-stone-950 p-5 text-white">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{copy.summary}</div>
+            <p className="mt-3 text-sm font-semibold leading-6 text-stone-200">{copy.tip}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FillBlankCard({ item, index, copy }) {
+  const [value, setValue] = useState("");
+  const [checked, setChecked] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+  const normalized = normalizeWrittenAnswer(value);
+  const accepted = (item.accepted || [item.answer]).map(normalizeWrittenAnswer);
+  const isCorrect = checked && normalized.length > 0 && accepted.some(answer => answer === normalized || normalized.includes(answer));
+  return (
+    <article className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm">
+      <div className="flex items-center gap-3">
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-stone-950 text-sm font-black text-white">{index + 1}</span>
+        {checked && <span className={`rounded-full px-3 py-1 text-xs font-black ${isCorrect ? "border border-emerald-200 bg-emerald-50 text-emerald-800" : "border border-amber-200 bg-amber-50 text-amber-800"}`}>{isCorrect ? copy.correct : copy.review}</span>}
+      </div>
+      <h3 className="mt-4 text-lg font-black leading-7 text-stone-950">{item.prompt}</h3>
+      <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+        <input
+          value={value}
+          onChange={(event) => { setValue(event.target.value); setChecked(false); }}
+          placeholder={copy.yourAnswer}
+          className="min-w-0 flex-1 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm font-bold text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-red-300 focus:ring-4 focus:ring-red-100"
+        />
+        <button type="button" onClick={() => setChecked(true)} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white transition hover:bg-stone-800">{copy.check}</button>
+        <button type="button" onClick={() => setRevealed(prev => !prev)} className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:shadow-md">{revealed ? copy.hide : copy.reveal}</button>
+      </div>
+      {(revealed || checked) && (
+        <div className="mt-4 rounded-3xl border border-emerald-200 bg-emerald-50 p-4">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-800">{copy.modelAnswer}</div>
+          <p className="mt-2 text-sm font-black text-emerald-950">{item.answer}</p>
+          <p className="mt-2 text-sm font-semibold leading-6 text-emerald-950/80">{item.explanation}</p>
+        </div>
+      )}
+    </article>
+  );
+}
+
+function OpenQuestionCard({ item, index, copy }) {
+  const [value, setValue] = useState("");
+  const [revealed, setRevealed] = useState(false);
+  return (
+    <article className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm md:p-6">
+      <div className="flex items-center gap-3">
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-stone-950 text-sm font-black text-white">{index + 1}</span>
+        <span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{copy.openTitle}</span>
+      </div>
+      <h3 className="mt-4 text-xl font-black leading-8 text-stone-950">{item.prompt}</h3>
+      <textarea
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+        placeholder={copy.yourAnswer}
+        rows={5}
+        className="mt-4 w-full rounded-3xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm font-semibold leading-6 text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-red-300 focus:ring-4 focus:ring-red-100"
+      />
+      <button type="button" onClick={() => setRevealed(prev => !prev)} className="mt-3 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:shadow-md">{revealed ? copy.hide : copy.reveal}</button>
+      {revealed && (
+        <div className="mt-4 grid gap-4 lg:grid-cols-[1.5fr_1fr]">
+          <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-5">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-800">{copy.modelAnswer}</div>
+            <p className="mt-3 text-sm font-semibold leading-7 text-emerald-950">{item.modelAnswer}</p>
+          </div>
+          <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-600">{copy.checklist}</div>
+            <ul className="mt-3 space-y-2 text-sm font-semibold leading-6 text-stone-700">
+              {(item.checklist || []).map(point => <li key={point} className="flex gap-2"><span className="text-red-700">•</span><span>{point}</span></li>)}
+            </ul>
+          </div>
+        </div>
+      )}
+    </article>
+  );
+}
+
+function MPWrittenPracticePage({ lang }) {
+  const copy = phyloWrittenPracticeCopy(lang);
+  const fillBlanks = PHYLO_WRITTEN_PRACTICE.fillBlanks || [];
+  const openQuestions = PHYLO_WRITTEN_PRACTICE.openQuestions || [];
+  return (
+    <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
+      <section className="rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+        <a href="#/" className="text-sm font-black text-red-700">← {copy.back}</a>
+        <div className="mt-5 grid gap-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+          <div>
+            <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.eyebrow}</div>
+            <h1 className="mt-2 text-4xl font-black tracking-tight text-stone-950 md:text-6xl">{copy.title}</h1>
+            <p className="mt-4 max-w-3xl text-lg font-semibold leading-8 text-stone-600">{copy.body}</p>
+          </div>
+          <div className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.summary}</div>
+            <p className="mt-3 text-sm font-semibold leading-6 text-stone-600">{copy.tip}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-8 rounded-[2.5rem] border border-stone-200 bg-white/75 p-5 shadow-sm md:p-6">
+        <div className="mb-5">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.fillTitle}</div>
+          <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-stone-600">{copy.fillBody}</p>
+        </div>
+        <div className="grid gap-4 lg:grid-cols-2">
+          {fillBlanks.map((item, index) => <FillBlankCard key={`${index}-${item.prompt}`} item={item} index={index} copy={copy} />)}
+        </div>
+      </section>
+
+      <section className="mt-8 rounded-[2.5rem] border border-stone-200 bg-white/75 p-5 shadow-sm md:p-6">
+        <div className="mb-5">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.openTitle}</div>
+          <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-stone-600">{copy.openBody}</p>
+        </div>
+        <div className="grid gap-4">
+          {openQuestions.map((item, index) => <OpenQuestionCard key={`${index}-${item.prompt}`} item={item} index={index} copy={copy} />)}
+        </div>
+      </section>
+    </main>
+  );
+}
+
 function MPResourcesPanel({ lang }) {
   const copy = phyloResourceCopy(lang);
   return (
@@ -994,10 +1217,12 @@ function MPApp({ t, lang, hash }) {
   const [query, setQuery] = useState("");
   const match = hash.match(/^#\/lesson\/(\d+)/);
   const examMatch = hash.match(/^#\/mock-exam\/(\d+)/);
+  const writtenPracticeMatch = hash.match(/^#\/written-practice/);
   const lessonNo = match ? Number(match[1]) : null;
   const examNo = examMatch ? Number(examMatch[1]) : null;
   const save = (next) => { setProgress(next); setJSON("phylo_progress_v2", next); };
   if (examNo) return <MPMockExamPage lang={lang} examNo={examNo}/>;
+  if (writtenPracticeMatch) return <MPWrittenPracticePage lang={lang}/>;
   if (lessonNo) return <MPLessonPage lang={lang} lessonNo={lessonNo} progress={progress} save={save} t={t}/>;
   const titles = PHYLO_TITLES[lang] || PHYLO_TITLES.es;
   const modules = PHYLO_MODULES[lang] || PHYLO_MODULES.es;
@@ -1006,9 +1231,10 @@ function MPApp({ t, lang, hash }) {
   const activeLesson = Array.from({ length: 16 }, (_, i) => i + 1).find(n => !progress[`lesson${String(n).padStart(2,"0")}`]) || 1;
   const q = query.trim().toLowerCase();
   const filtered = q ? modules.map(m => ({ m, lessons: m[3].filter(n => `${n} ${titles[n-1]} ${m[1]} ${m[2]} ${m[4].join(" ")}`.toLowerCase().includes(q)) })).filter(x => x.lessons.length) : modules.map(m => ({ m, lessons: m[3] }));
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.phylo} title={<>{t.phylo} <span className="text-red-700">Study Guide</span></>} subtitle={t.phyloDesc} actions={<><a href={`#/lesson/${String(activeLesson).padStart(2,"0")}`} className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{t.continue}: {String(activeLesson).padStart(2,"0")}</a><a href="#mock-exams" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{phyloMockExamCopy(lang).title}</a><a href="#/tools" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{t.quickReview}</a></>} visual={<div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.progress}</div><div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div><p className="mt-2 text-sm font-semibold text-stone-500">{count} / 16 {t.completed.toLowerCase()}</p><div className="mt-5"><ProgressBar value={percent}/></div><div className="mt-6 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyPath}</div><p className="mt-2 text-lg font-bold leading-7">data → alignment → model → tree → support → interpretation</p></div></div>} />
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.phylo} title={<>{t.phylo} <span className="text-red-700">Study Guide</span></>} subtitle={t.phyloDesc} actions={<><a href={`#/lesson/${String(activeLesson).padStart(2,"0")}`} className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{t.continue}: {String(activeLesson).padStart(2,"0")}</a><a href="#mock-exams" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{phyloMockExamCopy(lang).title}</a><a href="#/written-practice" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{phyloWrittenPracticeCopy(lang).title}</a><a href="#/tools" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{t.quickReview}</a></>} visual={<div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.progress}</div><div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div><p className="mt-2 text-sm font-semibold text-stone-500">{count} / 16 {t.completed.toLowerCase()}</p><div className="mt-5"><ProgressBar value={percent}/></div><div className="mt-6 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyPath}</div><p className="mt-2 text-lg font-bold leading-7">data → alignment → model → tree → support → interpretation</p></div></div>} />
     <MPResourcesPanel lang={lang} />
     <MPExamPanel lang={lang} />
+    <MPWrittenPracticePanel lang={lang} />
     <section className="mt-10"><div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.modules}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.phylo}</h2></div><input value={query} onChange={e => setQuery(e.target.value)} placeholder={t.search} className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-stone-700 outline-none transition placeholder:text-stone-400 focus:border-red-300 focus:ring-4 focus:ring-red-100 md:w-80"/></div><div className="space-y-5">{filtered.map(({m, lessons}) => <MPModule key={m[0]} module={m} lessonNumbers={lessons} titles={titles} progress={progress} save={save} t={t} activeLesson={activeLesson}/>)}</div></section></main>;
 }
 function MPModule({ module, lessonNumbers, titles, progress, save, t, activeLesson }) {

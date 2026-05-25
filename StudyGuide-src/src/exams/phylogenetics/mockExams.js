@@ -3369,14 +3369,16 @@ export const PHYLO_MOCK_EXAMS = [
         "explanation": "In Bayesian MCMC, Metropolis-Hastings decides whether a proposed new state, often including a tree and parameters, is accepted into the chain."
       },
       {
-        "prompt": "In codon-based models, dS represents the rate of ________ substitutions per ________ site. The dN/dS reflects the action of ________.",
-        "answer": "synonymous; synonymous; selection",
+        "prompt": "In codon-based models, dS represents the rate of ________ substitutions and dN the rate of ________ substitutions. The dN/dS reflects the action of ________.",
+        "answer": "synonymous; nonsynonymous; selection",
         "accepted": [
-          "synonymous synonymous selection",
-          "synonymous substitutions synonymous site selection",
-          "synonymous synonymous sites selection"
+          "synonymous nonsynonymous selection",
+          "synonymous non-synonymous selection",
+          "synonymous nonsynonymous substitutions selection",
+          "synonymous non synonymous selection",
+          "synonymous non-synonymous substitutions selection"
         ],
-        "explanation": "dS is the rate of synonymous substitution per synonymous site; comparing dN and dS gives information about selective pressure on protein-changing substitutions."
+        "explanation": "dS refers to synonymous substitutions, dN to nonsynonymous substitutions, and their ratio is used as a proxy for selective pressure on protein-coding genes."
       },
       {
         "prompt": "In node dating, fossils are used to constrain the ages of internal ________, setting minimum bounds based on the fossil’s age. In contrast, tip dating incorporates ________ directly, allowing their placement in the tree alongside extant taxa.",

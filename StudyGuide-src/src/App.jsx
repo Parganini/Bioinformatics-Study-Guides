@@ -956,7 +956,7 @@ function MPExamPanel({ lang }) {
           <article key={exam.id} className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
             <div className="flex items-center justify-between gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-stone-950 text-sm font-black text-white">{exam.id}</span>
-              <span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{exam.questions?.length || 0}{exam.openEnded ? " + 1" : ""}</span>
+              <span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{(exam.questions?.length || 0) + (exam.fillBlanks?.length || 0)}{exam.openEnded ? " + 1" : ""}</span>
             </div>
             <h3 className="mt-4 text-2xl font-black tracking-tight text-stone-950">{exam.title}</h3>
             <p className="mt-2 min-h-[4.5rem] text-sm font-semibold leading-6 text-stone-600">{exam.subtitle}</p>
@@ -987,6 +987,8 @@ function MPMockExamPage({ lang, examNo }) {
     );
   }
   const questions = exam.questions || [];
+  const fillBlanks = exam.fillBlanks || [];
+  const writtenCopy = phyloWrittenPracticeCopy(lang);
   const answeredCount = Object.keys(answers).length;
   const correctCount = questions.reduce((total, question, index) => total + (answers[index] === question.answer ? 1 : 0), 0);
   return (
@@ -1026,6 +1028,18 @@ function MPMockExamPage({ lang, examNo }) {
           ))}
         </div>
       </section>
+
+      {fillBlanks.length > 0 && (
+        <section className="mt-8 rounded-[2.5rem] border border-stone-200 bg-white/75 p-5 shadow-sm md:p-6">
+          <div className="mb-5">
+            <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{writtenCopy.fillTitle}</div>
+            <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-stone-600">{writtenCopy.fillBody}</p>
+          </div>
+          <div className="grid gap-4 lg:grid-cols-2">
+            {fillBlanks.map((item, index) => <FillBlankCard key={`${exam.id}-fill-${index}-${item.prompt}`} item={item} index={index} copy={writtenCopy} />)}
+          </div>
+        </section>
+      )}
 
       {exam.openEnded && (
         <section className="mt-8 rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm md:p-8">

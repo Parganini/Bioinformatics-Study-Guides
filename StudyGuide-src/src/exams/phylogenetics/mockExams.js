@@ -2971,5 +2971,439 @@ export const PHYLO_MOCK_EXAMS = [
         ]
       }
     ]
+  },
+  {
+    "id": "07",
+    "title": "Mock Exam 7",
+    "subtitle": "Screenshot-based practice exam with 27 closed questions and one short open-ended prompt.",
+    "sourceLabel": "Source screenshots",
+    "questions": [
+      {
+        "kind": "exam",
+        "question": "Phylogenetic trees are — choose the wrong one:",
+        "options": [
+          "Direct observations of speciation events.",
+          "Hypotheses on the past.",
+          "A representation of evolutionary histories.",
+          "Tools to study the relationships among organisms."
+        ],
+        "answer": 0,
+        "optionExplanations": [
+          "Correct — this is the wrong statement. Phylogenetic trees are inferred hypotheses; we usually cannot directly observe historical speciation events.",
+          "This is true: trees are hypotheses about evolutionary history and the past.",
+          "This is true: trees represent possible evolutionary histories among taxa.",
+          "This is true: trees are tools for studying relationships among organisms."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "The scale of a phylogenetic tree can be:",
+        "options": [
+          "Number of substitutions.",
+          "Time, expressed as years.",
+          "Generations.",
+          "All of the above, depending on the data and tree type."
+        ],
+        "answer": 3,
+        "optionExplanations": [
+          "This is possible for a phylogram, where branch lengths represent amount of change.",
+          "This is possible for a chronogram or time tree.",
+          "This can be meaningful in population-genetic or coalescent contexts.",
+          "Correct — branch scale depends on the tree and analysis: substitutions, time, generations, or sometimes no meaningful scale in a cladogram."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "An outgroup is:",
+        "options": [
+          "A species included in the analysis that shares no single gene with the others.",
+          "A randomly chosen species to test model robustness.",
+          "A taxon known to fall outside the group of interest, used to root the tree.",
+          "A taxon used to calibrate molecular clocks using fossil data."
+        ],
+        "answer": 2,
+        "optionExplanations": [
+          "An outgroup should still be homologously comparable; it is outside the ingroup, not gene-incomparable.",
+          "Outgroups are chosen based on prior phylogenetic knowledge, not at random.",
+          "Correct — an outgroup lies outside the ingroup and helps polarize/root the tree.",
+          "Calibration taxa or fossils are used for dating; that is not the definition of an outgroup."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "The root of a phylogenetic tree is:",
+        "options": [
+          "The specific location where two species happen to share identical DNA sequences across a site.",
+          "The most recently evolved lineage in the tree.",
+          "The node representing the most recent common ancestor of all taxa in the tree.",
+          "A terminal branch that points to a species no longer existing, inferred from fossil evidence."
+        ],
+        "answer": 2,
+        "optionExplanations": [
+          "Shared sequence states are character observations, not the tree root.",
+          "The root is ancestral, not the newest lineage.",
+          "Correct — the root represents the MRCA of all taxa included and gives direction to the tree.",
+          "A fossil terminal branch can be a tip; it is not the root by definition."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "Which of the following is a desirable characteristic of a trait used in phylogenetic analysis?",
+        "options": [
+          "It varies randomly within species, sometimes also depending on the environment.",
+          "It is heritable and varies among species.",
+          "It is beautiful.",
+          "It is only found in one individual."
+        ],
+        "answer": 1,
+        "optionExplanations": [
+          "Random within-species or environmental variation is noise unless properly modeled.",
+          "Correct — useful phylogenetic traits should be heritable and informative among taxa.",
+          "Aesthetic value is irrelevant to phylogenetic informativeness.",
+          "A trait found in one individual is not useful for reconstructing relationships among taxa."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "Neighbour Joining is a:",
+        "options": [
+          "Character-based phylogenetic method.",
+          "Peculiar type of phylogenetic tree, used only at a shallower taxonomic scale.",
+          "Distance-based phylogenetic method.",
+          "Kind of data type used in Bayesian phylogenetics only."
+        ],
+        "answer": 2,
+        "optionExplanations": [
+          "Character-based methods score trees using individual sites/characters; NJ starts from a distance matrix.",
+          "Neighbour Joining is an algorithm, not a tree type restricted to shallow analyses.",
+          "Correct — NJ uses pairwise distances and produces an unrooted tree.",
+          "NJ is not a Bayesian data type."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "Maximum Parsimony is a:",
+        "options": [
+          "Distance-based phylogenetic method.",
+          "Specific bias in phylogenomics, associated with extremely low rates of evolutionary change.",
+          "Character-based phylogenetic method.",
+          "Specific step performed only in Maximum Likelihood algorithms."
+        ],
+        "answer": 2,
+        "optionExplanations": [
+          "Parsimony does not collapse an alignment into a distance matrix; it scores character-state changes on trees.",
+          "Parsimony can be biased by long branch attraction, but it is not itself a bias.",
+          "Correct — maximum parsimony is character-based and seeks the tree requiring the fewest changes.",
+          "Parsimony is its own inference criterion, not a required ML-only step."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "Which one is a branch support metric?",
+        "options": [
+          "General Time Reversible.",
+          "Metropolis-Hastings.",
+          "Jackknife.",
+          "Nearest Neighbor Interchange."
+        ],
+        "answer": 2,
+        "optionExplanations": [
+          "GTR is a substitution model, not a support metric.",
+          "Metropolis-Hastings is an MCMC acceptance algorithm, not branch support.",
+          "Correct — jackknife support is based on resampling/removing parts of the data and checking whether splits persist.",
+          "NNI is a tree rearrangement/proposal move, not a support metric."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "Which one is a substitution model?",
+        "options": [
+          "Bootstrap.",
+          "General Time Reversible.",
+          "Subtree Pruning and Regrafting.",
+          "Dirichlet prior."
+        ],
+        "answer": 1,
+        "optionExplanations": [
+          "Bootstrap is a support/resampling procedure.",
+          "Correct — GTR is a nucleotide substitution model.",
+          "SPR is a tree rearrangement move used during tree search.",
+          "A Dirichlet prior is a Bayesian prior distribution, not a substitution model."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "What is Incomplete Lineage Sorting (ILS) in phylogenetic analysis?",
+        "options": [
+          "Ancestral polymorphisms persist across speciation, and alleles sort into descendants in a way that may not match the species tree.",
+          "It occurs when there is no genetic variation between species in a particular gene.",
+          "It is the phenomenon where all genes evolve at the same rate across all lineages.",
+          "A phenomenon that occurs when the gene tree matches the species tree exactly, without discordance."
+        ],
+        "answer": 0,
+        "optionExplanations": [
+          "Correct — ILS is caused by ancestral variation persisting through speciation and being sorted differently among descendants.",
+          "No genetic variation would not create alternative gene tree histories.",
+          "Equal rates describe a clock-like process, not ILS.",
+          "ILS is a cause of gene tree/species tree discordance, not perfect agreement."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "Homology is:",
+        "options": [
+          "Similarity due to convergent evolution, regardless of function.",
+          "Similarity due to shared ancestry, regardless of function.",
+          "Similarity due to convergent evolution, implying a similar function.",
+          "Similarity due to shared ancestry, implying a similar function."
+        ],
+        "answer": 1,
+        "optionExplanations": [
+          "Convergent similarity is homoplasy, not homology.",
+          "Correct — homology means shared ancestry; function may be conserved or may differ.",
+          "Convergence can produce similar functions, but that is not homology.",
+          "Shared ancestry is right, but similar function is not required for homology."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "Homoplasy refers to:",
+        "options": [
+          "Similarity caused by shared ancestry and inherited from a common ancestor.",
+          "A trait that is uniquely passed down from the last universal common ancestor without any change.",
+          "Similarity that evolved independently in different lineages due to convergent evolution.",
+          "The duplication of a gene that leads to identical traits in unrelated species."
+        ],
+        "answer": 2,
+        "optionExplanations": [
+          "That describes homology/synapomorphy depending on context, not homoplasy.",
+          "That is not the meaning of homoplasy and would not describe independent similarity.",
+          "Correct — homoplasy is similarity not due to the focal common ancestry, often from convergence or reversal.",
+          "Gene duplication produces paralogy; it is not the definition of homoplasy."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "How many possible unrooted topological resolutions has a quartet?",
+        "options": [
+          "01",
+          "03",
+          "12",
+          "15"
+        ],
+        "answer": 1,
+        "optionExplanations": [
+          "A quartet has more than one possible unrooted resolved topology.",
+          "Correct — four taxa have three possible unrooted binary resolutions.",
+          "Twelve is not the standard number of unrooted quartet resolutions.",
+          "Fifteen is associated with rooted resolutions for four taxa, not unrooted quartet resolutions."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "In Bayesian inference the burn-in is…",
+        "options": [
+          "A correction factor used when substitution rates vary among sites.",
+          "An estimate of the proportion of missing or ambiguous positions in a sequence alignment.",
+          "The initial portion of the MCMC chain that is discarded before convergence is reached.",
+          "A count of all trees not included in a bootstrap consensus due to instability in topology."
+        ],
+        "answer": 2,
+        "optionExplanations": [
+          "Rate variation among sites is often modeled with gamma or mixture models, not burn-in.",
+          "Missing/ambiguous positions are alignment properties, not burn-in.",
+          "Correct — burn-in removes early MCMC samples before the chain reaches the target/stationary distribution.",
+          "Bootstrap consensus is a different support framework."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "Which of the following best describes the primary advantage of using a mixture model in phylogenetics?",
+        "options": [
+          "They assume all sites evolve under a single model.",
+          "They allow for the combination of multiple components to better account for heterogeneity.",
+          "They are used exclusively for estimating divergence times.",
+          "Sites are a priori assigned exclusively to a single substitution model."
+        ],
+        "answer": 1,
+        "optionExplanations": [
+          "A single model for all sites is the simpler approach that mixture models try to improve on.",
+          "Correct — mixture models let sites be probabilistically described by multiple components, improving treatment of heterogeneity.",
+          "Dating uses clock/calibration models; mixture models are broader sequence-evolution models.",
+          "A priori assignment is characteristic of partition models, not mixture models."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "In phylogenetics the gamma distribution is often used to:",
+        "options": [
+          "Model among-site variation.",
+          "Align sequences.",
+          "Be a component of the Metropolis-Hastings algorithm.",
+          "Estimate branch lengths in nucleotide substitution models."
+        ],
+        "answer": 0,
+        "optionExplanations": [
+          "Correct — +Γ/+G models rate heterogeneity among sites.",
+          "Sequence alignment is done by alignment algorithms such as MAFFT or PRANK, not gamma.",
+          "Metropolis-Hastings is an MCMC acceptance rule; gamma is not its defining component here.",
+          "Branch lengths are estimated during tree inference; gamma specifically models rate variation across sites."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "What is a likely effect of systematic biases in phylogenomics?",
+        "options": [
+          "They are eliminated simply by adding more data.",
+          "They persist as long as model assumptions are violated, regardless of the amount of data.",
+          "They only affect small datasets, not large ones.",
+          "They are easily addressed by using a large number of parametric bootstrap replicates."
+        ],
+        "answer": 1,
+        "optionExplanations": [
+          "Adding data helps stochastic error, but can reinforce systematic bias if the model is wrong.",
+          "Correct — systematic bias comes from model violation and can remain or even become more confidently supported with more data.",
+          "Large datasets can still be systematically biased; sometimes the problem becomes more convincing, not less.",
+          "Parametric bootstrap does not automatically fix model misspecification and can itself be sensitive to it."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "What is a multiple sequence alignment?",
+        "options": [
+          "A tree-building algorithm that uses substitution models to infer evolutionary relationships.",
+          "A technique for assembling genomes from raw reads.",
+          "A method for comparing gene expression levels across species.",
+          "A method to identify regions of similarity due to functional, structural, or evolutionary relationships among sequences."
+        ],
+        "answer": 3,
+        "optionExplanations": [
+          "Tree-building comes after alignment in many workflows; it is not the definition of MSA.",
+          "Genome assembly reconstructs sequences from reads, whereas MSA compares homologous sequences.",
+          "Expression comparison is transcriptomics, not sequence alignment.",
+          "Correct — MSA arranges sequences so homologous or comparable positions are placed in columns."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "What is a potential limitation of concatenation in phylogenetics?",
+        "options": [
+          "It cannot handle protein sequences.",
+          "It assumes that all genes evolved under the same tree, ignoring gene tree discordance.",
+          "It is only used for mitochondrial genomes.",
+          "It removes informative sites from alignments."
+        ],
+        "answer": 1,
+        "optionExplanations": [
+          "Concatenation can be applied to nucleotide or protein alignments.",
+          "Correct — concatenation usually imposes a single underlying topology and may ignore gene tree discordance from ILS, HGT, introgression, or other processes.",
+          "Concatenation is widely used for nuclear, mitochondrial, plastid, and genomic datasets.",
+          "Removing sites is filtering/trimming, not concatenation itself."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "Which support metric is more sensitive to model misspecification?",
+        "options": [
+          "Parametric bootstrap.",
+          "Non-parametric bootstrap."
+        ],
+        "answer": 0,
+        "optionExplanations": [
+          "Correct — parametric bootstrap simulates data under a chosen model, so wrong model assumptions can strongly affect the result.",
+          "Non-parametric bootstrap resamples observed alignment columns and is usually less directly dependent on a single simulation model."
+        ]
+      },
+      {
+        "kind": "exam",
+        "question": "Why is it problematic to perform correlation analyses of traits without considering phylogenetic relationships?",
+        "options": [
+          "Trait values are always measured incorrectly.",
+          "Because species are independent data points by default.",
+          "Because correlation tests only work on genetic sequences.",
+          "Related species may share traits due to common ancestry, violating the assumption of independence."
+        ],
+        "answer": 3,
+        "optionExplanations": [
+          "Measurement error can happen, but it is not the phylogenetic-comparative problem being asked here.",
+          "This is the opposite of the issue: species are often not independent because of shared ancestry.",
+          "Correlation tests can be used for many data types, including traits.",
+          "Correct — phylogenetic relatedness creates non-independence, so comparative methods account for shared ancestry."
+        ]
+      }
+    ],
+    "fillBlanks": [
+      {
+        "prompt": "Distance-based phylogenetic methods do not rely on an ________, while character-based methods incorporate an explicit one.",
+        "answer": "evolutionary model / model of sequence evolution",
+        "accepted": [
+          "evolutionary model",
+          "model of sequence evolution",
+          "substitution model",
+          "explicit evolutionary model"
+        ],
+        "explanation": "Distance-based methods mainly use a distance matrix, whereas ML and Bayesian character-based methods explicitly score characters using a model of sequence evolution."
+      },
+      {
+        "prompt": "Sequence saturation occurs when multiple ________ happen at the same site, making it difficult to infer the true number of ________ between sequences.",
+        "answer": "substitutions; substitutions",
+        "accepted": [
+          "substitutions substitutions",
+          "substitutions changes",
+          "changes substitutions",
+          "changes changes",
+          "multiple substitutions true substitutions"
+        ],
+        "explanation": "Saturation hides the real number of evolutionary changes because the same site has changed repeatedly."
+      },
+      {
+        "prompt": "The Metropolis-Hastings algorithm is used in ________ methods to decide if a new ________ should be ________ based on how well it fits the data.",
+        "answer": "Bayesian; tree/state/proposal; accepted",
+        "accepted": [
+          "bayesian tree accepted",
+          "bayesian state accepted",
+          "bayesian proposal accepted",
+          "mcmc tree accepted",
+          "bayesian inference tree accepted"
+        ],
+        "explanation": "In Bayesian MCMC, Metropolis-Hastings decides whether a proposed new state, often including a tree and parameters, is accepted into the chain."
+      },
+      {
+        "prompt": "In codon-based models, dS represents the rate of ________ substitutions per ________ site. The dN/dS reflects the action of ________.",
+        "answer": "synonymous; synonymous; selection",
+        "accepted": [
+          "synonymous synonymous selection",
+          "synonymous substitutions synonymous site selection",
+          "synonymous synonymous sites selection"
+        ],
+        "explanation": "dS is the rate of synonymous substitution per synonymous site; comparing dN and dS gives information about selective pressure on protein-changing substitutions."
+      },
+      {
+        "prompt": "In node dating, fossils are used to constrain the ages of internal ________, setting minimum bounds based on the fossil’s age. In contrast, tip dating incorporates ________ directly, allowing their placement in the tree alongside extant taxa.",
+        "answer": "nodes; dated samples/tips",
+        "accepted": [
+          "nodes dated samples",
+          "nodes dated tips",
+          "nodes fossil tips",
+          "nodes ancient samples",
+          "nodes sampled tips"
+        ],
+        "explanation": "Node dating constrains internal nodes, while tip dating uses samples with known ages, such as ancient DNA or viruses sampled at known dates."
+      },
+      {
+        "prompt": "Paralogous genes arise from gene ________ events, while orthologous genes arise from gene ________ events.",
+        "answer": "duplication; speciation",
+        "accepted": [
+          "duplication speciation",
+          "duplications speciation",
+          "duplication speciation events"
+        ],
+        "explanation": "Paralogy is produced by gene duplication; orthology traces gene divergence through speciation."
+      }
+    ],
+    "openEnded": {
+      "prompt": "Briefly explain what an orthogroup is and how it relates to the concept of orthology. Also, what is a 1-to-1 orthogroup?",
+      "sampleAnswer": "An orthogroup is a set of homologous genes that descend from a single gene in the last common ancestor of the species being considered, so it can include orthologs and sometimes paralogs produced within that reference group. Orthology is the relationship between genes separated by speciation, while paralogy comes from duplication. A 1-to-1 orthogroup contains one gene from each species, making it especially useful because it avoids within-species duplicates and is easier to treat as a single-copy marker."
+    }
   }
 ];

@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1F1UK7JpTC8Sm8arnNC9mfXnj8aLxbzqZ/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1kYvSq04ZeL3mt3GbLNdNwmaAqFImS8CgG70t_9NQWnA/edit?usp=drivesdk";
-const CLASS_RECORDING_URL = "#";
+const CLASS_RECORDING_URL = "https://www.youtube.com/watch?v=SQtYHrV1y-U&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=1";
 
 const LESSON_COPY = {
   "en": {

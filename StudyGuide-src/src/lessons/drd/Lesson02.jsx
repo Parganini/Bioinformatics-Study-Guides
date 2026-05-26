@@ -63,6 +63,222 @@ const LESSON2_IMAGE_BANK = {
   scalingBoxplots: { src: scalingBoxplotsSlide, slide: 42 }
 };
 
+
+const EXAM_UI_COPY = {
+  en: {
+    zoom: "Click to zoom",
+    closeZoom: "Close zoom",
+    expand: "Open expanded answer",
+    include: "What to include",
+    trap: "Common trap",
+    model: "Sample answer"
+  },
+  es: {
+    zoom: "Haz clic para ampliar",
+    closeZoom: "Cerrar zoom",
+    expand: "Ver respuesta ampliada",
+    include: "Qué deberías incluir",
+    trap: "Trampa frecuente",
+    model: "Respuesta modelo"
+  },
+  fa: {
+    zoom: "برای بزرگ‌نمایی کلیک کنید",
+    closeZoom: "بستن بزرگ‌نمایی",
+    expand: "پاسخ بازشده را ببینید",
+    include: "چه چیزهایی را باید بیاورید",
+    trap: "اشتباه رایج",
+    model: "پاسخ نمونه"
+  }
+};
+
+function getExamUi(lang = "es") {
+  return EXAM_UI_COPY[lang] || EXAM_UI_COPY.es;
+}
+
+function firstSentence(text = "") {
+  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  if (!clean) return "";
+  const match = clean.match(/.*?[.!?](?:\s|$)/);
+  return (match ? match[0] : clean).trim();
+}
+
+function getExamTrap(item, lang = "es") {
+  const haystack = `${item?.title || ""} ${item?.exam || ""} ${item?.professor || ""}`.toLowerCase();
+  if (/ma-?plot/.test(haystack)) {
+    return lang === "en"
+      ? "Do not stop at saying ‘it is a microarray graph’. Define M and A, and explain what a good normalized cloud looks like."
+      : lang === "fa"
+        ? "فقط نگویید «یک نمودار میکروآرایه است». باید M و A را تعریف کنید و بگویید ابر نرمال‌شده چه شکلی دارد."
+        : "No te quedes en ‘es una gráfica de microarrays’. Hay que definir M y A y decir cómo se ve una nube bien normalizada.";
+  }
+  if (/competitive|cy3|cy5|two-colou?r|array/.test(haystack)) {
+    return lang === "en"
+      ? "Do not forget the technical side: two samples, same chip, two dyes, two lasers, competition for the same probe, dye bias and normalization."
+      : lang === "fa"
+        ? "بخش فنی را فراموش نکنید: دو نمونه، یک چیپ، دو رنگ، دو لیزر، رقابت برای یک probe، bias رنگ و normalization."
+        : "No olvides la parte técnica: dos muestras, un chip, dos dyes, dos láseres, competición por el mismo probe, dye bias y normalización.";
+  }
+  if (/replicat|donor|donante/.test(haystack)) {
+    return lang === "en"
+      ? "A classic mistake is calling different donors ‘replicates’. Replicates estimate technical variability; donors introduce biological variability."
+      : lang === "fa"
+        ? "اشتباه کلاسیک این است که donorهای مختلف را «replicate» بنامیم. replicate تغییرپذیری فنی را می‌سنجد؛ donor تغییرپذیری زیستی را وارد می‌کند."
+        : "La trampa clásica es llamar ‘replicados’ a donantes distintos. Los replicados estiman variabilidad técnica; los donantes introducen variabilidad biológica.";
+  }
+  if (/mirna|sirna/.test(haystack)) {
+    return lang === "en"
+      ? "Do not mix miRNA and siRNA: miRNA usually acts with partial complementarity, whereas siRNA is classically described with perfect complementarity and cleavage."
+      : lang === "fa"
+        ? "miRNA و siRNA را یکی نگیرید: miRNA معمولاً مکمل‌بودن جزئی دارد، اما siRNA به‌صورت کلاسیک با مکمل‌بودن کامل و cleavage توضیح داده می‌شود."
+        : "No mezcles miRNA y siRNA: miRNA suele actuar con complementariedad parcial, mientras que siRNA se describe clásicamente con complementariedad perfecta y cleavage.";
+  }
+  if (/methyl|metil/.test(haystack)) {
+    return lang === "en"
+      ? "Do not present methylation rules as fully solved causality. The lecture explicitly says these associations are useful, but causality is not completely resolved."
+      : lang === "fa"
+        ? "قواعد متیلاسیون را به‌صورت علیت کاملاً حل‌شده ارائه نکنید. خود درس می‌گوید این روابط مفیدند اما علیت هنوز کاملاً روشن نیست."
+        : "No presentes las reglas de metilación como causalidad completamente resuelta. La clase dice explícitamente que son asociaciones útiles, pero la causalidad no está cerrada.";
+  }
+  if (/boxplot|iqr|outlier/.test(haystack)) {
+    return lang === "en"
+      ? "Do not confuse mean/SD with median/IQR. If you mention boxplots, explain quartiles and why outliers are defined from the interquartile range."
+      : lang === "fa"
+        ? "میانگین/انحراف معیار را با میانه/IQR قاطی نکنید. اگر از boxplot حرف می‌زنید باید quartileها و تعریف outlier از IQR را توضیح دهید."
+        : "No confundas media/SD con mediana/IQR. Si hablas de boxplot, explica los cuartiles y por qué los outliers se definen desde el IQR.";
+  }
+  return lang === "en"
+    ? "Avoid a generic answer. Define the concept first, then connect it to the experimental logic of the lesson."
+    : lang === "fa"
+      ? "پاسخ را خیلی کلی ندهید. اول مفهوم را تعریف کنید و بعد آن را به منطق آزمایشی درس وصل کنید."
+      : "Evita una respuesta genérica. Primero define el concepto y después conéctalo con la lógica experimental de la lección.";
+}
+
+function getExamModel(item, lang = "es") {
+  const haystack = `${item?.title || ""} ${item?.exam || ""}`.toLowerCase();
+  if (/ma-?plot/.test(haystack)) {
+    return lang === "en"
+      ? "An MA-plot represents M as the log2 ratio between the two channels and A as the average log intensity. It is used to visualize dye bias, check whether the cloud is centred around M = 0, and judge whether normalization made the distribution parallel to the x-axis."
+      : lang === "fa"
+        ? "MA-plot در محور M نسبت log2 دو کانال و در محور A میانگین شدت log را نشان می‌دهد. از آن برای دیدن dye bias، بررسی تمرکز ابر حول M=0 و قضاوت دربارهٔ موفقیت normalization استفاده می‌شود."
+        : "Un MA-plot representa en M el ratio log2 entre los dos canales y en A la intensidad media log. Sirve para visualizar el dye bias, comprobar si la nube queda centrada alrededor de M = 0 y juzgar si la normalización dejó la distribución paralela al eje x.";
+  }
+  if (/competitive|cy3|cy5|two-colou?r|array/.test(haystack)) {
+    return lang === "en"
+      ? "A competitive array places two labelled samples on the same chip, so both populations compete for the same probe. The readout is a colour ratio, but because Cy3 and Cy5 do not behave identically, quality control and normalization are essential before interpreting expression changes."
+      : lang === "fa"
+        ? "در competitive array دو نمونهٔ برچسب‌خورده روی یک چیپ قرار می‌گیرند و برای همان probe رقابت می‌کنند. خروجی یک نسبت رنگی است، اما چون Cy3 و Cy5 یکسان رفتار نمی‌کنند، قبل از تفسیر تغییرات بیان باید QC و normalization انجام شود."
+        : "En un competitive array dos muestras marcadas se colocan en el mismo chip y compiten por el mismo probe. La lectura es un ratio de color, pero como Cy3 y Cy5 no se comportan igual, hacen falta QC y normalización antes de interpretar cambios de expresión.";
+  }
+  if (/replicat|donor|donante/.test(haystack)) {
+    return lang === "en"
+      ? "Technical replicates reuse the same biological sample and therefore estimate experimental variability. Different donors are not replicates, because they add genuine biological variability on top of the technical noise of the method."
+      : lang === "fa"
+        ? "replicate فنی همان نمونهٔ زیستی را دوباره اندازه می‌گیرد و بنابراین تغییرپذیری آزمایشی را برآورد می‌کند. donorهای مختلف replicate نیستند، چون علاوه بر نویز فنی، تغییرپذیری واقعی زیستی را وارد می‌کنند."
+        : "Los replicados técnicos reutilizan la misma muestra biológica y por eso estiman variabilidad experimental. Donantes distintos no son replicados, porque añaden variabilidad biológica real encima del ruido técnico del método.";
+  }
+  if (/mirna|sirna/.test(haystack)) {
+    return lang === "en"
+      ? "The lecture presents miRNA as a small regulatory RNA that usually binds with partial complementarity and represses translation, while siRNA is described with perfect complementarity and cleavage of the target mRNA."
+      : lang === "fa"
+        ? "درس miRNA را به‌صورت RNA تنظیمی کوچک با مکمل‌بودن جزئی و سرکوب ترجمه معرفی می‌کند، در حالی که siRNA با مکمل‌بودن کامل و cleavage mRNA هدف توضیح داده می‌شود."
+        : "La clase presenta al miRNA como un RNA regulador pequeño que suele unirse con complementariedad parcial y reprimir la traducción, mientras que el siRNA se describe con complementariedad perfecta y corte del mRNA diana.";
+  }
+  if (/methyl|metil/.test(haystack)) {
+    return lang === "en"
+      ? "DNA methylation refers mainly to methylation of cytosines in CpG contexts. It is relevant because it changes with cell type, stimuli and age, and because it can be used as a biomarker, although the lecture stresses that causality is still not fully resolved."
+      : lang === "fa"
+        ? "متیلاسیون DNA عمدتاً به متیله‌شدن سیتوزین‌ها در زمینهٔ CpG اشاره دارد. این موضوع مهم است چون با نوع سلول، محرک و سن تغییر می‌کند و می‌تواند biomarker باشد، هرچند خود درس تأکید می‌کند که علیت هنوز کاملاً روشن نشده است."
+        : "La metilación del DNA se refiere sobre todo a la metilación de citosinas en contextos CpG. Es relevante porque cambia con el tipo celular, los estímulos y la edad, y porque puede usarse como biomarcador, aunque la clase insiste en que la causalidad no está completamente resuelta.";
+  }
+  if (/boxplot|iqr|outlier/.test(haystack)) {
+    return lang === "en"
+      ? "A boxplot summarizes ranked data through quartiles, with the box spanning Q1 to Q3 and the median inside. The interquartile range is Q3 − Q1, and outliers are defined as values that fall well beyond that central range."
+      : lang === "fa"
+        ? "boxplot داده‌های رتبه‌بندی‌شده را با quartileها خلاصه می‌کند؛ جعبه از Q1 تا Q3 است و میانه درون آن قرار می‌گیرد. IQR برابر Q3−Q1 است و outlierها مقادیری هستند که به‌وضوح بیرون از این بازهٔ مرکزی می‌افتند."
+        : "Un boxplot resume datos ordenados mediante cuartiles: la caja va de Q1 a Q3 y la mediana queda dentro. El IQR es Q3 − Q1, y los outliers son los valores que caen claramente fuera de ese rango central.";
+  }
+  const body = firstSentence(item?.body || "");
+  const professor = firstSentence(item?.professor || "");
+  return lang === "en"
+    ? `Start by defining ${item?.title || "the concept"}. Then connect it to the lecture's message: ${body} ${professor}`.trim()
+    : lang === "fa"
+      ? `با تعریف ${item?.title || "مفهوم اصلی"} شروع کنید. سپس آن را به پیام درس وصل کنید: ${body} ${professor}`.trim()
+      : `Empieza definiendo ${item?.title || "el concepto central"}. Después conéctalo con el mensaje de la clase: ${body} ${professor}`.trim();
+}
+
+function getExamInclude(item, lang = "es") {
+  const body = firstSentence(item?.body || "");
+  const professor = firstSentence(item?.professor || "");
+  if (lang === "en") {
+    return [
+      `Open with a one-sentence definition of ${item?.title || "the concept"}.`,
+      `Then include the lecture's key content: ${body}`,
+      `Finish with the nuance the professor emphasizes: ${professor}`
+    ];
+  }
+  if (lang === "fa") {
+    return [
+      `با یک تعریف یک‌جمله‌ای از ${item?.title || "مفهوم اصلی"} شروع کنید.`,
+      `بعد ایدهٔ کلیدی درس را وارد کنید: ${body}`,
+      `در پایان نکته‌ای را بگویید که استاد روی آن تأکید کرده است: ${professor}`
+    ];
+  }
+  return [
+    `Abre con una definición de una frase sobre ${item?.title || "el concepto central"}.`,
+    `Después mete la idea clave de la clase: ${body}`,
+    `Cierra con el matiz que la profesora remarca: ${professor}`
+  ];
+}
+
+function ZoomableFigure({ src, alt, lang = "es", className = "" }) {
+  const [open, setOpen] = useState(false);
+  const ui = getExamUi(lang);
+  return <>
+    <button type="button" onClick={() => setOpen(true)} className="group relative block h-full w-full cursor-zoom-in text-left">
+      <img src={src} alt={alt} loading="lazy" className={className} />
+      <span className="pointer-events-none absolute bottom-3 right-3 rounded-full border border-stone-200 bg-white/95 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-stone-700 shadow-sm transition group-hover:-translate-y-0.5">{ui.zoom}</span>
+    </button>
+    {open && <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/80 p-4" onClick={() => setOpen(false)}>
+      <div className="relative w-full max-w-6xl rounded-[2rem] border border-stone-200 bg-white p-3 shadow-2xl" onClick={e => e.stopPropagation()}>
+        <button type="button" onClick={() => setOpen(false)} className="absolute right-5 top-5 z-10 rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-stone-700 shadow-sm transition hover:bg-stone-50">{ui.closeZoom}</button>
+        <div className="rounded-[1.5rem] bg-stone-50 p-2">
+          <img src={src} alt={alt} className="max-h-[82vh] w-full rounded-[1.25rem] object-contain" />
+        </div>
+      </div>
+    </div>}
+  </>;
+}
+
+function ExamWatchCard({ item, lang = "es", label }) {
+  const ui = getExamUi(lang);
+  const include = getExamInclude(item, lang);
+  const trap = getExamTrap(item, lang);
+  const model = getExamModel(item, lang);
+  return <div className="mt-3 rounded-2xl border border-red-200 bg-red-50 p-4">
+    <div className="text-xs font-black uppercase tracking-[0.16em] text-red-700">{label}</div>
+    <p className="mt-1 text-sm font-bold leading-6 text-red-950">{item.exam}</p>
+    <details className="mt-3 rounded-2xl border border-red-200/80 bg-white/80 p-3 open:bg-white">
+      <summary className="cursor-pointer list-none text-sm font-black text-red-800 marker:hidden">{ui.expand}</summary>
+      <div className="mt-3 space-y-3 text-sm font-semibold leading-6 text-stone-700">
+        <div>
+          <div className="text-[11px] font-black uppercase tracking-[0.16em] text-stone-500">{ui.include}</div>
+          <ul className="mt-2 space-y-2">
+            {include.map(point => <li key={point} className="flex gap-2"><span className="mt-1 text-red-600">•</span><span>{point}</span></li>)}
+          </ul>
+        </div>
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-3">
+          <div className="text-[11px] font-black uppercase tracking-[0.16em] text-amber-800">{ui.trap}</div>
+          <p className="mt-1 font-bold text-amber-950">{trap}</p>
+        </div>
+        <div className="rounded-2xl border border-stone-200 bg-stone-50 p-3">
+          <div className="text-[11px] font-black uppercase tracking-[0.16em] text-stone-500">{ui.model}</div>
+          <p className="mt-1 font-bold text-stone-900">{model}</p>
+        </div>
+      </div>
+    </details>
+  </div>;
+}
+
 const LESSON2_VISUAL_COPY = {
   en: {
     labels: { professor: "Professor emphasis", exam: "Exam watch", slide: "Slide", open: "Open slides PDF" },
@@ -470,10 +686,10 @@ function Lesson2VisualBlock({ lang = "es", block }) {
   const local = LESSON2_VISUAL_COPY[lang] || LESSON2_VISUAL_COPY.es;
   const data = local.blocks[block];
   if (!data) return null;
-  const cols = data.items.length === 1 ? "lg:grid-cols-1" : data.items.length === 2 ? "lg:grid-cols-2" : "lg:grid-cols-2 xl:grid-cols-3";
+  const cols = data.items.length === 1 ? "lg:grid-cols-1" : "lg:grid-cols-2";
   return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
     <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"><SectionHeader eyebrow={data.eyebrow} title={data.title}>{data.intro}</SectionHeader><a href={SLIDES_URL} target="_blank" rel="noreferrer" className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-black text-red-800 transition hover:-translate-y-0.5 hover:bg-white">{local.labels.open}</a></div>
-    <div className={`grid gap-4 ${cols}`}>{data.items.map((item, idx) => { const figure = LESSON2_IMAGE_BANK[item.image]; return <article key={`${block}-${item.image}-${idx}`} className="overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm"><div className="aspect-[4/3] border-b border-stone-200 bg-white p-3"><img src={figure.src} alt={item.title} loading="lazy" className="h-full w-full rounded-2xl object-contain" /></div><div className="p-5"><Pill tone="red">{local.labels.slide} {figure.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{item.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p><div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-amber-800">{local.labels.professor}</div><p className="mt-1 text-sm font-bold leading-6 text-amber-950">{item.professor}</p></div><div className="mt-3 rounded-2xl border border-red-200 bg-red-50 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-red-700">{local.labels.exam}</div><p className="mt-1 text-sm font-bold leading-6 text-red-950">{item.exam}</p></div></div></article>; })}</div>
+    <div className={`grid gap-4 ${cols}`}>{data.items.map((item, idx) => { const figure = LESSON2_IMAGE_BANK[item.image]; const fullRow = data.items.length === 1 || (data.items.length % 2 === 1 && idx === data.items.length - 1); return <article key={`${block}-${item.image}-${idx}`} className={`overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm ${fullRow ? "lg:col-span-2 lg:grid lg:grid-cols-[0.95fr_1.05fr]" : ""}`}><div className={`aspect-[4/3] border-b border-stone-200 bg-white p-3 ${fullRow ? "lg:aspect-auto lg:border-b-0 lg:border-r" : ""}`}><ZoomableFigure src={figure.src} alt={item.title} lang={lang} className="h-full w-full rounded-2xl object-contain" /></div><div className="p-5"><Pill tone="red">{local.labels.slide} {figure.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{item.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p><div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-amber-800">{local.labels.professor}</div><p className="mt-1 text-sm font-bold leading-6 text-amber-950">{item.professor}</p></div><ExamWatchCard item={item} lang={lang} label={local.labels.exam} /></div></article>; })}</div>
   </section>;
 }
 

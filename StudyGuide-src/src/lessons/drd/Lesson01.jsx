@@ -1258,9 +1258,9 @@ const LESSON_COPY = {
 function getCopy(lang) { return LESSON_COPY[lang] || LESSON_COPY.es; }
 
 const RESOURCE_COPY = {
-  en: { resources: "Class resources", recording: "Class recording", recordingPending: "Recording link pending" },
-  es: { resources: "Recursos de clase", recording: "Grabación de la clase", recordingPending: "Link de grabación pendiente" },
-  fa: { resources: "منابع کلاس", recording: "ضبط کلاس", recordingPending: "لینک ضبط هنوز اضافه نشده" }
+  en: { resources: "Class resources", recording: "Recording", recordingPending: "Recording link pending" },
+  es: { resources: "Recursos de clase", recording: "Grabación", recordingPending: "Link de grabación pendiente" },
+  fa: { resources: "منابع کلاس", recording: "ضبط", recordingPending: "لینک ضبط هنوز اضافه نشده" }
 };
 
 function ResourceLinks({ copy, lang = "es" }) {

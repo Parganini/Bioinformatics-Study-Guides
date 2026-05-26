@@ -456,7 +456,7 @@ const COPY = {
     module: "Module", exam: "Exam", answer: "Answer", core: "Core", slides: "Slides PDF", transcript: "Transcript",
     bigIdea: "Big idea",
     bigIdeaText: "In competitive arrays, two labelled samples compete on the same chip; the biology is read through a colour ratio, but the ratio must be protected from technical colour bias.",
-    resources: "Class resources", recording: "Class recording",
+    resources: "Class resources", recording: "Recording",
     flowEyebrow: "Core workflow", flowTitle: "From RNA samples to comparable log-ratios", flowIntro: "The transcript repeatedly links every step to potential experimental variability: two tubes, two fluorochromes, two lasers, image processing and normalization.", activeStep: "Active step",
     flow: [
       ["1. Biological question", "Example from the lecture: does a stimulus, infection or treatment modify transcription in a specific biological model?"],
@@ -528,7 +528,7 @@ const COPY = {
     module: "Module", exam: "Examen", answer: "Respuesta", core: "Núcleo", slides: "Slides PDF", transcript: "Transcripción",
     bigIdea: "Idea central",
     bigIdeaText: "En los arrays competitivos, dos muestras marcadas compiten en el mismo chip; la biología se lee como un ratio de color, pero ese ratio debe protegerse del sesgo técnico del color.",
-    resources: "Recursos de clase", recording: "Grabación de la clase",
+    resources: "Recursos de clase", recording: "Grabación",
     flowEyebrow: "Workflow central", flowTitle: "De muestras de RNA a log-ratios comparables", flowIntro: "La transcripción conecta cada paso con posible variabilidad experimental: dos tubos, dos fluorocromos, dos láseres, procesamiento de imagen y normalización.", activeStep: "Paso activo",
     flow: [
       ["1. Pregunta biológica", "Ejemplo de la clase: ¿un estímulo, infección o tratamiento modifica la transcripción en un modelo biológico concreto?"],
@@ -600,7 +600,7 @@ const COPY = {
     module: "ماژول", exam: "امتحان", answer: "پاسخ", core: "هسته", slides: "PDF اسلایدها", transcript: "رونویسی",
     bigIdea: "ایدهٔ اصلی",
     bigIdeaText: "در آرایه‌های رقابتی، دو نمونهٔ برچسب‌دار روی یک chip رقابت می‌کنند؛ زیست‌شناسی از نسبت رنگ خوانده می‌شود، اما این نسبت باید از bias فنی رنگ محافظت شود.",
-    resources: "منابع کلاس", recording: "ضبط کلاس",
+    resources: "منابع کلاس", recording: "ضبط",
     flowEyebrow: "روند اصلی", flowTitle: "از نمونه‌های RNA تا log-ratioهای قابل مقایسه", flowIntro: "رونویسی هر گام را به تغییرپذیری آزمایشی وصل می‌کند: دو لوله، دو فلوروکروم، دو لیزر، پردازش تصویر و نرمال‌سازی.", activeStep: "گام فعال",
     flow: [
       ["۱. پرسش زیستی", "نمونهٔ درس: آیا محرک، عفونت یا درمان، transcription را در یک مدل زیستی خاص تغییر می‌دهد؟"],

@@ -132,7 +132,7 @@ const COPY = {
           model: "Competitive arrays compare two labelled samples on the same chip and read a colour ratio, so they are affected by Cy3/Cy5 bias and require intra-array normalization. Affymetrix GeneChip arrays are noncompetitive: one sample is hybridized on one chip and measured with one colour. This avoids the two-dye problem, but each chip must be made comparable to the others, and each transcript must be summarized from several probes. Therefore the key pipeline is background correction, normalization and summarization, often through RMA."
         },
         slides: [
-          { key: "affyTitle", title: "Affymetrix GeneChips: the new platform", body: "The lesson begins with history, technical aspects, data output, normalization and the evolution of these arrays." },
+          { key: "affyTitle", spotlight: true, title: "Affymetrix GeneChips: the new platform", body: "The lesson begins with history, technical aspects, data output, normalization and the evolution of these arrays." },
           { key: "photolithography", title: "Noncompetitive array fabrication", body: "This slide names the core manufacturing idea: in situ photolithographic synthesis, not spotting." }
         ]
       },
@@ -219,7 +219,7 @@ const COPY = {
           { key: "visualInspection", title: "Visual inspection", body: "Image inspection includes controls, feature quality and global artifacts." },
           { key: "featureQuality", title: "Feature quality", body: "Each small square must be good enough for reliable intensity extraction." },
           { key: "gridAlignment", title: "Grid alignment", body: "The software aligns the grid and extracts a central pixel region per feature." },
-          { key: "datCelProcessing", title: "DAT → CEL", body: "This is the key visual for the raw image becoming a processed intensity matrix." },
+          { key: "datCelProcessing", spotlight: true, title: "DAT → CEL", body: "This is the key visual for the raw image becoming a processed intensity matrix." },
           { key: "affyDataFlow", title: "Affymetrix data flow", body: "The diagram connects experimental information, DAT, CEL, CDF and downstream files." },
           { key: "fileTypes", title: "Affymetrix file types", body: "The slide lists probe information files, experiment files and result files." }
         ]
@@ -237,7 +237,7 @@ const COPY = {
         },
         slides: [
           { key: "probeVariationProblem", title: "Probe set variation", body: "The problem is not only between arrays; it also exists inside a probe set." },
-          { key: "spikeinProbeVariation", title: "Spike-in experiment", body: "The plot demonstrates that probe identity strongly affects intensity." }
+          { key: "spikeinProbeVariation", spotlight: true, title: "Spike-in experiment", body: "The plot demonstrates that probe identity strongly affects intensity." }
         ]
       },
       {
@@ -275,7 +275,7 @@ const COPY = {
         slides: [
           { key: "qcPlots", title: "QC plots in R", body: "Quality-control plots are used to inspect distributions and hybridization behaviour." },
           { key: "maPlotOneColor", title: "MA-plot for one-colour arrays", body: "Here M compares arrays rather than Cy3/Cy5 channels." },
-          { key: "beforeAfterRma", title: "MA-plots before/after RMA", body: "The visual shift shows why RMA matters before interpretation." },
+          { key: "beforeAfterRma", spotlight: true, title: "MA-plots before/after RMA", body: "The visual shift shows why RMA matters before interpretation." },
           { key: "boxplotsBeforeAfter", title: "Boxplots before/after RMA", body: "Boxplots should become comparable after preprocessing." }
         ]
       },
@@ -556,11 +556,14 @@ function ExamWatchCard({ data, copy }) {
 function SlideFigure({ figure, copy, onZoom, isFull, professor, exam }) {
   const image = IMG[figure.key];
   if (!image) return null;
-  return <article className={cn("overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm", isFull && "lg:col-span-2 lg:grid lg:grid-cols-[0.95fr_1.05fr]")}><button type="button" onClick={() => onZoom({ ...figure, ...image })} className={cn("group relative block w-full cursor-zoom-in border-b border-stone-200 bg-white p-3 text-left", isFull && "lg:border-b-0 lg:border-r")}><div className={cn("aspect-[4/3] w-full overflow-hidden rounded-2xl bg-white", isFull && "lg:aspect-auto lg:h-full")}><img src={image.src} alt={figure.title} loading="lazy" className="h-full w-full object-contain transition duration-300 group-hover:scale-[1.02]" /></div><span className="pointer-events-none absolute bottom-6 right-6 rounded-full border border-stone-200 bg-white/95 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-stone-700 shadow-sm transition group-hover:-translate-y-0.5">{copy.zoom}</span></button><div className="p-5"><Pill tone="red">{copy.slideLabel} {image.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{figure.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{figure.body}</p><div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-amber-800">{copy.professor}</div><p className="mt-1 text-sm font-bold leading-6 text-amber-950">{professor}</p></div><ExamWatchCard data={exam} copy={copy}/></div></article>;
+  const noteText = figure.professor || professor;
+  const examData = figure.exam || exam;
+  const showNotes = Boolean(isFull && (noteText || examData));
+  return <article className={cn("overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm", isFull && "lg:col-span-2 lg:grid lg:grid-cols-[0.95fr_1.05fr]")}><button type="button" onClick={() => onZoom({ ...figure, ...image })} className={cn("group relative block w-full cursor-zoom-in border-b border-stone-200 bg-white p-3 text-left", isFull && "lg:border-b-0 lg:border-r")}><div className={cn("aspect-[4/3] w-full overflow-hidden rounded-2xl bg-white", isFull && "lg:aspect-auto lg:h-full")}><img src={image.src} alt={figure.title} loading="lazy" className="h-full w-full object-contain transition duration-300 group-hover:scale-[1.02]" /></div><span className="pointer-events-none absolute bottom-6 right-6 rounded-full border border-stone-200 bg-white/95 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-stone-700 shadow-sm transition group-hover:-translate-y-0.5">{copy.zoom}</span></button><div className="p-5"><Pill tone="red">{copy.slideLabel} {image.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{figure.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{figure.body}</p>{showNotes && <><div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-amber-800">{copy.professor}</div><p className="mt-1 text-sm font-bold leading-6 text-amber-950">{noteText}</p></div><ExamWatchCard data={examData} copy={copy}/></>}</div></article>;
 }
 
 function SlideGrid({ slides = [], copy, onZoom, professor, exam }) {
-  return <div className="mt-6 grid gap-4 lg:grid-cols-2">{slides.map((figure, idx) => <SlideFigure key={`${figure.key}-${idx}`} figure={figure} copy={copy} onZoom={onZoom} professor={professor} exam={exam} isFull={slides.length % 2 === 1 && idx === slides.length - 1} />)}</div>;
+  return <div className="mt-6 grid gap-4 lg:grid-cols-2">{slides.map((figure, idx) => { const isFull = Boolean(figure.spotlight || (slides.length % 2 === 1 && idx === slides.length - 1)); return <SlideFigure key={`${figure.key}-${idx}`} figure={figure} copy={copy} onZoom={onZoom} professor={professor} exam={exam} isFull={isFull} />; })}</div>;
 }
 
 function ZoomModal({ item, copy, onClose }) {

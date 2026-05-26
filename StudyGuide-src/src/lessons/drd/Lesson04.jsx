@@ -1,17 +1,17 @@
-import React, { useMemo, useState } from "react";
-import module2OverviewVisual from "../../assets/drd/lesson04/module2-overview.svg";
-import reportRequirementsVisual from "../../assets/drd/lesson04/report-requirements.svg";
-import whyRVisual from "../../assets/drd/lesson04/why-r.svg";
-import functionsPackagesVisual from "../../assets/drd/lesson04/functions-packages.svg";
-import repositoriesVisual from "../../assets/drd/lesson04/repositories.svg";
-import rstudioInterfaceVisual from "../../assets/drd/lesson04/rstudio-interface.svg";
-import workspaceDirectoryVisual from "../../assets/drd/lesson04/workspace-directory.svg";
-import objectsDataTypesVisual from "../../assets/drd/lesson04/objects-data-types.svg";
-import factorsLevelsVisual from "../../assets/drd/lesson04/factors-levels.svg";
-import operatorsSubsettingVisual from "../../assets/drd/lesson04/operators-subsetting.svg";
-import sampleSheetVisual from "../../assets/drd/lesson04/sample-sheet.svg";
-import exploratoryFunctionsVisual from "../../assets/drd/lesson04/exploratory-functions.svg";
-import orderingFunctionVisual from "../../assets/drd/lesson04/ordering-function.svg";
+import React, { useState } from "react";
+import module2OverviewVisual from "../../assets/drd/lesson04/module2-overview.png";
+import reportRequirementsVisual from "../../assets/drd/lesson04/report-requirements.png";
+import whyRVisual from "../../assets/drd/lesson04/why-r.png";
+import functionsPackagesVisual from "../../assets/drd/lesson04/functions-packages.png";
+import repositoriesVisual from "../../assets/drd/lesson04/repositories.png";
+import rstudioInterfaceVisual from "../../assets/drd/lesson04/rstudio-interface.png";
+import workspaceDirectoryVisual from "../../assets/drd/lesson04/workspace-directory.png";
+import objectsDataTypesVisual from "../../assets/drd/lesson04/objects-data-types.png";
+import factorsLevelsVisual from "../../assets/drd/lesson04/factors-levels.png";
+import operatorsSubsettingVisual from "../../assets/drd/lesson04/operators-subsetting.png";
+import sampleSheetVisual from "../../assets/drd/lesson04/sample-sheet.png";
+import exploratoryFunctionsVisual from "../../assets/drd/lesson04/exploratory-functions.png";
+import orderingFunctionVisual from "../../assets/drd/lesson04/ordering-function.png";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1Qo2clrYIp2JO2cTf6VoSP-a3szJ_kgMa/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1I6CzjnJ7O4F6oJ_46aownNn4woG6ewL3p7xLDEQpgAI/edit?usp=drivesdk";
@@ -54,9 +54,9 @@ const COPY = {
     open: "Open",
     zoom: "Click to zoom",
     close: "Close zoom",
-    visualLabel: "Slide-guided visual",
+    visualLabel: "Source slide",
     professor: "Professor emphasis",
-    exam: "Report / exam watch",
+    exam: "Report watch",
     examMore: "Open expanded answer",
     include: "What to include",
     trap: "Common trap",
@@ -66,7 +66,7 @@ const COPY = {
     tryAgain: "Not quite — use the lecture logic.",
     correct: "Correct — that is the key point.",
     quizTitle: "Quick checkpoint quiz",
-    writtenTitle: "Written / report trainer",
+    writtenTitle: "Report paragraph trainer",
     answerPlaceholder: "Write a 10–12 line answer or a report paragraph here...",
     words: "words",
     modelAnswer: "Model answer",
@@ -222,9 +222,9 @@ const COPY = {
     open: "Abrir",
     zoom: "Click para ampliar",
     close: "Cerrar zoom",
-    visualLabel: "Visual guiado por slides",
+    visualLabel: "Diapositiva fuente",
     professor: "Énfasis del profesor",
-    exam: "Ojo para report / examen",
+    exam: "Ojo para report",
     examMore: "Abrir respuesta desarrollada",
     include: "Qué incluir",
     trap: "Trampa común",
@@ -234,7 +234,7 @@ const COPY = {
     tryAgain: "Casi — usa la lógica de la clase.",
     correct: "Correcto — ese es el punto clave.",
     quizTitle: "Quiz rápido de checkpoint",
-    writtenTitle: "Entrenador de respuesta / report",
+    writtenTitle: "Entrenador de párrafo de report",
     answerPlaceholder: "Escribe aquí una respuesta de 10–12 líneas o un párrafo de report...",
     words: "palabras",
     modelAnswer: "Respuesta modelo",
@@ -271,7 +271,7 @@ const COPY = {
     close: "بستن بزرگ‌نمایی",
     visualLabel: "تصویر راهنما بر اساس اسلاید",
     professor: "تأکید استاد",
-    exam: "نکتهٔ report / امتحان",
+    exam: "نکتهٔ report",
     examMore: "باز کردن پاسخ کامل‌تر",
     include: "چه چیزهایی اضافه شود",
     trap: "دام رایج",
@@ -281,7 +281,7 @@ const COPY = {
     tryAgain: "نه کاملاً — از منطق درس استفاده کن.",
     correct: "درست — نکتهٔ اصلی همین است.",
     quizTitle: "آزمونک checkpoint",
-    writtenTitle: "تمرین پاسخ / report",
+    writtenTitle: "تمرین پاراگراف report",
     answerPlaceholder: "اینجا یک پاسخ ۱۰–۱۲ خطی یا پاراگراف report بنویس...",
     words: "کلمه",
     modelAnswer: "پاسخ نمونه",
@@ -484,7 +484,27 @@ function Hero({ copy }) {
   return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#f3fff7]/95 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{copy.heroEyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.heroTitle}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.heroSubtitle}</p><div className="mt-6 flex flex-wrap gap-2">{copy.flow.map(step => <Pill key={step} tone="stone">{step}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label="Module" value="2" tone="green"/><StatCard label="Date" value="May 8"/><StatCard label="Core" value="R" tone="green"/><StatCard label="Output" value="Report"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Pipeline mindset</div><p className="mt-2 text-lg font-bold leading-7">metadata → object type → inspect → subset → model/report</p></div><ResourceLinks copy={copy}/></div></div></div></section>;
 }
 function ExamWatchCard({ exam, copy }) {
-  return <details className="mt-4 rounded-3xl border border-emerald-200 bg-emerald-50 p-4"><summary className="cursor-pointer text-sm font-black text-emerald-900">⚑ {copy.exam}: {exam.title} · {copy.examMore}</summary><div className="mt-4 grid gap-3 lg:grid-cols-3"><div className="rounded-2xl bg-white/80 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{copy.include}</div><ul className="mt-3 list-disc space-y-2 pl-5 text-sm font-semibold leading-6 text-stone-700">{exam.include.map(item => <li key={item}>{item}</li>)}</ul></div><div className="rounded-2xl border border-amber-200 bg-amber-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-amber-800">{copy.trap}</div><p className="mt-3 text-sm font-semibold leading-6 text-amber-950">{exam.trap}</p></div><div className="rounded-2xl border border-stone-200 bg-stone-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.model}</div><p className="mt-3 text-sm font-semibold leading-6 text-stone-900">{exam.model}</p></div></div></details>;
+  return <div className="mt-4 rounded-[2rem] border border-emerald-200 bg-emerald-50/60 p-4">
+    <div className="text-xs font-black uppercase tracking-[0.2em] text-emerald-700">{copy.exam}</div>
+    <p className="mt-2 text-sm font-black leading-6 text-emerald-950">{exam.title}</p>
+    <details className="mt-4 rounded-[1.6rem] border border-emerald-200 bg-white p-4">
+      <summary className="cursor-pointer text-sm font-black text-emerald-900">{copy.examMore}</summary>
+      <div className="mt-5 space-y-3">
+        <div>
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.include}</div>
+          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm font-semibold leading-6 text-stone-800 marker:text-emerald-600">{exam.include.map(item => <li key={item}>{item}</li>)}</ul>
+        </div>
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-amber-800">{copy.trap}</div>
+          <p className="mt-2 text-sm font-black leading-6 text-amber-950">{exam.trap}</p>
+        </div>
+        <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.model}</div>
+          <p className="mt-3 text-sm font-black leading-7 text-stone-950">{exam.model}</p>
+        </div>
+      </div>
+    </details>
+  </div>;
 }
 function ProfessorEmphasis({ copy, children }) {
   return <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-emerald-800">{copy.professor}</div><p className="mt-1 text-sm font-bold leading-6 text-emerald-950">{children}</p></div>;
@@ -515,11 +535,6 @@ function Quiz({ copy }) {
   const [open, setOpen] = useState({});
   return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="Quiz" title={copy.quizTitle}>{copy.quizIntro}</SectionHeader><div className="grid gap-3">{copy.quiz.map((item, idx) => <article key={item.q} className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="flex gap-4"><div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-stone-950 text-sm font-black text-white">{idx + 1}</div><div className="min-w-0 flex-1"><p className="font-bold text-stone-900">{item.q}</p><button type="button" onClick={() => setOpen({...open, [idx]: !open[idx]})} className="mt-4 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-bold text-emerald-700 transition hover:bg-emerald-100">{open[idx] ? copy.hideAnswer : copy.showAnswer}</button>{open[idx] && <p className="mt-4 rounded-2xl bg-white p-4 text-sm font-semibold leading-6 text-stone-700">{item.a}</p>}</div></div></article>)}</div></section>;
 }
-function WrittenTrainer({ copy }) {
-  const [answer, setAnswer] = useState("");
-  const words = useMemo(() => answer.trim() ? answer.trim().split(/\s+/).length : 0, [answer]);
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="10–12 lines" title={copy.writtenTitle}>{copy.writtenPrompt}</SectionHeader><div className="grid gap-4 lg:grid-cols-[0.92fr_1.08fr]"><article className="rounded-3xl border border-stone-200 bg-white p-5"><label className="text-xl font-black text-stone-950" htmlFor="drd-lesson4-answer">{copy.writtenTitle}</label><textarea id="drd-lesson4-answer" value={answer} onChange={(event) => setAnswer(event.target.value)} rows={12} placeholder={copy.answerPlaceholder} className="mt-4 w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm font-semibold leading-7 text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100"/><div className="mt-2 text-xs font-bold text-stone-500">{words} {copy.words}</div></article><article className="rounded-3xl border border-stone-800 bg-stone-950 p-5 text-white"><h3 className="text-xl font-black">{copy.modelAnswer}</h3><p className="mt-3 text-sm font-semibold leading-7 text-stone-200">{copy.writtenModel}</p></article></div></section>;
-}
 function ZoomModal({ item, copy, onClose }) {
   if (!item) return null;
   return <div className="fixed inset-0 z-[100] flex items-center justify-center bg-stone-950/80 p-4" role="dialog" aria-modal="true" onClick={onClose}><div className="max-h-[94vh] w-[min(1100px,96vw)] overflow-auto rounded-[2rem] bg-white p-4 shadow-2xl" onClick={event => event.stopPropagation()}><div className="mb-3 flex items-center justify-between gap-3"><div><Pill tone="green">{copy.visualLabel} · Slide {item.slide}</Pill><h3 className="mt-2 text-xl font-black text-stone-950">{item.title}</h3></div><button onClick={onClose} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white hover:bg-emerald-700">{copy.close}</button></div><img src={item.src} alt={item.title} className="w-full rounded-[1.5rem] object-contain"/><p className="mt-3 text-sm font-semibold leading-7 text-stone-600">{item.body}</p></div></div>;
@@ -528,5 +543,5 @@ function ZoomModal({ item, copy, onClose }) {
 export default function DRDLesson04({ lang = "es", isDone = false, toggle = () => {} }) {
   const copy = COPY[lang] || COPY.es;
   const [zoom, setZoom] = useState(null);
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav copy={copy} isDone={isDone} toggle={toggle}/><Hero copy={copy}/>{copy.sections.map(section => <LessonSection key={section.eyebrow} section={section} copy={copy} onZoom={setZoom}/>) }<FunctionLab copy={copy}/><DataTypeClassifier copy={copy}/><SubsetPractice copy={copy}/><Quiz copy={copy}/><WrittenTrainer copy={copy}/><LessonNav copy={copy} isDone={isDone} toggle={toggle} position="bottom"/><ZoomModal item={zoom} copy={copy} onClose={() => setZoom(null)}/></main>;
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav copy={copy} isDone={isDone} toggle={toggle}/><Hero copy={copy}/>{copy.sections.map(section => <LessonSection key={section.eyebrow} section={section} copy={copy} onZoom={setZoom}/>) }<FunctionLab copy={copy}/><DataTypeClassifier copy={copy}/><SubsetPractice copy={copy}/><Quiz copy={copy}/><LessonNav copy={copy} isDone={isDone} toggle={toggle} position="bottom"/><ZoomModal item={zoom} copy={copy} onClose={() => setZoom(null)}/></main>;
 }

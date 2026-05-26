@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1F1UK7JpTC8Sm8arnNC9mfXnj8aLxbzqZ/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1kYvSq04ZeL3mt3GbLNdNwmaAqFImS8CgG70t_9NQWnA/edit?usp=drivesdk";
+const CLASS_RECORDING_URL = "#";
 
 const LESSON_COPY = {
   "en": {
@@ -886,6 +887,33 @@ const LESSON_COPY = {
 };
 
 function getCopy(lang) { return LESSON_COPY[lang] || LESSON_COPY.es; }
+
+const RESOURCE_COPY = {
+  en: { resources: "Class resources", recording: "Class recording", recordingPending: "Recording link pending" },
+  es: { resources: "Recursos de clase", recording: "Grabación de la clase", recordingPending: "Link de grabación pendiente" },
+  fa: { resources: "منابع کلاس", recording: "ضبط کلاس", recordingPending: "لینک ضبط هنوز اضافه نشده" }
+};
+
+function ResourceLinks({ copy, lang = "es" }) {
+  const labels = RESOURCE_COPY[lang] || RESOURCE_COPY.es;
+  const recordingReady = CLASS_RECORDING_URL && CLASS_RECORDING_URL !== "#";
+  const linkBase = "rounded-2xl border px-4 py-3 text-sm font-black transition hover:-translate-y-0.5 hover:shadow-sm";
+  return (
+    <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4">
+      <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div>
+      <div className="grid gap-2 sm:grid-cols-3">
+        <a href={SLIDES_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-red-200 bg-red-50 text-red-800 hover:bg-white`}>{copy.slides}</a>
+        <a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-200 bg-white text-stone-800 hover:bg-stone-50`}>{copy.transcript}</a>
+        {recordingReady ? (
+          <a href={CLASS_RECORDING_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-800 bg-stone-950 text-white hover:bg-red-700`}>{labels.recording}</a>
+        ) : (
+          <span className={`${linkBase} cursor-not-allowed border-stone-200 bg-white text-stone-400`} aria-disabled="true">{labels.recordingPending}</span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function fmt(template, values) { return Object.entries(values).reduce((acc, [k, v]) => acc.replaceAll(`{${k}}`, v), template); }
 function Pill({ children, tone = "stone" }) {
   const tones = { red: "border-red-200 bg-red-50 text-red-700", amber: "border-amber-200 bg-amber-50 text-amber-800", emerald: "border-emerald-200 bg-emerald-50 text-emerald-800", stone: "border-stone-200 bg-white text-stone-700", dark: "border-stone-800 bg-stone-950 text-white" };
@@ -986,12 +1014,16 @@ const LESSON_NAV_COPY = {
   fa: { dashboard: "داشبورد DRD", previous: "قبلی", next: "بعدی", current: "درس ۱", nextTitle: "M1.2 آرایه‌های دو رنگ Stanford" }
 };
 
-function LessonNav({ lang = "es", position = "top" }) {
+function LessonNav({ lang = "es", position = "top", isDone = false, toggle = () => {}, copy }) {
   const nav = LESSON_NAV_COPY[lang] || LESSON_NAV_COPY.es;
+  const labels = copy || getCopy(lang);
   return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation">
-    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+    <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
       <a href="#/" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {nav.previous}: {nav.dashboard}</a>
-      <div className="text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500">{nav.current}</div>
+      <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center">
+        <div className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500">{nav.current}</div>
+        <button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? labels.done : labels.mark}</button>
+      </div>
       <a href="#/lesson/m1-stanford" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-md">{nav.next}: {nav.nextTitle} →</a>
     </div>
   </nav>;
@@ -999,13 +1031,13 @@ function LessonNav({ lang = "es", position = "top" }) {
 
 export default function DRDLesson01({ lang = "es", isDone = false, toggle = () => {} }) {
   const copy = getCopy(lang); const [activeFlow, setActiveFlow] = useState(0);
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav lang={lang} position="top"/><div className="mb-6 flex flex-wrap items-center justify-end gap-3"><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? copy.done : copy.mark}</button></div>
-    <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.eyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.title}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.subtitle}</p><div className="mt-6 flex flex-wrap gap-2">{copy.tags.map(tag => <Pill key={tag} tone={tag.includes("CV") ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={copy.module} value="1" tone="red"/><StatCard label={copy.exam} value="4Q"/><StatCard label={copy.answer} value="10–12"/><StatCard label={copy.core} value="CV" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{copy.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{copy.bigIdeaText}</p></div><div className="mt-4 flex flex-wrap gap-2"><a href={SLIDES_URL} className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-black text-stone-700 hover:bg-white">{copy.slides}</a><a href={TRANSCRIPT_URL} className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-black text-stone-700 hover:bg-white">{copy.transcript}</a></div></div></div></div></section>
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav lang={lang} position="top" isDone={isDone} toggle={toggle} copy={copy}/>
+    <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.eyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.title}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.subtitle}</p><div className="mt-6 flex flex-wrap gap-2">{copy.tags.map(tag => <Pill key={tag} tone={tag.includes("CV") ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={copy.module} value="1" tone="red"/><StatCard label={copy.exam} value="4Q"/><StatCard label={copy.answer} value="10–12"/><StatCard label={copy.core} value="CV" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{copy.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{copy.bigIdeaText}</p></div><ResourceLinks copy={copy} lang={lang}/></div></div></div></section>
     <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.flowEyebrow} title={copy.flowTitle}>{copy.flowIntro}</SectionHeader><div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]"><div className="space-y-2">{copy.flow.map((step, idx) => <button key={step.title} onClick={() => setActiveFlow(idx)} className={`w-full rounded-2xl border p-4 text-left transition ${activeFlow === idx ? "border-red-200 bg-red-50 shadow-sm" : "border-stone-200 bg-stone-50 hover:bg-white"}`}><div className="flex items-center justify-between gap-3"><span className="text-sm font-black text-stone-950">{step.title}</span><ProgressDots active={idx} /></div></button>)}</div><article className="rounded-[2rem] border border-stone-200 bg-stone-950 p-6 text-white"><div className="text-xs font-black uppercase tracking-[0.2em] text-red-200">{copy.activeStep}</div><h3 className="mt-3 text-3xl font-black tracking-tight">{copy.flow[activeFlow].title}</h3><p className="mt-4 text-lg font-semibold leading-8 text-stone-200">{copy.flow[activeFlow].body}</p></article></div></section>
     <section className="mt-10 grid gap-6 lg:grid-cols-[1fr_0.95fr]"><BiologicalQuestionBuilder copy={copy}/><article className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm"><div className="text-xs font-black uppercase tracking-[0.2em] text-red-700">{copy.designEyebrow}</div><h3 className="mt-1 text-2xl font-black text-stone-950">{copy.designTitle}</h3><div className="mt-5 grid gap-3">{copy.designCards.map(([title, body]) => <div key={title} className="rounded-2xl border border-stone-200 bg-stone-50 p-4"><div className="text-sm font-black text-stone-950">{title}</div><div className="mt-1 text-sm font-semibold leading-6 text-stone-600">{body}</div></div>)}</div></article></section>
     <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.omicsEyebrow} title={copy.omicsTitle}>{copy.omicsIntro}</SectionHeader><div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">{copy.omics.map(([name, what, tools]) => <article key={name} className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><h3 className="text-xl font-black text-stone-950">{name}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{what}</p><div className="mt-4 rounded-2xl bg-white p-3 text-xs font-black text-red-700 shadow-sm">{tools}</div></article>)}</div></section>
     <section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1fr]"><VariabilityClassifier copy={copy}/><CVExercise copy={copy}/></section>
     <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.repEyebrow} title={copy.repTitle}>{copy.repIntro}</SectionHeader><div className="grid gap-4 lg:grid-cols-3">{copy.repCards.map(([title, body], i) => <article key={title} className={`rounded-3xl border p-5 ${i === 0 ? "border-emerald-200 bg-emerald-50" : i === 1 ? "border-red-200 bg-red-50" : "border-amber-200 bg-amber-50"}`}><h3 className="text-xl font-black text-stone-950">{title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-700">{body}</p></article>)}</div></section>
-    <QuizBlock copy={copy}/><ExamTrainer copy={copy} lang={lang}/><LessonNav lang={lang} position="bottom"/>
+    <QuizBlock copy={copy}/><ExamTrainer copy={copy} lang={lang}/><LessonNav lang={lang} position="bottom" isDone={isDone} toggle={toggle} copy={copy}/>
   </main>;
 }

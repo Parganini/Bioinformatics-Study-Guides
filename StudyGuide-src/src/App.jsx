@@ -18,6 +18,7 @@ import InferringSelectionLesson, { lesson15Quiz } from "./lessons/phylogenetics/
 import TraitEvolutionLesson, { lesson16Quiz } from "./lessons/phylogenetics/Lesson16.jsx";
 import { PHYLO_MOCK_EXAMS } from "./exams/phylogenetics/mockExams.js";
 import { PHYLO_WRITTEN_PRACTICE } from "./exams/phylogenetics/writtenPractice.js";
+import DRDLesson01 from "./lessons/drd/Lesson01.jsx";
 
 
 const LANGS = [
@@ -617,6 +618,7 @@ const DRD_MODULE1_UNITS = [
     desc: "Convert a focused biological question into model, variables, sample size, technique, quantitative data and interpretation. Distinguish biological variability from experimental variability.",
     products: ["React lesson", "concept quiz", "short written practice"],
     tags: ["biological question", "variables", "variability", "omics"],
+    lessonHref: "#/lesson/m1-foundations",
   },
   {
     id: "m1-stanford",
@@ -814,6 +816,7 @@ function drdCopy(lang) {
       incomplete: "Incomplete",
       status: "Status",
       tags: "Key tags",
+      openLesson: "Open lesson",
       deliverables: "Guide deliverables",
       sources: "Source folders considered",
       sourcesBody: "Module 1 PDFs plus the Module 2 Lesson1–Lesson5 folders, including scripts, SampleSheets, manifests, RData objects, normalization outputs and support papers.",
@@ -840,6 +843,7 @@ function drdCopy(lang) {
       incomplete: "Pendiente",
       status: "Estado",
       tags: "Etiquetas clave",
+      openLesson: "Abrir lección",
       deliverables: "Entregables de la guía",
       sources: "Fuentes consideradas",
       sourcesBody: "PDFs del Module 1 y carpetas Lesson1–Lesson5 del Module 2, incluyendo scripts, SampleSheets, manifests, objetos RData, salidas de normalización y papers de apoyo.",
@@ -974,6 +978,10 @@ function DRDApp({ t, lang, hash }) {
   const module2 = filterDRDUnits(DRD_MODULE2_UNITS, q);
   const save = (next) => { setProgress(next); setJSON("drd_progress_v1", next); };
   const toggle = (id) => save({ ...progress, [id]: !progress[id] });
+  const lessonId = (hash.match(/^#\/lesson\/(.+)$/) || [])[1];
+  if (lessonId === "m1-foundations" || lessonId === "01") {
+    return <DRDLesson01 lang={lang} isDone={!!progress["m1-foundations"]} toggle={() => toggle("m1-foundations")} />;
+  }
   const covered = allUnits.filter(unit => unit.status !== "upcoming").length;
   const upcoming = allUnits.filter(unit => unit.status === "upcoming").length;
 
@@ -1096,7 +1104,10 @@ function DRDUnitCard({ unit, isDone, toggle, copy, lang }) {
           <h4 className="mt-3 text-xl font-black leading-7 text-stone-950">{unit.title}</h4>
           <p className="mt-2 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{unit.desc}</p>
         </div>
-        <button onClick={toggle} className={`shrink-0 rounded-full px-4 py-2 text-xs font-black ${isDone ? "bg-emerald-600 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{isDone ? "✓ " + copy.complete : "○ " + copy.mark}</button>
+        <div className="flex shrink-0 flex-wrap gap-2 md:justify-end">
+          {unit.lessonHref && <a href={unit.lessonHref} className="rounded-full bg-red-700 px-4 py-2 text-xs font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-800">{copy.openLesson || "Open lesson"}</a>}
+          <button onClick={toggle} className={`rounded-full px-4 py-2 text-xs font-black ${isDone ? "bg-emerald-600 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{isDone ? "✓ " + copy.complete : "○ " + copy.mark}</button>
+        </div>
       </div>
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <div>

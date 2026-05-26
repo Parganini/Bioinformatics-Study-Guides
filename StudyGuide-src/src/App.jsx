@@ -792,6 +792,71 @@ const DRD_STUDY_PRODUCTS = [
   { title: "Team report simulator", desc: "A Module 2 report scaffold from biological question to QC, normalization, DMP/DMR, PCA, batch effect and interpretation.", tags: ["report", "pipeline", "methylation"] },
 ];
 
+
+const DRD_UNIT_I18N = {
+  es: {
+    "m1-foundations": { title: "Pregunta biológica, diseño experimental y variabilidad", desc: "Convertir una pregunta biológica enfocada en modelo, variables, sample size, técnica, datos cuantitativos e interpretación. Distinguir variabilidad biológica de variabilidad experimental.", products: ["React lesson", "quiz conceptual", "práctica escrita corta"], tags: ["pregunta biológica", "variables", "variabilidad", "ómicas"] },
+    "m1-stanford": { title: "Arrays competitivos two-colour: Stanford", desc: "Spotted arrays, targets Cy3/Cy5, dye bias, dye swap, imágenes TIFF/raw y control de calidad a nivel de imagen.", products: ["ordenar workflow", "quiz de errores técnicos", "respuesta tipo examen"], tags: ["two-colour", "Cy3/Cy5", "dye swap", "QC"] },
+    "m1-affy": { title: "Affymetrix / ThermoFisher GeneChip", desc: "Arrays no competitivos one-colour, fotolitografía, probes PM/MM, probe sets, archivos DAT/CEL/CDF/CHP, RMA y normalización quantile.", products: ["diagrama de archivos", "comparación PM/MM", "checklist RMA"], tags: ["one-colour", "PM/MM", "RMA", "archivos CEL"] },
+    "m1-illumina": { title: "Illumina BeadChip y plataformas de metilación", desc: "Diseño BeadArray, optical decoding, transcriptómica, lógica de bisulfito, cobertura 27K/450K/EPIC y contexto genómico CpG.", products: ["React lesson visual", "comparación 27K/450K/EPIC", "quiz de bisulfito"], tags: ["BeadChip", "bisulfito", "450K", "EPIC"] },
+    "m1-methylation-biology": { title: "Biología de la metilación del DNA", desc: "5mC, DNMT1, DNMT3A/3B, enzimas TET, metilación de promotor, metilación de gene body, envejecimiento, enfermedad y relojes epigenéticos.", products: ["mapa conceptual", "quiz región→interpretación", "plantilla escrita"], tags: ["5mC", "DNMT", "TET", "reloj epigenético"] },
+    "m1-deg-i": { title: "Genes diferencialmente expresados I", desc: "Fold change frente a significancia estadística, log2 ratios, MA-plots, hipótesis nula/alternativa, p-values, errores alfa/beta, potencia y tests paramétricos/no paramétricos.", products: ["árbol de selección de test", "ejercicios de p-value", "trampas de fold change"], tags: ["fold change", "p-value", "potencia", "MA-plot"] },
+    "m1-deg-ii": { title: "Genes diferencialmente expresados II", desc: "Continuación esperada: diseños paired/unpaired, Student t-test, Welch, Wilcoxon, Mann–Whitney, multiple testing e interpretación biológica.", products: ["simulador de test estadístico", "preguntas comparativas", "respuestas de 10–12 líneas"], tags: ["paired/unpaired", "t-test", "Wilcoxon", "FDR"] },
+    "m1-samples-genes-i": { title: "Relación entre muestras y genes I", desc: "Matrices genes/probes × muestras, similitud, distancia, estructura de muestras, lógica inicial de clustering e interpretación de patrones globales.", products: ["lectura de matriz", "quiz de distancia entre muestras", "interpretación de plots"], tags: ["matriz", "muestras", "genes", "distancia"] },
+    "m1-samples-genes-ii": { title: "Relación entre muestras y genes II", desc: "Heatmaps, clustering de genes/muestras, outliers, razonamiento tipo PCA y conexión de patrones con fenotipo, tratamiento, tejido o batch.", products: ["práctica de heatmap", "interpretación de PCA", "errores comunes"], tags: ["heatmap", "clustering", "PCA", "outliers"] },
+    "m1-scrna": { title: "Clase invitada: scRNA-seq", desc: "Bulk vs single-cell RNA-seq, heterogeneidad celular, counts/UMIs, marker genes, reducción de dimensionalidad, clustering e interpretación de dropouts.", products: ["comparador bulk vs single-cell", "glosario", "mock question"], tags: ["scRNA-seq", "UMI", "markers", "UMAP"] },
+    "m2-r": { title: "Introducción a R/Bioconductor", desc: "Bases de R, paquetes, scripts, lógica de SampleSheet, metadata y hábitos de análisis reproducible.", products: ["setup guiado", "ejercicio SampleSheet", "glosario de objetos R"], tags: ["R", "Bioconductor", "SampleSheet", "metadata"] },
+    "m2-manifest": { title: "Metilación de DNA y química Illumina BeadChip", desc: "Manifest files, anotación de probes, cromosoma/posición, genes, contexto CpG island e interpretación a nivel de probe.", products: ["quiz de anotación de probes", "lectura de manifest", "resumen de química"], tags: ["manifest", "probe ID", "contexto CpG", "Infinium"] },
+    "m2-import-qc": { title: "Pipeline 1: importación de datos + quality check", desc: "Datos crudos de methylation arrays, RGSet, MSet_raw, detection p-values, control probes, sample QC y probe QC.", products: ["diagrama RGSet→MSet", "práctica detection p-value", "checklist de filtrado"], tags: ["RGSet", "MSet", "detection p-value", "control probes"] },
+    "m2-normalization-1": { title: "Pipeline 2: normalización 1", desc: "Por qué las señales crudas de metilación no son directamente comparables y cómo la normalización cambia distribuciones e interpretación downstream.", products: ["interpretación de density plots", "comparación raw vs normalized", "glosario de normalización"], tags: ["normalización", "beta values", "density plots", "raw data"] },
+    "m2-normalization-2": { title: "Pipeline 2: normalización 2", desc: "Quantile, Noob, SWAN y functional normalization, incluyendo background, dye bias, sesgo por tipo de probe y corrección basada en control probes.", products: ["comparador de métodos", "quiz Noob/SWAN/Funnorm", "notas de decisión"], tags: ["Quantile", "Noob", "SWAN", "Funnorm"] },
+    "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "Beta vs M values, design matrix, contrasts, posiciones diferencialmente metiladas, regiones diferencialmente metiladas, FDR y PCA.", products: ["walkthrough de pipeline", "práctica design matrix", "interpretación volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
+    "m2-batch-clustering": { title: "Pipeline 4: batch effect, visualización y clustering", desc: "Detección/corrección de batch effect, ComBat, PCA antes/después de corrección, heatmaps, clustering e integración para verification test.", products: ["checklist de plots", "explicador ComBat", "simulador de team report"], tags: ["batch effect", "ComBat", "visualización", "clustering"] }
+  },
+  fa: {
+    "m1-foundations": { title: "پرسش زیستی، طراحی آزمایش و تغییرپذیری", desc: "تبدیل پرسش زیستی متمرکز به مدل، متغیرها، اندازهٔ نمونه، تکنیک، دادهٔ کمی و تفسیر؛ تمایز تغییرپذیری زیستی از آزمایشی.", products: ["درس React", "آزمونک مفهومی", "تمرین نوشتاری کوتاه"], tags: ["پرسش زیستی", "متغیرها", "تغییرپذیری", "اومیکس"] },
+    "m1-stanford": { title: "آرایه‌های رقابتی دو‌رنگ: Stanford", desc: "spotted arrays، هدف‌های Cy3/Cy5، سوگیری رنگ، dye swap، تصاویر TIFF/raw و کنترل کیفیت تصویر.", products: ["چینش workflow", "آزمونک خطاهای فنی", "پاسخ شبیه امتحان"], tags: ["دو‌رنگ", "Cy3/Cy5", "dye swap", "QC"] },
+    "m1-affy": { title: "Affymetrix / ThermoFisher GeneChip", desc: "آرایه‌های غیررقابتی one-colour، فوتولیتوگرافی، پروب‌های PM/MM، probe set، فایل‌های DAT/CEL/CDF/CHP، RMA و quantile normalization.", products: ["نمودار جریان فایل", "مقایسه PM/MM", "چک‌لیست RMA"], tags: ["one-colour", "PM/MM", "RMA", "CEL files"] },
+    "m1-illumina": { title: "Illumina BeadChip و پلتفرم‌های متیلاسیون", desc: "طراحی BeadArray، optical decoding، transcriptomics، منطق bisulfite، پوشش 27K/450K/EPIC و زمینهٔ ژنومی CpG.", products: ["درس تصویری React", "مقایسه 27K/450K/EPIC", "آزمونک bisulfite"], tags: ["BeadChip", "bisulfite", "450K", "EPIC"] },
+    "m1-methylation-biology": { title: "زیست‌شناسی متیلاسیون DNA", desc: "5mC، DNMT1، DNMT3A/3B، آنزیم‌های TET، متیلاسیون promoter و gene body، پیری، بیماری و ساعت‌های اپی‌ژنتیک.", products: ["نقشهٔ مفهومی", "آزمونک ناحیه→تفسیر", "قالب پاسخ نوشتاری"], tags: ["5mC", "DNMT", "TET", "epigenetic clock"] },
+    "m1-deg-i": { title: "ژن‌های با بیان متفاوت I", desc: "fold change در برابر معنی‌داری آماری، log2 ratio، MA-plot، فرضیهٔ صفر/جایگزین، p-value، خطاهای آلفا/بتا، توان و آزمون‌های پارامتریک/ناپارامتریک.", products: ["درخت انتخاب آزمون", "تمرین p-value", "دام‌های fold change"], tags: ["fold change", "p-value", "power", "MA-plot"] },
+    "m1-deg-ii": { title: "ژن‌های با بیان متفاوت II", desc: "ادامهٔ مورد انتظار: طراحی paired/unpaired، آزمون t، Welch، Wilcoxon، Mann–Whitney، multiple testing و تفسیر زیستی.", products: ["شبیه‌ساز آزمون آماری", "پرسش‌های مقایسه‌ای", "پاسخ ۱۰–۱۲ خطی"], tags: ["paired/unpaired", "t-test", "Wilcoxon", "FDR"] },
+    "m1-samples-genes-i": { title: "رابطهٔ نمونه‌ها و ژن‌ها I", desc: "ماتریس genes/probes × samples، شباهت، فاصله، ساختار نمونه‌ها، منطق اولیهٔ clustering و تفسیر الگوهای کلی.", products: ["درس خواندن ماتریس", "آزمونک فاصله نمونه", "تفسیر plot"], tags: ["ماتریس", "نمونه‌ها", "ژن‌ها", "فاصله"] },
+    "m1-samples-genes-ii": { title: "رابطهٔ نمونه‌ها و ژن‌ها II", desc: "heatmap، clustering ژن/نمونه، outlier، منطق PCA و پیوند الگوها با phenotype، treatment، tissue یا batch.", products: ["تمرین heatmap", "تفسیر PCA", "خطاهای رایج"], tags: ["heatmap", "clustering", "PCA", "outlier"] },
+    "m1-scrna": { title: "درس مهمان: scRNA-seq", desc: "bulk در برابر single-cell RNA-seq، ناهمگنی سلولی، counts/UMI، marker gene، کاهش بعد، clustering و تفسیر dropout.", products: ["مقایسه bulk/single-cell", "واژه‌نامه", "mock question"], tags: ["scRNA-seq", "UMI", "marker", "UMAP"] },
+    "m2-r": { title: "معرفی R/Bioconductor", desc: "مبانی R، پکیج‌ها، اسکریپت‌ها، منطق SampleSheet، metadata و عادت‌های تحلیل reproducible.", products: ["setup راهنما", "تمرین SampleSheet", "واژه‌نامه اشیای R"], tags: ["R", "Bioconductor", "SampleSheet", "metadata"] },
+    "m2-manifest": { title: "متیلاسیون DNA و شیمی Illumina BeadChip", desc: "manifest file، annotation پروب، chromosome/position، gene، CpG island context و تفسیر در سطح probe.", products: ["آزمونک annotation probe", "خواندن manifest", "خلاصه شیمی"], tags: ["manifest", "probe ID", "CpG context", "Infinium"] },
+    "m2-import-qc": { title: "Pipeline 1: ورود داده + quality check", desc: "دادهٔ خام methylation array، RGSet، MSet_raw، detection p-value، control probe، sample QC و probe QC.", products: ["نمودار RGSet→MSet", "تمرین detection p-value", "چک‌لیست فیلتر"], tags: ["RGSet", "MSet", "detection p-value", "control probes"] },
+    "m2-normalization-1": { title: "Pipeline 2: نرمال‌سازی 1", desc: "چرا سیگنال‌های خام متیلاسیون مستقیماً قابل مقایسه نیستند و normalisation چگونه توزیع و تفسیر downstream را تغییر می‌دهد.", products: ["تفسیر density plot", "مقایسه raw/normalized", "واژه‌نامه normalisation"], tags: ["normalisation", "beta values", "density plots", "raw data"] },
+    "m2-normalization-2": { title: "Pipeline 2: نرمال‌سازی 2", desc: "Quantile، Noob، SWAN و functional normalisation، شامل background، dye bias، bias نوع probe و تصحیح با control probe.", products: ["مقایسه روش‌ها", "آزمونک Noob/SWAN/Funnorm", "یادداشت تصمیم"], tags: ["Quantile", "Noob", "SWAN", "Funnorm"] },
+    "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "Beta در برابر M values، design matrix، contrasts، DMP، DMR، FDR و PCA.", products: ["walkthrough پایپ‌لاین", "تمرین design matrix", "تفسیر volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
+    "m2-batch-clustering": { title: "Pipeline 4: batch effect، visualization و clustering", desc: "تشخیص/تصحیح batch effect، ComBat، PCA قبل/بعد از تصحیح، heatmap، clustering و یکپارچه‌سازی برای verification test.", products: ["چک‌لیست plot", "توضیح ComBat", "شبیه‌ساز team report"], tags: ["batch effect", "ComBat", "visualization", "clustering"] }
+  }
+};
+
+function localizeDRDUnit(unit, lang) {
+  return { ...unit, ...(DRD_UNIT_I18N[lang]?.[unit.id] || {}) };
+}
+
+const DRD_PRODUCT_I18N = {
+  es: {
+    "React lessons": { title: "Lecciones React", desc: "Lecciones visuales breves para teoría de Module 1 y lógica de workflow de Module 2, con el estilo de Filogenética.", tags: ["conceptos", "diagramas", "trampas comunes"] },
+    "Interactive quizzes": { title: "Quizzes interactivos", desc: "Vocabulario, ordenar workflows, detectar errores, elegir tests estadísticos e interpretar plots.", tags: ["Cy3/Cy5", "RGSet", "FDR", "PCA"] },
+    "Mock written exams": { title: "Mock exams escritos", desc: "Prácticas de 45 minutos con 4 preguntas y respuestas modelo de 10–12 líneas para Module 1.", tags: ["4 preguntas", "rúbrica", "respuestas modelo"] },
+    "Team report simulator": { title: "Simulador de team report", desc: "Estructura de reporte de Module 2 desde pregunta biológica hasta QC, normalización, DMP/DMR, PCA, batch effect e interpretación.", tags: ["reporte", "pipeline", "metilación"] }
+  },
+  fa: {
+    "React lessons": { title: "درس‌های React", desc: "درس‌های تصویری کوتاه برای نظریهٔ Module 1 و منطق workflow در Module 2، مشابه سبک Filogenética.", tags: ["مفهوم‌ها", "نمودارها", "دام‌های رایج"] },
+    "Interactive quizzes": { title: "آزمونک‌های تعاملی", desc: "واژه‌ها، ترتیب workflow، تشخیص خطا، انتخاب آزمون آماری و تفسیر plot.", tags: ["Cy3/Cy5", "RGSet", "FDR", "PCA"] },
+    "Mock written exams": { title: "امتحان‌های آزمایشی نوشتاری", desc: "تمرین‌های ۴۵ دقیقه‌ای با ۴ پرسش و پاسخ مدل ۱۰–۱۲ خطی برای Module 1.", tags: ["۴ پرسش", "rubric", "پاسخ مدل"] },
+    "Team report simulator": { title: "شبیه‌ساز team report", desc: "اسکلت گزارش Module 2 از پرسش زیستی تا QC، نرمال‌سازی، DMP/DMR، PCA، batch effect و تفسیر.", tags: ["گزارش", "پایپ‌لاین", "متیلاسیون"] }
+  }
+};
+
+function localizeDRDProduct(product, lang) {
+  return { ...product, ...(DRD_PRODUCT_I18N[lang]?.[product.title] || {}) };
+}
+
 function drdCopy(lang) {
   return {
     en: {
@@ -974,8 +1039,8 @@ function DRDApp({ t, lang, hash }) {
   const completed = allUnits.filter(unit => progress[unit.id]).length;
   const percent = allUnits.length ? (completed / allUnits.length) * 100 : 0;
   const q = query.trim().toLowerCase();
-  const module1 = filterDRDUnits(DRD_MODULE1_UNITS, q);
-  const module2 = filterDRDUnits(DRD_MODULE2_UNITS, q);
+  const module1 = filterDRDUnits(DRD_MODULE1_UNITS, q, lang);
+  const module2 = filterDRDUnits(DRD_MODULE2_UNITS, q, lang);
   const save = (next) => { setProgress(next); setJSON("drd_progress_v1", next); };
   const toggle = (id) => save({ ...progress, [id]: !progress[id] });
   const lessonId = (hash.match(/^#\/lesson\/(.+)$/) || [])[1];
@@ -1050,7 +1115,7 @@ function DRDApp({ t, lang, hash }) {
           <p className="mt-2 max-w-3xl leading-7 text-stone-600">{copy.productsBody}</p>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {DRD_STUDY_PRODUCTS.map(product => <DRDProductCard key={product.title} product={product} />)}
+          {DRD_STUDY_PRODUCTS.map(product => <DRDProductCard key={product.title} product={product} lang={lang} />)}
         </div>
       </section>
 
@@ -1062,9 +1127,12 @@ function DRDApp({ t, lang, hash }) {
   );
 }
 
-function filterDRDUnits(units, q) {
+function filterDRDUnits(units, q, lang = "es") {
   if (!q) return units;
-  return units.filter(unit => [unit.code, unit.date, unit.status, unit.title, unit.desc, ...(unit.tags || []), ...(unit.products || [])].join(" ").toLowerCase().includes(q));
+  return units.filter(unit => {
+    const localized = localizeDRDUnit(unit, lang);
+    return [localized.code, localized.date, localized.status, localized.title, localized.desc, ...(localized.tags || []), ...(localized.products || [])].join(" ").toLowerCase().includes(q.toLowerCase());
+  });
 }
 
 function DRDModule({ title, units, progress, toggle, copy, lang }) {
@@ -1090,46 +1158,48 @@ function DRDModule({ title, units, progress, toggle, copy, lang }) {
 }
 
 function DRDUnitCard({ unit, isDone, toggle, copy, lang }) {
-  const statusLabel = DRD_STATUS_COPY[unit.status]?.[lang] || DRD_STATUS_COPY[unit.status]?.es || unit.status;
-  const statusClass = DRD_STATUS_CLASSES[unit.status] || DRD_STATUS_CLASSES.upcoming;
+  const localized = localizeDRDUnit(unit, lang);
+  const statusLabel = DRD_STATUS_COPY[localized.status]?.[lang] || DRD_STATUS_COPY[localized.status]?.es || localized.status;
+  const statusClass = DRD_STATUS_CLASSES[localized.status] || DRD_STATUS_CLASSES.upcoming;
   return (
     <div className={`rounded-3xl border p-5 transition ${isDone ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50 hover:bg-white"}`}>
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-stone-950 px-3 py-1 text-xs font-black text-white">{unit.code}</span>
+            <span className="rounded-full bg-stone-950 px-3 py-1 text-xs font-black text-white">{localized.code}</span>
             <span className={`rounded-full border px-3 py-1 text-xs font-black ${statusClass}`}>{statusLabel}</span>
-            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{unit.date}</span>
+            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{localized.date}</span>
           </div>
-          <h4 className="mt-3 text-xl font-black leading-7 text-stone-950">{unit.title}</h4>
-          <p className="mt-2 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{unit.desc}</p>
+          <h4 className="mt-3 text-xl font-black leading-7 text-stone-950">{localized.title}</h4>
+          <p className="mt-2 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{localized.desc}</p>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2 md:justify-end">
-          {unit.lessonHref && <a href={unit.lessonHref} className="rounded-full bg-red-700 px-4 py-2 text-xs font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-800">{copy.openLesson || "Open lesson"}</a>}
+          {localized.lessonHref && <a href={localized.lessonHref} className="rounded-full bg-red-700 px-4 py-2 text-xs font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-800">{copy.openLesson || "Open lesson"}</a>}
           <button onClick={toggle} className={`rounded-full px-4 py-2 text-xs font-black ${isDone ? "bg-emerald-600 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{isDone ? "✓ " + copy.complete : "○ " + copy.mark}</button>
         </div>
       </div>
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <div>
           <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.tags}</div>
-          <div className="mt-2 flex flex-wrap gap-2">{unit.tags.map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-600">{tag}</span>)}</div>
+          <div className="mt-2 flex flex-wrap gap-2">{localized.tags.map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-600">{tag}</span>)}</div>
         </div>
         <div>
           <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.deliverables}</div>
-          <div className="mt-2 flex flex-wrap gap-2">{unit.products.map(product => <span key={product} className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{product}</span>)}</div>
+          <div className="mt-2 flex flex-wrap gap-2">{localized.products.map(product => <span key={product} className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{product}</span>)}</div>
         </div>
       </div>
     </div>
   );
 }
 
-function DRDProductCard({ product }) {
+function DRDProductCard({ product, lang = "es" }) {
+  const localized = localizeDRDProduct(product, lang);
   return (
     <article className="rounded-3xl border border-stone-200 bg-stone-50 p-5 shadow-sm">
-      <h3 className="text-lg font-black text-stone-950">{product.title}</h3>
-      <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{product.desc}</p>
+      <h3 className="text-lg font-black text-stone-950">{localized.title}</h3>
+      <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{localized.desc}</p>
       <div className="mt-4 flex flex-wrap gap-2">
-        {product.tags.map(tag => <span key={tag} className="rounded-full bg-white px-3 py-1 text-xs font-black text-stone-600 shadow-sm">{tag}</span>)}
+        {localized.tags.map(tag => <span key={tag} className="rounded-full bg-white px-3 py-1 text-xs font-black text-stone-600 shadow-sm">{tag}</span>)}
       </div>
     </article>
   );

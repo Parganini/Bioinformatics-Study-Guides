@@ -94,7 +94,7 @@ const COPY = {
     next: "Next",
     current: "Lesson 3",
     previousTitle: "M1.2 Stanford arrays",
-    nextTitle: "M1.4 Illumina BeadChip",
+    nextTitle: "M2.1 R/Bioconductor intro",
     heroEyebrow: "Module 1 · May 6 · Affymetrix / ThermoFisher",
     heroTitle: "Noncompetitive one-colour GeneChip arrays",
     heroSubtitle: "From photolithography and probe sets to DAT/CEL files, quality control, RMA, quantile normalization and summarization.",
@@ -330,7 +330,7 @@ const COPY = {
     next: "Siguiente",
     current: "Lección 3",
     previousTitle: "M1.2 Arrays Stanford",
-    nextTitle: "M1.4 Illumina BeadChip",
+    nextTitle: "M2.1 R/Bioconductor intro",
     heroEyebrow: "Module 1 · 6 de mayo · Affymetrix / ThermoFisher",
     heroTitle: "Arrays GeneChip no competitivos one-colour",
     heroSubtitle: "De fotolitografía y probe sets a archivos DAT/CEL, control de calidad, RMA, normalización quantile y summarization.",
@@ -386,7 +386,7 @@ const COPY = {
     next: "بعدی",
     current: "درس ۳",
     previousTitle: "M1.2 آرایه‌های Stanford",
-    nextTitle: "M1.4 Illumina BeadChip",
+    nextTitle: "M2.1 R/Bioconductor intro",
     heroEyebrow: "ماژول ۱ · ۶ مه · Affymetrix / ThermoFisher",
     heroTitle: "آرایه‌های GeneChip غیررقابتی one-colour",
     heroSubtitle: "از فوتولیتوگرافی و probe set تا فایل‌های DAT/CEL، کنترل کیفیت، RMA، quantile normalization و summarization.",
@@ -526,7 +526,7 @@ function ResourceLinks({ copy }) {
 }
 
 function LessonNav({ copy, isDone, toggle, position = "top" }) {
-  return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m1-stanford" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {copy.previous}: {copy.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{copy.current} · {copy.dashboard}</a><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? copy.done : copy.mark}</button></div><a href="#/lesson/m1-illumina" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-md">{copy.next}: {copy.nextTitle} →</a></div></nav>;
+  return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m1-stanford" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {copy.previous}: {copy.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{copy.current} · {copy.dashboard}</a><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? copy.done : copy.mark}</button></div><a href="#/lesson/m2-r" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-md">{copy.next}: {copy.nextTitle} →</a></div></nav>;
 }
 
 function Hero({ copy }) {

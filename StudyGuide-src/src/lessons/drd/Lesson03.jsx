@@ -482,6 +482,32 @@ function getCopy(lang = "es") { return COPY[lang] || COPY.es; }
 function cn(...classes) { return classes.filter(Boolean).join(" "); }
 function wordCount(text = "") { return text.trim() ? text.trim().split(/\s+/).length : 0; }
 
+function getHeroMeta(copy) {
+  const current = String(copy.current || "");
+  if (current.includes("درس")) {
+    return {
+      module: "ماژول", exam: "امتحان", answer: "پاسخ", core: "هسته",
+      tags: ["one-colour", "Affymetrix", "GeneChip", "PM/MM", "CEL/CDF", "RMA"],
+      bigIdea: "ایدهٔ اصلی",
+      bigIdeaText: "در GeneChip یک نمونه روی یک chip خوانده می‌شود؛ بنابراین مقایسهٔ زیستی فقط زمانی معتبر است که تصویر، فایل‌ها، probe setها و RMA درست فهمیده و نرمال‌سازی شوند."
+    };
+  }
+  if (current.includes("Lesson")) {
+    return {
+      module: "Module", exam: "Exam", answer: "Answer", core: "Core",
+      tags: ["one-colour", "Affymetrix", "GeneChip", "PM/MM", "CEL/CDF", "RMA"],
+      bigIdea: "Big idea",
+      bigIdeaText: "In GeneChip, one sample is read on one chip; biological comparison only becomes meaningful after image QC, file mapping, probe-set summarization and RMA normalization."
+    };
+  }
+  return {
+    module: "Module", exam: "Examen", answer: "Respuesta", core: "Núcleo",
+    tags: ["one-colour", "Affymetrix", "GeneChip", "PM/MM", "CEL/CDF", "RMA"],
+    bigIdea: "Idea central",
+    bigIdeaText: "En GeneChip, una muestra se lee en un chip; la comparación biológica solo tiene sentido después de QC de imagen, mapeo de archivos, resumen de probe sets y normalización RMA."
+  };
+}
+
 function Pill({ children, tone = "red" }) {
   return <span className={cn("inline-flex rounded-full border px-3 py-1 text-xs font-black", toneClasses[tone] || toneClasses.red)}>{children}</span>;
 }
@@ -490,8 +516,13 @@ function SectionHeader({ eyebrow, title, children }) {
   return <div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{eyebrow}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{title}</h2>{children && <p className="mt-3 max-w-4xl text-base font-semibold leading-8 text-stone-600">{children}</p>}</div>;
 }
 
-function ResourceCard({ label, href, copy }) {
-  return <a href={href} target="_blank" rel="noreferrer" className="group rounded-3xl border border-stone-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{label}</div><div className="mt-3 flex items-center justify-between gap-3"><span className="text-lg font-black text-stone-950">{copy.open}</span><span className="rounded-full bg-stone-950 px-3 py-1 text-xs font-black text-white transition group-hover:bg-red-700">↗</span></div></a>;
+function StatCard({ label, value, tone = "stone" }) {
+  return <div className={`rounded-2xl border p-4 ${tone === "red" ? "border-red-200 bg-red-50" : "border-stone-200 bg-stone-50"}`}><div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{label}</div><div className="mt-1 text-2xl font-black text-stone-950">{value}</div></div>;
+}
+
+function ResourceLinks({ copy }) {
+  const linkBase = "rounded-2xl border px-4 py-3 text-sm font-black transition hover:-translate-y-0.5 hover:shadow-sm";
+  return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.resources}</div><div className="grid gap-2 sm:grid-cols-3"><a href={SLIDES_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-red-200 bg-red-50 text-red-800 hover:bg-white`}>{copy.slides}</a><a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-200 bg-white text-stone-800 hover:bg-stone-50`}>{copy.transcript}</a><a href={CLASS_RECORDING_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-800 bg-stone-950 text-white hover:bg-red-700`}>{copy.recording}</a></div></div>;
 }
 
 function LessonNav({ copy, isDone, toggle, position = "top" }) {
@@ -499,17 +530,37 @@ function LessonNav({ copy, isDone, toggle, position = "top" }) {
 }
 
 function Hero({ copy }) {
-  return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white shadow-sm"><div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]"><div className="p-6 md:p-10"><Pill tone="red">{copy.heroEyebrow}</Pill><h1 className="mt-5 text-4xl font-black tracking-tight text-stone-950 md:text-6xl">{copy.heroTitle}</h1><p className="mt-5 max-w-3xl text-lg font-semibold leading-8 text-stone-600">{copy.heroSubtitle}</p><div className="mt-6 flex flex-wrap gap-2">{copy.flow.map(item => <span key={item} className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs font-black text-stone-600">{item}</span>)}</div></div><div className="bg-stone-950 p-6 text-white md:p-8"><div className="rounded-[2rem] bg-white/10 p-3"><img src={IMG.affyTitle.src} alt="Affymetrix GeneChip title slide" className="w-full rounded-[1.5rem] object-contain" /></div><div className="mt-6 grid gap-3 sm:grid-cols-3"><div className="rounded-2xl bg-white/10 p-4"><div className="text-2xl font-black">1</div><div className="text-xs font-bold text-red-100">sample / chip</div></div><div className="rounded-2xl bg-white/10 p-4"><div className="text-2xl font-black">PM</div><div className="text-xs font-bold text-red-100">perfect match</div></div><div className="rounded-2xl bg-white/10 p-4"><div className="text-2xl font-black">RMA</div><div className="text-xs font-bold text-red-100">preprocessing</div></div></div></div></div></section>;
+  const meta = getHeroMeta(copy);
+  return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.heroEyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.heroTitle}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.heroSubtitle}</p><div className="mt-6 flex flex-wrap gap-2">{meta.tags.map(tag => <Pill key={tag} tone={tag.includes("RMA") || tag.includes("PM") ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={meta.module} value="1" tone="red"/><StatCard label={meta.exam} value="4Q"/><StatCard label={meta.answer} value="10–12"/><StatCard label={meta.core} value="PM/RMA" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{meta.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{meta.bigIdeaText}</p></div><ResourceLinks copy={copy}/></div></div></div></section>;
 }
 
-function SlideFigure({ figure, copy, onZoom, isFull }) {
+function ExamWatchCard({ data, copy }) {
+  if (!data) return null;
+  return <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4">
+    <div className="text-xs font-black uppercase tracking-[0.16em] text-red-700">{copy.exam}</div>
+    <p className="mt-1 text-sm font-bold leading-6 text-red-950">{data.title}</p>
+    <details className="mt-3 rounded-2xl border border-red-200/80 bg-white/80 p-3 open:bg-white">
+      <summary className="cursor-pointer list-none text-sm font-black text-red-800 marker:hidden">{copy.examMore}</summary>
+      <div className="mt-3 space-y-3 text-sm font-semibold leading-6 text-stone-700">
+        <div>
+          <div className="text-[11px] font-black uppercase tracking-[0.16em] text-stone-500">{copy.include}</div>
+          <ul className="mt-2 space-y-2">{data.include.map(point => <li key={point} className="flex gap-2"><span className="mt-1 text-red-600">•</span><span>{point}</span></li>)}</ul>
+        </div>
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-3"><div className="text-[11px] font-black uppercase tracking-[0.16em] text-amber-800">{copy.trap}</div><p className="mt-1 font-bold text-amber-950">{data.trap}</p></div>
+        <div className="rounded-2xl border border-stone-200 bg-stone-50 p-3"><div className="text-[11px] font-black uppercase tracking-[0.16em] text-stone-500">{copy.model}</div><p className="mt-1 font-bold text-stone-900">{data.model}</p></div>
+      </div>
+    </details>
+  </div>;
+}
+
+function SlideFigure({ figure, copy, onZoom, isFull, professor, exam }) {
   const image = IMG[figure.key];
   if (!image) return null;
-  return <article className={cn("overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm", isFull && "md:col-span-2")}><button type="button" onClick={() => onZoom({ ...figure, ...image })} className="group block w-full border-b border-stone-200 bg-white p-3 text-left"><div className="aspect-[4/3] w-full overflow-hidden rounded-2xl bg-white"><img src={image.src} alt={figure.title} loading="lazy" className="h-full w-full object-contain transition duration-300 group-hover:scale-[1.02]" /></div><div className="mt-2 text-center text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.zoom}</div></button><div className="p-5"><Pill tone="red">{copy.slideLabel} {image.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{figure.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{figure.body}</p></div></article>;
+  return <article className={cn("overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm", isFull && "lg:col-span-2 lg:grid lg:grid-cols-[0.95fr_1.05fr]")}><button type="button" onClick={() => onZoom({ ...figure, ...image })} className={cn("group relative block w-full cursor-zoom-in border-b border-stone-200 bg-white p-3 text-left", isFull && "lg:border-b-0 lg:border-r")}><div className={cn("aspect-[4/3] w-full overflow-hidden rounded-2xl bg-white", isFull && "lg:aspect-auto lg:h-full")}><img src={image.src} alt={figure.title} loading="lazy" className="h-full w-full object-contain transition duration-300 group-hover:scale-[1.02]" /></div><span className="pointer-events-none absolute bottom-6 right-6 rounded-full border border-stone-200 bg-white/95 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-stone-700 shadow-sm transition group-hover:-translate-y-0.5">{copy.zoom}</span></button><div className="p-5"><Pill tone="red">{copy.slideLabel} {image.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{figure.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{figure.body}</p><div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-amber-800">{copy.professor}</div><p className="mt-1 text-sm font-bold leading-6 text-amber-950">{professor}</p></div><ExamWatchCard data={exam} copy={copy}/></div></article>;
 }
 
-function SlideGrid({ slides = [], copy, onZoom }) {
-  return <div className="mt-6 grid gap-4 md:grid-cols-2">{slides.map((figure, idx) => <SlideFigure key={`${figure.key}-${idx}`} figure={figure} copy={copy} onZoom={onZoom} isFull={slides.length % 2 === 1 && idx === slides.length - 1} />)}</div>;
+function SlideGrid({ slides = [], copy, onZoom, professor, exam }) {
+  return <div className="mt-6 grid gap-4 lg:grid-cols-2">{slides.map((figure, idx) => <SlideFigure key={`${figure.key}-${idx}`} figure={figure} copy={copy} onZoom={onZoom} professor={professor} exam={exam} isFull={slides.length % 2 === 1 && idx === slides.length - 1} />)}</div>;
 }
 
 function ZoomModal({ item, copy, onClose }) {
@@ -527,26 +578,27 @@ function ProfessorNote({ children, copy }) {
 }
 
 function LessonSection({ section, copy, onZoom }) {
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/85 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={section.eyebrow} title={section.title}>{section.body}</SectionHeader><ProfessorNote copy={copy}>{section.professor}</ProfessorNote><ExamWatch data={section.exam} copy={copy}/><SlideGrid slides={section.slides} copy={copy} onZoom={onZoom}/></section>;
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={section.eyebrow} title={section.title}>{section.body}</SectionHeader><SlideGrid slides={section.slides} copy={copy} onZoom={onZoom} professor={section.professor} exam={section.exam}/></section>;
 }
 
 function KeyConcepts({ copy }) {
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/85 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="Glossary" title="Key concepts / Conceptos clave">{copy.heroSubtitle}</SectionHeader><div className="grid gap-3 md:grid-cols-2">{copy.keyConcepts.map(([term, definition]) => <article key={term} className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><h3 className="text-lg font-black text-stone-950">{term}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{definition}</p></article>)}</div></section>;
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="Glossary" title="Key concepts / Conceptos clave">{copy.heroSubtitle}</SectionHeader><div className="grid gap-3 md:grid-cols-2">{copy.keyConcepts.map(([term, definition]) => <article key={term} className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><h3 className="text-lg font-black text-stone-950">{term}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{definition}</p></article>)}</div></section>;
 }
 
 function Quiz({ copy }) {
   const [answers, setAnswers] = useState({});
   const score = copy.quiz.reduce((sum, q, idx) => sum + (answers[idx] === q.answer ? 1 : 0), 0);
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/85 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.check} title={copy.quizTitle}>{score} / {copy.quiz.length}</SectionHeader><div className="grid gap-4">{copy.quiz.map((q, idx) => <article key={q.q} className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><h3 className="text-lg font-black text-stone-950">{idx + 1}. {q.q}</h3><div className="mt-4 grid gap-2 md:grid-cols-2">{q.options.map((option, optionIdx) => { const selected = answers[idx] === optionIdx; const correct = q.answer === optionIdx; return <button key={option} onClick={() => setAnswers({ ...answers, [idx]: optionIdx })} className={cn("rounded-2xl border px-4 py-3 text-left text-sm font-black transition", selected && correct ? "border-emerald-300 bg-emerald-50 text-emerald-800" : selected ? "border-red-300 bg-red-50 text-red-800" : "border-stone-200 bg-white text-stone-700 hover:bg-stone-100")}>{selected ? (correct ? "✓ " : "✕ ") : "○ "}{option}</button>; })}</div></article>)}</div></section>;
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end"><SectionHeader eyebrow={copy.check} title={copy.quizTitle} /><Pill tone={score === copy.quiz.length ? "emerald" : "amber"}>{score}/{copy.quiz.length}</Pill></div><div className="grid gap-4 lg:grid-cols-2">{copy.quiz.map((q, idx) => { const selected = answers[idx]; const answered = selected !== undefined; const correct = answered && selected === q.answer; return <article key={q.q} className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm"><div className="flex items-center justify-between gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-stone-950 text-sm font-black text-white">{idx + 1}</span>{answered && <Pill tone={correct ? "emerald" : "amber"}>{correct ? "Correct" : "Review"}</Pill>}</div><h3 className="mt-4 text-lg font-black leading-7 text-stone-950">{q.q}</h3><div className="mt-4 grid gap-2">{q.options.map((option, optionIdx) => { const isSelected = selected === optionIdx; const isAnswer = q.answer === optionIdx; const cls = !answered ? "border-stone-200 bg-stone-50 hover:bg-white" : isAnswer ? "border-emerald-300 bg-emerald-50 text-emerald-900" : isSelected ? "border-amber-300 bg-amber-50 text-amber-900" : "border-stone-200 bg-stone-50 text-stone-500"; return <button key={option} onClick={() => setAnswers({ ...answers, [idx]: optionIdx })} className={`rounded-2xl border px-4 py-3 text-left text-sm font-black leading-6 transition ${cls}`}><span className="me-2">{String.fromCharCode(65 + optionIdx)}.</span>{option}{answered && isAnswer && <span className="ms-2 text-emerald-700">✓</span>}{answered && isSelected && !isAnswer && <span className="ms-2 text-amber-700">×</span>}</button>; })}</div></article>; })}</div></section>;
 }
 
 function WrittenTrainer({ copy }) {
   const [answer, setAnswer] = useState("");
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/85 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="10–12 lines" title={copy.writtenTitle}>{copy.writtenPrompt}</SectionHeader><textarea value={answer} onChange={(event) => setAnswer(event.target.value)} placeholder={copy.answerPlaceholder} className="min-h-56 w-full rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5 text-base font-semibold leading-7 text-stone-800 outline-none focus:border-red-300 focus:bg-white"/><div className="mt-3 text-sm font-black text-stone-500">{wordCount(answer)} {copy.words}</div><details className="mt-5 rounded-[1.75rem] border border-emerald-200 bg-emerald-50 p-5 text-emerald-950"><summary className="cursor-pointer text-base font-black">{copy.modelAnswer}</summary><p className="mt-3 text-sm font-semibold leading-7">{copy.writtenModel}</p></details></section>;
+  const words = wordCount(answer);
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="10–12 lines" title={copy.writtenTitle}>{copy.writtenPrompt}</SectionHeader><div className="grid gap-4 lg:grid-cols-[0.92fr_1.08fr]"><article className="rounded-3xl border border-stone-200 bg-white p-5"><label className="text-xl font-black text-stone-950" htmlFor="drd-lesson3-answer">{copy.writtenTitle}</label><textarea id="drd-lesson3-answer" value={answer} onChange={(event) => setAnswer(event.target.value)} rows={12} placeholder={copy.answerPlaceholder} className="mt-4 w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-sm font-semibold leading-7 text-stone-800 outline-none transition placeholder:text-stone-400 focus:border-red-300 focus:ring-4 focus:ring-red-100"/><div className="mt-2 text-xs font-bold text-stone-500">{words} {copy.words}</div></article><article className="rounded-3xl border border-stone-800 bg-stone-950 p-5 text-white"><h3 className="text-xl font-black">{copy.modelAnswer}</h3><p className="mt-3 text-sm font-semibold leading-7 text-stone-200">{copy.writtenModel}</p></article></div></section>;
 }
 
 export default function DRDLesson03({ lang = "es", isDone = false, toggle = () => {} }) {
   const copy = useMemo(() => getCopy(lang), [lang]);
   const [zoom, setZoom] = useState(null);
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav copy={copy} isDone={isDone} toggle={toggle}/><Hero copy={copy}/><section className="mt-8 rounded-[2.5rem] border border-stone-200 bg-white/85 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="Resources" title={copy.resources}>{copy.heroSubtitle}</SectionHeader><div className="grid gap-4 md:grid-cols-3"><ResourceCard label={copy.slides} href={SLIDES_URL} copy={copy}/><ResourceCard label={copy.transcript} href={TRANSCRIPT_URL} copy={copy}/><ResourceCard label={copy.recording} href={CLASS_RECORDING_URL} copy={copy}/></div></section>{copy.sections.map(section => <LessonSection key={section.eyebrow} section={section} copy={copy} onZoom={setZoom}/>) }<KeyConcepts copy={copy}/><Quiz copy={copy}/><WrittenTrainer copy={copy}/><LessonNav copy={copy} isDone={isDone} toggle={toggle} position="bottom"/><ZoomModal item={zoom} copy={copy} onClose={() => setZoom(null)}/></main>;
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav copy={copy} isDone={isDone} toggle={toggle}/><Hero copy={copy}/>{copy.sections.map(section => <LessonSection key={section.eyebrow} section={section} copy={copy} onZoom={setZoom}/>) }<KeyConcepts copy={copy}/><Quiz copy={copy}/><WrittenTrainer copy={copy}/><LessonNav copy={copy} isDone={isDone} toggle={toggle} position="bottom"/><ZoomModal item={zoom} copy={copy} onClose={() => setZoom(null)}/></main>;
 }

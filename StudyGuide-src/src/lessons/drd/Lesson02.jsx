@@ -1,53 +1,232 @@
 import React, { useMemo, useState } from "react";
+import targetsProbesSlide from "../../assets/drd/lesson02/targets-probes.jpg";
+import threeArrayTypesSlide from "../../assets/drd/lesson02/three-array-types.jpg";
+import spottingSlide from "../../assets/drd/lesson02/spotting-slide.jpg";
+import oldArrayerSlide from "../../assets/drd/lesson02/old-arrayer.jpg";
+import pinHeadSlide from "../../assets/drd/lesson02/pin-head.jpg";
+import subarrayControlsSlide from "../../assets/drd/lesson02/subarray-controls.jpg";
 import workflowSlide from "../../assets/drd/lesson02/competitive-workflow.jpg";
+import cyanineDyesSlide from "../../assets/drd/lesson02/cyanine-dyes.jpg";
+import indirectLabelingSlide from "../../assets/drd/lesson02/indirect-labeling.jpg";
 import mergedScanSlide from "../../assets/drd/lesson02/merged-scan.jpg";
-import maPlotSlide from "../../assets/drd/lesson02/ma-plot.jpg";
+import falseColoursSlide from "../../assets/drd/lesson02/false-colours.jpg";
+import spotQcSlide from "../../assets/drd/lesson02/spot-qc.jpg";
+import technicalVariabilityMapSlide from "../../assets/drd/lesson02/technical-variability-map.jpg";
+import dyeSwapSlide from "../../assets/drd/lesson02/dye-swap.jpg";
+import atlasArraySlide from "../../assets/drd/lesson02/atlas-array.jpg";
+import aspecificFluorescenceSlide from "../../assets/drd/lesson02/aspecific-fluorescence.jpg";
+import imageneOutputSlide from "../../assets/drd/lesson02/imagene-output.jpg";
+import toxoplasmaQuestionSlide from "../../assets/drd/lesson02/toxoplasma-question.jpg";
+import dotPlotSlide from "../../assets/drd/lesson02/dot-plot.jpg";
+import qcFilteringSlide from "../../assets/drd/lesson02/qc-filtering.jpg";
+import logTransformSlide from "../../assets/drd/lesson02/log-transform.jpg";
+import logNormalSlide from "../../assets/drd/lesson02/log-normal.jpg";
+import linearRegressionBiasSlide from "../../assets/drd/lesson02/linear-regression-bias.jpg";
+import maPlotFormulaSlide from "../../assets/drd/lesson02/ma-plot-formula.jpg";
+import maExpectedRatiosSlide from "../../assets/drd/lesson02/ma-expected-ratios.jpg";
+import maScalingSlide from "../../assets/drd/lesson02/ma-scaling.jpg";
+import referenceSampleSlide from "../../assets/drd/lesson02/reference-sample.jpg";
+import scalingBoxplotsSlide from "../../assets/drd/lesson02/scaling-boxplots.jpg";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1dZoiMM4jpg6J_1Ty_Pwd-kiInbBZS2nX/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1JLwo7lsvMAB2sCSC2wfyHYyh9wQWUoDoO9QYqnfvLoM/edit?usp=drivesdk";
 const CLASS_RECORDING_URL = "https://www.youtube.com/watch?v=UqIn_t1T_RU&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=2";
 
-const LESSON2_SLIDES = [
-  { src: workflowSlide, slide: 11 },
-  { src: mergedScanSlide, slide: 15 },
-  { src: maPlotSlide, slide: 33 }
-];
+const LESSON2_IMAGE_BANK = {
+  targetsProbes: { src: targetsProbesSlide, slide: 2 },
+  threeArrayTypes: { src: threeArrayTypesSlide, slide: 4 },
+  spotting: { src: spottingSlide, slide: 7 },
+  oldArrayer: { src: oldArrayerSlide, slide: 8 },
+  pinHead: { src: pinHeadSlide, slide: 9 },
+  subarrayControls: { src: subarrayControlsSlide, slide: 10 },
+  workflow: { src: workflowSlide, slide: 11 },
+  cyanineDyes: { src: cyanineDyesSlide, slide: 12 },
+  indirectLabeling: { src: indirectLabelingSlide, slide: 13 },
+  mergedScan: { src: mergedScanSlide, slide: 15 },
+  falseColours: { src: falseColoursSlide, slide: 16 },
+  spotQc: { src: spotQcSlide, slide: 17 },
+  technicalVariabilityMap: { src: technicalVariabilityMapSlide, slide: 18 },
+  dyeSwap: { src: dyeSwapSlide, slide: 19 },
+  atlasArray: { src: atlasArraySlide, slide: 21 },
+  aspecificFluorescence: { src: aspecificFluorescenceSlide, slide: 22 },
+  imageneOutput: { src: imageneOutputSlide, slide: 24 },
+  toxoplasmaQuestion: { src: toxoplasmaQuestionSlide, slide: 26 },
+  dotPlot: { src: dotPlotSlide, slide: 27 },
+  qcFiltering: { src: qcFilteringSlide, slide: 28 },
+  logTransform: { src: logTransformSlide, slide: 29 },
+  logNormal: { src: logNormalSlide, slide: 30 },
+  linearRegressionBias: { src: linearRegressionBiasSlide, slide: 32 },
+  maPlotFormula: { src: maPlotFormulaSlide, slide: 33 },
+  maExpectedRatios: { src: maExpectedRatiosSlide, slide: 34 },
+  maScaling: { src: maScalingSlide, slide: 38 },
+  referenceSample: { src: referenceSampleSlide, slide: 40 },
+  scalingBoxplots: { src: scalingBoxplotsSlide, slide: 42 }
+};
 
-const LESSON2_SLIDE_COPY = {
+const LESSON2_VISUAL_COPY = {
   en: {
-    eyebrow: "Slide snapshots",
-    title: "Original lecture images for the Stanford array workflow",
-    intro: "These images from the real slides make the platform easier to visualize: the lab workflow, the merged scan and the MA-plot logic used downstream.",
-    open: "Open slides PDF",
-    figures: [
-      { title: "The competitive workflow on one slide", body: "This diagram shows the full logic: label the two samples separately, mix them, hybridize them on the same array and read relative abundance from shared probes." },
-      { title: "How the merged Cy3/Cy5 scan looks", body: "The overlaid image turns raw fluorescence into an intuitive signal: greener spots favour Cy3, redder spots favour Cy5 and yellow suggests similar abundance." },
-      { title: "MA-plot as the bridge to normalization", body: "The slide formalizes M and A so students can see why raw intensities are transformed into log-ratios before assessing bias and performing normalization." }
-    ]
+    labels: { professor: "Professor emphasis", exam: "Exam watch", slide: "Slide", open: "Open slides PDF" },
+    blocks: {
+      arrayTypes: { eyebrow: "Microarray dictionary", title: "1 · Targets, probes and the three array families", intro: "The professor starts by building the vocabulary, so these images sit near the beginning rather than in a separate gallery.", items: [
+        { image: "targetsProbes", title: "Target versus probe", body: "The target is the labelled biological molecule from the sample; the probe is fixed on the array support and captures a complementary sequence.", professor: "She pauses on terminology: targets vary with the biological question, and arrays can be DNA, RNA, miRNA, ChIP-chip, CGH or methylation-related.", exam: "Possible definition question: distinguish target, probe and array support." },
+        { image: "threeArrayTypes", title: "Three platforms in this course", body: "Competitive/two-colour arrays, noncompetitive/one-colour arrays and Illumina BeadChip are the three technologies to compare across Module 1.", professor: "She says to pay attention to ‘competitive’: two samples on the same array, two colours and two lasers. Noncompetitive means one sample and one laser.", exam: "High-yield comparison: competitive vs noncompetitive vs BeadChip." }
+      ] },
+      fabrication: { eyebrow: "Fabrication and controls", title: "2 · Spotted arrays are physical objects with technical weak points", intro: "This visual block follows the platform overview because the professor explains that manufacturing itself creates part of the technical variability.", items: [
+        { image: "spotting", title: "Glass slide and spotting", body: "Old competitive arrays used coated slides where cDNA/oligos were spotted onto precise positions.", professor: "She emphasizes that early systems resembled microscopy slides and that DNA had to bind to a chemically treated surface.", exam: "Mention spotting and fixed probes when listing characteristics of competitive arrays." },
+        { image: "oldArrayer", title: "Old arrayer hardware", body: "Plate stacker, washer/vacuum, slides and pin head make the physical array; every step can introduce variation.", professor: "At the beginning, the pin touched the slide, creating many problems; later inkjet-like systems improved this.", exam: "Manufacturing issues explain why QC and filtering are needed." },
+        { image: "pinHead", title: "Pin heads and cross-contamination", body: "Pins dip into wells and spot the slide; cleaning between dips is required to avoid cross-contamination.", professor: "She wants you to imagine the physical process: pin, wash, spot, repeat. This helps explain irregular spots.", exam: "Useful detail for a 10–12 line answer on technical variability." },
+        { image: "subarrayControls", title: "Subarrays and controls", body: "Positive controls should fluoresce, negative controls should remain dark, and spike-ins can test intensity levels.", professor: "She later corrects a common confusion: positive/negative controls are QC spots; they are not the same as a reference sample.", exam: "Trap: reference sample ≠ positive/negative control spot." }
+      ] },
+      workflow: { eyebrow: "Competitive workflow", title: "3 · Two samples are processed separately, then compete", intro: "These slides belong next to the workflow component because they show exactly why this platform is called competitive.", items: [
+        { image: "workflow", title: "Control and treated samples compete on the same probes", body: "Two mRNA samples are reverse-transcribed, labelled with different dyes, mixed and hybridized to the same array.", professor: "Her wording: if a transcript is more abundant in one sample, it ‘wins’ the hybridization competition for that spot.", exam: "Repeatable question: What does ‘competitive array’ mean?" },
+        { image: "cyanineDyes", title: "Cy3 and Cy5 create the central bias", body: "Cy3 emits green and Cy5 emits red; their physical/chemical differences generate dye bias that must be corrected.", professor: "She stresses Cy5 is not identical to Cy3, and this is the origin of a systematic technical problem.", exam: "Must mention dye bias and normalization when describing two-colour arrays." },
+        { image: "indirectLabeling", title: "Indirect labelling reduces colour bias", body: "Aminoallyl-dUTP allows cDNA synthesis first and dye coupling later, reducing problems caused by different dye size/behaviour.", professor: "She explains this as a protocol-level attempt to minimize the fluorochrome bias before computational correction.", exam: "Good supporting detail if asked how experimental variability is controlled." }
+      ] },
+      imageQc: { eyebrow: "Image output and QC", title: "4 · The image is the first dataset", intro: "These images appear before the colour and checkpoint exercises because the professor says the image and its processing determine the raw data table.", items: [
+        { image: "mergedScan", title: "Separate Cy3/Cy5 scans and merged TIFF", body: "The array is scanned with two lasers; software merges the green and red channels into an interpretable image.", professor: "She says it is absolutely important to know the software and algorithm that turn the image into intensities.", exam: "Data output: TIFF/image → raw data table of spot intensities." },
+        { image: "falseColours", title: "False colours are a code", body: "White means saturated, blue absent signal, red up-regulation, green down-regulation and yellow/orange similar signal.", professor: "She notes that one white spot is not catastrophic, but many white spots mean laser intensity/saturation problems.", exam: "Useful quick quiz: interpret red, green, yellow, white and blue spots." },
+        { image: "spotQc", title: "Each spot is a distribution of pixels", body: "Spot-level QC checks background, irregular shapes, donuts, saturation, scratches and dust.", professor: "If background is higher than the signal, the spot is bad and cannot be used.", exam: "Possible question: why must spot-level QC precede normalization?" },
+        { image: "technicalVariabilityMap", title: "Every step can add technical variability", body: "Separate tubes, dyes, lasers, hybridization, print-tip effects, background and image-processing algorithms all contribute.", professor: "This is why she returns to the first lecture’s variability concept: the technology itself produces experimental variability.", exam: "Link Lesson 2 back to Lesson 1: technical variability must be measured and reduced." }
+      ] },
+      dyeSwapOutput: { eyebrow: "Checking technical variability", title: "5 · Dye swap, failed areas and raw software tables", intro: "This block follows QC because it shows how the professor checks whether Cy3/Cy5 behaviour is distorting the result.", items: [
+        { image: "dyeSwap", title: "Dye swap reverses the labels", body: "Use the same biological samples twice, reversing Cy3 and Cy5. If dyes behaved identically, combined ratios should be close to one.", professor: "She says you never obtain exactly one; you obtain a cloud. The acceptable variation discussed is around ±1.74 on the log scale.", exam: "Very likely: explain the purpose of dye swap." },
+        { image: "atlasArray", title: "Visual inspection of the original array", body: "The ATLAS example shows controls, subarrays and different intensities in a real two-colour experiment.", professor: "She uses this to show that you must inspect arrays with your eyes before trusting the software output.", exam: "Visual QC is part of the answer, not an optional detail." },
+        { image: "aspecificFluorescence", title: "A dye swap can fail", body: "Nonspecific fluorescence can cover spots; affected areas cannot be used for reliable measurement.", professor: "She explains that washing/background problems can make a whole area unusable and force filtering or repetition.", exam: "Good example of technical artifact that must not be interpreted biologically." },
+        { image: "imageneOutput", title: "Software output: mean, median, SD, MAD and flags", body: "The final table includes spot location, signal/background mean and median, SD, MAD-like descriptors and quality flags.", professor: "Flag 0 means good; flag 1 means bad. If background exceeds the signal, the spot should not be used.", exam: "Mention that spot values are not single pixels; they summarize a pixel distribution." }
+      ] },
+      biologicalExample: { eyebrow: "Biological question in practice", title: "6 · Toxoplasma experiment: from question to first plots", intro: "The professor uses Toxoplasma infection to reconnect the technology to the design logic from Lesson 1.", items: [
+        { image: "toxoplasmaQuestion", title: "A focused question, not a generic experiment", body: "Does Toxoplasma gondii infect human fibroblasts and modify gene transcription after one hour?", professor: "She emphasizes model, control, treated condition and timing. One hour is a design decision based on expected biological response.", exam: "Use this as a template for writing biological question + model + variable + technique." },
+        { image: "dotPlot", title: "Raw dot plot: Cy3 versus Cy5", body: "Each dot is a spot/transcript, but raw intensities are bunched in the corner and spread at high intensity.", professor: "She says the raw cloud is not enough: you cannot really see the full distribution.", exam: "If asked why transform data, start from this problem." },
+        { image: "qcFiltering", title: "QC before interpretation", body: "Saturated spots and outliers must be evaluated; outliers are filtered only if you are sure they are technical.", professor: "She explains that decreasing SD at very high intensity is a serious saturation signal, not a biological pattern.", exam: "Do not say ‘remove all outliers’; discuss whether they are technical or biological." }
+      ] },
+      transformMa: { eyebrow: "Transform and visualize", title: "7 · Log transformation and MA-plot open the data cloud", intro: "These images are inserted around the MA mini-lab because the professor explicitly marks MA-plot as a verification-test type question.", items: [
+        { image: "logTransform", title: "Log2 transformation makes distributions visible", body: "Raw Cy3/Cy5 intensities are skewed; log2 transformation spreads the data and makes distributions more analyzable.", professor: "She says this transformation is used in both competitive and noncompetitive array contexts and prepares data for statistics.", exam: "State that log transform helps move toward a normal/log-normal distribution." },
+        { image: "logNormal", title: "Original scale versus log scale", body: "The slide shows why a log-normal raw variable can become approximately Gaussian after log transformation.", professor: "She uses it to justify why downstream statistical reasoning often works on log2-transformed data.", exam: "Good definition: if log(X) is normal, X is log-normal." },
+        { image: "linearRegressionBias", title: "Dot plot shows dye-dependent bias", body: "The regression line is not Y=X: Cy5 can dominate at low intensity and Cy3 at high intensity.", professor: "She says this shows the two dyes do not behave identically; therefore intra-array normalization is needed.", exam: "Connect dye bias to the need for intra-array normalization." },
+        { image: "maPlotFormula", title: "MA-plot formula", body: "M is the log2 ratio Cy5/Cy3; A is the average log intensity. M shows effect direction; A shows signal strength.", professor: "She says clearly: ‘MA plot’ can be a verification-test question and is also used beyond microarrays, including RNA-seq.", exam: "Very high-yield: define M and A and explain what the plot is used for." },
+        { image: "maExpectedRatios", title: "Expected MA distribution", body: "A good MA-plot should have its cloud centred around M=0 and roughly parallel to the x-axis.", professor: "She warns that fold-change thresholds are only suggestions; significance still needs statistical testing.", exam: "Do not equate fold change with statistical significance." }
+      ] },
+      normalization: { eyebrow: "Normalization and design", title: "8 · Make arrays comparable without claiming biology is identical", intro: "This final visual block follows the normalization exercise and design clarifier because it contains the professor’s most exam-oriented summary.", items: [
+        { image: "maScaling", title: "Intra-array scaling", body: "Subtract the mean/median M so the cloud is centred around zero, assuming the red/green relationship is a constant factor.", professor: "She says the data must become parallel to the x-axis; otherwise they are not good for further analysis.", exam: "Possible question: what is the final purpose of normalization in competitive arrays?" },
+        { image: "referenceSample", title: "Reference sample across arrays", body: "The same biological reference is hybridized across many arrays to create a fixed comparison anchor.", professor: "She explicitly says the reference is a biological sample, not a positive or negative control spot.", exam: "Important trap: reference sample ≠ array QC controls." },
+        { image: "scalingBoxplots", title: "Inter-array scaling/centering", body: "Boxplots show how scaling can make medians comparable across arrays before more complete normalization.", professor: "She stresses that normalization makes intensity distributions comparable, not that all biological results become the same.", exam: "Phrase to memorize: equal distribution of intensities, not equal biological results." }
+      ] },
+      examSummary: { eyebrow: "Professor’s exam hints", title: "9 · What she explicitly says could be asked", intro: "This block is placed before the quiz/exam trainer so you can convert lecture warnings into written answers.", items: [
+        { image: "threeArrayTypes", title: "‘What does competitive mean?’", body: "Answer with the list: two samples, same array, two colours, two lasers, competition for probes, dye bias, QC, intra-array and inter-array normalization.", professor: "Near the end she says a repeatable question is to list characteristics of competitive arrays. She wants concepts and ideas, not long calculations.", exam: "Write a 10–12 line answer using this checklist." },
+        { image: "maPlotFormula", title: "‘What is an MA-plot?’", body: "M = log2 ratio; A = average log intensity; it helps evaluate distribution, dye bias, normalization quality and potential fold-change extremes.", professor: "She explicitly calls MA-plot a clear verification-test question.", exam: "Define axes, purpose, and what a good normalized MA-plot looks like." }
+      ] }
+    }
   },
   es: {
-    eyebrow: "Imágenes de las diapositivas",
-    title: "Capturas originales para entender el workflow Stanford",
-    intro: "Estas imágenes de las slides reales hacen más visual la plataforma: el flujo experimental, el escaneo fusionado y la lógica del MA-plot que se usa después.",
-    open: "Abrir PDF de slides",
-    figures: [
-      { title: "El workflow competitivo resumido en una slide", body: "Este esquema muestra toda la lógica: marcar por separado las dos muestras, mezclarlas, hibridarlas sobre el mismo array y leer la abundancia relativa usando probes compartidos." },
-      { title: "Cómo se ve el escaneo fusionado Cy3/Cy5", body: "La imagen superpuesta convierte la fluorescencia cruda en una señal intuitiva: los spots verdosos favorecen Cy3, los rojizos favorecen Cy5 y el amarillo sugiere abundancia similar." },
-      { title: "El MA-plot como puente hacia la normalización", body: "La slide formaliza M y A para que se vea por qué las intensidades crudas se transforman en log-ratios antes de evaluar sesgos y aplicar la normalización." }
-    ]
+    labels: { professor: "Énfasis de la profesora", exam: "Ojo para examen", slide: "Diapositiva", open: "Abrir PDF de slides" },
+    blocks: {
+      arrayTypes: { eyebrow: "Diccionario de microarrays", title: "1 · Targets, probes y tres familias de arrays", intro: "La profesora empieza construyendo vocabulario; por eso estas imágenes van al inicio y no en una galería separada.", items: [
+        { image: "targetsProbes", title: "Target versus probe", body: "El target es la molécula biológica marcada de la muestra; el probe está fijo en el array y captura una secuencia complementaria.", professor: "Se detiene en la terminología: los targets dependen de la pregunta biológica, y los arrays pueden medir DNA, RNA, miRNA, ChIP-chip, CGH o methylation.", exam: "Posible definición: distinguir target, probe y soporte del array." },
+        { image: "threeArrayTypes", title: "Tres plataformas del curso", body: "Competitive/two-colour arrays, noncompetitive/one-colour arrays e Illumina BeadChip son las tres tecnologías a comparar en Module 1.", professor: "Dice que prestes atención a ‘competitive’: dos muestras en el mismo array, dos colores y dos láseres. Noncompetitive: una muestra y un láser.", exam: "Comparación de alto rendimiento: competitive vs noncompetitive vs BeadChip." }
+      ] },
+      fabrication: { eyebrow: "Fabricación y controles", title: "2 · Los spotted arrays son objetos físicos con puntos débiles técnicos", intro: "Este bloque sigue al overview porque la fabricación en sí misma introduce variabilidad técnica.", items: [
+        { image: "spotting", title: "Slide de vidrio y spotting", body: "Los arrays competitivos antiguos usaban slides recubiertos donde se depositaban cDNA/oligos en posiciones precisas.", professor: "Enfatiza que los primeros sistemas se parecían a slides de microscopía y que el DNA debía unirse a una superficie tratada químicamente.", exam: "Menciona spotting y probes fijos al listar características de competitive arrays." },
+        { image: "oldArrayer", title: "Hardware del old arrayer", body: "Plate stacker, washer/vacuum, slides y pin head construyen el array físico; cada paso puede introducir variación.", professor: "Al principio el pin tocaba el slide, creando muchos problemas; luego sistemas tipo inkjet mejoraron la fabricación.", exam: "Los problemas de fabricación explican por qué hacen falta QC y filtering." },
+        { image: "pinHead", title: "Pin heads y contaminación cruzada", body: "Los pins entran en los wells y hacen spotting; deben limpiarse entre dips para evitar contaminación cruzada.", professor: "Quiere que imagines el proceso físico: pin, wash, spot, repetir. Eso explica irregular spots.", exam: "Detalle útil para una respuesta de 10–12 líneas sobre variabilidad técnica." },
+        { image: "subarrayControls", title: "Subarrays y controles", body: "Los controles positivos deben fluorescer, los negativos deben quedar oscuros y los spike-ins prueban niveles de intensidad.", professor: "Corrige una confusión común: positive/negative controls son spots de QC; no son lo mismo que reference sample.", exam: "Trampa: reference sample ≠ positive/negative control spot." }
+      ] },
+      workflow: { eyebrow: "Workflow competitivo", title: "3 · Dos muestras se procesan separadas y luego compiten", intro: "Estas slides van junto al workflow porque muestran por qué la plataforma se llama competitive.", items: [
+        { image: "workflow", title: "Control y tratado compiten por los mismos probes", body: "Dos muestras de mRNA se retrotranscriben, se marcan con dyes distintos, se mezclan e hibridan en el mismo array.", professor: "Su frase: si un transcrito es más abundante en una muestra, ‘gana’ la competencia por el spot.", exam: "Pregunta repetible: ¿qué significa competitive array?" },
+        { image: "cyanineDyes", title: "Cy3 y Cy5 generan el sesgo central", body: "Cy3 emite verde y Cy5 rojo; sus diferencias físico-químicas generan dye bias que debe corregirse.", professor: "Insiste en que Cy5 no es idéntico a Cy3, y eso origina un problema técnico sistemático.", exam: "Debe aparecer dye bias y normalization al describir two-colour arrays." },
+        { image: "indirectLabeling", title: "El indirect labelling reduce color bias", body: "Aminoallyl-dUTP permite sintetizar cDNA primero y acoplar el dye después, reduciendo problemas de tamaño/comportamiento del fluoróforo.", professor: "Lo explica como una estrategia de protocolo para minimizar dye bias antes de la corrección computacional.", exam: "Buen detalle si preguntan cómo se controla la variabilidad experimental." }
+      ] },
+      imageQc: { eyebrow: "Imagen y QC", title: "4 · La imagen es el primer dataset", intro: "Estas imágenes van antes de los ejercicios de color/QC porque la profesora dice que la imagen y su procesamiento determinan la tabla de datos crudos.", items: [
+        { image: "mergedScan", title: "Escaneos Cy3/Cy5 y merge TIFF", body: "El array se escanea con dos láseres; el software fusiona los canales verde y rojo.", professor: "Dice que es absolutamente importante conocer el software y el algoritmo que transforman imagen en intensities.", exam: "Data output: TIFF/image → tabla cruda de intensidades por spot." },
+        { image: "falseColours", title: "Los false colours son un código", body: "Blanco = saturado, azul = ausencia de señal, rojo = up-regulation, verde = down-regulation y amarillo/naranja = señal similar.", professor: "Un spot blanco no destruye todo, pero muchos spots blancos indican problema de laser intensity/saturation.", exam: "Quiz clásico: interpretar spots rojos, verdes, amarillos, blancos y azules." },
+        { image: "spotQc", title: "Cada spot es una distribución de pixels", body: "El QC revisa background, formas irregulares, donuts, saturación, scratches y polvo.", professor: "Si el background es mayor que la señal, el spot es malo y no debe usarse.", exam: "Posible pregunta: ¿por qué el spot-level QC precede a la normalización?" },
+        { image: "technicalVariabilityMap", title: "Cada paso añade variabilidad técnica", body: "Tubos separados, dyes, láseres, hibridación, print-tip, background y algoritmos de imagen contribuyen.", professor: "Por eso vuelve a Lesson 1: la tecnología produce experimental variability.", exam: "Conecta Lesson 2 con Lesson 1: la variabilidad técnica debe medirse y reducirse." }
+      ] },
+      dyeSwapOutput: { eyebrow: "Control de variabilidad técnica", title: "5 · Dye swap, áreas fallidas y tablas de software", intro: "Este bloque muestra cómo comprobar si Cy3/Cy5 están distorsionando el resultado.", items: [
+        { image: "dyeSwap", title: "Dye swap invierte los labels", body: "Se usan las mismas muestras dos veces, invirtiendo Cy3 y Cy5. Si los dyes se comportaran igual, los ratios combinados deberían acercarse a uno.", professor: "Dice que nunca obtienes exactamente uno; obtienes una nube. La variación aceptable discutida es alrededor de ±1.74 en escala log.", exam: "Muy probable: explicar el propósito de dye swap." },
+        { image: "atlasArray", title: "Inspección visual del array original", body: "El ejemplo ATLAS muestra controles, subarrays e intensidades diferentes en un experimento real.", professor: "Lo usa para mostrar que hay que mirar el array con los ojos antes de confiar en la salida del software.", exam: "El visual QC es parte de la respuesta, no un detalle opcional." },
+        { image: "aspecificFluorescence", title: "Un dye swap puede fallar", body: "La fluorescencia inespecífica puede cubrir spots; esas áreas no sirven para medición fiable.", professor: "Explica que problemas de lavado/background pueden inutilizar una zona completa y forzar filtrado o repetición.", exam: "Ejemplo claro de artefacto técnico que no debe interpretarse biológicamente." },
+        { image: "imageneOutput", title: "Salida del software: mean, median, SD, MAD y flags", body: "La tabla final incluye localización, señal/background mean y median, SD, descriptors tipo MAD y flags de calidad.", professor: "Flag 0 significa bueno; flag 1 malo. Si background excede señal, el spot no debe usarse.", exam: "Menciona que los valores de un spot resumen una distribución de pixels." }
+      ] },
+      biologicalExample: { eyebrow: "Pregunta biológica en práctica", title: "6 · Experimento Toxoplasma: de la pregunta a los primeros plots", intro: "La profesora usa infección por Toxoplasma para volver a la lógica de diseño de Lesson 1.", items: [
+        { image: "toxoplasmaQuestion", title: "Una pregunta enfocada, no un experimento genérico", body: "¿Toxoplasma gondii infecta fibroblastos humanos y modifica la transcripción génica tras una hora?", professor: "Enfatiza modelo, control, tratado y timing. Una hora es una decisión de diseño basada en respuesta esperada.", exam: "Úsalo como plantilla: biological question + model + variable + technique." },
+        { image: "dotPlot", title: "Dot plot crudo: Cy3 versus Cy5", body: "Cada punto es un spot/transcrito, pero las intensidades crudas se acumulan en la esquina y se abren a intensidades altas.", professor: "Dice que la nube cruda no basta: no se ve bien la distribución completa.", exam: "Si preguntan por qué transformar datos, empieza por este problema." },
+        { image: "qcFiltering", title: "QC antes de interpretar", body: "Saturated spots y outliers deben evaluarse; los outliers solo se filtran si estás seguro de que son técnicos.", professor: "Explica que si SD disminuye a alta intensidad es una señal seria de saturación, no un patrón biológico.", exam: "No digas ‘eliminar todos los outliers’; discute si son técnicos o biológicos." }
+      ] },
+      transformMa: { eyebrow: "Transformar y visualizar", title: "7 · Log transformation y MA-plot abren la nube de datos", intro: "Estas imágenes van junto al MA mini-lab porque la profesora marca explícitamente el MA-plot como pregunta tipo verification test.", items: [
+        { image: "logTransform", title: "La transformación log2 hace visibles las distribuciones", body: "Las intensidades crudas Cy3/Cy5 son sesgadas; log2 dispersa los datos y permite analizarlos mejor.", professor: "Dice que esta transformación se usa en arrays competitivos y no competitivos, y prepara los datos para estadística.", exam: "Di que log transform ayuda a acercarse a una distribución normal/log-normal." },
+        { image: "logNormal", title: "Escala original versus escala log", body: "La slide muestra por qué una variable log-normal en escala cruda puede volverse aproximadamente gaussiana al aplicar log.", professor: "La usa para justificar el razonamiento estadístico sobre datos log2.", exam: "Definición útil: si log(X) es normal, X es log-normal." },
+        { image: "linearRegressionBias", title: "El dot plot muestra bias dependiente del dye", body: "La regresión no es Y=X: Cy5 domina a baja intensidad y Cy3 a alta intensidad.", professor: "Dice que esto prueba que los dyes no se comportan igual; por eso hace falta intra-array normalization.", exam: "Conecta dye bias con la necesidad de intra-array normalization." },
+        { image: "maPlotFormula", title: "Fórmula del MA-plot", body: "M es log2 ratio Cy5/Cy3; A es el promedio de log intensity. M muestra dirección del efecto y A fuerza de señal.", professor: "Lo dice claramente: ‘MA plot’ puede ser pregunta del verification test y se usa también fuera de microarrays, como RNA-seq.", exam: "Muy importante: define M y A y explica para qué sirve el plot." },
+        { image: "maExpectedRatios", title: "Distribución esperada del MA-plot", body: "Un buen MA-plot debe tener la nube centrada alrededor de M=0 y aproximadamente paralela al eje x.", professor: "Advierte que los umbrales de fold-change son sugerencias; la significancia requiere test estadístico.", exam: "No confundas fold change con significancia estadística." }
+      ] },
+      normalization: { eyebrow: "Normalización y diseño", title: "8 · Hacer arrays comparables sin decir que la biología es idéntica", intro: "Este bloque final sigue a normalización y design clarifier porque contiene el resumen más orientado a examen.", items: [
+        { image: "maScaling", title: "Scaling intra-array", body: "Se resta mean/median de M para centrar la nube en cero, asumiendo que rojo/verde se relacionan por un factor constante.", professor: "Dice que los datos deben quedar paralelos al eje x; si no, no son buenos para análisis posterior.", exam: "Posible pregunta: ¿cuál es el objetivo final de la normalización en competitive arrays?" },
+        { image: "referenceSample", title: "Reference sample entre arrays", body: "La misma referencia biológica se hibrida en muchos arrays para crear un ancla fija de comparación.", professor: "Lo dice explícitamente: la reference es una muestra biológica, no un positive/negative control spot.", exam: "Trampa importante: reference sample ≠ controles de QC del array." },
+        { image: "scalingBoxplots", title: "Scaling/centering inter-array", body: "Los boxplots muestran cómo el scaling hace comparables las medianas antes de una normalización más completa.", professor: "Insiste en que la normalización iguala distribuciones de intensidad, no resultados biológicos.", exam: "Frase para memorizar: equal distribution of intensities, not equal biological results." }
+      ] },
+      examSummary: { eyebrow: "Pistas explícitas de examen", title: "9 · Lo que ella dice que puede preguntar", intro: "Este bloque va antes del quiz/exam trainer para convertir advertencias de la clase en respuestas escritas.", items: [
+        { image: "threeArrayTypes", title: "‘What does competitive mean?’", body: "Responde con la lista: dos muestras, mismo array, dos colores, dos láseres, competencia por probes, dye bias, QC, intra-array e inter-array normalization.", professor: "Al final dice que una pregunta repetible es listar características de competitive arrays. Quiere conceptos e ideas, no cálculos largos.", exam: "Escribe una respuesta de 10–12 líneas con este checklist." },
+        { image: "maPlotFormula", title: "‘What is an MA-plot?’", body: "M = log2 ratio; A = average log intensity; sirve para evaluar distribución, dye bias, calidad de normalización y extremos de fold-change.", professor: "Llama explícitamente al MA-plot una pregunta clara de verification test.", exam: "Define ejes, propósito y cómo se ve un MA-plot normalizado." }
+      ] }
+    }
   },
   fa: {
-    eyebrow: "تصاویر اسلایدها",
-    title: "تصاویر اصلی برای فهم workflow آرایهٔ Stanford",
-    intro: "این تصاویر از اسلایدهای واقعی، پلتفرم را دیداری‌تر می‌کنند: workflow آزمایشگاهی، تصویر اسکن ادغام‌شده و منطق MA-plot که در ادامه استفاده می‌شود.",
-    open: "باز کردن PDF اسلایدها",
-    figures: [
-      { title: "workflow رقابتی در یک اسلاید", body: "این نمودار کل منطق را نشان می‌دهد: دو نمونه جداگانه label می‌شوند، با هم مخلوط می‌شوند، روی یک آرایه hybridize می‌شوند و abundance نسبی از probeهای مشترک خوانده می‌شود." },
-      { title: "ظاهر اسکن ادغام‌شدهٔ Cy3/Cy5", body: "تصویر روی‌هم‌افتاده fluorescence خام را به یک سیگنال شهودی تبدیل می‌کند: spotهای سبزتر به نفع Cy3 هستند، spotهای قرمزتر به نفع Cy5 و زرد یعنی abundance تقریباً مشابه." },
-      { title: "MA-plot به‌عنوان پلِ نرمال‌سازی", body: "این اسلاید M و A را رسمی می‌کند تا روشن شود چرا intensityهای خام پیش از بررسی bias و انجام نرمال‌سازی به log-ratio تبدیل می‌شوند." }
-    ]
+    labels: { professor: "تأکید استاد", exam: "نکتهٔ امتحانی", slide: "اسلاید", open: "باز کردن PDF اسلایدها" },
+    blocks: {
+      arrayTypes: { eyebrow: "واژگان microarray", title: "۱ · target، probe و سه خانوادهٔ array", intro: "استاد درس را با واژگان شروع می‌کند؛ بنابراین تصاویر باید در جریان درس باشند، نه در یک گالری جدا.", items: [
+        { image: "targetsProbes", title: "Target در برابر Probe", body: "target مولکول زیستیِ label شده از نمونه است؛ probe روی array ثابت است و توالی complementary را می‌گیرد.", professor: "targets به biological question بستگی دارند و arrayها می‌توانند DNA، RNA، miRNA، ChIP-chip، CGH یا methylation را بررسی کنند.", exam: "تعریف احتمالی: target، probe و support array را جدا کنید." },
+        { image: "threeArrayTypes", title: "سه پلتفرم اصلی درس", body: "competitive/two-colour، noncompetitive/one-colour و Illumina BeadChip سه فناوری مهم Module 1 هستند.", professor: "competitive یعنی دو نمونه روی یک array، دو رنگ و دو laser. noncompetitive یعنی یک نمونه و یک laser.", exam: "مقایسهٔ مهم: competitive vs noncompetitive vs BeadChip." }
+      ] },
+      fabrication: { eyebrow: "ساخت و کنترل‌ها", title: "۲ · spotted array یک شیء فیزیکی با خطاهای فنی است", intro: "این بخش نشان می‌دهد خود manufacturing هم technical variability ایجاد می‌کند.", items: [
+        { image: "spotting", title: "slide شیشه‌ای و spotting", body: "در arrayهای قدیمی cDNA/oligo روی slide پوشش‌دار spot می‌شد.", professor: "سطح باید شیمیایی آماده شود تا DNA به آن متصل شود.", exam: "در ویژگی‌های competitive array، spotting و fixed probe را ذکر کنید." },
+        { image: "oldArrayer", title: "old arrayer", body: "plate stacker، washer، slide و pin head هر کدام می‌توانند variation ایجاد کنند.", professor: "او می‌گوید pin در ابتدا slide را لمس می‌کرد و مشکل می‌ساخت؛ روش‌های جدیدتر بهتر شدند.", exam: "مشکلات ساخت دلیل نیاز به QC و filtering است." },
+        { image: "pinHead", title: "pin head و cross-contamination", body: "pinها باید بین dipها تمیز شوند تا آلودگی متقاطع رخ ندهد.", professor: "فرایند فیزیکی را تصور کنید: pin، wash، spot، repeat؛ همین irregular spots را توضیح می‌دهد.", exam: "جزئیات خوب برای پاسخ دربارهٔ technical variability." },
+        { image: "subarrayControls", title: "subarray و controls", body: "positive controls باید روشن شوند، negative controls تاریک بمانند و spike-inها شدت را کنترل می‌کنند.", professor: "positive/negative controls با reference sample یکی نیستند.", exam: "دام مهم: reference sample ≠ positive/negative control spot." }
+      ] },
+      workflow: { eyebrow: "workflow رقابتی", title: "۳ · دو نمونه جدا آماده می‌شوند و بعد رقابت می‌کنند", intro: "این تصاویر دقیقاً نشان می‌دهند چرا این پلتفرم competitive نام دارد.", items: [
+        { image: "workflow", title: "control و treated برای probe مشترک رقابت می‌کنند", body: "دو نمونهٔ mRNA reverse-transcribe، label، mix و روی یک array hybridize می‌شوند.", professor: "اگر transcript در یک نمونه بیشتر باشد، در hybridization ‘برنده’ می‌شود.", exam: "پرسش تکراری: competitive array یعنی چه؟" },
+        { image: "cyanineDyes", title: "Cy3 و Cy5 bias اصلی را می‌سازند", body: "Cy3 سبز و Cy5 قرمز است؛ تفاوت‌های فیزیکی/شیمیایی dye bias می‌سازند.", professor: "Cy5 با Cy3 یکسان نیست؛ این یک مشکل technical systematic است.", exam: "در توصیف two-colour array، dye bias و normalization را ذکر کنید." },
+        { image: "indirectLabeling", title: "indirect labeling برای کاهش bias", body: "aminoallyl-dUTP اجازه می‌دهد cDNA اول ساخته شود و dye بعداً attach شود.", professor: "این یک راهکار آزمایشگاهی برای کم کردن dye bias قبل از correction نرم‌افزاری است.", exam: "جزئیات خوب برای کنترل experimental variability." }
+      ] },
+      imageQc: { eyebrow: "خروجی تصویر و QC", title: "۴ · تصویر اولین dataset است", intro: "استاد می‌گوید تصویر و پردازش آن تعیین می‌کند جدول raw data چیست.", items: [
+        { image: "mergedScan", title: "اسکن Cy3/Cy5 و merged TIFF", body: "array با دو laser اسکن می‌شود و software دو channel را merge می‌کند.", professor: "دانستن software و algorithm تبدیل image به intensity مهم است.", exam: "خروجی داده: TIFF/image → جدول intensity هر spot." },
+        { image: "falseColours", title: "false colours یک کد هستند", body: "سفید=saturation، آبی=signal absence، قرمز=up، سبز=down، زرد=similar.", professor: "یک spot سفید فاجعه نیست، اما تعداد زیاد نشان‌دهندهٔ مشکل saturation است.", exam: "تفسیر رنگ‌ها را بلد باشید." },
+        { image: "spotQc", title: "هر spot یک distribution از pixels است", body: "QC شامل background، irregular shapes، donuts، saturation، scratches و dust است.", professor: "اگر background از signal بزرگ‌تر باشد، spot بد است.", exam: "چرا spot-level QC قبل از normalization است؟" },
+        { image: "technicalVariabilityMap", title: "هر مرحله technical variability اضافه می‌کند", body: "tubes، dyes، lasers، hybridization، print-tip، background و algorithms همگی دخیل‌اند.", professor: "اینجا درس ۲ به مفهوم variability در درس ۱ وصل می‌شود.", exam: "technical variability باید اندازه‌گیری و کم شود." }
+      ] },
+      dyeSwapOutput: { eyebrow: "بررسی variability فنی", title: "۵ · dye swap، نواحی خراب و جدول نرم‌افزار", intro: "این بخش نشان می‌دهد Cy3/Cy5 چگونه کنترل می‌شوند.", items: [
+        { image: "dyeSwap", title: "dye swap labelها را برعکس می‌کند", body: "همان نمونه‌ها دوبار استفاده می‌شوند، اما Cy3/Cy5 برعکس می‌شود؛ ratioها باید نزدیک ۱ باشند.", professor: "هرگز دقیقاً ۱ نمی‌شود؛ یک cloud داریم. variation قابل قبول حدود ±1.74 در log scale است.", exam: "احتمالی: هدف dye swap چیست؟" },
+        { image: "atlasArray", title: "بازبینی visual array", body: "مثال ATLAS controls، subarrays و intensities را نشان می‌دهد.", professor: "قبل از اعتماد به software باید array را دیداری چک کرد.", exam: "visual QC بخشی از پاسخ است." },
+        { image: "aspecificFluorescence", title: "dye swap می‌تواند fail شود", body: "fluorescence غیر اختصاصی spotها را می‌پوشاند و آن ناحیه قابل استفاده نیست.", professor: "مشکل washing/background می‌تواند نیاز به filtering یا تکرار بسازد.", exam: "artifact فنی را biological interpretation نکنید." },
+        { image: "imageneOutput", title: "خروجی software: mean، median، SD، MAD و flag", body: "جدول شامل location، signal/background، SD و flag کیفیت است.", professor: "flag 0 خوب و flag 1 بد است؛ اگر background از signal بیشتر باشد، spot حذف می‌شود.", exam: "spot value خلاصهٔ pixel distribution است." }
+      ] },
+      biologicalExample: { eyebrow: "پرسش زیستی در عمل", title: "۶ · آزمایش Toxoplasma از پرسش تا plot", intro: "این مثال تکنولوژی را به منطق طراحی درس ۱ وصل می‌کند.", items: [
+        { image: "toxoplasmaQuestion", title: "پرسش دقیق، نه آزمایش کلی", body: "آیا Toxoplasma gondii fibroblast انسانی را infect می‌کند و transcription را بعد از ۱ ساعت تغییر می‌دهد؟", professor: "model، control، treated و timing مهم‌اند؛ یک ساعت یک تصمیم طراحی است.", exam: "الگو: biological question + model + variable + technique." },
+        { image: "dotPlot", title: "dot plot خام: Cy3 در برابر Cy5", body: "هر نقطه یک spot/transcript است، اما raw intensities در گوشه جمع می‌شوند.", professor: "raw cloud کافی نیست؛ distribution کامل دیده نمی‌شود.", exam: "علت transform داده را با این مشکل توضیح دهید." },
+        { image: "qcFiltering", title: "QC قبل از interpretation", body: "saturated spots و outliers باید بررسی شوند؛ outlier فقط اگر technical باشد حذف می‌شود.", professor: "کاهش SD در intensity بالا نشانهٔ saturation است، نه biology.", exam: "نگویید همهٔ outliers را حذف می‌کنیم؛ دلیل حذف را توضیح دهید." }
+      ] },
+      transformMa: { eyebrow: "تبدیل و visualization", title: "۷ · log transform و MA-plot ابر داده را باز می‌کنند", intro: "استاد MA-plot را صریحاً پرسش verification-test می‌داند.", items: [
+        { image: "logTransform", title: "log2 distribution را قابل دیدن می‌کند", body: "raw Cy3/Cy5 skewed است؛ log2 داده را بهتر پخش می‌کند.", professor: "این transform برای arrays رقابتی و غیررقابتی و برای statistics مفید است.", exam: "log transform را به normal/log-normal distribution وصل کنید." },
+        { image: "logNormal", title: "original scale در برابر log scale", body: "اگر log(X) normal باشد، X log-normal است.", professor: "این توجیه کار با داده‌های log2 است.", exam: "تعریف log-normal را بلد باشید." },
+        { image: "linearRegressionBias", title: "dot plot bias وابسته به dye را نشان می‌دهد", body: "خط regression برابر Y=X نیست: Cy5 در low intensity و Cy3 در high intensity قوی‌تر است.", professor: "پس dyes یکسان رفتار نمی‌کنند و intra-array normalization لازم است.", exam: "dye bias را به normalization وصل کنید." },
+        { image: "maPlotFormula", title: "فرمول MA-plot", body: "M = log2(Cy5/Cy3) و A = average log intensity است.", professor: "می‌گوید MA-plot یک پرسش روشن verification test است و در RNA-seq هم استفاده می‌شود.", exam: "M و A، هدف plot و شکل normalized آن را توضیح دهید." },
+        { image: "maExpectedRatios", title: "انتظار از MA distribution", body: "cloud باید حول M=0 و parallel با محور x باشد.", professor: "fold-change threshold فقط پیشنهاد است؛ significance نیاز به test دارد.", exam: "fold change را با statistical significance یکی نگیرید." }
+      ] },
+      normalization: { eyebrow: "normalization و design", title: "۸ · arrays را قابل مقایسه کنید، نه اینکه biology را یکسان بدانید", intro: "اینجا خلاصهٔ امتحانی normalization آمده است.", items: [
+        { image: "maScaling", title: "intra-array scaling", body: "mean/median M کم می‌شود تا cloud حول صفر قرار گیرد.", professor: "داده‌ها باید parallel با x-axis شوند؛ در غیر این صورت برای تحلیل بعدی خوب نیستند.", exam: "هدف final normalization در competitive arrays چیست؟" },
+        { image: "referenceSample", title: "reference sample بین arrays", body: "یک reference زیستی ثابت روی arrays متعدد hybridize می‌شود.", professor: "reference یک biological sample است، نه positive/negative control spot.", exam: "دام مهم: reference sample ≠ QC controls." },
+        { image: "scalingBoxplots", title: "inter-array scaling/centering", body: "boxplotها نشان می‌دهند medianها چگونه قابل مقایسه می‌شوند.", professor: "normalization distribution intensity را مساوی می‌کند، نه biological results را.", exam: "حفظ کنید: equal distribution of intensities, not equal biological results." }
+      ] },
+      examSummary: { eyebrow: "نکات صریح امتحانی", title: "۹ · چیزهایی که استاد گفت ممکن است بپرسد", intro: "این بخش قبل از quiz آمده تا نکات استاد به پاسخ نوشتاری تبدیل شوند.", items: [
+        { image: "threeArrayTypes", title: "competitive یعنی چه؟", body: "دو نمونه، یک array، دو رنگ، دو laser، رقابت برای probe، dye bias، QC و normalization.", professor: "او می‌گوید سؤال تکراری می‌تواند list of characteristics of competitive arrays باشد. او concepts می‌خواهد، نه محاسبات طولانی.", exam: "پاسخ ۱۰–۱۲ خطی با همین checklist بنویسید." },
+        { image: "maPlotFormula", title: "MA-plot چیست؟", body: "M=log2 ratio و A=average log intensity؛ برای distribution، bias و normalization استفاده می‌شود.", professor: "MA-plot را صریحاً verification-test question می‌داند.", exam: "محورها، هدف و شکل normalized را توضیح دهید." }
+      ] }
+    }
   }
 };
+
+const LESSON2_SLIDES = [];
+const LESSON2_SLIDE_COPY = {};
 
 const COPY = {
   en: {
@@ -287,6 +466,17 @@ function SlideVisualNotes({ lang = "es" }) {
   return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"><SectionHeader eyebrow={local.eyebrow} title={local.title}>{local.intro}</SectionHeader><a href={SLIDES_URL} target="_blank" rel="noreferrer" className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-black text-red-800 transition hover:-translate-y-0.5 hover:bg-white">{local.open}</a></div><div className="grid gap-4 lg:grid-cols-3">{LESSON2_SLIDES.map((figure, idx) => { const item = local.figures[idx]; return <article key={figure.slide} className="overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm"><div className="aspect-[4/3] border-b border-stone-200 bg-white p-3"><img src={figure.src} alt={item.title} loading="lazy" className="h-full w-full rounded-2xl object-contain" /></div><div className="p-5"><Pill tone="red">Slide {figure.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{item.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p></div></article>; })}</div></section>;
 }
 
+function Lesson2VisualBlock({ lang = "es", block }) {
+  const local = LESSON2_VISUAL_COPY[lang] || LESSON2_VISUAL_COPY.es;
+  const data = local.blocks[block];
+  if (!data) return null;
+  const cols = data.items.length === 1 ? "lg:grid-cols-1" : data.items.length === 2 ? "lg:grid-cols-2" : "lg:grid-cols-2 xl:grid-cols-3";
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+    <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"><SectionHeader eyebrow={data.eyebrow} title={data.title}>{data.intro}</SectionHeader><a href={SLIDES_URL} target="_blank" rel="noreferrer" className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-black text-red-800 transition hover:-translate-y-0.5 hover:bg-white">{local.labels.open}</a></div>
+    <div className={`grid gap-4 ${cols}`}>{data.items.map((item, idx) => { const figure = LESSON2_IMAGE_BANK[item.image]; return <article key={`${block}-${item.image}-${idx}`} className="overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm"><div className="aspect-[4/3] border-b border-stone-200 bg-white p-3"><img src={figure.src} alt={item.title} loading="lazy" className="h-full w-full rounded-2xl object-contain" /></div><div className="p-5"><Pill tone="red">{local.labels.slide} {figure.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{item.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p><div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-amber-800">{local.labels.professor}</div><p className="mt-1 text-sm font-bold leading-6 text-amber-950">{item.professor}</p></div><div className="mt-3 rounded-2xl border border-red-200 bg-red-50 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-red-700">{local.labels.exam}</div><p className="mt-1 text-sm font-bold leading-6 text-red-950">{item.exam}</p></div></div></article>; })}</div>
+  </section>;
+}
+
 function Workflow({ copy }) {
   const [active, setActive] = useState(0);
   return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.flowEyebrow} title={copy.flowTitle}>{copy.flowIntro}</SectionHeader><div className="grid gap-5 lg:grid-cols-[0.82fr_1.18fr]"><div className="space-y-2">{copy.flow.map(([title], idx) => <button key={title} onClick={() => setActive(idx)} className={`w-full rounded-2xl border p-4 text-left transition ${active === idx ? "border-red-200 bg-red-50 shadow-sm" : "border-stone-200 bg-stone-50 hover:bg-white"}`}><div className="flex items-center justify-between gap-3"><span className="text-sm font-black text-stone-950">{title}</span><span className="rounded-full bg-white px-2 py-1 text-xs font-black text-stone-500">{idx + 1}/{copy.flow.length}</span></div></button>)}</div><article className="rounded-[2rem] border border-stone-200 bg-stone-950 p-6 text-white"><div className="text-xs font-black uppercase tracking-[0.2em] text-red-200">{copy.activeStep}</div><h3 className="mt-3 text-3xl font-black tracking-tight">{copy.flow[active][0]}</h3><p className="mt-4 text-lg font-semibold leading-8 text-stone-200">{copy.flow[active][1]}</p><div className="mt-6 h-3 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-red-500 transition-all" style={{ width: `${((active + 1) / copy.flow.length) * 100}%` }} /></div></article></div></section>;
@@ -330,5 +520,5 @@ function ExamTrainer({ copy }) {
 }
 export default function DRDLesson02({ lang = "es", isDone = false, toggle = () => {} }) {
   const copy = getCopy(lang);
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav lang={lang} position="top" isDone={isDone} toggle={toggle} copy={copy}/><section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.eyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.title}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.subtitle}</p><div className="mt-6 flex flex-wrap gap-2">{copy.tags.map(tag => <Pill key={tag} tone={tag.includes("Cy") || tag.includes("dye") ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={copy.module} value="1" tone="red"/><StatCard label={copy.exam} value="4Q"/><StatCard label={copy.answer} value="10–12"/><StatCard label={copy.core} value="Cy3/Cy5" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{copy.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{copy.bigIdeaText}</p></div><ResourceLinks copy={copy}/></div></div></div></section><Workflow copy={copy}/><ConceptCards copy={copy}/><SlideVisualNotes lang={lang}/><section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1fr]"><SignalInterpreter copy={copy}/><Checkpoint copy={copy}/></section><MAMiniLab copy={copy}/><section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1fr]"><NormalizationExercise copy={copy}/><DesignClarifier copy={copy}/></section><QuizBlock copy={copy}/><ExamTrainer copy={copy}/><LessonNav lang={lang} position="bottom" isDone={isDone} toggle={toggle} copy={copy}/></main>;
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav lang={lang} position="top" isDone={isDone} toggle={toggle} copy={copy}/><section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.eyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.title}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.subtitle}</p><div className="mt-6 flex flex-wrap gap-2">{copy.tags.map(tag => <Pill key={tag} tone={tag.includes("Cy") || tag.includes("dye") ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={copy.module} value="1" tone="red"/><StatCard label={copy.exam} value="4Q"/><StatCard label={copy.answer} value="10–12"/><StatCard label={copy.core} value="Cy3/Cy5" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{copy.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{copy.bigIdeaText}</p></div><ResourceLinks copy={copy}/></div></div></div></section><Workflow copy={copy}/><ConceptCards copy={copy}/><Lesson2VisualBlock lang={lang} block="arrayTypes"/><Lesson2VisualBlock lang={lang} block="fabrication"/><Lesson2VisualBlock lang={lang} block="workflow"/><section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1fr]"><SignalInterpreter copy={copy}/><Checkpoint copy={copy}/></section><Lesson2VisualBlock lang={lang} block="imageQc"/><Lesson2VisualBlock lang={lang} block="dyeSwapOutput"/><Lesson2VisualBlock lang={lang} block="biologicalExample"/><MAMiniLab copy={copy}/><Lesson2VisualBlock lang={lang} block="transformMa"/><section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1fr]"><NormalizationExercise copy={copy}/><DesignClarifier copy={copy}/></section><Lesson2VisualBlock lang={lang} block="normalization"/><Lesson2VisualBlock lang={lang} block="examSummary"/><QuizBlock copy={copy}/><ExamTrainer copy={copy}/><LessonNav lang={lang} position="bottom" isDone={isDone} toggle={toggle} copy={copy}/></main>;
 }

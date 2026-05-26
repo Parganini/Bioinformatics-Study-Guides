@@ -1,53 +1,161 @@
 import React, { useMemo, useState } from "react";
+import wetLabFlowSlide from "../../assets/drd/lesson01/wet-lab-flow.jpg";
 import biologicalQuestionSlide from "../../assets/drd/lesson01/biological-question.jpg";
 import omicsMapSlide from "../../assets/drd/lesson01/omics-map.jpg";
-import variabilityComparisonSlide from "../../assets/drd/lesson01/variability-comparison.jpg";
+import dynamicProcessesSlide from "../../assets/drd/lesson01/dynamic-processes.jpg";
+import variabilitySourcesSlide from "../../assets/drd/lesson01/variability-sources.jpg";
+import environmentEpigeneticsSlide from "../../assets/drd/lesson01/environment-epigenetics.jpg";
+import dnaMethylationSlide from "../../assets/drd/lesson01/dna-methylation.jpg";
+import mirnaSeedSlide from "../../assets/drd/lesson01/mirna-seed.jpg";
+import gutMicrornaSlide from "../../assets/drd/lesson01/gut-microrna.jpg";
+import mainMessageSlide from "../../assets/drd/lesson01/main-message.jpg";
+import platformsPipelineSlide from "../../assets/drd/lesson01/platforms-pipeline.jpg";
+import technicalCvSlide from "../../assets/drd/lesson01/technical-cv.jpg";
+import donorCvSlide from "../../assets/drd/lesson01/donor-cv.jpg";
+import boxplotIqrSlide from "../../assets/drd/lesson01/boxplot-iqr.jpg";
+import individualVariabilitySlide from "../../assets/drd/lesson01/individual-variability.jpg";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1F1UK7JpTC8Sm8arnNC9mfXnj8aLxbzqZ/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1kYvSq04ZeL3mt3GbLNdNwmaAqFImS8CgG70t_9NQWnA/edit?usp=drivesdk";
 const CLASS_RECORDING_URL = "https://www.youtube.com/watch?v=SQtYHrV1y-U&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=1";
 
-const LESSON1_SLIDES = [
-  { src: biologicalQuestionSlide, slide: 9 },
-  { src: omicsMapSlide, slide: 10 },
-  { src: variabilityComparisonSlide, slide: 41 }
-];
+const LESSON1_IMAGE_BANK = {
+  wetLabFlow: { src: wetLabFlowSlide, slide: 8 },
+  biologicalQuestion: { src: biologicalQuestionSlide, slide: 9 },
+  omicsMap: { src: omicsMapSlide, slide: 10 },
+  dynamicProcesses: { src: dynamicProcessesSlide, slide: 11 },
+  variabilitySources: { src: variabilitySourcesSlide, slide: 12 },
+  environmentEpigenetics: { src: environmentEpigeneticsSlide, slide: 18 },
+  dnaMethylation: { src: dnaMethylationSlide, slide: 21 },
+  mirnaSeed: { src: mirnaSeedSlide, slide: 27 },
+  gutMicrorna: { src: gutMicrornaSlide, slide: 31 },
+  mainMessage: { src: mainMessageSlide, slide: 32 },
+  platformsPipeline: { src: platformsPipelineSlide, slide: 34 },
+  technicalCv: { src: technicalCvSlide, slide: 36 },
+  donorCv: { src: donorCvSlide, slide: 40 },
+  boxplotIqr: { src: boxplotIqrSlide, slide: 43 },
+  individualVariability: { src: individualVariabilitySlide, slide: 44 }
+};
 
-const LESSON1_SLIDE_COPY = {
+const LESSON1_VISUAL_COPY = {
   en: {
-    eyebrow: "Slide snapshots",
-    title: "Original lecture images that reinforce the ideas",
-    intro: "These three slide snapshots make the lecture logic more concrete: how to formulate the question, how to choose the omics layer, and how to visualize variability.",
-    open: "Open slides PDF",
-    figures: [
-      { title: "From topic to answerable biological question", body: "This slide condenses the lecture checklist: define the biological context, choose the right model and design, set the sample size, pick the ad hoc technique, and keep variability explicit." },
-      { title: "Omics is a menu, not the question itself", body: "The table helps students map a biological layer to the right technology. It is a good reminder that genomics, epigenomics, transcriptomics and proteomics answer different kinds of questions." },
-      { title: "Technical variability is smaller than donor-to-donor variability", body: "The chart makes the course message visual: replicate measurements of the same material should stay tight, while biological samples across different individuals are expected to spread more." }
-    ]
+    labels: { professor: "Professor emphasis", exam: "Exam watch", slide: "Slide", open: "Open slides PDF" },
+    blocks: {
+      questionFlow: {
+        eyebrow: "Follow the lecture flow", title: "1 · Wet-lab science starts with a focused question", intro: "The image is placed here because it is the first conceptual step of the lesson: question → experiment → results/statistics → a new, more focused question.",
+        items: [
+          { image: "wetLabFlow", title: "Science is an iterative circuit", body: "The professor says this looks trivial, but it is not: results do not close the project; they usually generate the next biological question.", professor: "Do not write a broad topic like ‘study cancer’. Write a specific question: which cancer, which model, which stimulus, dose, time and readout?", exam: "Possible written question: Explain how a focused biological question becomes an experiment and why statistics comes before the next question." }
+        ]
+      },
+      design: {
+        eyebrow: "Design before data", title: "2 · Define context, model, variables and technique", intro: "These slides belong next to the biological-question builder because they show what must be decided before any dataset exists.",
+        items: [
+          { image: "biologicalQuestion", title: "The checklist behind every answer", body: "Context, model, experimental design, sample size, ad hoc technique, independent/dependent variables and variability are all part of the same answer.", professor: "Sample size is not just ‘more samples’: it is the number needed to find something significant. Time-series is described as an excellent design when feasible.", exam: "High-yield: Be ready to list these elements in 10–12 lines and connect them to DNA/RNA quantification." },
+          { image: "dynamicProcesses", title: "DNA/RNA dynamics in a specific context", body: "The model can be human, animal, in vitro, in vivo or ex vivo; variables include tissue/cell type, sex, stimulus, dose, time and age.", professor: "She repeatedly links the technique to the variable: if the question is RNA, measure RNA; if it is methylation, choose methylation profiling.", exam: "Possible question: Describe which variables must be controlled in a DNA/RNA dynamics experiment." }
+        ]
+      },
+      omics: {
+        eyebrow: "Choose the biological layer", title: "3 · Omics technologies are selected after the question", intro: "The omics table follows the design block because the professor’s point is not to choose a fashionable technique first, but to choose the layer that answers the question.",
+        items: [
+          { image: "omicsMap", title: "From genomics to spatial multiomics", body: "Genomics, transcriptomics, epigenomics, metagenomics, proteomics, metabolomics, single-cell and spatial multiomics answer different questions.", professor: "She highlights spatial multiomics as ‘the top’ because it can measure RNA/protein while preserving tissue location, but the key is still appropriateness.", exam: "Useful contrast: DNA-seq for sequence variation, RNA profiling for expression, methylation arrays for epigenetic state." }
+        ]
+      },
+      molecularContext: {
+        eyebrow: "Biological context", title: "4 · DNA, epigenetics, RNA and microbiome create the variability", intro: "This block follows the omics map because the first lecture spends time showing why biological context is not generic background—it determines the variables to measure.",
+        items: [
+          { image: "environmentEpigenetics", title: "Environment and exposome modify DNA/RNA profiles", body: "Diet, stress, smoking, alcohol, pathogens and aging can influence chromatin, methylation and expression.", professor: "The word ‘exposome’ is emphasized as crucial: our life is exposed every day to stimuli that interact with age and biological defenses.", exam: "Mention genetics + epigenetics + environment/exposome + age as sources of biological variability." },
+          { image: "dnaMethylation", title: "DNA methylation is the bridge to Module 2", body: "CpG methylation, DNMT1 maintenance, DNMT3A/3B de novo methylation and TET demethylation are introduced here before the Illumina pipeline.", professor: "She says DNA methylation is the core of Module 2 and warns that promoter/gene-body methylation rules are useful but causality is not fully resolved.", exam: "Possible short question: What is DNA methylation and why is it relevant for biological age or disease?" },
+          { image: "mirnaSeed", title: "RNA is not only mRNA", body: "The lecture introduces non-coding RNAs, especially miRNAs: 18–25 nt, seed sequence, many targets and broad regulation of gene expression.", professor: "She contrasts miRNA with siRNA: miRNA usually has partial complementarity, whereas siRNA is perfectly complementary and cleaves the mRNA.", exam: "Remember the difference between miRNA and siRNA; it is a compact, exam-friendly comparison." },
+          { image: "gutMicrorna", title: "Microbiome becomes a variable in gut-related pathology", body: "In intestinal inflammation, host cells, microbes, metabolites, cytokines and miRNAs interact; this is why the biological model must include the right variables.", professor: "She says that if you write a gut-inflammation project excluding the microbiome, the project would likely be rejected.", exam: "Use this as an example of ‘biological context determines variables’." },
+          { image: "mainMessage", title: "Main message of the lecture", body: "The proper variables can only be measured if the biological context is known first.", professor: "This slide is the shortest version of her main thesis: context → variables → technique → data.", exam: "This can be the opening sentence of almost any written answer for Lesson 1." }
+        ]
+      },
+      variability: {
+        eyebrow: "Quantifying variability", title: "5 · Technical variability must not hide biological variability", intro: "The CV examples are placed after the interactive classifier because they show exactly how the professor distinguishes replicates from different donors.",
+        items: [
+          { image: "platformsPipeline", title: "High-throughput platforms add preprocessing and algorithms", body: "DNA/RNA targets become data only after biosample processing, platform chemistry, preprocessing, data mining and statistics.", professor: "She notes that different software/algorithms can change final results, so the technique itself is a source of variability.", exam: "Good phrase: raw data are not yet biological conclusions; preprocessing and algorithms are part of the experiment." },
+          { image: "variabilitySources", title: "Two types of variability", body: "Experimental variability comes from technique, instruments, reagents and operators. Biological variability comes from individuals, time, genetics, epigenetics, environment and age.", professor: "She is very explicit: if technical variability is bigger than biological variability, ‘you cannot work’. You must know the machine’s variability.", exam: "Very likely: distinguish biological and experimental variability with examples." },
+          { image: "technicalCv", title: "Technical replicates: CV ≈ 8.53%", body: "The same sample measured repeatedly gives similar but not identical values; CV = SD / mean × 100.", professor: "She stresses that identical replicates never give exactly identical numbers; SD = 0 basically does not happen in real experiments.", exam: "Be able to state what technical replicates measure: experimental variability, not donor variability." },
+          { image: "donorCv", title: "Different donors: CV ≈ 51%", body: "The same gene measured in different donors includes biological variability plus the technical variability embedded in the method.", professor: "She warns: do not call different donors ‘replicates’. Donors are different biological samples.", exam: "This is a key trap: replicates ≠ donors." }
+        ]
+      },
+      plots: {
+        eyebrow: "Showing variability", title: "6 · Use plots to show distribution, outliers and individuality", intro: "The final visual block follows the replicate/donor distinction because the professor ends by moving from mean/SD toward heterogeneity and individualized profiles.",
+        items: [
+          { image: "boxplotIqr", title: "Boxplot, IQR and outliers", body: "Quartiles divide ranked data; IQR is Q3−Q1; outliers lie below Q1−1.5×IQR or above Q3+1.5×IQR.", professor: "She says boxplots often show data better than a simple mean ± SD because they display distribution and outliers.", exam: "Possible definition question: What is IQR and how are outliers identified in a boxplot?" },
+          { image: "individualVariability", title: "Beyond the mean: individual variability", body: "The centenarian/nonagenarian example is used to show that aging increases heterogeneity and that mean values can hide individual trajectories.", professor: "Her vision is personalized medicine and N-of-1/longitudinal approaches, while recognizing that they are expensive and difficult.", exam: "Use this to close answers about why variability is not just noise; it can be the biological phenomenon itself." }
+        ]
+      }
+    }
   },
   es: {
-    eyebrow: "Imágenes de las diapositivas",
-    title: "Capturas de la clase para reforzar las ideas clave",
-    intro: "Estas tres diapositivas insertadas ayudan a aterrizar mejor la lógica de la lección: cómo formular la pregunta, cómo elegir la capa ómica y cómo visualizar la variabilidad.",
-    open: "Abrir PDF de slides",
-    figures: [
-      { title: "De un tema amplio a una pregunta biológica respondible", body: "Esta slide resume el checklist de la clase: definir el contexto biológico, escoger el modelo y diseño correctos, fijar el tamaño muestral, usar la técnica ad hoc y mantener la variabilidad explícita." },
-      { title: "La ómica es el menú, no la pregunta en sí", body: "La tabla ayuda a relacionar cada capa biológica con la tecnología adecuada. Sirve para recordar que genómica, epigenómica, transcriptómica y proteómica responden preguntas diferentes." },
-      { title: "La variabilidad técnica debe ser menor que la variabilidad entre donantes", body: "La gráfica vuelve visual el mensaje central del curso: las mediciones repetidas del mismo material deben agruparse, mientras que las muestras biológicas de individuos distintos suelen mostrar una dispersión mayor." }
-    ]
+    labels: { professor: "Énfasis de la profesora", exam: "Ojo para examen", slide: "Diapositiva", open: "Abrir PDF de slides" },
+    blocks: {
+      questionFlow: { eyebrow: "Sigue el flujo de la clase", title: "1 · La wet lab empieza con una pregunta enfocada", intro: "La imagen va aquí porque es el primer paso conceptual: pregunta → experimento → resultados/estadística → nueva pregunta más enfocada.", items: [
+        { image: "wetLabFlow", title: "La ciencia es un circuito iterativo", body: "La profesora dice que parece trivial, pero no lo es: los resultados no cierran el proyecto; normalmente abren la siguiente pregunta biológica.", professor: "No escribas una idea amplia como ‘estudiar cáncer’. Hay que especificar qué cáncer, qué modelo, qué estímulo, dosis, tiempo y variable de salida.", exam: "Posible pregunta escrita: explicar cómo una pregunta biológica enfocada se transforma en experimento y por qué la estadística precede a la siguiente pregunta." }
+      ] },
+      design: { eyebrow: "Diseño antes que datos", title: "2 · Define contexto, modelo, variables y técnica", intro: "Estas slides van junto al constructor de pregunta biológica porque muestran qué se decide antes de tener un dataset.", items: [
+        { image: "biologicalQuestion", title: "El checklist detrás de cualquier respuesta", body: "Contexto, modelo, diseño, tamaño muestral, técnica ad hoc, variables independientes/dependientes y variabilidad forman una sola respuesta.", professor: "Sample size no es solo ‘más muestras’: es el número necesario para encontrar algo significativo. Time-series es una estrategia muy buena cuando se puede.", exam: "Muy preguntable: listar estos elementos en 10–12 líneas y conectarlos con cuantificación de DNA/RNA." },
+        { image: "dynamicProcesses", title: "DNA/RNA dynamics en contexto específico", body: "El modelo puede ser humano, animal, in vitro, in vivo o ex vivo; las variables incluyen tejido/célula, sexo, estímulo, dosis, tiempo y edad.", professor: "Ella une siempre técnica y variable: si la pregunta es RNA, mide RNA; si es metilación, usa methylation profiling.", exam: "Posible pregunta: describe qué variables deben controlarse en un experimento de DNA/RNA dynamics." }
+      ] },
+      omics: { eyebrow: "Elegir la capa biológica", title: "3 · Las tecnologías ómicas se eligen después de la pregunta", intro: "La tabla de ómicas sigue al diseño porque el mensaje no es elegir la técnica de moda, sino la capa que responde la pregunta.", items: [
+        { image: "omicsMap", title: "De genómica a spatial multiomics", body: "Genomics, transcriptomics, epigenomics, metagenomics, proteomics, metabolomics, single-cell y spatial multiomics responden preguntas distintas.", professor: "Destaca spatial multiomics como ‘lo top’ porque preserva localización tisular, pero la clave sigue siendo que la técnica sea apropiada.", exam: "Contraste útil: DNA-seq para secuencia, RNA profiling para expresión, methylation arrays para estado epigenético." }
+      ] },
+      molecularContext: { eyebrow: "Contexto biológico", title: "4 · DNA, epigenética, RNA y microbioma generan variabilidad", intro: "Este bloque sigue al mapa de ómicas porque la clase muestra que el contexto biológico determina las variables que se deben medir.", items: [
+        { image: "environmentEpigenetics", title: "Ambiente y exposoma modifican perfiles DNA/RNA", body: "Dieta, estrés, tabaco, alcohol, patógenos y edad pueden influir sobre cromatina, metilación y expresión.", professor: "La palabra ‘exposome’ se enfatiza como crucial: cada día estamos expuestos a estímulos que interactúan con la edad y las defensas biológicas.", exam: "Menciona genetics + epigenetics + environment/exposome + age como fuentes de variabilidad biológica." },
+        { image: "dnaMethylation", title: "DNA methylation conecta con Module 2", body: "Se introducen CpG methylation, DNMT1, DNMT3A/3B y TET antes de la pipeline Illumina.", professor: "Dice que la metilación es el núcleo del Module 2 y advierte que las reglas promoter/gene body ayudan, pero la causalidad no está completamente resuelta.", exam: "Posible pregunta: ¿qué es DNA methylation y por qué importa en edad biológica o enfermedad?" },
+        { image: "mirnaSeed", title: "RNA no es solo mRNA", body: "La clase introduce ncRNAs, sobre todo miRNAs: 18–25 nt, seed sequence, muchos targets y regulación amplia.", professor: "Contrasta miRNA y siRNA: miRNA suele tener complementariedad parcial; siRNA es perfectamente complementario y corta el mRNA.", exam: "Recuerda la diferencia miRNA vs siRNA; es una comparación compacta para examen." },
+        { image: "gutMicrorna", title: "El microbioma es variable en patología intestinal", body: "En inflamación intestinal interactúan células huésped, microbios, metabolitos, citoquinas y miRNAs.", professor: "Afirma que un proyecto sobre inflamación intestinal que excluye el microbioma probablemente sería rechazado.", exam: "Úsalo como ejemplo de ‘el contexto biológico determina las variables’." },
+        { image: "mainMessage", title: "Mensaje principal de la clase", body: "Solo se miden las variables correctas si primero se conoce el contexto biológico.", professor: "Esta slide resume su tesis: contexto → variables → técnica → datos.", exam: "Puede ser la frase inicial de casi cualquier respuesta de la Lesson 1." }
+      ] },
+      variability: { eyebrow: "Cuantificar variabilidad", title: "5 · La variabilidad técnica no debe ocultar la biológica", intro: "Los ejemplos de CV van después del clasificador porque muestran cómo separar replicados técnicos de donantes diferentes.", items: [
+        { image: "platformsPipeline", title: "Las plataformas añaden preprocesamiento y algoritmos", body: "Los targets DNA/RNA se vuelven datos tras procesamiento de muestra, química de plataforma, preprocessing, data mining y estadística.", professor: "Señala que software y algoritmos distintos pueden cambiar los resultados finales; la técnica también introduce variabilidad.", exam: "Buena frase: raw data no son conclusiones biológicas; preprocessing y algoritmos son parte del experimento." },
+        { image: "variabilitySources", title: "Dos tipos de variabilidad", body: "La experimental viene de técnica, instrumentos, reactivos y operador. La biológica viene de individuos, tiempo, genética, epigenética, ambiente y edad.", professor: "Lo dice muy claro: si la variabilidad técnica supera a la biológica, ‘no se puede trabajar’. Hay que conocer la variabilidad de la máquina.", exam: "Muy probable: distinguir variabilidad biológica y experimental con ejemplos." },
+        { image: "technicalCv", title: "Replicados técnicos: CV ≈ 8.53%", body: "La misma muestra medida varias veces da valores parecidos, pero no idénticos; CV = SD / mean × 100.", professor: "Insiste en que replicados idénticos nunca dan números exactamente idénticos; SD = 0 prácticamente no existe.", exam: "Debes decir qué miden los replicados técnicos: variabilidad experimental, no variabilidad entre donantes." },
+        { image: "donorCv", title: "Donantes diferentes: CV ≈ 51%", body: "El mismo gen en donantes distintos incluye variabilidad biológica más la variabilidad técnica del método.", professor: "Advertencia clave: no llames ‘replicates’ a donantes distintos. Son muestras biológicas diferentes.", exam: "Trampa clave: replicates ≠ donors." }
+      ] },
+      plots: { eyebrow: "Mostrar la variabilidad", title: "6 · Usa plots para distribución, outliers e individualidad", intro: "El bloque final conecta la diferencia replicados/donantes con la idea de heterogeneidad e individualización.", items: [
+        { image: "boxplotIqr", title: "Boxplot, IQR y outliers", body: "Los cuartiles dividen datos ordenados; IQR = Q3−Q1; outliers están fuera de Q1−1.5×IQR o Q3+1.5×IQR.", professor: "Dice que un boxplot puede mostrar mejor los datos que mean ± SD porque enseña distribución y outliers.", exam: "Posible definición: ¿qué es IQR y cómo se identifican outliers en un boxplot?" },
+        { image: "individualVariability", title: "Más allá de la media: variabilidad individual", body: "El ejemplo de nonagenarians/centenarians muestra que el envejecimiento aumenta la heterogeneidad y que la media puede ocultar trayectorias individuales.", professor: "Su visión es personalized medicine y enfoques N-of-1/longitudinales, aunque reconoce que son costosos y difíciles.", exam: "Úsalo para cerrar respuestas: la variabilidad no siempre es ruido; puede ser el fenómeno biológico." }
+      ] }
+    }
   },
   fa: {
-    eyebrow: "تصاویر اسلایدها",
-    title: "تصاویر اصلی کلاس برای تقویت ایده‌های مهم",
-    intro: "این سه تصویر از اسلایدها منطق درس را ملموس‌تر می‌کنند: چگونه پرسش را صورت‌بندی کنیم، چگونه لایهٔ اُمیکس را انتخاب کنیم و چگونه تغییرپذیری را ببینیم.",
-    open: "باز کردن PDF اسلایدها",
-    figures: [
-      { title: "از موضوع کلی تا پرسش زیستیِ قابل پاسخ", body: "این اسلاید چک‌لیست اصلی درس را فشرده می‌کند: زمینهٔ زیستی را مشخص کنید، مدل و طراحی مناسب را برگزینید، اندازهٔ نمونه را تعیین کنید، تکنیک ad hoc را انتخاب کنید و تغییرپذیری را صریح نگه دارید." },
-      { title: "اُمیکس یک منو است، نه خودِ پرسش", body: "این جدول کمک می‌کند هر لایهٔ زیستی را به فناوری مناسب وصل کنید. یادآور خوبی است که genomics، epigenomics، transcriptomics و proteomics هر کدام برای پرسش متفاوتی مناسب‌اند." },
-      { title: "تغییرپذیری فنی باید از تغییرپذیری بین افراد کمتر باشد", body: "این نمودار پیام اصلی درس را تصویری می‌کند: تکرارهای یک نمونه باید به‌هم نزدیک باشند، اما نمونه‌های زیستی از افراد مختلف معمولاً پراکندگی بیشتری دارند." }
-    ]
+    labels: { professor: "تأکید استاد", exam: "نکتهٔ امتحانی", slide: "اسلاید", open: "باز کردن PDF اسلایدها" },
+    blocks: {
+      questionFlow: { eyebrow: "جریان درس", title: "۱ · wet lab با یک پرسش دقیق شروع می‌شود", intro: "این تصویر در این بخش آمده چون اولین منطق درس است: پرسش → آزمایش → داده/آمار → پرسش دقیق‌تر بعدی.", items: [
+        { image: "wetLabFlow", title: "علم یک چرخهٔ تکراری است", body: "استاد می‌گوید این جریان ساده به نظر می‌رسد، اما ساده نیست: نتیجه‌ها معمولاً پایان کار نیستند و پرسش بعدی را می‌سازند.", professor: "ننویسید ‘study cancer’. باید مشخص کنید کدام سرطان، کدام مدل، کدام stimulus، dose، زمان و readout.", exam: "پرسش احتمالی: توضیح دهید چگونه biological question به experiment تبدیل می‌شود و چرا statistics مهم است." }
+      ] },
+      design: { eyebrow: "طراحی پیش از داده", title: "۲ · زمینه، مدل، متغیرها و تکنیک را تعریف کنید", intro: "این اسلایدها کنار question builder قرار می‌گیرند چون نشان می‌دهند قبل از dataset چه چیزهایی باید مشخص شوند.", items: [
+        { image: "biologicalQuestion", title: "چک‌لیست هر پاسخ خوب", body: "context، model، design، sample size، تکنیک ad hoc، متغیرهای independent/dependent و variability باید با هم دیده شوند.", professor: "sample size یعنی تعداد لازم برای دیدن نتیجهٔ significant. time-series وقتی ممکن باشد یک طراحی بسیار خوب است.", exam: "پرکاربرد: این عناصر را در ۱۰–۱۲ خط به quantification در DNA/RNA وصل کنید." },
+        { image: "dynamicProcesses", title: "DNA/RNA dynamics در context مشخص", body: "مدل می‌تواند human، animal، in vitro، in vivo یا ex vivo باشد؛ متغیرها شامل cell/tissue، sex، stimulus، dose، time و age هستند.", professor: "تکنیک همیشه باید به متغیر وصل باشد: پرسش RNA → اندازه‌گیری RNA؛ پرسش methylation → methylation profiling.", exam: "پرسش احتمالی: در یک آزمایش DNA/RNA dynamics چه متغیرهایی باید کنترل شوند؟" }
+      ] },
+      omics: { eyebrow: "انتخاب لایهٔ زیستی", title: "۳ · فناوری omics بعد از پرسش انتخاب می‌شود", intro: "جدول omics بعد از design می‌آید چون پیام استاد این است که اول پرسش، بعد تکنیک.", items: [
+        { image: "omicsMap", title: "از genomics تا spatial multiomics", body: "genomics، transcriptomics، epigenomics، metagenomics، proteomics، metabolomics، single-cell و spatial multiomics هرکدام پرسش متفاوتی را پاسخ می‌دهند.", professor: "spatial multiomics را ‘top’ می‌داند چون مکان بافتی را حفظ می‌کند، اما اصل همان مناسب بودن تکنیک است.", exam: "مقایسهٔ مفید: DNA-seq برای sequence، RNA profiling برای expression، methylation array برای epigenetic state." }
+      ] },
+      molecularContext: { eyebrow: "زمینهٔ زیستی", title: "۴ · DNA، اپی‌ژنتیک، RNA و microbiome تغییرپذیری می‌سازند", intro: "این بخش نشان می‌دهد context زیستی تعیین می‌کند چه variableهایی باید اندازه‌گیری شوند.", items: [
+        { image: "environmentEpigenetics", title: "environment و exposome پروفایل‌های DNA/RNA را تغییر می‌دهند", body: "diet، stress، smoking، alcohol، pathogens و age می‌توانند chromatin، methylation و expression را تغییر دهند.", professor: "واژهٔ exposome مهم است: بدن هر روز در تماس با stimulusهایی است که با age و defenseها تعامل دارند.", exam: "منابع variability زیستی: genetics + epigenetics + environment/exposome + age." },
+        { image: "dnaMethylation", title: "DNA methylation پل ورود به Module 2 است", body: "CpG methylation، DNMT1، DNMT3A/3B و TET پیش از pipeline Illumina معرفی می‌شوند.", professor: "می‌گوید methylation هستهٔ Module 2 است و causality کاملاً حل نشده است.", exam: "پرسش احتمالی: DNA methylation چیست و چرا در biological age یا disease مهم است؟" },
+        { image: "mirnaSeed", title: "RNA فقط mRNA نیست", body: "miRNAها ۱۸–۲۵ نوکلئوتید هستند، seed sequence دارند و targets زیادی را تنظیم می‌کنند.", professor: "miRNA با complementarity جزئی کار می‌کند؛ siRNA معمولاً complementarity کامل دارد و mRNA را cleave می‌کند.", exam: "تفاوت miRNA و siRNA را حفظ کنید." },
+        { image: "gutMicrorna", title: "microbiome در بیماری روده یک متغیر کلیدی است", body: "در التهاب روده، سلول میزبان، میکروب، metabolite، cytokine و miRNA تعامل دارند.", professor: "می‌گوید پروژهٔ التهاب روده بدون microbiome احتمالاً رد می‌شود.", exam: "مثال خوب برای اینکه context زیستی variableها را تعیین می‌کند." },
+        { image: "mainMessage", title: "پیام اصلی درس", body: "فقط وقتی context را می‌دانیم می‌توانیم variable درست را اندازه‌گیری کنیم.", professor: "خلاصهٔ درس: context → variables → technique → data.", exam: "جملهٔ شروع مناسب برای پاسخ‌های Lesson 1." }
+      ] },
+      variability: { eyebrow: "اندازه‌گیری variability", title: "۵ · variability فنی نباید variability زیستی را پنهان کند", intro: "مثال‌های CV نشان می‌دهند replicates فنی با donors متفاوت فرق دارند.", items: [
+        { image: "platformsPipeline", title: "platformها preprocessing و الگوریتم دارند", body: "targets DNA/RNA بعد از sample processing، chemistry، preprocessing، data mining و statistics به داده تبدیل می‌شوند.", professor: "نرم‌افزار و الگوریتم هم می‌توانند نتیجه را تغییر دهند؛ پس تکنیک هم منبع variability است.", exam: "raw data هنوز biological conclusion نیست." },
+        { image: "variabilitySources", title: "دو نوع variability", body: "experimental از تکنیک، instrument، reagent و operator می‌آید؛ biological از فرد، زمان، genetics، epigenetics، environment و age.", professor: "اگر technical variability از biological variability بزرگ‌تر باشد، نمی‌توان کار کرد.", exam: "احتمالی: biological و experimental variability را با مثال جدا کنید." },
+        { image: "technicalCv", title: "technical replicates: CV ≈ 8.53%", body: "یک نمونهٔ یکسان چند بار اندازه‌گیری می‌شود؛ CV = SD / mean × 100.", professor: "نتایج identical واقعاً identical نمی‌شوند؛ SD=0 تقریباً وجود ندارد.", exam: "technical replicates variability آزمایشی را می‌سنجند، نه donor variability." },
+        { image: "donorCv", title: "donors متفاوت: CV ≈ 51%", body: "اندازه‌گیری یک ژن در donors مختلف شامل biological variability و technical variability است.", professor: "donors را replicates صدا نکنید؛ donors نمونه‌های زیستی متفاوت‌اند.", exam: "دام مهم: replicates ≠ donors." }
+      ] },
+      plots: { eyebrow: "نمایش variability", title: "۶ · plotها distribution، outlier و individuality را نشان می‌دهند", intro: "این بخش آخر به heterogeneity و personalized medicine وصل می‌شود.", items: [
+        { image: "boxplotIqr", title: "Boxplot، IQR و outliers", body: "IQR = Q3−Q1 و outlier خارج از Q1−1.5×IQR یا Q3+1.5×IQR است.", professor: "boxplot گاهی از mean ± SD بهتر است چون distribution و outlier را نشان می‌دهد.", exam: "تعریف IQR و outlier ممکن است پرسیده شود." },
+        { image: "individualVariability", title: "فراتر از میانگین: variability فردی", body: "مثال centenarians نشان می‌دهد aging heterogeneity را زیاد می‌کند و میانگین می‌تواند مسیرهای فردی را پنهان کند.", professor: "چشم‌انداز او personalized medicine و N-of-1/longitudinal study است، اگرچه گران و دشوار است.", exam: "variability همیشه noise نیست؛ گاهی خود phenomenon زیستی است." }
+      ] }
+    }
   }
 };
+
+const LESSON1_SLIDES = [];
+const LESSON1_SLIDE_COPY = {};
 
 const LESSON_COPY = {
   "en": {
@@ -1058,6 +1166,17 @@ function SlideVisualNotes({ lang = "es" }) {
   return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"><SectionHeader eyebrow={local.eyebrow} title={local.title}>{local.intro}</SectionHeader><a href={SLIDES_URL} target="_blank" rel="noreferrer" className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-black text-red-800 transition hover:-translate-y-0.5 hover:bg-white">{local.open}</a></div><div className="grid gap-4 lg:grid-cols-3">{LESSON1_SLIDES.map((figure, idx) => { const item = local.figures[idx]; return <article key={figure.slide} className="overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm"><div className="aspect-[4/3] border-b border-stone-200 bg-white p-3"><img src={figure.src} alt={item.title} loading="lazy" className="h-full w-full rounded-2xl object-contain" /></div><div className="p-5"><Pill tone="red">Slide {figure.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{item.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p></div></article>; })}</div></section>;
 }
 
+function Lesson1VisualBlock({ lang = "es", block }) {
+  const local = LESSON1_VISUAL_COPY[lang] || LESSON1_VISUAL_COPY.es;
+  const data = local.blocks[block];
+  if (!data) return null;
+  const isSingle = data.items.length === 1;
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+    <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"><SectionHeader eyebrow={data.eyebrow} title={data.title}>{data.intro}</SectionHeader><a href={SLIDES_URL} target="_blank" rel="noreferrer" className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-black text-red-800 transition hover:-translate-y-0.5 hover:bg-white">{local.labels.open}</a></div>
+    <div className={`grid gap-4 ${isSingle ? "lg:grid-cols-1" : "lg:grid-cols-2"}`}>{data.items.map((item, idx) => { const figure = LESSON1_IMAGE_BANK[item.image]; return <article key={`${block}-${item.image}-${idx}`} className={`overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm ${isSingle ? "lg:grid lg:grid-cols-[0.95fr_1.05fr]" : ""}`}><div className="border-b border-stone-200 bg-white p-3 lg:border-b-0 lg:border-r"><img src={figure.src} alt={item.title} loading="lazy" className="h-full max-h-[420px] w-full rounded-2xl object-contain" /></div><div className="p-5"><Pill tone="red">{local.labels.slide} {figure.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{item.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p><div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-amber-800">{local.labels.professor}</div><p className="mt-1 text-sm font-bold leading-6 text-amber-950">{item.professor}</p></div><div className="mt-3 rounded-2xl border border-red-200 bg-red-50 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-red-700">{local.labels.exam}</div><p className="mt-1 text-sm font-bold leading-6 text-red-950">{item.exam}</p></div></div></article>; })}</div>
+  </section>;
+}
+
 const LESSON_NAV_COPY = {
   en: { dashboard: "DRD dashboard", previous: "Previous", next: "Next", current: "Lesson 1", nextTitle: "M1.2 Stanford two-colour arrays" },
   es: { dashboard: "Dashboard DRD", previous: "Anterior", next: "Siguiente", current: "Lección 1", nextTitle: "M1.2 Stanford two-colour arrays" },
@@ -1084,11 +1203,16 @@ export default function DRDLesson01({ lang = "es", isDone = false, toggle = () =
   return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav lang={lang} position="top" isDone={isDone} toggle={toggle} copy={copy}/>
     <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.eyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.title}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.subtitle}</p><div className="mt-6 flex flex-wrap gap-2">{copy.tags.map(tag => <Pill key={tag} tone={tag.includes("CV") ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={copy.module} value="1" tone="red"/><StatCard label={copy.exam} value="4Q"/><StatCard label={copy.answer} value="10–12"/><StatCard label={copy.core} value="CV" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{copy.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{copy.bigIdeaText}</p></div><ResourceLinks copy={copy} lang={lang}/></div></div></div></section>
     <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.flowEyebrow} title={copy.flowTitle}>{copy.flowIntro}</SectionHeader><div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]"><div className="space-y-2">{copy.flow.map((step, idx) => <button key={step.title} onClick={() => setActiveFlow(idx)} className={`w-full rounded-2xl border p-4 text-left transition ${activeFlow === idx ? "border-red-200 bg-red-50 shadow-sm" : "border-stone-200 bg-stone-50 hover:bg-white"}`}><div className="flex items-center justify-between gap-3"><span className="text-sm font-black text-stone-950">{step.title}</span><ProgressDots active={idx} /></div></button>)}</div><article className="rounded-[2rem] border border-stone-200 bg-stone-950 p-6 text-white"><div className="text-xs font-black uppercase tracking-[0.2em] text-red-200">{copy.activeStep}</div><h3 className="mt-3 text-3xl font-black tracking-tight">{copy.flow[activeFlow].title}</h3><p className="mt-4 text-lg font-semibold leading-8 text-stone-200">{copy.flow[activeFlow].body}</p></article></div></section>
+    <Lesson1VisualBlock lang={lang} block="questionFlow"/>
     <section className="mt-10 grid gap-6 lg:grid-cols-[1fr_0.95fr]"><BiologicalQuestionBuilder copy={copy}/><article className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm"><div className="text-xs font-black uppercase tracking-[0.2em] text-red-700">{copy.designEyebrow}</div><h3 className="mt-1 text-2xl font-black text-stone-950">{copy.designTitle}</h3><div className="mt-5 grid gap-3">{copy.designCards.map(([title, body]) => <div key={title} className="rounded-2xl border border-stone-200 bg-stone-50 p-4"><div className="text-sm font-black text-stone-950">{title}</div><div className="mt-1 text-sm font-semibold leading-6 text-stone-600">{body}</div></div>)}</div></article></section>
+    <Lesson1VisualBlock lang={lang} block="design"/>
     <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.omicsEyebrow} title={copy.omicsTitle}>{copy.omicsIntro}</SectionHeader><div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">{copy.omics.map(([name, what, tools]) => <article key={name} className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><h3 className="text-xl font-black text-stone-950">{name}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{what}</p><div className="mt-4 rounded-2xl bg-white p-3 text-xs font-black text-red-700 shadow-sm">{tools}</div></article>)}</div></section>
-    <SlideVisualNotes lang={lang}/>
+    <Lesson1VisualBlock lang={lang} block="omics"/>
+    <Lesson1VisualBlock lang={lang} block="molecularContext"/>
     <section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1fr]"><VariabilityClassifier copy={copy}/><CVExercise copy={copy}/></section>
+    <Lesson1VisualBlock lang={lang} block="variability"/>
     <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.repEyebrow} title={copy.repTitle}>{copy.repIntro}</SectionHeader><div className="grid gap-4 lg:grid-cols-3">{copy.repCards.map(([title, body], i) => <article key={title} className={`rounded-3xl border p-5 ${i === 0 ? "border-emerald-200 bg-emerald-50" : i === 1 ? "border-red-200 bg-red-50" : "border-amber-200 bg-amber-50"}`}><h3 className="text-xl font-black text-stone-950">{title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-700">{body}</p></article>)}</div></section>
+    <Lesson1VisualBlock lang={lang} block="plots"/>
     <QuizBlock copy={copy}/><ExamTrainer copy={copy} lang={lang}/><LessonNav lang={lang} position="bottom" isDone={isDone} toggle={toggle} copy={copy}/>
   </main>;
 }

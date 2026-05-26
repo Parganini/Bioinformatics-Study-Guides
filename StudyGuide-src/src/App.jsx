@@ -20,6 +20,7 @@ import { PHYLO_MOCK_EXAMS } from "./exams/phylogenetics/mockExams.js";
 import { PHYLO_WRITTEN_PRACTICE } from "./exams/phylogenetics/writtenPractice.js";
 import DRDLesson01 from "./lessons/drd/Lesson01.jsx";
 import DRDLesson02 from "./lessons/drd/Lesson02.jsx";
+import DRDLesson03 from "./lessons/drd/Lesson03.jsx";
 
 
 const LANGS = [
@@ -641,6 +642,7 @@ const DRD_MODULE1_UNITS = [
     desc: "One-colour noncompetitive arrays, photolithography, PM/MM probes, probe sets, DAT/CEL/CDF/CHP files, RMA and quantile normalization.",
     products: ["file-flow diagram", "PM/MM comparison", "RMA checklist"],
     tags: ["one-colour", "PM/MM", "RMA", "CEL files"],
+    lessonHref: "#/lesson/m1-affy",
   },
   {
     id: "m1-illumina",
@@ -1051,6 +1053,9 @@ function DRDApp({ t, lang, hash }) {
   }
   if (lessonId === "m1-stanford" || lessonId === "02") {
     return <DRDLesson02 lang={lang} isDone={!!progress["m1-stanford"]} toggle={() => toggle("m1-stanford")} />;
+  }
+  if (lessonId === "m1-affy" || lessonId === "03") {
+    return <DRDLesson03 lang={lang} isDone={!!progress["m1-affy"]} toggle={() => toggle("m1-affy")} />;
   }
   const covered = allUnits.filter(unit => unit.status !== "upcoming").length;
   const upcoming = allUnits.filter(unit => unit.status === "upcoming").length;

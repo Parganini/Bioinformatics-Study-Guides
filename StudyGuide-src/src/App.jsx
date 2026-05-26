@@ -19,6 +19,7 @@ import TraitEvolutionLesson, { lesson16Quiz } from "./lessons/phylogenetics/Less
 import { PHYLO_MOCK_EXAMS } from "./exams/phylogenetics/mockExams.js";
 import { PHYLO_WRITTEN_PRACTICE } from "./exams/phylogenetics/writtenPractice.js";
 import DRDLesson01 from "./lessons/drd/Lesson01.jsx";
+import DRDLesson02 from "./lessons/drd/Lesson02.jsx";
 
 
 const LANGS = [
@@ -629,6 +630,7 @@ const DRD_MODULE1_UNITS = [
     desc: "Spotted arrays, Cy3/Cy5 targets, dye bias, dye swap, TIFF/raw images and image-level quality control.",
     products: ["workflow ordering", "technical-error quiz", "exam-style answer"],
     tags: ["two-colour", "Cy3/Cy5", "dye swap", "QC"],
+    lessonHref: "#/lesson/m1-stanford",
   },
   {
     id: "m1-affy",
@@ -1046,6 +1048,9 @@ function DRDApp({ t, lang, hash }) {
   const lessonId = (hash.match(/^#\/lesson\/(.+)$/) || [])[1];
   if (lessonId === "m1-foundations" || lessonId === "01") {
     return <DRDLesson01 lang={lang} isDone={!!progress["m1-foundations"]} toggle={() => toggle("m1-foundations")} />;
+  }
+  if (lessonId === "m1-stanford" || lessonId === "02") {
+    return <DRDLesson02 lang={lang} isDone={!!progress["m1-stanford"]} toggle={() => toggle("m1-stanford")} />;
   }
   const covered = allUnits.filter(unit => unit.status !== "upcoming").length;
   const upcoming = allUnits.filter(unit => unit.status === "upcoming").length;

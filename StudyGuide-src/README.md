@@ -36,6 +36,7 @@ The build writes the public pages into:
 index.html
 AMLB/index.html
 MP/index.html
+DRD/index.html
 assets/
 ```
 
@@ -58,7 +59,12 @@ Each entry page has its own favicon:
 favicons/hub.svg      # general Study Hub
 favicons/amlb.svg     # Applied Machine Learning
 favicons/mp.svg       # Molecular Phylogenetics
+favicons/hub.svg      # DNA/RNA Dynamics currently reuses the general icon
 ```
 
 The source copies live in `StudyGuide-src/favicons/` for local Vite preview.
 The published copies live in `favicons/` for GitHub Pages.
+
+## DNA/RNA Dynamics
+
+The DNA/RNA Dynamics dashboard lives at `StudyGuide-src/DRD/index.html` and is implemented in `StudyGuide-src/src/App.jsx`. It currently adds the full guide blueprint split into Module 1 theory and Module 2 R/Bioconductor methylation-pipeline units, updated with the 26 May status and the upcoming scheduled topics.

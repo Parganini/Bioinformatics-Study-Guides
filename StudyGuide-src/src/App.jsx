@@ -54,6 +54,8 @@ const UI = {
     appliedMLDesc: "Lecture notes, practical material, recordings, exam preparation and progress tracking.",
     phylo: "Molecular Phylogenetics",
     phyloDesc: "Trilingual study guide with modules, flashcards, quizzes, glossary tools and progress tracking.",
+    drd: "DNA/RNA Dynamics",
+    drdDesc: "Course map for Module 1 theory and Module 2 methylation-array pipelines, updated with the May 26 status and upcoming topics.",
     builtFor: "Course study guides",
     uniform: "Study guide",
     studyPath: "Study path",
@@ -89,6 +91,8 @@ const UI = {
     appliedMLDesc: "Apuntes de clase, material práctico, grabaciones, preparación de examen y seguimiento de progreso.",
     phylo: "Filogenética Molecular",
     phyloDesc: "Guía trilingüe con módulos, flashcards, quizzes, glosario y seguimiento de progreso.",
+    drd: "DNA/RNA Dynamics",
+    drdDesc: "Mapa de la materia con Module 1 teórico y Module 2 de pipelines de metilación, actualizado al 26 de mayo e incluyendo los temas pendientes.",
     builtFor: "Guías de curso",
     uniform: "Guía de estudio",
     studyPath: "Ruta de estudio",
@@ -124,6 +128,8 @@ const UI = {
     appliedMLDesc: "یادداشت‌های درس، مواد عملی، ضبط‌ها، آمادگی امتحان و پیگیری پیشرفت.",
     phylo: "تبارزایی مولکولی",
     phyloDesc: "راهنمای سه‌زبانه با ماژول‌ها، فلش‌کارت‌ها، آزمونک‌ها، واژه‌نامه و پیگیری پیشرفت.",
+    drd: "DNA/RNA Dynamics",
+    drdDesc: "نقشهٔ درس برای ماژول ۱ نظری و ماژول ۲ پایپ‌لاین‌های methylation array، با وضعیت ۲۶ مه و موضوعات آینده.",
     builtFor: "راهنماهای درسی",
     uniform: "راهنمای مطالعه",
     studyPath: "مسیر مطالعه",
@@ -588,10 +594,290 @@ function phyloResourceCopy(lang) {
   };
 }
 
+
+const DRD_STATUS_COPY = {
+  covered: { es: "Cubierto", en: "Covered", fa: "پوشش داده‌شده" },
+  active: { es: "En curso", en: "In progress", fa: "در حال انجام" },
+  upcoming: { es: "Pendiente", en: "Upcoming", fa: "در پیش" },
+};
+
+const DRD_STATUS_CLASSES = {
+  covered: "border-emerald-200 bg-emerald-50 text-emerald-800",
+  active: "border-amber-200 bg-amber-50 text-amber-800",
+  upcoming: "border-stone-200 bg-stone-50 text-stone-600",
+};
+
+const DRD_MODULE1_UNITS = [
+  {
+    id: "m1-foundations",
+    code: "M1.1",
+    date: "Apr 28",
+    status: "covered",
+    title: "Biological question, experimental design and variability",
+    desc: "Convert a focused biological question into model, variables, sample size, technique, quantitative data and interpretation. Distinguish biological variability from experimental variability.",
+    products: ["React lesson", "concept quiz", "short written practice"],
+    tags: ["biological question", "variables", "variability", "omics"],
+  },
+  {
+    id: "m1-stanford",
+    code: "M1.2",
+    date: "May 5",
+    status: "covered",
+    title: "Competitive two-colour arrays: Stanford",
+    desc: "Spotted arrays, Cy3/Cy5 targets, dye bias, dye swap, TIFF/raw images and image-level quality control.",
+    products: ["workflow ordering", "technical-error quiz", "exam-style answer"],
+    tags: ["two-colour", "Cy3/Cy5", "dye swap", "QC"],
+  },
+  {
+    id: "m1-affy",
+    code: "M1.3",
+    date: "May 6",
+    status: "covered",
+    title: "Affymetrix / ThermoFisher GeneChip",
+    desc: "One-colour noncompetitive arrays, photolithography, PM/MM probes, probe sets, DAT/CEL/CDF/CHP files, RMA and quantile normalization.",
+    products: ["file-flow diagram", "PM/MM comparison", "RMA checklist"],
+    tags: ["one-colour", "PM/MM", "RMA", "CEL files"],
+  },
+  {
+    id: "m1-illumina",
+    code: "M1.4",
+    date: "May 12",
+    status: "covered",
+    title: "Illumina BeadChip and methylation platforms",
+    desc: "BeadArray design, optical decoding, transcriptomics, bisulfite logic, 27K/450K/EPIC coverage and CpG genomic context.",
+    products: ["visual React lesson", "27K/450K/EPIC comparison", "bisulfite quiz"],
+    tags: ["BeadChip", "bisulfite", "450K", "EPIC"],
+  },
+  {
+    id: "m1-methylation-biology",
+    code: "M1.5",
+    date: "Apr–May",
+    status: "covered",
+    title: "DNA methylation biology",
+    desc: "5mC, DNMT1, DNMT3A/3B, TET enzymes, promoter methylation, gene-body methylation, aging, disease and epigenetic clocks.",
+    products: ["concept map", "region-to-interpretation quiz", "written answer template"],
+    tags: ["5mC", "DNMT", "TET", "epigenetic clock"],
+  },
+  {
+    id: "m1-deg-i",
+    code: "M1.6",
+    date: "May 26",
+    status: "active",
+    title: "Differentially expressed genes I",
+    desc: "Fold change versus statistical significance, log2 ratios, MA-plots, null and alternative hypotheses, p-values, alpha/beta errors, power and parametric versus non-parametric tests.",
+    products: ["test-selection tree", "p-value exercises", "fold-change traps"],
+    tags: ["fold change", "p-value", "power", "MA-plot"],
+  },
+  {
+    id: "m1-deg-ii",
+    code: "M1.7",
+    date: "May 27",
+    status: "upcoming",
+    title: "Differentially expressed genes II",
+    desc: "Expected continuation: paired versus unpaired designs, Student t-test, Welch, Wilcoxon, Mann–Whitney, multiple testing and biological interpretation.",
+    products: ["statistical-test simulator", "comparison questions", "10–12-line answers"],
+    tags: ["paired/unpaired", "t-test", "Wilcoxon", "FDR"],
+  },
+  {
+    id: "m1-samples-genes-i",
+    code: "M1.8",
+    date: "Jun 5",
+    status: "upcoming",
+    title: "Relationship between samples and genes I",
+    desc: "Matrices of genes/probes by samples, similarity, distance, sample structure, early clustering logic and interpretation of global patterns.",
+    products: ["matrix-reading lesson", "sample-distance quiz", "plot interpretation"],
+    tags: ["matrix", "samples", "genes", "distance"],
+  },
+  {
+    id: "m1-samples-genes-ii",
+    code: "M1.9",
+    date: "Jun 9",
+    status: "upcoming",
+    title: "Relationship between samples and genes II",
+    desc: "Heatmaps, gene/sample clustering, outliers, PCA-like reasoning and linking patterns to phenotype, treatment, tissue or batch.",
+    products: ["heatmap practice", "PCA interpretation", "common mistakes"],
+    tags: ["heatmap", "clustering", "PCA", "outliers"],
+  },
+  {
+    id: "m1-scrna",
+    code: "M1.10",
+    date: "Jun 10",
+    status: "upcoming",
+    title: "Guest lecture: scRNA-seq",
+    desc: "Bulk versus single-cell RNA-seq, cellular heterogeneity, counts/UMIs, marker genes, dimensionality reduction, clustering and dropout-aware interpretation.",
+    products: ["bulk-vs-single-cell comparator", "glossary", "mock question"],
+    tags: ["scRNA-seq", "UMI", "markers", "UMAP"],
+  },
+];
+
+const DRD_MODULE2_UNITS = [
+  {
+    id: "m2-r",
+    code: "M2.1",
+    date: "May 8",
+    status: "covered",
+    title: "R/Bioconductor introduction",
+    desc: "R basics, packages, scripts, SampleSheet logic, metadata and reproducible analysis habits.",
+    products: ["guided setup", "SampleSheet exercise", "R object glossary"],
+    tags: ["R", "Bioconductor", "SampleSheet", "metadata"],
+  },
+  {
+    id: "m2-manifest",
+    code: "M2.2",
+    date: "May 14",
+    status: "covered",
+    title: "DNA methylation and Illumina BeadChip chemistry",
+    desc: "Manifest files, probe annotation, chromosome/position, genes, CpG island context and probe-level interpretation.",
+    products: ["probe annotation quiz", "manifest reading", "chemistry summary"],
+    tags: ["manifest", "probe ID", "CpG context", "Infinium"],
+  },
+  {
+    id: "m2-import-qc",
+    code: "M2.3",
+    date: "May 19",
+    status: "covered",
+    title: "Pipeline 1: Data import + quality check",
+    desc: "Raw methylation-array data, RGSet, MSet_raw, detection p-values, control probes, sample QC and probe QC.",
+    products: ["RGSet→MSet diagram", "detection p-value practice", "filtering checklist"],
+    tags: ["RGSet", "MSet", "detection p-value", "control probes"],
+  },
+  {
+    id: "m2-normalization-1",
+    code: "M2.4",
+    date: "May 20",
+    status: "covered",
+    title: "Pipeline 2: Normalization 1",
+    desc: "Why raw methylation signals are not directly comparable and how normalization changes distributions and downstream interpretation.",
+    products: ["density-plot interpretation", "raw vs normalized comparison", "normalization glossary"],
+    tags: ["normalization", "beta values", "density plots", "raw data"],
+  },
+  {
+    id: "m2-normalization-2",
+    code: "M2.5",
+    date: "May 22",
+    status: "covered",
+    title: "Pipeline 2: Normalization 2",
+    desc: "Quantile, Noob, SWAN and functional normalization, including background, dye bias, probe-type bias and control-probe-based correction.",
+    products: ["method comparator", "Noob/SWAN/Funnorm quiz", "decision notes"],
+    tags: ["Quantile", "Noob", "SWAN", "Funnorm"],
+  },
+  {
+    id: "m2-dmp-dmr",
+    code: "M2.6",
+    date: "Jun 4",
+    status: "upcoming",
+    title: "Pipeline 3: DMP/DMR + multiple testing + PCA",
+    desc: "Beta versus M values, design matrix, contrasts, differentially methylated positions, differentially methylated regions, FDR and PCA.",
+    products: ["pipeline walkthrough", "design-matrix practice", "volcano/PCA interpretation"],
+    tags: ["DMP", "DMR", "FDR", "PCA"],
+  },
+  {
+    id: "m2-batch-clustering",
+    code: "M2.7",
+    date: "Jun 11",
+    status: "upcoming",
+    title: "Pipeline 4: Batch effect, visualization and clustering",
+    desc: "Batch effect detection/correction, ComBat, PCA before/after correction, heatmaps, clustering and final verification-test integration.",
+    products: ["plot checklist", "ComBat explainer", "team-report simulator"],
+    tags: ["batch effect", "ComBat", "visualization", "clustering"],
+  },
+];
+
+const DRD_STUDY_PRODUCTS = [
+  { title: "React lessons", desc: "Short visual lessons for Module 1 theory and Module 2 workflow logic, matching the Filogenética style.", tags: ["concepts", "diagrams", "common traps"] },
+  { title: "Interactive quizzes", desc: "Vocabulary, workflow ordering, error spotting, statistical-test selection and plot interpretation.", tags: ["Cy3/Cy5", "RGSet", "FDR", "PCA"] },
+  { title: "Mock written exams", desc: "Four-question, 45-minute practice sets with 10–12-line model answers for the Module 1 written test.", tags: ["4 questions", "rubric", "model answers"] },
+  { title: "Team report simulator", desc: "A Module 2 report scaffold from biological question to QC, normalization, DMP/DMR, PCA, batch effect and interpretation.", tags: ["report", "pipeline", "methylation"] },
+];
+
+function drdCopy(lang) {
+  return {
+    en: {
+      updated: "Updated status",
+      asOf: "as of 26 May 2026",
+      module1: "Module 1 — Theory and written-exam reasoning",
+      module2: "Module 2 — R/Bioconductor methylation pipeline",
+      module1Short: "Module 1",
+      module2Short: "Module 2",
+      coveredNow: "Covered or in progress",
+      upcoming: "Still scheduled",
+      evaluation: "Evaluation map",
+      writtenExam: "Written test: 45 min, 4 questions, about 10–12 lines each.",
+      report: "Team report: methylation dataset analysis pipeline, delivered before the exam date.",
+      products: "Study-guide products",
+      productsBody: "This dashboard is the blueprint for the full guide: lessons, quizzes, mock exams and written/report practice.",
+      roadmap: "Roadmap",
+      search: "Search DNA/RNA topics...",
+      pending: "Upcoming topics included from the programme",
+      mark: "Mark",
+      complete: "Complete",
+      incomplete: "Incomplete",
+      status: "Status",
+      tags: "Key tags",
+      deliverables: "Guide deliverables",
+      sources: "Source folders considered",
+      sourcesBody: "Module 1 PDFs plus the Module 2 Lesson1–Lesson5 folders, including scripts, SampleSheets, manifests, RData objects, normalization outputs and support papers.",
+    },
+    es: {
+      updated: "Estado actualizado",
+      asOf: "al 26 de mayo de 2026",
+      module1: "Module 1 — Teoría y razonamiento para el escrito",
+      module2: "Module 2 — Pipeline de metilación en R/Bioconductor",
+      module1Short: "Module 1",
+      module2Short: "Module 2",
+      coveredNow: "Cubierto o en curso",
+      upcoming: "Aún programado",
+      evaluation: "Mapa de evaluación",
+      writtenExam: "Test escrito: 45 min, 4 preguntas, unas 10–12 líneas por respuesta.",
+      report: "Team report: análisis de un dataset de metilación, entregado antes del examen.",
+      products: "Productos de la guía",
+      productsBody: "Este dashboard es el plano de la guía completa: lecciones, quizzes, mock exams y práctica escrita/de reporte.",
+      roadmap: "Roadmap",
+      search: "Buscar temas de DNA/RNA...",
+      pending: "Temas pendientes incluidos desde el programa",
+      mark: "Marcar",
+      complete: "Completado",
+      incomplete: "Pendiente",
+      status: "Estado",
+      tags: "Etiquetas clave",
+      deliverables: "Entregables de la guía",
+      sources: "Fuentes consideradas",
+      sourcesBody: "PDFs del Module 1 y carpetas Lesson1–Lesson5 del Module 2, incluyendo scripts, SampleSheets, manifests, objetos RData, salidas de normalización y papers de apoyo.",
+    },
+    fa: {
+      updated: "وضعیت به‌روز",
+      asOf: "تا ۲۶ مه ۲۰۲۶",
+      module1: "ماژول ۱ — نظریه و استدلال برای امتحان نوشتاری",
+      module2: "ماژول ۲ — پایپ‌لاین methylation در R/Bioconductor",
+      module1Short: "ماژول ۱",
+      module2Short: "ماژول ۲",
+      coveredNow: "پوشش داده‌شده یا در حال انجام",
+      upcoming: "هنوز برنامه‌ریزی‌شده",
+      evaluation: "نقشهٔ ارزیابی",
+      writtenExam: "آزمون نوشتاری: ۴۵ دقیقه، ۴ پرسش، حدود ۱۰–۱۲ خط برای هر پاسخ.",
+      report: "گزارش تیمی: تحلیل dataset متیلاسیون، تحویل پیش از تاریخ امتحان.",
+      products: "خروجی‌های راهنمای مطالعه",
+      productsBody: "این داشبورد نقشهٔ راهنمای کامل است: درس‌ها، آزمونک‌ها، آزمون‌های آزمایشی و تمرین نوشتاری/گزارشی.",
+      roadmap: "نقشهٔ راه",
+      search: "جستجوی موضوعات DNA/RNA...",
+      pending: "موضوعات آینده از برنامهٔ درس",
+      mark: "علامت‌گذاری",
+      complete: "کامل‌شده",
+      incomplete: "ناقص",
+      status: "وضعیت",
+      tags: "برچسب‌های کلیدی",
+      deliverables: "خروجی‌ها",
+      sources: "منابع در نظر گرفته‌شده",
+      sourcesBody: "PDFهای ماژول ۱ و پوشه‌های Lesson1–Lesson5 ماژول ۲، شامل scriptها، SampleSheetها، manifestها، آبجکت‌های RData، خروجی‌های normalization و مقاله‌های پشتیبان.",
+    },
+  }[lang] || {};
+}
+
 function currentMode() {
   const path = window.location.pathname.toLowerCase();
   if (path.includes("/amlb/")) return "amlb";
   if (path.includes("/mp/")) return "mp";
+  if (path.includes("/drd/")) return "drd";
   return "hub";
 }
 
@@ -646,6 +932,12 @@ function Header({ lang, setLang, mode, t }) {
       icon: "Φ",
       iconClass: "bg-red-700",
     },
+    drd: {
+      title: t.drd,
+      subtitle: `${t.modules} · ${t.studyTools}`,
+      icon: "DRD",
+      iconClass: "bg-teal-700",
+    },
   }[mode] || { title: t.studyHub, subtitle: t.subjects, icon: "⌂", iconClass: "bg-stone-950" };
 
   return <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#fffaf0]/88 backdrop-blur-xl"><div className="mx-auto flex w-[min(1180px,calc(100%-24px))] items-center justify-between gap-4 py-3"><a href={mode === "hub" ? "#top" : "../index.html"} className="flex items-center gap-3"><div className={`flex h-10 min-w-10 items-center justify-center rounded-2xl px-2 text-sm font-black text-white ${header.iconClass}`}>{header.icon}</div><div><div className="text-sm font-black leading-4 text-stone-950">{header.title}</div><div className="text-xs font-semibold text-stone-500">{header.subtitle}</div></div></a><nav className="hidden items-center gap-2 lg:flex"><a href={mode === "hub" ? "#subjects" : "#/"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{mode === "hub" ? t.subjects : t.modules}</a><a href={mode === "hub" ? "#tools" : "#/tools"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.studyTools}</a><a href={mode === "hub" ? "#tools" : "#/resources"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.resources}</a></nav><LangSwitcher lang={lang} setLang={setLang} /></div></header>;
@@ -658,8 +950,8 @@ function Hero({ eyebrow, title, subtitle, actions, visual }) {
 }
 
 function HubApp({ t }) {
-  return <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.builtFor} title={<>{t.studyHub}</>} subtitle={t.hubSubtitle} actions={<><a href="AMLB/index.html" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-red-800">{t.appliedML}</a><a href="MP/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.phylo}</a></>} visual={<div><div className="flex items-start justify-between gap-4"><div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.publishedFolders}</div><div className="mt-2 text-2xl font-black text-stone-950">AMLB · MP</div><div className="mt-1 text-sm font-semibold text-stone-500">{t.sourceText}</div></div><div className="rounded-2xl bg-stone-950 px-3 py-2 text-sm font-black text-white">2</div></div><div className="mt-6 rounded-[2rem] bg-[#fffaf0] p-4"><MiniTreeIcon active/><div className="mt-3"><ProgressBar value={50}/></div></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyTools}</div><p className="mt-2 text-lg font-bold leading-7">{t.tools.join(" · ")}</p></div></div>} />
-    <section id="subjects" className="mt-10"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div><div className="grid gap-5 md:grid-cols-2"><SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/><SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/></div></section>
+  return <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.builtFor} title={<>{t.studyHub}</>} subtitle={t.hubSubtitle} actions={<><a href="AMLB/index.html" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-red-800">{t.appliedML}</a><a href="MP/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.phylo}</a><a href="DRD/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.drd}</a></>} visual={<div><div className="flex items-start justify-between gap-4"><div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.publishedFolders}</div><div className="mt-2 text-2xl font-black text-stone-950">AMLB · MP · DRD</div><div className="mt-1 text-sm font-semibold text-stone-500">{t.sourceText}</div></div><div className="rounded-2xl bg-stone-950 px-3 py-2 text-sm font-black text-white">3</div></div><div className="mt-6 rounded-[2rem] bg-[#fffaf0] p-4"><MiniTreeIcon active/><div className="mt-3"><ProgressBar value={50}/></div></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyTools}</div><p className="mt-2 text-lg font-bold leading-7">{t.tools.join(" · ")}</p></div></div>} />
+    <section id="subjects" className="mt-10"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div><div className="grid gap-5 md:grid-cols-3"><SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/><SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/><SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={DRD_MODULE1_UNITS.length + DRD_MODULE2_UNITS.length} icon="DRD"/></div></section>
     <section id="tools" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.studyTools}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.quickReview}</h2><p className="mt-2 max-w-2xl leading-7 text-stone-600">{t.sourceText}</p></div><div className="grid gap-3 md:grid-cols-5">{t.tools.map(tool => <div key={tool} className="rounded-2xl border border-stone-200 bg-white p-4 text-sm font-black text-stone-800 shadow-sm">{tool}</div>)}</div></section></main>;
 }
 function SubjectCard({ href, title, desc, progressKey, total, icon }) {
@@ -667,6 +959,169 @@ function SubjectCard({ href, title, desc, progressKey, total, icon }) {
   const count = Object.values(progress).filter(Boolean).length;
   const percent = total ? (count / total) * 100 : 0;
   return <a href={href} className="group rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><div className="flex items-start justify-between gap-4"><div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-stone-950 text-lg font-black text-white">{icon}</div><span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{clamp(percent)}%</span></div><h3 className="mt-5 text-2xl font-black text-stone-950">{title}</h3><p className="mt-2 leading-7 text-stone-600">{desc}</p><div className="mt-5"><ProgressBar value={percent}/></div></a>;
+}
+
+
+function DRDApp({ t, lang, hash }) {
+  const copy = drdCopy(lang);
+  const [progress, setProgress] = useState(() => getJSON("drd_progress_v1", {}));
+  const [query, setQuery] = useState("");
+  const allUnits = [...DRD_MODULE1_UNITS, ...DRD_MODULE2_UNITS];
+  const completed = allUnits.filter(unit => progress[unit.id]).length;
+  const percent = allUnits.length ? (completed / allUnits.length) * 100 : 0;
+  const q = query.trim().toLowerCase();
+  const module1 = filterDRDUnits(DRD_MODULE1_UNITS, q);
+  const module2 = filterDRDUnits(DRD_MODULE2_UNITS, q);
+  const save = (next) => { setProgress(next); setJSON("drd_progress_v1", next); };
+  const toggle = (id) => save({ ...progress, [id]: !progress[id] });
+  const covered = allUnits.filter(unit => unit.status !== "upcoming").length;
+  const upcoming = allUnits.filter(unit => unit.status === "upcoming").length;
+
+  return (
+    <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
+      <Hero
+        eyebrow={`${copy.updated} · ${copy.asOf}`}
+        title={<>{t.drd} <span className="text-red-700">Study Guide</span></>}
+        subtitle={t.drdDesc}
+        actions={(
+          <>
+            <a href="#module-1" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{copy.module1Short}</a>
+            <a href="#module-2" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.module2Short}</a>
+            <a href="#products" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.products}</a>
+          </>
+        )}
+        visual={(
+          <div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.progress}</div>
+            <div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{completed} / {allUnits.length} {t.completed.toLowerCase()}</p>
+            <div className="mt-5"><ProgressBar value={percent}/></div>
+            <div className="mt-6 grid grid-cols-2 gap-3">
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">{copy.coveredNow}</div><div className="mt-1 text-2xl font-black">{covered}</div></div>
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">{copy.upcoming}</div><div className="mt-1 text-2xl font-black">{upcoming}</div></div>
+            </div>
+            <div className="mt-6 rounded-3xl bg-stone-950 p-5 text-white">
+              <div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyPath}</div>
+              <p className="mt-2 text-lg font-bold leading-7">question → technology → QC → normalization → statistics → interpretation</p>
+            </div>
+          </div>
+        )}
+      />
+
+      <section className="mt-8 grid gap-5 lg:grid-cols-3">
+        <Stat label={copy.evaluation} value="20 + 10" note="Module 1 written score + Module 2 team report" />
+        <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm lg:col-span-2">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.evaluation}</div>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><h3 className="text-lg font-black text-stone-950">{copy.module1Short}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{copy.writtenExam}</p></div>
+            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><h3 className="text-lg font-black text-stone-950">{copy.module2Short}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{copy.report}</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/75 p-5 shadow-sm md:p-6">
+        <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.roadmap}</div>
+            <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.drd}</h2>
+          </div>
+          <input value={query} onChange={e => setQuery(e.target.value)} placeholder={copy.search} className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-stone-700 outline-none transition placeholder:text-stone-400 focus:border-red-300 focus:ring-4 focus:ring-red-100 md:w-80"/>
+        </div>
+        <div id="module-1" className="scroll-mt-28">
+          <DRDModule title={copy.module1} units={module1} progress={progress} toggle={toggle} copy={copy} lang={lang} />
+        </div>
+        <div id="module-2" className="mt-6 scroll-mt-28">
+          <DRDModule title={copy.module2} units={module2} progress={progress} toggle={toggle} copy={copy} lang={lang} />
+        </div>
+      </section>
+
+      <section id="products" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+        <div className="mb-6">
+          <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.deliverables}</div>
+          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{copy.products}</h2>
+          <p className="mt-2 max-w-3xl leading-7 text-stone-600">{copy.productsBody}</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {DRD_STUDY_PRODUCTS.map(product => <DRDProductCard key={product.title} product={product} />)}
+        </div>
+      </section>
+
+      <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.sources}</div>
+        <p className="mt-3 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{copy.sourcesBody}</p>
+      </section>
+    </main>
+  );
+}
+
+function filterDRDUnits(units, q) {
+  if (!q) return units;
+  return units.filter(unit => [unit.code, unit.date, unit.status, unit.title, unit.desc, ...(unit.tags || []), ...(unit.products || [])].join(" ").toLowerCase().includes(q));
+}
+
+function DRDModule({ title, units, progress, toggle, copy, lang }) {
+  const done = units.filter(unit => progress[unit.id]).length;
+  const percent = units.length ? done / units.length * 100 : 0;
+  return (
+    <article className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm">
+      <div className="border-b border-stone-200 bg-stone-50 p-5 md:p-6">
+        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+          <div>
+            <h3 className="text-2xl font-black tracking-tight text-stone-950">{title}</h3>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{done} / {units.length} {copy.complete.toLowerCase()}</p>
+          </div>
+          <div className="w-full md:w-64"><ProgressBar value={percent}/></div>
+        </div>
+      </div>
+      <div className="grid gap-4 p-5 md:p-6">
+        {units.length === 0 && <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5 text-sm font-black text-stone-500">No matches.</div>}
+        {units.map(unit => <DRDUnitCard key={unit.id} unit={unit} isDone={!!progress[unit.id]} toggle={() => toggle(unit.id)} copy={copy} lang={lang} />)}
+      </div>
+    </article>
+  );
+}
+
+function DRDUnitCard({ unit, isDone, toggle, copy, lang }) {
+  const statusLabel = DRD_STATUS_COPY[unit.status]?.[lang] || DRD_STATUS_COPY[unit.status]?.es || unit.status;
+  const statusClass = DRD_STATUS_CLASSES[unit.status] || DRD_STATUS_CLASSES.upcoming;
+  return (
+    <div className={`rounded-3xl border p-5 transition ${isDone ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50 hover:bg-white"}`}>
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-stone-950 px-3 py-1 text-xs font-black text-white">{unit.code}</span>
+            <span className={`rounded-full border px-3 py-1 text-xs font-black ${statusClass}`}>{statusLabel}</span>
+            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{unit.date}</span>
+          </div>
+          <h4 className="mt-3 text-xl font-black leading-7 text-stone-950">{unit.title}</h4>
+          <p className="mt-2 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{unit.desc}</p>
+        </div>
+        <button onClick={toggle} className={`shrink-0 rounded-full px-4 py-2 text-xs font-black ${isDone ? "bg-emerald-600 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{isDone ? "✓ " + copy.complete : "○ " + copy.mark}</button>
+      </div>
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+        <div>
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.tags}</div>
+          <div className="mt-2 flex flex-wrap gap-2">{unit.tags.map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-600">{tag}</span>)}</div>
+        </div>
+        <div>
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.deliverables}</div>
+          <div className="mt-2 flex flex-wrap gap-2">{unit.products.map(product => <span key={product} className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{product}</span>)}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DRDProductCard({ product }) {
+  return (
+    <article className="rounded-3xl border border-stone-200 bg-stone-50 p-5 shadow-sm">
+      <h3 className="text-lg font-black text-stone-950">{product.title}</h3>
+      <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{product.desc}</p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {product.tags.map(tag => <span key={tag} className="rounded-full bg-white px-3 py-1 text-xs font-black text-stone-600 shadow-sm">{tag}</span>)}
+      </div>
+    </article>
+  );
 }
 
 function AMLBApp({ t, hash }) {
@@ -1406,7 +1861,7 @@ function App() {
   const dir = LANGS.find(x => x.code === lang)?.dir || "ltr";
   const setLang = (next) => { localStorage.setItem("studyhub_lang", next); localStorage.setItem("phylo_lang", next); setLangState(next); };
   useEffect(() => { document.documentElement.lang = lang; document.documentElement.dir = dir; }, [lang, dir]);
-  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={lang} setLang={setLang} mode={mode} t={t}/>{mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={lang} hash={hash}/> : <HubApp t={t}/>}</div>;
+  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={lang} setLang={setLang} mode={mode} t={t}/>{mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={lang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={lang} hash={hash}/> : <HubApp t={t}/>}</div>;
 }
 
 createRoot(document.getElementById("root")).render(<App />);

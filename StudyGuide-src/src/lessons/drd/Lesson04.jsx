@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import module2OverviewVisual from "../../assets/drd/lesson04/module2-overview.png";
 import reportRequirementsVisual from "../../assets/drd/lesson04/report-requirements.png";
+import reportDeadlineVisual from "../../assets/drd/lesson04/report-deadline.png";
+import rVsPythonVisual from "../../assets/drd/lesson04/r-vs-python.png";
 import whyRVisual from "../../assets/drd/lesson04/why-r.png";
+import whyNotRVisual from "../../assets/drd/lesson04/why-not-r.png";
 import functionsPackagesVisual from "../../assets/drd/lesson04/functions-packages.png";
 import repositoriesVisual from "../../assets/drd/lesson04/repositories.png";
 import rstudioInterfaceVisual from "../../assets/drd/lesson04/rstudio-interface.png";
+import rbaseConsoleVisual from "../../assets/drd/lesson04/rbase-console.png";
 import workspaceDirectoryVisual from "../../assets/drd/lesson04/workspace-directory.png";
 import objectsDataTypesVisual from "../../assets/drd/lesson04/objects-data-types.png";
+import dataTypesVisual from "../../assets/drd/lesson04/data-types.png";
 import factorsLevelsVisual from "../../assets/drd/lesson04/factors-levels.png";
 import operatorsSubsettingVisual from "../../assets/drd/lesson04/operators-subsetting.png";
 import sampleSheetVisual from "../../assets/drd/lesson04/sample-sheet.png";
+import accessorsVisual from "../../assets/drd/lesson04/accessors.png";
 import exploratoryFunctionsVisual from "../../assets/drd/lesson04/exploratory-functions.png";
 import orderingFunctionVisual from "../../assets/drd/lesson04/ordering-function.png";
 
@@ -18,19 +24,25 @@ const TRANSCRIPT_URL = "https://docs.google.com/document/d/1I6CzjnJ7O4F6oJ_46aow
 const CLASS_RECORDING_URL = "https://www.youtube.com/watch?v=XmowKzBBqx8&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=4";
 
 const IMG = {
-  module2Overview: { src: module2OverviewVisual, slide: 1 },
-  reportRequirements: { src: reportRequirementsVisual, slide: 4 },
-  whyR: { src: whyRVisual, slide: 8 },
+  module2Overview: { src: module2OverviewVisual, slide: 2 },
+  reportRequirements: { src: reportRequirementsVisual, slide: 3 },
+  reportDeadline: { src: reportDeadlineVisual, slide: 4 },
+  rVsPython: { src: rVsPythonVisual, slide: 5 },
+  whyR: { src: whyRVisual, slide: 6 },
+  whyNotR: { src: whyNotRVisual, slide: 7 },
   functionsPackages: { src: functionsPackagesVisual, slide: 9 },
   repositories: { src: repositoriesVisual, slide: 10 },
-  rstudioInterface: { src: rstudioInterfaceVisual, slide: 11 },
-  workspaceDirectory: { src: workspaceDirectoryVisual, slide: 12 },
-  objectsDataTypes: { src: objectsDataTypesVisual, slide: 13 },
-  factorsLevels: { src: factorsLevelsVisual, slide: 15 },
-  operatorsSubsetting: { src: operatorsSubsettingVisual, slide: 16 },
+  rbaseConsole: { src: rbaseConsoleVisual, slide: 11 },
+  rstudioInterface: { src: rstudioInterfaceVisual, slide: 12 },
+  workspaceDirectory: { src: workspaceDirectoryVisual, slide: 13 },
+  objectsDataTypes: { src: objectsDataTypesVisual, slide: 14 },
+  dataTypes: { src: dataTypesVisual, slide: 15 },
+  factorsLevels: { src: factorsLevelsVisual, slide: 16 },
+  operatorsSubsetting: { src: operatorsSubsettingVisual, slide: 17 },
+  accessors: { src: accessorsVisual, slide: 18 },
   sampleSheet: { src: sampleSheetVisual, slide: 18 },
-  exploratoryFunctions: { src: exploratoryFunctionsVisual, slide: 17 },
-  orderingFunction: { src: orderingFunctionVisual, slide: 20 }
+  exploratoryFunctions: { src: exploratoryFunctionsVisual, slide: 19 },
+  orderingFunction: { src: orderingFunctionVisual, slide: 19 }
 };
 
 const COPY = {
@@ -93,7 +105,8 @@ const COPY = {
         },
         slides: [
           { key: "module2Overview", title: "Theory + tutorial + practice", body: "The lecture roadmap is practical: understand the workflow, then run R code, then apply it to the report." },
-          { key: "reportRequirements", title: "Team report deliverable", body: "The assessment is a group report with data analysis, code, comments and a final PDF/HTML output." }
+          { key: "reportRequirements", title: "Team report deliverable", body: "The assessment is a group report with data analysis, code, comments and a final PDF/HTML output." },
+          { key: "reportDeadline", title: "Deadline rule", body: "The report is due one day before the exam date, so reproducibility and final export have to be planned in advance." }
         ]
       },
       {
@@ -108,7 +121,9 @@ const COPY = {
           model: "In the report, R should be described as the analysis environment and the relevant packages should be named. A package is a collection of functions and data designed for a specific task. CRAN provides general R packages, while Bioconductor focuses on high-throughput genomic data. Downloading or installing a package is not enough: it must be loaded into the working environment with library(). For methylation arrays, packages such as minfi provide functions to import, preprocess and analyze Illumina methylation data."
         },
         slides: [
+          { key: "rVsPython", title: "R vs Python is not the point", body: "The lecture uses the R/Python comparison to frame R as the practical language selected for this methylation-array pipeline." },
           { key: "whyR", title: "Why R?", body: "R is flexible for omics data, statistical analysis and publication-quality plots, but it requires careful pipeline choices." },
+          { key: "whyNotR", title: "Why not R?", body: "The professor also stresses the limitations: R will not choose the correct package or pipeline for you." },
           { key: "functionsPackages", title: "Functions and packages", body: "Function syntax and package loading are basic vocabulary for every later pipeline step." },
           { key: "repositories", title: "Where packages come from", body: "CRAN and Bioconductor are the two repositories emphasized for this course." }
         ]
@@ -125,6 +140,7 @@ const COPY = {
           model: "A reproducible R script should not depend on hidden objects already present in the workspace. The workspace contains objects created during the session, so old objects can accidentally affect the analysis. For this reason, scripts often start by cleaning objects with rm(list = ls()), loading the needed packages, and setting or documenting the working directory. sessionInfo() is useful because it records the R version, operating system and loaded packages. These steps make it easier for another person to reproduce the pipeline and verify that the code matches the report."
         },
         slides: [
+          { key: "rbaseConsole", title: "Console plus script editor", body: "The course recommends writing code in a script/editor and running it into the console instead of working only interactively." },
           { key: "rstudioInterface", title: "RStudio panes", body: "Editor, console, environment and accessory tabs are the practical interface for the course." },
           { key: "workspaceDirectory", title: "Workspace + working directory", body: "Objects live in the workspace; files are read from and written to the working directory unless a full path is provided." }
         ]
@@ -141,7 +157,8 @@ const COPY = {
           model: "Data types matter because R functions behave differently depending on the object type. Metadata are usually stored as data frames, where each row is a sample and each column is a variable. Numeric variables such as age should remain numeric, while categorical variables such as diagnosis, treatment group or sex should often be factors. Vectors store one data type, so mixing characters and numbers can force numbers to become characters. If the type is wrong, subsetting, plotting and modeling can give misleading results."
         },
         slides: [
-          { key: "objectsDataTypes", title: "Objects and data types", body: "This visual groups the vocabulary needed before manipulating any SampleSheet or methylation object." }
+          { key: "objectsDataTypes", title: "R objects", body: "Object naming, assignment with <- and case sensitivity are the first source of many beginner errors." },
+          { key: "dataTypes", title: "R data types", body: "This slide groups the vocabulary needed before manipulating any SampleSheet or methylation object." }
         ]
       },
       {
@@ -171,10 +188,9 @@ const COPY = {
           model: "The SampleSheet is the metadata table that links each sample to its biological and technical variables. It can be imported as a data frame using read.table(), specifying the separator and whether the file has a header. Before any analysis, it should be inspected with dim(), head(), str(), summary() and table() to confirm the number of samples, column names, variable types, missing values and group distribution. Then subsetting can use logical operators and metadata columns, for example to select samples older than a threshold or to compare diagnosis groups."
         },
         slides: [
-          { key: "operatorsSubsetting", title: "Operators and subsetting", body: "Logical operators produce TRUE/FALSE outputs that can be used to select rows or elements." },
-          { key: "sampleSheet", title: "SampleSheet data frame", body: "The SampleSheet is the practical bridge from biological design to R code." },
-          { key: "exploratoryFunctions", title: "Explore first", body: "These commands are the first QC layer for metadata before any methylation pipeline step." },
-          { key: "orderingFunction", title: "Ordering rows", body: "order() returns positions; combine it with brackets to rearrange the data frame." }
+          { key: "operatorsSubsetting", title: "Operators", body: "Logical operators produce TRUE/FALSE outputs that can be used to select rows or elements." },
+          { key: "accessors", title: "Accessors and subsetting", body: "Square brackets, double brackets and the dollar sign are the syntax you need to extract data from vectors, lists and data frames." },
+          { key: "exploratoryFunctions", title: "Explore first", body: "These commands are the first QC layer for metadata before any methylation pipeline step." }
         ]
       }
     ],
@@ -269,7 +285,7 @@ const COPY = {
     open: "باز کردن",
     zoom: "برای بزرگ‌نمایی کلیک کن",
     close: "بستن بزرگ‌نمایی",
-    visualLabel: "تصویر راهنما بر اساس اسلاید",
+    visualLabel: "اسلاید منبع",
     professor: "تأکید استاد",
     exam: "نکتهٔ report",
     examMore: "باز کردن پاسخ کامل‌تر",

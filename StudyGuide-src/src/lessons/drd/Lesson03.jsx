@@ -585,6 +585,183 @@ function KeyConcepts({ copy }) {
   return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="Glossary" title="Key concepts / Conceptos clave">{copy.heroSubtitle}</SectionHeader><div className="grid gap-3 md:grid-cols-2">{copy.keyConcepts.map(([term, definition]) => <article key={term} className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><h3 className="text-lg font-black text-stone-950">{term}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{definition}</p></article>)}</div></section>;
 }
 
+
+function getInteractiveCopy(copy) {
+  const isFa = String(copy.current || "").includes("درس");
+  const isEn = String(copy.current || "").includes("Lesson");
+  if (isFa) return {
+    eyebrow: "تمرین‌های تعاملی",
+    title: "لایهٔ آموزشی اضافه برای Affymetrix",
+    intro: "این بخش چیزی فراتر از اسلایدهاست: مفاهیمی را که در امتحان ممکن است به‌صورت مقایسه، workflow یا تفسیر داده بیایند، به‌صورت تمرین فعال مرور می‌کند.",
+    pmTitle: "PM/MM simulator",
+    pmIntro: "Perfect Match باید سیگنال هدف را نشان دهد؛ Mismatch قرار بود background را تخمین بزند، اما در عمل گاهی از PM قوی‌تر می‌شود.",
+    pm: "Perfect Match",
+    mm: "Mismatch",
+    specific: "PM − MM",
+    pmGood: "PM بزرگ‌تر از MM است؛ این حالت با انتظار اولیه سازگار است.",
+    pmBad: "هشدار: MM از PM بزرگ‌تر است. این همان trap مهم درس است و نشان می‌دهد چرا MM correction قابل اعتماد نبود.",
+    fileTitle: "DAT → CEL → CDF → CHP workflow",
+    fileIntro: "روی هر فایل کلیک کن تا ببینی در workflow Affymetrix چه نقشی دارد.",
+    files: [
+      ["DAT", "تصویر خام scanner؛ هنوز grid و feature intensity قابل استفاده برای تحلیل ندارد."],
+      ["CEL", "فایل کلیدی برای reanalysis؛ intensity پردازش‌شدهٔ featureها بعد از image processing."],
+      ["CDF", "Chip Definition File؛ نقشه‌ای که می‌گوید هر feature به کدام probe و probe set تعلق دارد."],
+      ["CHP", "خروجی downstream یا summarized report؛ برای بازتحلیل معمولاً CEL مهم‌تر است."]
+    ],
+    rmaTitle: "RMA mini-lab",
+    rmaIntro: "RMA را به‌عنوان سه کار جدا بخوان: background correction، quantile normalization و summarization.",
+    rmaSteps: [
+      ["1", "Background correction", "شدت خام شامل سیگنال واقعی و background است. قبل از تفسیر باید background correction انجام شود."],
+      ["2", "Quantile normalization", "توزیع intensity در arrays مختلف هم‌شکل می‌شود تا chipها قابل مقایسه باشند."],
+      ["3", "Summarization", "چند probe از یک probe set به یک مقدار expression برای transcript خلاصه می‌شوند."],
+    ],
+    qnTitle: "Quantile normalization toy example",
+    qnIntro: "مقادیر هر array مرتب می‌شوند، رتبه‌های مشابه average می‌گیرند، سپس مقدار متوسط به رتبهٔ اصلی برگردانده می‌شود.",
+    qcTitle: "QC checklist",
+    qcIntro: "مواردی را که قبل از اعتماد به CEL/RMA باید بررسی شوند علامت بزن.",
+    qcItems: ["grid alignment درست است", "featureها اشباع یا مخدوش نیستند", "control probes رفتار قابل انتظار دارند", "boxplot/MA-plot بعد از RMA متعادل‌تر است"],
+    decisionTitle: "Competitive vs noncompetitive quick sorter",
+    decisionIntro: "هر سناریو را به platform درست وصل کن.",
+    scenarios: [
+      { prompt: "دو sample روی یک array با Cy3/Cy5", answer: "Competitive", why: "این همان منطق Stanford two-colour است." },
+      { prompt: "یک sample در هر GeneChip و مقایسه بین chipها", answer: "Noncompetitive", why: "این منطق Affymetrix one-colour است." },
+      { prompt: "مشکل اصلی: dye bias", answer: "Competitive", why: "bias بین fluorochromeها مخصوص two-colour است." },
+      { prompt: "مشکل اصلی: بین chips normalization و summarization", answer: "Noncompetitive", why: "Affymetrix به RMA و comparability بین arrays نیاز دارد." }
+    ],
+    choose: "انتخاب کن",
+    correct: "درست",
+    review: "مرور کن",
+    takeHome: "Take-home",
+    takeHomeText: "برای امتحان، Affymetrix را فقط به‌عنوان ‘one-colour’ تعریف نکن؛ workflow کامل را بگو: chip fabrication → target preparation → scan → DAT/CEL/CDF → QC → RMA → GEO/MIAME."
+  };
+  if (isEn) return {
+    eyebrow: "Interactive study labs",
+    title: "Extra teaching layer for Affymetrix",
+    intro: "This section goes beyond the slides: it turns the main exam-relevant concepts into active practice, so you can explain the workflow instead of just recognizing the figures.",
+    pmTitle: "PM/MM simulator",
+    pmIntro: "Perfect Match should capture target signal; Mismatch was intended to estimate background, but in real arrays it could be stronger than PM.",
+    pm: "Perfect Match",
+    mm: "Mismatch",
+    specific: "PM − MM",
+    pmGood: "PM is higher than MM, which matches the original expectation.",
+    pmBad: "Warning: MM is higher than PM. This is the key trap from the lecture and explains why MM correction was unreliable.",
+    fileTitle: "DAT → CEL → CDF → CHP workflow",
+    fileIntro: "Click each file type to review its role in the Affymetrix workflow.",
+    files: [
+      ["DAT", "Raw scanner image; not yet a feature-intensity table for analysis."],
+      ["CEL", "Key reanalysis file; processed feature-level intensities after image processing."],
+      ["CDF", "Chip Definition File; maps each feature to its probe and probe set."],
+      ["CHP", "Downstream summarized report; CEL is usually more important for reanalysis."]
+    ],
+    rmaTitle: "RMA mini-lab",
+    rmaIntro: "Study RMA as three different jobs: background correction, quantile normalization and summarization.",
+    rmaSteps: [
+      ["1", "Background correction", "Raw intensities include true signal plus background. Correction is needed before interpretation."],
+      ["2", "Quantile normalization", "The intensity distribution is made comparable across arrays, so chips can be compared."],
+      ["3", "Summarization", "Multiple probes from the same probe set are condensed into one expression value."],
+    ],
+    qnTitle: "Quantile normalization toy example",
+    qnIntro: "Values are sorted within each array, values with the same rank are averaged, and the averaged ranks are mapped back to the original order.",
+    qcTitle: "QC checklist",
+    qcIntro: "Check what you should inspect before trusting CEL/RMA values.",
+    qcItems: ["grid alignment is correct", "features are not saturated or damaged", "control probes behave as expected", "boxplot/MA-plot improves after RMA"],
+    decisionTitle: "Competitive vs noncompetitive quick sorter",
+    decisionIntro: "Assign each scenario to the correct platform logic.",
+    scenarios: [
+      { prompt: "two samples on one array with Cy3/Cy5", answer: "Competitive", why: "That is the Stanford two-colour logic." },
+      { prompt: "one sample per GeneChip and comparison across chips", answer: "Noncompetitive", why: "That is the Affymetrix one-colour logic." },
+      { prompt: "main issue: dye bias", answer: "Competitive", why: "Fluorochrome bias is specific to two-colour arrays." },
+      { prompt: "main issue: between-chip normalization and summarization", answer: "Noncompetitive", why: "Affymetrix requires RMA and array comparability." }
+    ],
+    choose: "Choose",
+    correct: "Correct",
+    review: "Review",
+    takeHome: "Take-home",
+    takeHomeText: "For the exam, do not define Affymetrix only as ‘one-colour’; explain the complete workflow: chip fabrication → target preparation → scan → DAT/CEL/CDF → QC → RMA → GEO/MIAME."
+  };
+  return {
+    eyebrow: "Laboratorios interactivos",
+    title: "Capa didáctica extra para Affymetrix",
+    intro: "Esta sección va más allá de las diapositivas: convierte los conceptos más preguntables en práctica activa, para que puedas explicar el workflow y no solo reconocer las figuras.",
+    pmTitle: "Simulador PM/MM",
+    pmIntro: "Perfect Match debería capturar la señal del target; Mismatch buscaba estimar background, pero en arrays reales podía ser más intenso que PM.",
+    pm: "Perfect Match",
+    mm: "Mismatch",
+    specific: "PM − MM",
+    pmGood: "PM es mayor que MM, lo cual coincide con la expectativa original.",
+    pmBad: "Alerta: MM es mayor que PM. Esta es la trampa clave de la clase y explica por qué la corrección con MM no era fiable.",
+    fileTitle: "Workflow DAT → CEL → CDF → CHP",
+    fileIntro: "Haz clic en cada tipo de archivo para repasar su papel en el workflow Affymetrix.",
+    files: [
+      ["DAT", "Imagen cruda del scanner; todavía no es una tabla de intensidades por feature lista para analizar."],
+      ["CEL", "Archivo clave para reanálisis; contiene intensidades procesadas por feature después del procesamiento de imagen."],
+      ["CDF", "Chip Definition File; mapea cada feature a su probe y probe set."],
+      ["CHP", "Reporte downstream o resumido; para reanálisis suele ser más importante el CEL."],
+    ],
+    rmaTitle: "Mini-lab de RMA",
+    rmaIntro: "Estudia RMA como tres trabajos distintos: background correction, quantile normalization y summarization.",
+    rmaSteps: [
+      ["1", "Background correction", "Las intensidades crudas incluyen señal verdadera más background. Hay que corregir antes de interpretar."],
+      ["2", "Quantile normalization", "La distribución de intensidad se hace comparable entre arrays, para que los chips puedan compararse."],
+      ["3", "Summarization", "Varios probes del mismo probe set se condensan en un único valor de expresión."],
+    ],
+    qnTitle: "Ejemplo juguete de quantile normalization",
+    qnIntro: "Se ordenan los valores dentro de cada array, se promedian los valores con el mismo rango y luego esos promedios se devuelven al orden original.",
+    qcTitle: "Checklist de QC",
+    qcIntro: "Marca qué deberías inspeccionar antes de confiar en los valores CEL/RMA.",
+    qcItems: ["grid alignment correcto", "features no saturadas ni dañadas", "control probes con comportamiento esperado", "boxplot/MA-plot mejora después de RMA"],
+    decisionTitle: "Clasificador rápido: competitive vs noncompetitive",
+    decisionIntro: "Asigna cada escenario a la lógica de plataforma correcta.",
+    scenarios: [
+      { prompt: "dos muestras en un array con Cy3/Cy5", answer: "Competitive", why: "Esa es la lógica Stanford two-colour." },
+      { prompt: "una muestra por GeneChip y comparación entre chips", answer: "Noncompetitive", why: "Esa es la lógica Affymetrix one-colour." },
+      { prompt: "problema principal: dye bias", answer: "Competitive", why: "El sesgo de fluoróforos es propio de los arrays two-colour." },
+      { prompt: "problema principal: normalización entre chips y summarization", answer: "Noncompetitive", why: "Affymetrix requiere RMA y comparabilidad entre arrays." }
+    ],
+    choose: "Elige",
+    correct: "Correcto",
+    review: "Revisar",
+    takeHome: "Take-home",
+    takeHomeText: "Para el examen, no definas Affymetrix solo como ‘one-colour’; explica el workflow completo: fabricación del chip → preparación del target → escaneo → DAT/CEL/CDF → QC → RMA → GEO/MIAME."
+  };
+}
+
+function PMMMSimulator({ lab }) {
+  const [pm, setPm] = useState(680);
+  const [mm, setMm] = useState(420);
+  const diff = pm - mm;
+  const max = Math.max(pm, mm, 1);
+  return <article className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm"><div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between"><div><h3 className="text-2xl font-black text-stone-950">{lab.pmTitle}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{lab.pmIntro}</p></div><Pill tone={diff >= 0 ? "emerald" : "amber"}>{lab.specific}: {diff}</Pill></div><div className="mt-5 grid gap-4 md:grid-cols-2"><label className="rounded-2xl border border-stone-200 bg-stone-50 p-4 text-sm font-black text-stone-700">{lab.pm}<input type="range" min="100" max="1200" value={pm} onChange={e => setPm(Number(e.target.value))} className="mt-3 w-full"/><span className="mt-2 block text-2xl text-stone-950">{pm}</span></label><label className="rounded-2xl border border-stone-200 bg-stone-50 p-4 text-sm font-black text-stone-700">{lab.mm}<input type="range" min="100" max="1200" value={mm} onChange={e => setMm(Number(e.target.value))} className="mt-3 w-full"/><span className="mt-2 block text-2xl text-stone-950">{mm}</span></label></div><div className="mt-5 rounded-2xl border border-stone-200 bg-stone-50 p-4"><div className="grid gap-3"><div className="h-5 overflow-hidden rounded-full bg-white"><div className="h-full rounded-full bg-red-600" style={{ width: `${Math.max(8, (pm / max) * 100)}%` }} /></div><div className="h-5 overflow-hidden rounded-full bg-white"><div className="h-full rounded-full bg-amber-500" style={{ width: `${Math.max(8, (mm / max) * 100)}%` }} /></div></div><p className={cn("mt-4 text-sm font-black leading-6", diff >= 0 ? "text-emerald-800" : "text-amber-900")}>{diff >= 0 ? lab.pmGood : lab.pmBad}</p></div></article>;
+}
+
+function FileWorkflowLab({ lab }) {
+  const [active, setActive] = useState(1);
+  const item = lab.files[active];
+  return <article className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm"><h3 className="text-2xl font-black text-stone-950">{lab.fileTitle}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{lab.fileIntro}</p><div className="mt-5 flex flex-wrap gap-2">{lab.files.map(([name], idx) => <button key={name} onClick={() => setActive(idx)} className={cn("rounded-full border px-4 py-2 text-sm font-black transition", active === idx ? "border-red-200 bg-red-600 text-white shadow-sm" : "border-stone-200 bg-stone-50 text-stone-700 hover:bg-white")}>{name}</button>)}</div><div className="mt-5 rounded-3xl border border-red-100 bg-red-50 p-5"><div className="text-4xl font-black text-red-700">{item[0]}</div><p className="mt-2 text-sm font-bold leading-7 text-red-950">{item[1]}</p></div></article>;
+}
+
+function RMAMiniLab({ lab }) {
+  const [active, setActive] = useState(0);
+  const step = lab.rmaSteps[active];
+  const ranks = [[4, 8, 15], [5, 10, 20], [3, 11, 30]];
+  const averaged = ranks[0].map((_, i) => (ranks.reduce((s, arr) => s + arr[i], 0) / ranks.length).toFixed(1));
+  return <article className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm lg:col-span-2"><div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]"><div><h3 className="text-2xl font-black text-stone-950">{lab.rmaTitle}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{lab.rmaIntro}</p><div className="mt-5 grid gap-2">{lab.rmaSteps.map((s, idx) => <button key={s[1]} onClick={() => setActive(idx)} className={cn("rounded-2xl border px-4 py-3 text-left transition", active === idx ? "border-red-200 bg-red-50 shadow-sm" : "border-stone-200 bg-stone-50 hover:bg-white")}><div className="text-xs font-black uppercase tracking-[0.16em] text-red-700">Step {s[0]}</div><div className="mt-1 text-base font-black text-stone-950">{s[1]}</div></button>)}</div></div><div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><Pill tone="red">Step {step[0]}</Pill><h4 className="mt-3 text-2xl font-black text-stone-950">{step[1]}</h4><p className="mt-2 text-sm font-bold leading-7 text-stone-600">{step[2]}</p><div className="mt-5 rounded-2xl bg-white p-4"><div className="text-sm font-black text-stone-950">{lab.qnTitle}</div><p className="mt-1 text-xs font-semibold leading-5 text-stone-500">{lab.qnIntro}</p><div className="mt-3 overflow-hidden rounded-xl border border-stone-200 text-center text-xs font-black"><div className="grid grid-cols-4 bg-stone-100"><span className="p-2">Rank</span><span className="p-2">A1</span><span className="p-2">A2</span><span className="p-2">Avg</span></div>{averaged.map((avg, idx) => <div key={idx} className="grid grid-cols-4 border-t border-stone-200"><span className="p-2">{idx + 1}</span><span className="p-2">{ranks[0][idx]}</span><span className="p-2">{ranks[1][idx]}</span><span className="p-2 text-red-700">{avg}</span></div>)}</div></div></div></div></article>;
+}
+
+function QCDecisionLabs({ lab }) {
+  const [checked, setChecked] = useState({});
+  const [answers, setAnswers] = useState({});
+  const total = lab.qcItems.length;
+  const done = Object.values(checked).filter(Boolean).length;
+  const options = ["Competitive", "Noncompetitive"];
+  return <><article className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm"><div className="flex items-start justify-between gap-3"><div><h3 className="text-2xl font-black text-stone-950">{lab.qcTitle}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{lab.qcIntro}</p></div><Pill tone={done === total ? "emerald" : "amber"}>{done}/{total}</Pill></div><div className="mt-5 grid gap-2">{lab.qcItems.map((item, idx) => <button key={item} onClick={() => setChecked({ ...checked, [idx]: !checked[idx] })} className={cn("rounded-2xl border px-4 py-3 text-left text-sm font-black transition", checked[idx] ? "border-emerald-300 bg-emerald-50 text-emerald-900" : "border-stone-200 bg-stone-50 text-stone-700 hover:bg-white")}><span className="me-2">{checked[idx] ? "✓" : "□"}</span>{item}</button>)}</div></article><article className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm"><h3 className="text-2xl font-black text-stone-950">{lab.decisionTitle}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{lab.decisionIntro}</p><div className="mt-5 grid gap-3">{lab.scenarios.map((sc, idx) => { const selected = answers[idx]; const answered = Boolean(selected); const correct = selected === sc.answer; return <div key={sc.prompt} className="rounded-2xl border border-stone-200 bg-stone-50 p-4"><div className="text-sm font-black text-stone-950">{sc.prompt}</div><div className="mt-3 flex flex-wrap gap-2">{options.map(option => <button key={option} onClick={() => setAnswers({ ...answers, [idx]: option })} className={cn("rounded-full border px-3 py-1.5 text-xs font-black transition", selected === option ? correct ? "border-emerald-300 bg-emerald-50 text-emerald-900" : "border-amber-300 bg-amber-50 text-amber-900" : "border-stone-200 bg-white text-stone-700 hover:bg-stone-100")}>{option}</button>)}</div>{answered && <p className={cn("mt-2 text-xs font-bold leading-5", correct ? "text-emerald-800" : "text-amber-900")}>{correct ? lab.correct : lab.review}: {sc.why}</p>}</div>; })}</div></article></>;
+}
+
+function InteractiveLabs({ copy }) {
+  const lab = getInteractiveCopy(copy);
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={lab.eyebrow} title={lab.title}>{lab.intro}</SectionHeader><div className="grid gap-5 lg:grid-cols-2"><PMMMSimulator lab={lab}/><FileWorkflowLab lab={lab}/><RMAMiniLab lab={lab}/><QCDecisionLabs lab={lab}/></div><div className="mt-5 rounded-[1.75rem] border border-red-200 bg-red-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{lab.takeHome}</div><p className="mt-2 text-sm font-black leading-7 text-red-950">{lab.takeHomeText}</p></div></section>;
+}
+
 function Quiz({ copy }) {
   const [answers, setAnswers] = useState({});
   const score = copy.quiz.reduce((sum, q, idx) => sum + (answers[idx] === q.answer ? 1 : 0), 0);
@@ -600,5 +777,5 @@ function WrittenTrainer({ copy }) {
 export default function DRDLesson03({ lang = "es", isDone = false, toggle = () => {} }) {
   const copy = useMemo(() => getCopy(lang), [lang]);
   const [zoom, setZoom] = useState(null);
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav copy={copy} isDone={isDone} toggle={toggle}/><Hero copy={copy}/>{copy.sections.map(section => <LessonSection key={section.eyebrow} section={section} copy={copy} onZoom={setZoom}/>) }<KeyConcepts copy={copy}/><Quiz copy={copy}/><WrittenTrainer copy={copy}/><LessonNav copy={copy} isDone={isDone} toggle={toggle} position="bottom"/><ZoomModal item={zoom} copy={copy} onClose={() => setZoom(null)}/></main>;
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav copy={copy} isDone={isDone} toggle={toggle}/><Hero copy={copy}/>{copy.sections.map(section => <LessonSection key={section.eyebrow} section={section} copy={copy} onZoom={setZoom}/>) }<KeyConcepts copy={copy}/><InteractiveLabs copy={copy}/><Quiz copy={copy}/><WrittenTrainer copy={copy}/><LessonNav copy={copy} isDone={isDone} toggle={toggle} position="bottom"/><ZoomModal item={zoom} copy={copy} onClose={() => setZoom(null)}/></main>;
 }

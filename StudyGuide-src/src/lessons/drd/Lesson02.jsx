@@ -1,8 +1,53 @@
 import React, { useMemo, useState } from "react";
+import workflowSlide from "../../assets/drd/lesson02/competitive-workflow.jpg";
+import mergedScanSlide from "../../assets/drd/lesson02/merged-scan.jpg";
+import maPlotSlide from "../../assets/drd/lesson02/ma-plot.jpg";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1dZoiMM4jpg6J_1Ty_Pwd-kiInbBZS2nX/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1JLwo7lsvMAB2sCSC2wfyHYyh9wQWUoDoO9QYqnfvLoM/edit?usp=drivesdk";
 const CLASS_RECORDING_URL = "https://www.youtube.com/watch?v=UqIn_t1T_RU&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=2";
+
+const LESSON2_SLIDES = [
+  { src: workflowSlide, slide: 11 },
+  { src: mergedScanSlide, slide: 15 },
+  { src: maPlotSlide, slide: 33 }
+];
+
+const LESSON2_SLIDE_COPY = {
+  en: {
+    eyebrow: "Slide snapshots",
+    title: "Original lecture images for the Stanford array workflow",
+    intro: "These images from the real slides make the platform easier to visualize: the lab workflow, the merged scan and the MA-plot logic used downstream.",
+    open: "Open slides PDF",
+    figures: [
+      { title: "The competitive workflow on one slide", body: "This diagram shows the full logic: label the two samples separately, mix them, hybridize them on the same array and read relative abundance from shared probes." },
+      { title: "How the merged Cy3/Cy5 scan looks", body: "The overlaid image turns raw fluorescence into an intuitive signal: greener spots favour Cy3, redder spots favour Cy5 and yellow suggests similar abundance." },
+      { title: "MA-plot as the bridge to normalization", body: "The slide formalizes M and A so students can see why raw intensities are transformed into log-ratios before assessing bias and performing normalization." }
+    ]
+  },
+  es: {
+    eyebrow: "Imágenes de las diapositivas",
+    title: "Capturas originales para entender el workflow Stanford",
+    intro: "Estas imágenes de las slides reales hacen más visual la plataforma: el flujo experimental, el escaneo fusionado y la lógica del MA-plot que se usa después.",
+    open: "Abrir PDF de slides",
+    figures: [
+      { title: "El workflow competitivo resumido en una slide", body: "Este esquema muestra toda la lógica: marcar por separado las dos muestras, mezclarlas, hibridarlas sobre el mismo array y leer la abundancia relativa usando probes compartidos." },
+      { title: "Cómo se ve el escaneo fusionado Cy3/Cy5", body: "La imagen superpuesta convierte la fluorescencia cruda en una señal intuitiva: los spots verdosos favorecen Cy3, los rojizos favorecen Cy5 y el amarillo sugiere abundancia similar." },
+      { title: "El MA-plot como puente hacia la normalización", body: "La slide formaliza M y A para que se vea por qué las intensidades crudas se transforman en log-ratios antes de evaluar sesgos y aplicar la normalización." }
+    ]
+  },
+  fa: {
+    eyebrow: "تصاویر اسلایدها",
+    title: "تصاویر اصلی برای فهم workflow آرایهٔ Stanford",
+    intro: "این تصاویر از اسلایدهای واقعی، پلتفرم را دیداری‌تر می‌کنند: workflow آزمایشگاهی، تصویر اسکن ادغام‌شده و منطق MA-plot که در ادامه استفاده می‌شود.",
+    open: "باز کردن PDF اسلایدها",
+    figures: [
+      { title: "workflow رقابتی در یک اسلاید", body: "این نمودار کل منطق را نشان می‌دهد: دو نمونه جداگانه label می‌شوند، با هم مخلوط می‌شوند، روی یک آرایه hybridize می‌شوند و abundance نسبی از probeهای مشترک خوانده می‌شود." },
+      { title: "ظاهر اسکن ادغام‌شدهٔ Cy3/Cy5", body: "تصویر روی‌هم‌افتاده fluorescence خام را به یک سیگنال شهودی تبدیل می‌کند: spotهای سبزتر به نفع Cy3 هستند، spotهای قرمزتر به نفع Cy5 و زرد یعنی abundance تقریباً مشابه." },
+      { title: "MA-plot به‌عنوان پلِ نرمال‌سازی", body: "این اسلاید M و A را رسمی می‌کند تا روشن شود چرا intensityهای خام پیش از بررسی bias و انجام نرمال‌سازی به log-ratio تبدیل می‌شوند." }
+    ]
+  }
+};
 
 const COPY = {
   en: {
@@ -237,6 +282,11 @@ function LessonNav({ lang = "es", position = "top", isDone = false, toggle = () 
   const nav = NAV[lang] || NAV.es;
   return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m1-foundations" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {nav.previous}: {nav.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{nav.current} · {nav.dashboard}</a><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? copy.done : copy.mark}</button></div><a href="#/lesson/m1-affy" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-md">{nav.next}: {nav.nextTitle} →</a></div></nav>;
 }
+function SlideVisualNotes({ lang = "es" }) {
+  const local = LESSON2_SLIDE_COPY[lang] || LESSON2_SLIDE_COPY.es;
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"><SectionHeader eyebrow={local.eyebrow} title={local.title}>{local.intro}</SectionHeader><a href={SLIDES_URL} target="_blank" rel="noreferrer" className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-black text-red-800 transition hover:-translate-y-0.5 hover:bg-white">{local.open}</a></div><div className="grid gap-4 lg:grid-cols-3">{LESSON2_SLIDES.map((figure, idx) => { const item = local.figures[idx]; return <article key={figure.slide} className="overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm"><div className="aspect-[4/3] border-b border-stone-200 bg-white p-3"><img src={figure.src} alt={item.title} loading="lazy" className="h-full w-full rounded-2xl object-contain" /></div><div className="p-5"><Pill tone="red">Slide {figure.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{item.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p></div></article>; })}</div></section>;
+}
+
 function Workflow({ copy }) {
   const [active, setActive] = useState(0);
   return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.flowEyebrow} title={copy.flowTitle}>{copy.flowIntro}</SectionHeader><div className="grid gap-5 lg:grid-cols-[0.82fr_1.18fr]"><div className="space-y-2">{copy.flow.map(([title], idx) => <button key={title} onClick={() => setActive(idx)} className={`w-full rounded-2xl border p-4 text-left transition ${active === idx ? "border-red-200 bg-red-50 shadow-sm" : "border-stone-200 bg-stone-50 hover:bg-white"}`}><div className="flex items-center justify-between gap-3"><span className="text-sm font-black text-stone-950">{title}</span><span className="rounded-full bg-white px-2 py-1 text-xs font-black text-stone-500">{idx + 1}/{copy.flow.length}</span></div></button>)}</div><article className="rounded-[2rem] border border-stone-200 bg-stone-950 p-6 text-white"><div className="text-xs font-black uppercase tracking-[0.2em] text-red-200">{copy.activeStep}</div><h3 className="mt-3 text-3xl font-black tracking-tight">{copy.flow[active][0]}</h3><p className="mt-4 text-lg font-semibold leading-8 text-stone-200">{copy.flow[active][1]}</p><div className="mt-6 h-3 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-red-500 transition-all" style={{ width: `${((active + 1) / copy.flow.length) * 100}%` }} /></div></article></div></section>;
@@ -280,5 +330,5 @@ function ExamTrainer({ copy }) {
 }
 export default function DRDLesson02({ lang = "es", isDone = false, toggle = () => {} }) {
   const copy = getCopy(lang);
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav lang={lang} position="top" isDone={isDone} toggle={toggle} copy={copy}/><section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.eyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.title}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.subtitle}</p><div className="mt-6 flex flex-wrap gap-2">{copy.tags.map(tag => <Pill key={tag} tone={tag.includes("Cy") || tag.includes("dye") ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={copy.module} value="1" tone="red"/><StatCard label={copy.exam} value="4Q"/><StatCard label={copy.answer} value="10–12"/><StatCard label={copy.core} value="Cy3/Cy5" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{copy.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{copy.bigIdeaText}</p></div><ResourceLinks copy={copy}/></div></div></div></section><Workflow copy={copy}/><ConceptCards copy={copy}/><section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1fr]"><SignalInterpreter copy={copy}/><Checkpoint copy={copy}/></section><MAMiniLab copy={copy}/><section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1fr]"><NormalizationExercise copy={copy}/><DesignClarifier copy={copy}/></section><QuizBlock copy={copy}/><ExamTrainer copy={copy}/><LessonNav lang={lang} position="bottom" isDone={isDone} toggle={toggle} copy={copy}/></main>;
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav lang={lang} position="top" isDone={isDone} toggle={toggle} copy={copy}/><section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.eyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.title}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.subtitle}</p><div className="mt-6 flex flex-wrap gap-2">{copy.tags.map(tag => <Pill key={tag} tone={tag.includes("Cy") || tag.includes("dye") ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={copy.module} value="1" tone="red"/><StatCard label={copy.exam} value="4Q"/><StatCard label={copy.answer} value="10–12"/><StatCard label={copy.core} value="Cy3/Cy5" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{copy.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{copy.bigIdeaText}</p></div><ResourceLinks copy={copy}/></div></div></div></section><Workflow copy={copy}/><ConceptCards copy={copy}/><SlideVisualNotes lang={lang}/><section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1fr]"><SignalInterpreter copy={copy}/><Checkpoint copy={copy}/></section><MAMiniLab copy={copy}/><section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1fr]"><NormalizationExercise copy={copy}/><DesignClarifier copy={copy}/></section><QuizBlock copy={copy}/><ExamTrainer copy={copy}/><LessonNav lang={lang} position="bottom" isDone={isDone} toggle={toggle} copy={copy}/></main>;
 }

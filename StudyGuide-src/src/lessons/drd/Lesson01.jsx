@@ -1,8 +1,53 @@
 import React, { useMemo, useState } from "react";
+import biologicalQuestionSlide from "../../assets/drd/lesson01/biological-question.jpg";
+import omicsMapSlide from "../../assets/drd/lesson01/omics-map.jpg";
+import variabilityComparisonSlide from "../../assets/drd/lesson01/variability-comparison.jpg";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1F1UK7JpTC8Sm8arnNC9mfXnj8aLxbzqZ/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1kYvSq04ZeL3mt3GbLNdNwmaAqFImS8CgG70t_9NQWnA/edit?usp=drivesdk";
 const CLASS_RECORDING_URL = "https://www.youtube.com/watch?v=SQtYHrV1y-U&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=1";
+
+const LESSON1_SLIDES = [
+  { src: biologicalQuestionSlide, slide: 9 },
+  { src: omicsMapSlide, slide: 10 },
+  { src: variabilityComparisonSlide, slide: 41 }
+];
+
+const LESSON1_SLIDE_COPY = {
+  en: {
+    eyebrow: "Slide snapshots",
+    title: "Original lecture images that reinforce the ideas",
+    intro: "These three slide snapshots make the lecture logic more concrete: how to formulate the question, how to choose the omics layer, and how to visualize variability.",
+    open: "Open slides PDF",
+    figures: [
+      { title: "From topic to answerable biological question", body: "This slide condenses the lecture checklist: define the biological context, choose the right model and design, set the sample size, pick the ad hoc technique, and keep variability explicit." },
+      { title: "Omics is a menu, not the question itself", body: "The table helps students map a biological layer to the right technology. It is a good reminder that genomics, epigenomics, transcriptomics and proteomics answer different kinds of questions." },
+      { title: "Technical variability is smaller than donor-to-donor variability", body: "The chart makes the course message visual: replicate measurements of the same material should stay tight, while biological samples across different individuals are expected to spread more." }
+    ]
+  },
+  es: {
+    eyebrow: "Imágenes de las diapositivas",
+    title: "Capturas de la clase para reforzar las ideas clave",
+    intro: "Estas tres diapositivas insertadas ayudan a aterrizar mejor la lógica de la lección: cómo formular la pregunta, cómo elegir la capa ómica y cómo visualizar la variabilidad.",
+    open: "Abrir PDF de slides",
+    figures: [
+      { title: "De un tema amplio a una pregunta biológica respondible", body: "Esta slide resume el checklist de la clase: definir el contexto biológico, escoger el modelo y diseño correctos, fijar el tamaño muestral, usar la técnica ad hoc y mantener la variabilidad explícita." },
+      { title: "La ómica es el menú, no la pregunta en sí", body: "La tabla ayuda a relacionar cada capa biológica con la tecnología adecuada. Sirve para recordar que genómica, epigenómica, transcriptómica y proteómica responden preguntas diferentes." },
+      { title: "La variabilidad técnica debe ser menor que la variabilidad entre donantes", body: "La gráfica vuelve visual el mensaje central del curso: las mediciones repetidas del mismo material deben agruparse, mientras que las muestras biológicas de individuos distintos suelen mostrar una dispersión mayor." }
+    ]
+  },
+  fa: {
+    eyebrow: "تصاویر اسلایدها",
+    title: "تصاویر اصلی کلاس برای تقویت ایده‌های مهم",
+    intro: "این سه تصویر از اسلایدها منطق درس را ملموس‌تر می‌کنند: چگونه پرسش را صورت‌بندی کنیم، چگونه لایهٔ اُمیکس را انتخاب کنیم و چگونه تغییرپذیری را ببینیم.",
+    open: "باز کردن PDF اسلایدها",
+    figures: [
+      { title: "از موضوع کلی تا پرسش زیستیِ قابل پاسخ", body: "این اسلاید چک‌لیست اصلی درس را فشرده می‌کند: زمینهٔ زیستی را مشخص کنید، مدل و طراحی مناسب را برگزینید، اندازهٔ نمونه را تعیین کنید، تکنیک ad hoc را انتخاب کنید و تغییرپذیری را صریح نگه دارید." },
+      { title: "اُمیکس یک منو است، نه خودِ پرسش", body: "این جدول کمک می‌کند هر لایهٔ زیستی را به فناوری مناسب وصل کنید. یادآور خوبی است که genomics، epigenomics، transcriptomics و proteomics هر کدام برای پرسش متفاوتی مناسب‌اند." },
+      { title: "تغییرپذیری فنی باید از تغییرپذیری بین افراد کمتر باشد", body: "این نمودار پیام اصلی درس را تصویری می‌کند: تکرارهای یک نمونه باید به‌هم نزدیک باشند، اما نمونه‌های زیستی از افراد مختلف معمولاً پراکندگی بیشتری دارند." }
+    ]
+  }
+};
 
 const LESSON_COPY = {
   "en": {
@@ -1008,6 +1053,11 @@ function ExamTrainer({ copy, lang = "es" }) {
   </section>;
 }
 
+function SlideVisualNotes({ lang = "es" }) {
+  const local = LESSON1_SLIDE_COPY[lang] || LESSON1_SLIDE_COPY.es;
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between"><SectionHeader eyebrow={local.eyebrow} title={local.title}>{local.intro}</SectionHeader><a href={SLIDES_URL} target="_blank" rel="noreferrer" className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-black text-red-800 transition hover:-translate-y-0.5 hover:bg-white">{local.open}</a></div><div className="grid gap-4 lg:grid-cols-3">{LESSON1_SLIDES.map((figure, idx) => { const item = local.figures[idx]; return <article key={figure.slide} className="overflow-hidden rounded-[2rem] border border-stone-200 bg-stone-50 shadow-sm"><div className="aspect-[4/3] border-b border-stone-200 bg-white p-3"><img src={figure.src} alt={item.title} loading="lazy" className="h-full w-full rounded-2xl object-contain" /></div><div className="p-5"><Pill tone="red">Slide {figure.slide}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{item.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p></div></article>; })}</div></section>;
+}
+
 const LESSON_NAV_COPY = {
   en: { dashboard: "DRD dashboard", previous: "Previous", next: "Next", current: "Lesson 1", nextTitle: "M1.2 Stanford two-colour arrays" },
   es: { dashboard: "Dashboard DRD", previous: "Anterior", next: "Siguiente", current: "Lección 1", nextTitle: "M1.2 Stanford two-colour arrays" },
@@ -1036,6 +1086,7 @@ export default function DRDLesson01({ lang = "es", isDone = false, toggle = () =
     <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.flowEyebrow} title={copy.flowTitle}>{copy.flowIntro}</SectionHeader><div className="grid gap-5 lg:grid-cols-[0.8fr_1.2fr]"><div className="space-y-2">{copy.flow.map((step, idx) => <button key={step.title} onClick={() => setActiveFlow(idx)} className={`w-full rounded-2xl border p-4 text-left transition ${activeFlow === idx ? "border-red-200 bg-red-50 shadow-sm" : "border-stone-200 bg-stone-50 hover:bg-white"}`}><div className="flex items-center justify-between gap-3"><span className="text-sm font-black text-stone-950">{step.title}</span><ProgressDots active={idx} /></div></button>)}</div><article className="rounded-[2rem] border border-stone-200 bg-stone-950 p-6 text-white"><div className="text-xs font-black uppercase tracking-[0.2em] text-red-200">{copy.activeStep}</div><h3 className="mt-3 text-3xl font-black tracking-tight">{copy.flow[activeFlow].title}</h3><p className="mt-4 text-lg font-semibold leading-8 text-stone-200">{copy.flow[activeFlow].body}</p></article></div></section>
     <section className="mt-10 grid gap-6 lg:grid-cols-[1fr_0.95fr]"><BiologicalQuestionBuilder copy={copy}/><article className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm"><div className="text-xs font-black uppercase tracking-[0.2em] text-red-700">{copy.designEyebrow}</div><h3 className="mt-1 text-2xl font-black text-stone-950">{copy.designTitle}</h3><div className="mt-5 grid gap-3">{copy.designCards.map(([title, body]) => <div key={title} className="rounded-2xl border border-stone-200 bg-stone-50 p-4"><div className="text-sm font-black text-stone-950">{title}</div><div className="mt-1 text-sm font-semibold leading-6 text-stone-600">{body}</div></div>)}</div></article></section>
     <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.omicsEyebrow} title={copy.omicsTitle}>{copy.omicsIntro}</SectionHeader><div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">{copy.omics.map(([name, what, tools]) => <article key={name} className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><h3 className="text-xl font-black text-stone-950">{name}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{what}</p><div className="mt-4 rounded-2xl bg-white p-3 text-xs font-black text-red-700 shadow-sm">{tools}</div></article>)}</div></section>
+    <SlideVisualNotes lang={lang}/>
     <section className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1fr]"><VariabilityClassifier copy={copy}/><CVExercise copy={copy}/></section>
     <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.repEyebrow} title={copy.repTitle}>{copy.repIntro}</SectionHeader><div className="grid gap-4 lg:grid-cols-3">{copy.repCards.map(([title, body], i) => <article key={title} className={`rounded-3xl border p-5 ${i === 0 ? "border-emerald-200 bg-emerald-50" : i === 1 ? "border-red-200 bg-red-50" : "border-amber-200 bg-amber-50"}`}><h3 className="text-xl font-black text-stone-950">{title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-700">{body}</p></article>)}</div></section>
     <QuizBlock copy={copy}/><ExamTrainer copy={copy} lang={lang}/><LessonNav lang={lang} position="bottom" isDone={isDone} toggle={toggle} copy={copy}/>

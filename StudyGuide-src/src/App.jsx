@@ -23,6 +23,7 @@ import DRDLesson02 from "./lessons/drd/Lesson02.jsx";
 import DRDLesson03 from "./lessons/drd/Lesson03.jsx";
 import DRDLesson04 from "./lessons/drd/Lesson04.jsx";
 import DRDLesson05 from "./lessons/drd/Lesson05.jsx";
+import DRDLesson06 from "./lessons/drd/Lesson06.jsx";
 
 
 const LANGS = [
@@ -671,17 +672,18 @@ const DRD_MODULE1_UNITS = [
     id: "m1-deg-i",
     code: "M1.6",
     date: "May 26",
-    status: "active",
+    status: "covered",
     title: "Differentially expressed genes I",
     desc: "Fold change versus statistical significance, log2 ratios, MA-plots, null and alternative hypotheses, p-values, alpha/beta errors, power and parametric versus non-parametric tests.",
     products: ["test-selection tree", "p-value exercises", "fold-change traps"],
     tags: ["fold change", "p-value", "power", "MA-plot"],
+    lessonHref: "#/lesson/m1-deg-i",
   },
   {
     id: "m1-deg-ii",
     code: "M1.7",
     date: "May 27",
-    status: "upcoming",
+    status: "active",
     title: "Differentially expressed genes II",
     desc: "Expected continuation: paired versus unpaired designs, Student t-test, Welch, Wilcoxon, Mann–Whitney, multiple testing and biological interpretation.",
     products: ["statistical-test simulator", "comparison questions", "10–12-line answers"],
@@ -1066,6 +1068,9 @@ function DRDApp({ t, lang, hash }) {
   }
   if (lessonId === "m1-illumina" || lessonId === "05") {
     return <DRDLesson05 lang={lang} isDone={!!progress["m1-illumina"]} toggle={() => toggle("m1-illumina")} />;
+  }
+  if (lessonId === "m1-deg-i" || lessonId === "06") {
+    return <DRDLesson06 lang={lang} isDone={!!progress["m1-deg-i"]} toggle={() => toggle("m1-deg-i")} />;
   }
   const covered = allUnits.filter(unit => unit.status !== "upcoming").length;
   const upcoming = allUnits.filter(unit => unit.status === "upcoming").length;

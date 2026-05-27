@@ -159,9 +159,9 @@ COPY.fa.sections = COPY.en.sections.map((section) => ({ ...section, intro: secti
 
 const LAB_COPY = {
   en: {
-    h0: "Null hypothesis", pSoftware: "p-value from software", alpha: "Alpha decision", reject: "Reject H0", retain: "Do not reject H0", reset: "Reset example", group: "Group", labWarning: "This mini-lab shows the mechanics. For real work, use R/software for exact p-values and diagnostics.",
+    h0: "Null hypothesis", pSoftware: "Auto p-value (approx.)", alpha: "Alpha decision", reject: "Reject H0", retain: "Do not reject H0", reset: "Reset example", group: "Group", labWarning: "This mini-lab calculates an approximate p-value in-browser. For real work, confirm exact p-values, assumptions and diagnostics in R/software.",
     bootstrap: { title: "Bootstrap p-value mini-lab", intro: "Keep the preloaded result or change the number of bootstrap replicates and extreme statistics.", reps: "Bootstrap replicates", extreme: "Replicates as or more extreme than observed", observed: "Observed statistic", h0: "H0: the observed group difference could be produced by random reshuffling under the null." },
-    anova: { title: "Editable one-way ANOVA walkthrough", intro: "Use three or more groups. The lab calculates group means, grand mean, SSB, SSW, MS and F. Insert the software p-value to complete the decision.", h0: "H0: all group means are equal.", groups: ["Normal / wild type", "Mutant", "Double mutant"] },
+    anova: { title: "Editable one-way ANOVA walkthrough", intro: "Use three or more groups. The lab calculates group means, grand mean, SSB, SSW, MS, F and an approximate p-value automatically.", h0: "H0: all group means are equal.", groups: ["Normal / wild type", "Mutant", "Double mutant"] },
     kruskal: { title: "Editable Kruskal–Wallis walkthrough", intro: "Use three or more groups. The lab pools all values, assigns ranks with averaged ties, sums ranks by group and calculates H.", h0: "H0: the medians/rank distributions of all groups are equal.", groups: ["Control", "Treatment 1", "Treatment 2"] },
     fwer: { title: "FWER and Bonferroni mini-lab", intro: "Change alpha and number of tests to see why thousands of genes make p ≤ 0.05 unsafe.", tests: "Number of tests", bonferroni: "Bonferroni threshold", fwer: "FWER", h0: "Family of H0 tests: each gene has no true differential expression unless evidence survives correction." },
     fdr: { title: "FDR expectation mini-lab", intro: "Estimate expected false positives and FDR from a chosen threshold, total genes and observed significant genes.", total: "Total tests/genes", observed: "Observed genes under threshold", expected: "Expected false positives", fdr: "FDR" },
@@ -169,9 +169,9 @@ const LAB_COPY = {
     gsea: { title: "GSEA interpretation sorter", intro: "Select what each output tells you. The goal is to translate a long gene list into a biological interpretation.", items: ["NES", "FDR", "GO term", "KEGG/Reactome", "Permutation"], answers: { NES: "Normalized enrichment strength, adjusted for set size and permutations.", FDR: "Expected false-discovery proportion for the enriched term.", "GO term": "Functional category such as apoptosis or T-cell activation.", "KEGG/Reactome": "Pathway-level interpretation such as MAPK signaling or oxidative phosphorylation.", Permutation: "Internal reshuffling used to test whether enrichment is stronger than expected by chance." } }
   },
   es: {
-    h0: "Hipótesis nula", pSoftware: "p-value del software", alpha: "Decisión por alpha", reject: "Rechazar H0", retain: "No rechazar H0", reset: "Restaurar ejemplo", group: "Grupo", labWarning: "Este mini-lab muestra la mecánica. En un análisis real, usa R/software para p-values exactos y diagnósticos.",
+    h0: "Hipótesis nula", pSoftware: "p-value automático (aprox.)", alpha: "Decisión por alpha", reject: "Rechazar H0", retain: "No rechazar H0", reset: "Restaurar ejemplo", group: "Grupo", labWarning: "Este mini-lab calcula un p-value aproximado en el navegador. En un análisis real, confirma p-values exactos, supuestos y diagnósticos en R/software.",
     bootstrap: { title: "Mini-lab de p-value bootstrap", intro: "Mantén el resultado precargado o cambia el número de réplicas bootstrap y estadísticas extremas.", reps: "Réplicas bootstrap", extreme: "Réplicas tan extremas o más que la observada", observed: "Estadístico observado", h0: "H0: la diferencia observada entre grupos podría producirse por remezcla aleatoria bajo la nula." },
-    anova: { title: "Walkthrough editable de one-way ANOVA", intro: "Usa tres o más grupos. El lab calcula medias, grand mean, SSB, SSW, MS y F. Inserta el p-value del software para completar la decisión.", h0: "H0: todas las medias de grupo son iguales.", groups: ["Normal / wild type", "Mutant", "Double mutant"] },
+    anova: { title: "Walkthrough editable de one-way ANOVA", intro: "Usa tres o más grupos. El lab calcula medias, grand mean, SSB, SSW, MS, F y un p-value aproximado automáticamente.", h0: "H0: todas las medias de grupo son iguales.", groups: ["Normal / wild type", "Mutant", "Double mutant"] },
     kruskal: { title: "Walkthrough editable de Kruskal–Wallis", intro: "Usa tres o más grupos. El lab junta valores, asigna rangos con empates promediados, suma rangos por grupo y calcula H.", h0: "H0: las medianas/distribuciones de rangos de todos los grupos son iguales.", groups: ["Control", "Treatment 1", "Treatment 2"] },
     fwer: { title: "Mini-lab de FWER y Bonferroni", intro: "Cambia alpha y número de tests para ver por qué miles de genes vuelven inseguro p ≤ 0.05.", tests: "Número de tests", bonferroni: "Threshold Bonferroni", fwer: "FWER", h0: "Familia de H0: cada gen no tiene expresión diferencial real salvo que la evidencia sobreviva la corrección." },
     fdr: { title: "Mini-lab de FDR esperado", intro: "Estima falsos positivos esperados y FDR a partir de threshold, total de genes y genes observados significativos.", total: "Tests/genes totales", observed: "Genes observados bajo threshold", expected: "Falsos positivos esperados", fdr: "FDR" },
@@ -255,6 +255,104 @@ function labLabels(lab) {
     h0: "Null hypothesis (H0)", decision: "Decision against fixed alpha thresholds", pValue: "p-value used for decision", approx: "approx.", exact: "software/exact", alpha: "alpha", confidence: "confidence", noP: "p-value unavailable", rejectMeaning: "Significant: there is evidence against H0.", retainMeaning: "Not significant: there is not enough evidence to reject H0.", warning: "For real analysis, confirm the exact p-value and assumptions with R/software.", steps: "Step by step", reset: "Reset example", input: "Editable data"
   };
 }
+
+function clamp01(x) { return Number.isFinite(x) ? Math.min(1, Math.max(0, x)) : NaN; }
+function logGamma(z) {
+  const cof = [76.18009172947146, -86.50532032941677, 24.01409824083091, -1.231739572450155, 0.001208650973866179, -0.000005395239384953];
+  let x = z - 1;
+  let tmp = x + 5.5;
+  tmp -= (x + 0.5) * Math.log(tmp);
+  let ser = 1.000000000190015;
+  for (const c of cof) { x += 1; ser += c / x; }
+  return -tmp + Math.log(2.5066282746310005 * ser);
+}
+function betaContinuedFraction(a, b, x) {
+  const maxIter = 100;
+  const eps = 3e-7;
+  const fpMin = 1e-30;
+  const qab = a + b;
+  const qap = a + 1;
+  const qam = a - 1;
+  let c = 1;
+  let d = 1 - (qab * x) / qap;
+  if (Math.abs(d) < fpMin) d = fpMin;
+  d = 1 / d;
+  let h = d;
+  for (let m = 1; m <= maxIter; m += 1) {
+    const m2 = 2 * m;
+    let aa = (m * (b - m) * x) / ((qam + m2) * (a + m2));
+    d = 1 + aa * d;
+    if (Math.abs(d) < fpMin) d = fpMin;
+    c = 1 + aa / c;
+    if (Math.abs(c) < fpMin) c = fpMin;
+    d = 1 / d;
+    h *= d * c;
+    aa = -((a + m) * (qab + m) * x) / ((a + m2) * (qap + m2));
+    d = 1 + aa * d;
+    if (Math.abs(d) < fpMin) d = fpMin;
+    c = 1 + aa / c;
+    if (Math.abs(c) < fpMin) c = fpMin;
+    d = 1 / d;
+    const del = d * c;
+    h *= del;
+    if (Math.abs(del - 1) < eps) break;
+  }
+  return h;
+}
+function regularizedBeta(x, a, b) {
+  if (!Number.isFinite(x) || !Number.isFinite(a) || !Number.isFinite(b) || a <= 0 || b <= 0) return NaN;
+  if (x <= 0) return 0;
+  if (x >= 1) return 1;
+  const bt = Math.exp(logGamma(a + b) - logGamma(a) - logGamma(b) + a * Math.log(x) + b * Math.log(1 - x));
+  if (x < (a + 1) / (a + b + 2)) return clamp01((bt * betaContinuedFraction(a, b, x)) / a);
+  return clamp01(1 - (bt * betaContinuedFraction(b, a, 1 - x)) / b);
+}
+function fSurvival(f, df1, df2) {
+  if (!Number.isFinite(f) || f < 0 || df1 <= 0 || df2 <= 0) return NaN;
+  const x = (df1 * f) / (df1 * f + df2);
+  return clamp01(1 - regularizedBeta(x, df1 / 2, df2 / 2));
+}
+function gammaP(a, x) {
+  if (!Number.isFinite(a) || !Number.isFinite(x) || a <= 0 || x < 0) return NaN;
+  if (x === 0) return 0;
+  const maxIter = 100;
+  const eps = 3e-7;
+  const fpMin = 1e-30;
+  if (x < a + 1) {
+    let ap = a;
+    let sum = 1 / a;
+    let del = sum;
+    for (let n = 1; n <= maxIter; n += 1) {
+      ap += 1;
+      del *= x / ap;
+      sum += del;
+      if (Math.abs(del) < Math.abs(sum) * eps) break;
+    }
+    return clamp01(sum * Math.exp(-x + a * Math.log(x) - logGamma(a)));
+  }
+  let b = x + 1 - a;
+  let c = 1 / fpMin;
+  let d = 1 / Math.max(b, fpMin);
+  let h = d;
+  for (let i = 1; i <= maxIter; i += 1) {
+    const an = -i * (i - a);
+    b += 2;
+    d = an * d + b;
+    if (Math.abs(d) < fpMin) d = fpMin;
+    c = b + an / c;
+    if (Math.abs(c) < fpMin) c = fpMin;
+    d = 1 / d;
+    const del = d * c;
+    h *= del;
+    if (Math.abs(del - 1) < eps) break;
+  }
+  return clamp01(1 - Math.exp(-x + a * Math.log(x) - logGamma(a)) * h);
+}
+function chiSquareSurvival(x, df) {
+  if (!Number.isFinite(x) || x < 0 || df <= 0) return NaN;
+  return clamp01(1 - gammaP(df / 2, x / 2));
+}
+
 function ResultPill({ label, value, tone = "stone" }) { return <div className={`rounded-2xl border p-4 ${tone === "red" ? "border-red-200 bg-red-50" : "border-stone-200 bg-white"}`}><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{label}</div><div className="mt-1 text-xl font-black text-stone-950">{value}</div></div>; }
 function DataBox({ label, value, onChange, rows = 5 }) { return <label className="text-sm font-black text-stone-700">{label}<textarea value={value} rows={rows} onChange={(e) => onChange(e.target.value)} className="mt-2 min-h-[120px] w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 font-mono text-sm leading-6 outline-none focus:border-red-300"/></label>; }
 function NumberInput({ label, value, setValue, step = "1" }) { return <label className="text-sm font-black text-stone-700">{label}<input type="number" step={step} value={value} onChange={(e) => setValue(Number(e.target.value))} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 font-black outline-none focus:border-red-300"/></label>; }
@@ -262,8 +360,40 @@ function StepsPanel({ lab, steps }) { const t = labLabels(lab); return <div clas
 function DecisionPanel({ lab, h0, pValue, approximate = false, label }) { const t = labLabels(lab); const validP = Number.isFinite(pValue) && pValue >= 0 && pValue <= 1; return <div className="mt-4 rounded-[1.5rem] border border-stone-200 bg-white p-5"><div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]"><div className="rounded-2xl bg-stone-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{t.h0}</div><p className="mt-2 text-sm font-bold leading-6 text-stone-800">{h0}</p><div className="mt-3 rounded-xl bg-white p-3 text-xs font-black text-stone-600">{label || t.pValue}: {validP ? `${fmt(pValue, 5)} (${approximate ? t.approx : t.exact})` : t.noP}</div></div><div><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{t.decision}</div><div className="mt-3 grid gap-3 md:grid-cols-3">{ALPHA_LEVELS.map((alpha) => { const reject = validP && pValue <= alpha; return <div key={alpha} className={`rounded-2xl border p-4 ${reject ? "border-emerald-200 bg-emerald-50" : "border-amber-200 bg-amber-50"}`}><div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{t.alpha} = {alpha}</div><div className={`mt-1 text-lg font-black ${reject ? "text-emerald-800" : "text-amber-900"}`}>{reject ? lab.reject : lab.retain}</div><div className="mt-1 text-xs font-bold text-stone-600">{confidenceLabel(alpha)} {t.confidence}</div><p className="mt-2 text-xs font-semibold leading-5 text-stone-600">{reject ? t.rejectMeaning : t.retainMeaning}</p></div>; })}</div></div></div></div>; }
 function GroupInputs({ labels, values, setValues, lab }) { return <div className="grid gap-4 md:grid-cols-3">{values.map((value, i) => <DataBox key={i} label={labels[i] || `${lab.group} ${i + 1}`} value={value} onChange={(next) => setValues(values.map((v, j) => j === i ? next : v))}/>)}</div>; }
 function BootstrapLab({ lab }) { const [reps, setReps] = useState(1000000); const [extreme, setExtreme] = useState(9750); const [obs, setObs] = useState(3.1596); const p = Math.max(0, extreme) / Math.max(1, reps); const es = labLang(lab) === "es"; const steps = es ? ["Mantén el diseño original: dos grupos con sus tamaños de muestra.", "Remezcla los datos bajo H0 y repite el test muchas veces.", "Cuenta cuántas estadísticas bootstrap son tan extremas o más que la observada.", "Calcula p = eventos extremos / réplicas totales y compara con alpha."] : ["Keep the original design: two groups with their sample sizes.", "Reshuffle data under H0 and repeat the test many times.", "Count how many bootstrap statistics are as or more extreme than the observed one.", "Compute p = extreme events / total replicates and compare it with alpha."]; return <InteractiveShell title={lab.bootstrap.title} intro={lab.bootstrap.intro}><div className="grid gap-4 md:grid-cols-3"><NumberInput label={lab.bootstrap.reps} value={reps} setValue={setReps}/><NumberInput label={lab.bootstrap.extreme} value={extreme} setValue={setExtreme}/><NumberInput label={lab.bootstrap.observed} value={obs} setValue={setObs} step="0.0001"/></div><div className="mt-4 grid gap-3 md:grid-cols-3"><ResultPill label="p bootstrap" value={fmt(p, 5)} tone="red"/><ResultPill label="observed t" value={fmt(obs, 4)}/><ResultPill label="extreme / total" value={`${extreme}/${reps}`}/></div><DecisionPanel lab={lab} h0={lab.bootstrap.h0} pValue={p} label="bootstrap p-value"/><div className="mt-4 grid gap-4 lg:grid-cols-[1fr_0.9fr]"><p className="rounded-2xl bg-stone-950 p-4 text-sm font-black leading-6 text-white">{p <= 0.01 ? (es ? "La estadística observada queda en el extremo de la distribución bootstrap: confirma que el resultado difícilmente se explica por azar." : "The observed statistic is at the edge of the bootstrap distribution: this confirms that chance alone is unlikely.") : (es ? "La estadística no queda suficientemente en el extremo: la señal no queda confirmada con este bootstrap." : "The statistic is not extreme enough: the signal is not confirmed by this bootstrap.")}</p><StepsPanel lab={lab} steps={steps}/></div><p className="mt-4 text-sm font-bold leading-6 text-stone-600">{lab.labWarning}</p></InteractiveShell>; }
-function AnovaLab({ lab }) { const defaults = ["0.46, 0.30, 0.80, 1.51, 0.90", "-0.10, 0.49, 0.24, 0.06, 0.46", "-0.34, 0.56, 0.33"]; const [values, setValues] = useState(defaults); const [p, setP] = useState(0.079); const groups = values.map(parseNumbers).filter((g) => g.length > 0); const all = groups.flat(); const grand = all.length ? mean(all) : 0; const ssb = groups.reduce((acc, g) => acc + g.length * (mean(g) - grand) ** 2, 0); const ssw = groups.reduce((acc, g) => acc + g.reduce((a, x) => a + (x - mean(g)) ** 2, 0), 0); const dfb = Math.max(0, groups.length - 1); const dfw = Math.max(0, all.length - groups.length); const msb = dfb ? ssb / dfb : NaN; const msw = dfw ? ssw / dfw : NaN; const f = msb / msw; const es = labLang(lab) === "es"; const steps = es ? ["Calcula la media de cada grupo y la grand mean.", "Calcula SS between: cuánto se alejan las medias de grupo de la grand mean.", "Calcula SS within: cuánto varían los individuos dentro de cada grupo.", "Divide por los grados de libertad para obtener MSB y MSW.", "F = MSB/MSW; el p-value del software decide si rechazas H0."] : ["Compute each group mean and the grand mean.", "Compute SS between: how far group means are from the grand mean.", "Compute SS within: how much individuals vary inside each group.", "Divide by degrees of freedom to obtain MSB and MSW.", "F = MSB/MSW; the software p-value decides whether H0 is rejected."]; return <InteractiveShell title={lab.anova.title} intro={lab.anova.intro}><GroupInputs labels={lab.anova.groups} values={values} setValues={setValues} lab={lab}/><button onClick={() => setValues(defaults)} className="mt-3 rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black text-stone-700">{lab.reset}</button><div className="mt-4 grid gap-3 md:grid-cols-4"><ResultPill label="SS between" value={fmt(ssb, 4)}/><ResultPill label="SS within" value={fmt(ssw, 4)}/><ResultPill label="df" value={`${dfb}, ${dfw}`}/><ResultPill label="F observed" value={fmt(f, 3)} tone="red"/></div><label className="mt-4 block text-sm font-black text-stone-700">{lab.pSoftware}<input type="number" min="0" max="1" step="0.001" value={p} onChange={(e) => setP(Number(e.target.value))} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 font-black outline-none focus:border-red-300"/></label><DecisionPanel lab={lab} h0={lab.anova.h0} pValue={p}/><div className="mt-4 grid gap-4 lg:grid-cols-[1fr_0.9fr]"><p className="rounded-2xl bg-stone-950 p-4 text-sm font-black leading-6 text-white">{p <= 0.05 ? (es ? "Resultado global significativo: ANOVA dice que al menos un grupo difiere, pero necesitas post-hoc para saber cuál." : "Global significant result: ANOVA says at least one group differs, but post-hoc testing is needed to identify which one.") : (es ? "Resultado no significativo en el ejemplo de la clase: F observado no supera el valor crítico y no se rechaza H0." : "Non-significant result in the class example: observed F does not exceed the critical value and H0 is not rejected.")}</p><StepsPanel lab={lab} steps={steps}/></div><p className="mt-4 text-sm font-bold leading-6 text-stone-600">{lab.labWarning}</p></InteractiveShell>; }
-function KruskalLab({ lab }) { const defaults = ["23, 41, 54, 66, 78", "45, 55, 60, 70, 72", "18, 30, 34, 40, 44"]; const [values, setValues] = useState(defaults); const [p, setP] = useState(0.0347); const groups = values.map(parseNumbers).filter((g) => g.length > 0); const combined = groups.flat(); const ranks = rankValues(combined); let offset = 0; const rankSums = groups.map((g) => { const sum = ranks.slice(offset, offset + g.length).reduce((a, b) => a + b, 0); offset += g.length; return sum; }); const n = combined.length; const h = n ? (12 / (n * (n + 1))) * rankSums.reduce((acc, r, i) => acc + (r * r) / groups[i].length, 0) - 3 * (n + 1) : NaN; const es = labLang(lab) === "es"; const steps = es ? ["Junta los valores de todos los grupos.", "Ordénalos y asigna rangos; si hay empates, usa el rango promedio.", "Devuelve cada rango a su grupo original y suma rangos por grupo.", "Calcula H y compara con la distribución chi-square con k − 1 grados de libertad.", "Si H/p es significativo, usa post-hoc para identificar los pares que difieren."] : ["Pool values from all groups.", "Order them and assign ranks; use averaged ranks for ties.", "Return each rank to its original group and sum ranks by group.", "Compute H and compare it with chi-square distribution with k − 1 degrees of freedom.", "If H/p is significant, use post-hoc testing to identify which pairs differ."]; return <InteractiveShell title={lab.kruskal.title} intro={lab.kruskal.intro}><GroupInputs labels={lab.kruskal.groups} values={values} setValues={setValues} lab={lab}/><button onClick={() => setValues(defaults)} className="mt-3 rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black text-stone-700">{lab.reset}</button><div className="mt-4 grid gap-3 md:grid-cols-4"><ResultPill label="N" value={n}/><ResultPill label="rank sums" value={rankSums.map((x) => fmt(x, 1)).join(" / ")}/><ResultPill label="df = k − 1" value={Math.max(0, groups.length - 1)}/><ResultPill label="H observed" value={fmt(h, 3)} tone="red"/></div><label className="mt-4 block text-sm font-black text-stone-700">{lab.pSoftware}<input type="number" min="0" max="1" step="0.001" value={p} onChange={(e) => setP(Number(e.target.value))} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 font-black outline-none focus:border-red-300"/></label><DecisionPanel lab={lab} h0={lab.kruskal.h0} pValue={p}/><div className="mt-4 grid gap-4 lg:grid-cols-[1fr_0.9fr]"><p className="rounded-2xl bg-stone-950 p-4 text-sm font-black leading-6 text-white">{p <= 0.05 ? (es ? "Como alternativa no paramétrica, Kruskal–Wallis detecta una diferencia global entre rangos/medianas, no el par exacto." : "As a non-parametric alternative, Kruskal–Wallis detects a global rank/median difference, not the exact pair.") : (es ? "El patrón de rangos no es suficientemente extremo para rechazar H0." : "The rank pattern is not extreme enough to reject H0.")}</p><StepsPanel lab={lab} steps={steps}/></div><p className="mt-4 text-sm font-bold leading-6 text-stone-600">{lab.labWarning}</p></InteractiveShell>; }
+function AnovaLab({ lab }) {
+  const defaults = ["0.46, 0.30, 0.80, 1.51, 0.90", "-0.10, 0.49, 0.24, 0.06, 0.46", "-0.34, 0.56, 0.33"];
+  const [values, setValues] = useState(defaults);
+  const groups = values.map(parseNumbers).filter((g) => g.length > 0);
+  const all = groups.flat();
+  const grand = all.length ? mean(all) : 0;
+  const ssb = groups.reduce((acc, g) => acc + g.length * (mean(g) - grand) ** 2, 0);
+  const ssw = groups.reduce((acc, g) => acc + g.reduce((a, x) => a + (x - mean(g)) ** 2, 0), 0);
+  const dfb = Math.max(0, groups.length - 1);
+  const dfw = Math.max(0, all.length - groups.length);
+  const msb = dfb ? ssb / dfb : NaN;
+  const msw = dfw ? ssw / dfw : NaN;
+  const f = msb / msw;
+  const p = fSurvival(f, dfb, dfw);
+  const es = labLang(lab) === "es";
+  const steps = es ? ["Calcula la media de cada grupo y la grand mean.", "Calcula SS between: cuánto se alejan las medias de grupo de la grand mean.", "Calcula SS within: cuánto varían los individuos dentro de cada grupo.", "Divide por los grados de libertad para obtener MSB y MSW.", "F = MSB/MSW; el lab calcula automáticamente un p-value aproximado con la distribución F.", "Compara ese p-value contra α = 0.05, 0.01 y 0.001."] : ["Compute each group mean and the grand mean.", "Compute SS between: how far group means are from the grand mean.", "Compute SS within: how much individuals vary inside each group.", "Divide by degrees of freedom to obtain MSB and MSW.", "F = MSB/MSW; the lab automatically computes an approximate p-value from the F distribution.", "Compare that p-value against α = 0.05, 0.01 and 0.001."];
+  return <InteractiveShell title={lab.anova.title} intro={lab.anova.intro}><GroupInputs labels={lab.anova.groups} values={values} setValues={setValues} lab={lab}/><button onClick={() => setValues(defaults)} className="mt-3 rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black text-stone-700">{lab.reset}</button><div className="mt-4 grid gap-3 md:grid-cols-5"><ResultPill label="SS between" value={fmt(ssb, 4)}/><ResultPill label="SS within" value={fmt(ssw, 4)}/><ResultPill label="df" value={`${dfb}, ${dfw}`}/><ResultPill label="F observed" value={fmt(f, 3)} tone="red"/><ResultPill label={lab.pSoftware} value={fmt(p, 4)} tone="red"/></div><DecisionPanel lab={lab} h0={lab.anova.h0} pValue={p}/><div className="mt-4 grid gap-4 lg:grid-cols-[1fr_0.9fr]"><p className="rounded-2xl bg-stone-950 p-4 text-sm font-black leading-6 text-white">{p <= 0.05 ? (es ? "Resultado global significativo: ANOVA dice que al menos un grupo difiere, pero necesitas post-hoc para saber cuál." : "Global significant result: ANOVA says at least one group differs, but post-hoc testing is needed to identify which one.") : (es ? "Resultado no significativo en el ejemplo de la clase: F observado no supera el valor crítico y no se rechaza H0." : "Non-significant result in the class example: observed F does not exceed the critical value and H0 is not rejected.")}</p><StepsPanel lab={lab} steps={steps}/></div><p className="mt-4 text-sm font-bold leading-6 text-stone-600">{lab.labWarning}</p></InteractiveShell>;
+}
+function KruskalLab({ lab }) {
+  const defaults = ["23, 41, 54, 66, 78", "45, 55, 60, 70, 72", "18, 30, 34, 40, 44"];
+  const [values, setValues] = useState(defaults);
+  const groups = values.map(parseNumbers).filter((g) => g.length > 0);
+  const combined = groups.flat();
+  const ranks = rankValues(combined);
+  let offset = 0;
+  const rankSums = groups.map((g) => { const sum = ranks.slice(offset, offset + g.length).reduce((a, b) => a + b, 0); offset += g.length; return sum; });
+  const n = combined.length;
+  const h = n ? (12 / (n * (n + 1))) * rankSums.reduce((acc, r, i) => acc + (r * r) / groups[i].length, 0) - 3 * (n + 1) : NaN;
+  const df = Math.max(0, groups.length - 1);
+  const p = chiSquareSurvival(h, df);
+  const es = labLang(lab) === "es";
+  const steps = es ? ["Junta los valores de todos los grupos.", "Ordénalos y asigna rangos; si hay empates, usa el rango promedio.", "Devuelve cada rango a su grupo original y suma rangos por grupo.", "Calcula H y el lab estima automáticamente el p-value con una distribución chi-square de k − 1 grados de libertad.", "Si H/p es significativo, usa post-hoc para identificar los pares que difieren."] : ["Pool values from all groups.", "Order them and assign ranks; use averaged ranks for ties.", "Return each rank to its original group and sum ranks by group.", "Compute H and the lab automatically estimates the p-value with a chi-square distribution using k − 1 degrees of freedom.", "If H/p is significant, use post-hoc testing to identify which pairs differ."];
+  return <InteractiveShell title={lab.kruskal.title} intro={lab.kruskal.intro}><GroupInputs labels={lab.kruskal.groups} values={values} setValues={setValues} lab={lab}/><button onClick={() => setValues(defaults)} className="mt-3 rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black text-stone-700">{lab.reset}</button><div className="mt-4 grid gap-3 md:grid-cols-5"><ResultPill label="N" value={n}/><ResultPill label="rank sums" value={rankSums.map((x) => fmt(x, 1)).join(" / ")}/><ResultPill label="df = k − 1" value={df}/><ResultPill label="H observed" value={fmt(h, 3)} tone="red"/><ResultPill label={lab.pSoftware} value={fmt(p, 4)} tone="red"/></div><DecisionPanel lab={lab} h0={lab.kruskal.h0} pValue={p}/><div className="mt-4 grid gap-4 lg:grid-cols-[1fr_0.9fr]"><p className="rounded-2xl bg-stone-950 p-4 text-sm font-black leading-6 text-white">{p <= 0.05 ? (es ? "Como alternativa no paramétrica, Kruskal–Wallis detecta una diferencia global entre rangos/medianas, no el par exacto." : "As a non-parametric alternative, Kruskal–Wallis detects a global rank/median difference, not the exact pair.") : (es ? "El patrón de rangos no es suficientemente extremo para rechazar H0." : "The rank pattern is not extreme enough to reject H0.")}</p><StepsPanel lab={lab} steps={steps}/></div><p className="mt-4 text-sm font-bold leading-6 text-stone-600">{lab.labWarning}</p></InteractiveShell>;
+}
 function FwerLab({ lab }) { const [alpha, setAlpha] = useState(0.05); const [m, setM] = useState(6350); const fwer = 1 - Math.pow(1 - alpha, m); const bon = alpha / Math.max(1, m); const es = labLang(lab) === "es"; const steps = es ? ["Define alpha para un test individual.", "Multiplica el problema por m tests: genes, transcripts o CpGs.", "FWER = 1 − (1 − alpha)^m estima el riesgo de al menos un falso positivo.", "Bonferroni controla FWER usando alpha/m como cutoff nuevo."] : ["Set alpha for one individual test.", "Multiply the problem by m tests: genes, transcripts or CpGs.", "FWER = 1 − (1 − alpha)^m estimates the risk of at least one false positive.", "Bonferroni controls FWER using alpha/m as the new cutoff."]; return <InteractiveShell title={lab.fwer.title} intro={lab.fwer.intro}><div className="grid gap-4 md:grid-cols-2"><NumberInput label="α" value={alpha} setValue={setAlpha} step="0.001"/><NumberInput label={lab.fwer.tests} value={m} setValue={setM}/></div><div className="mt-4 grid gap-3 md:grid-cols-3"><ResultPill label={lab.fwer.fwer} value={`${fmt(fwer * 100, 2)}%`} tone="red"/><ResultPill label={lab.fwer.bonferroni} value={bon.toExponential(2)}/><ResultPill label="expected false positives" value={fmt(alpha * m, 2)}/></div><div className="mt-4 grid gap-4 lg:grid-cols-[1fr_0.9fr]"><p className="rounded-2xl bg-stone-950 p-4 text-sm font-black leading-6 text-white">{es ? "La idea clave es que p ≤ 0.05 parece seguro para un gen, pero no para miles de genes: el riesgo familiar se dispara." : "The key idea is that p ≤ 0.05 may look safe for one gene, but not for thousands: family-wise risk explodes."}</p><StepsPanel lab={lab} steps={steps}/></div></InteractiveShell>; }
 function FdrLab({ lab }) { const [alpha, setAlpha] = useState(0.001); const [total, setTotal] = useState(6350); const [obs, setObs] = useState(35); const expected = alpha * total; const fdr = obs ? (expected / obs) * 100 : NaN; const es = labLang(lab) === "es"; const steps = es ? ["Elige un threshold de p-value.", "Calcula falsos positivos esperados = total de tests × threshold.", "Cuenta cuántos genes observaste bajo ese threshold.", "FDR = esperados / observados × 100."] : ["Choose a p-value threshold.", "Compute expected false positives = total tests × threshold.", "Count how many genes were observed below that threshold.", "FDR = expected / observed × 100."]; return <InteractiveShell title={lab.fdr.title} intro={lab.fdr.intro}><div className="grid gap-4 md:grid-cols-3"><NumberInput label="threshold α" value={alpha} setValue={setAlpha} step="0.0001"/><NumberInput label={lab.fdr.total} value={total} setValue={setTotal}/><NumberInput label={lab.fdr.observed} value={obs} setValue={setObs}/></div><div className="mt-4 grid gap-3 md:grid-cols-2"><ResultPill label={lab.fdr.expected} value={fmt(expected, 3)}/><ResultPill label={lab.fdr.fdr} value={`${fmt(fdr, 2)}%`} tone="red"/></div><div className="mt-4 grid gap-4 lg:grid-cols-[1fr_0.9fr]"><p className="rounded-2xl bg-stone-950 p-4 text-sm font-black leading-6 text-white">{es ? "FDR no intenta eliminar todos los falsos positivos; intenta controlar la proporción esperada dentro de la lista que decides reportar." : "FDR does not try to remove every false positive; it controls the expected proportion inside the list you report."}</p><StepsPanel lab={lab} steps={steps}/></div></InteractiveShell>; }
 function BhLab({ lab }) { const [pvals, setPvals] = useState("0.001, 0.004, 0.006, 0.009, 0.015, 0.023, 0.045, 0.051, 0.078, 0.11"); const [q, setQ] = useState(0.05); const sorted = parseNumbers(pvals).filter((p) => p >= 0 && p <= 1).sort((a, b) => a - b); const m = sorted.length || 1; const rows = sorted.map((p, idx) => ({ p, rank: idx + 1, crit: ((idx + 1) / m) * q, pass: p <= ((idx + 1) / m) * q })); const passing = rows.filter((r) => r.pass); const cutoff = passing.length ? passing[passing.length - 1].p : NaN; const es = labLang(lab) === "es"; const steps = es ? ["Ordena todos los p-values de menor a mayor.", "Asigna un rango i a cada p-value.", "Calcula el threshold BH: (i/m)q.", "Busca el mayor p(i) que todavía cumple p(i) ≤ (i/m)q.", "Reporta como significativos los p-values hasta ese cutoff."] : ["Sort all p-values from smallest to largest.", "Assign rank i to each p-value.", "Compute the BH threshold: (i/m)q.", "Find the largest p(i) that still satisfies p(i) ≤ (i/m)q.", "Report p-values up to that cutoff as significant."]; return <InteractiveShell title={lab.bh.title} intro={lab.bh.intro}><div className="grid gap-4 md:grid-cols-[1.2fr_0.8fr]"><DataBox label={lab.bh.pvalues} value={pvals} onChange={setPvals} rows={4}/><NumberInput label={lab.bh.q} value={q} setValue={setQ} step="0.001"/></div><div className="mt-4 grid gap-3 md:grid-cols-2"><ResultPill label={lab.bh.cutoff} value={Number.isFinite(cutoff) ? fmt(cutoff, 4) : "none"} tone="red"/><ResultPill label={lab.bh.significant} value={passing.length}/></div><div className="mt-4 overflow-x-auto rounded-2xl border border-stone-200 bg-white"><table className="w-full min-w-[560px] text-left text-sm"><thead className="bg-stone-50 text-xs font-black uppercase tracking-[0.14em] text-stone-500"><tr><th className="p-3">rank</th><th className="p-3">p(i)</th><th className="p-3">(i/m)q</th><th className="p-3">decision</th></tr></thead><tbody>{rows.map((r) => <tr key={`${r.rank}-${r.p}`} className="border-t border-stone-100"><td className="p-3 font-bold">{r.rank}</td><td className="p-3 font-mono">{fmt(r.p, 4)}</td><td className="p-3 font-mono">{fmt(r.crit, 4)}</td><td className={`p-3 font-black ${r.pass ? "text-emerald-700" : "text-stone-500"}`}>{r.pass ? lab.reject : lab.retain}</td></tr>)}</tbody></table></div><div className="mt-4 grid gap-4 lg:grid-cols-[1fr_0.9fr]"><p className="rounded-2xl bg-stone-950 p-4 text-sm font-black leading-6 text-white">{es ? "Regla de parada de la clase: cuando el threshold deja de cumplirse, los p-values mayores restantes no se consideran significativos." : "Class stopping rule: once the threshold is no longer satisfied, larger remaining p-values are not considered significant."}</p><StepsPanel lab={lab} steps={steps}/></div></InteractiveShell>; }

@@ -635,7 +635,17 @@ function getInteractiveCopy(copy) {
     correct: "درست",
     review: "مرور کن",
     takeHome: "Take-home",
-    takeHomeText: "برای امتحان، Affymetrix را فقط به‌عنوان ‘one-colour’ تعریف نکن؛ workflow کامل را بگو: chip fabrication → target preparation → scan → DAT/CEL/CDF → QC → RMA → GEO/MIAME."
+    takeHomeText: "در پاسخ امتحان، Affymetrix را فقط با عبارت ‘one-colour’ تمام نکن. آن را مثل یک workflow کامل توضیح بده؛ یعنی از ساخت تراشه تا فایل‌ها، QC، normalization و قابلیت بازتولید نتایج.",
+    takeHomeSteps: [
+      ["Chip fabrication", "probeها روی GeneChip با photolithography و سنتز in situ ساخته می‌شوند. هر feature/cell هزاران نسخه از یک oligonucleotide یکسان دارد و probe setها روی ماتریس پخش‌اند."],
+      ["Target preparation", "RNA نمونه به cDNA/cRNA یا target مناسب تبدیل، fragmented و biotinylated می‌شود. استاد تأکید کرد لازم نیست جزئیات پروتکل را حفظ کنی، اما باید بفهمی این مراحل منبع experimental variability هستند."],
+      ["Hybridization + washing + scan", "در Affymetrix هر chip معمولاً یک sample دارد. target به probeها hybridize می‌شود، شستشو انجام می‌شود، سیستم biotin–streptavidin–fluorochrome سیگنال را قابل اسکن می‌کند و intensity هر feature به binding مربوط می‌شود."],
+      ["DAT / CEL / CDF", "DAT تصویر خام scanner است؛ CEL فایل processed feature intensity است و معمولاً برای reanalysis مهم‌ترین فایل است؛ CDF نقشه‌ای است که می‌گوید هر feature به کدام probe و probe set تعلق دارد."],
+      ["QC", "قبل از اعتماد به داده، باید image inspection، grid alignment، کیفیت featureها و control/spike-inها بررسی شوند. این همان پل بین تصویر خام و داده قابل تحلیل است."],
+      ["RMA", "RMA یعنی background correction، quantile normalization برای قابل‌مقایسه‌کردن chipها، و summarization برای تبدیل چند probe یک probe set به یک مقدار expression برای transcript."],
+      ["GEO / MIAME", "در پایان، داده و روش باید با اطلاعات کافی منتشر شوند: platform، design، فایل‌ها، preprocessing، filtering و normalization. هدف این است که تیم دیگر بتواند همان تحلیل را بازتولید کند."]
+    ],
+    takeHomeClosing: "زاویهٔ امتحانی: اگر سؤال compare competitive and noncompetitive arrays آمد، Affymetrix را در برابر Stanford two-colour با کل pipeline مقایسه کن، نه فقط با تعداد رنگ‌ها."
   };
   if (isEn) return {
     eyebrow: "Interactive study labs",
@@ -680,7 +690,17 @@ function getInteractiveCopy(copy) {
     correct: "Correct",
     review: "Review",
     takeHome: "Take-home",
-    takeHomeText: "For the exam, do not define Affymetrix only as ‘one-colour’; explain the complete workflow: chip fabrication → target preparation → scan → DAT/CEL/CDF → QC → RMA → GEO/MIAME."
+    takeHomeText: "For the exam, do not stop at ‘Affymetrix is one-colour’. Present it as a full workflow that starts with chip manufacturing and ends with normalized, documented, reusable data.",
+    takeHomeSteps: [
+      ["Chip fabrication", "Probes are synthesized directly on the GeneChip by in situ photolithography. Each feature/cell contains many identical copies of one oligonucleotide, and probe sets are distributed across the chip matrix."],
+      ["Target preparation", "The sample RNA is converted into the appropriate labelled target, fragmented and biotinylated. The professor stressed that you do not need to memorize every protocol detail, but you should understand that these steps create experimental variability and differ from competitive arrays."],
+      ["Hybridization + washing + scan", "One sample is hybridized on one chip, washed, stained through the biotin–streptavidin–fluorochrome system and scanned in one channel. Brighter features indicate stronger target binding."],
+      ["DAT / CEL / CDF", "DAT is the raw scanner image; CEL is the processed feature-intensity file and is the key file for reanalysis; CDF is the map that links features to probes and probe sets."],
+      ["QC", "Before trusting intensities, check image inspection, grid alignment, feature quality and control/spike-in behaviour. This is the bridge between a scan and reliable numerical data."],
+      ["RMA", "RMA combines background correction, quantile normalization across arrays and summarization of multiple probes into one expression value per probe set/transcript."],
+      ["GEO / MIAME", "At the end, data should be documented with platform, design, files, preprocessing, filtering and normalization details so another team can reproduce the analysis."]
+    ],
+    takeHomeClosing: "Exam angle: if the question asks you to compare competitive and noncompetitive arrays, compare the full Stanford two-colour workflow with the full Affymetrix pipeline, not only the number of colours."
   };
   return {
     eyebrow: "Laboratorios interactivos",
@@ -725,7 +745,17 @@ function getInteractiveCopy(copy) {
     correct: "Correcto",
     review: "Revisar",
     takeHome: "Take-home",
-    takeHomeText: "Para el examen, no definas Affymetrix solo como ‘one-colour’; explica el workflow completo: fabricación del chip → preparación del target → escaneo → DAT/CEL/CDF → QC → RMA → GEO/MIAME."
+    takeHomeText: "Para el examen, no te quedes en ‘Affymetrix es one-colour’. Preséntalo como un workflow completo que empieza con la fabricación del chip y termina con datos normalizados, documentados y reutilizables.",
+    takeHomeSteps: [
+      ["Fabricación del chip", "Los probes se sintetizan directamente sobre el GeneChip mediante fotolitografía in situ. Cada feature/cell contiene muchas copias idénticas de un oligonucleótido, y los probe sets están distribuidos por la matriz del chip."],
+      ["Preparación del target", "El RNA de la muestra se transforma en el target adecuado, se fragmenta y se biotinila. La profesora remarcó que no hace falta memorizar cada detalle del protocolo, pero sí entender que estos pasos introducen variabilidad experimental y son distintos del sistema competitivo."],
+      ["Hibridación, lavado y escaneo", "Una muestra se hibrida en un chip, se lava, se marca mediante el sistema biotina–estreptavidina–fluorocromo y se escanea en un solo canal. Las features más brillantes reflejan mayor unión del target."],
+      ["DAT / CEL / CDF", "DAT es la imagen cruda del scanner; CEL es el archivo procesado con intensidades por feature y suele ser el archivo clave para reanálisis; CDF es el mapa que conecta features con probes y probe sets."],
+      ["QC", "Antes de confiar en las intensidades, hay que revisar inspección visual, alineamiento del grid, calidad de las features y comportamiento de controles/spike-ins. Este paso conecta la imagen con datos numéricos fiables."],
+      ["RMA", "RMA combina background correction, quantile normalization entre arrays y summarization para convertir varios probes de un probe set en un único valor de expresión por transcript."],
+      ["GEO / MIAME", "Al final, los datos deben documentarse con plataforma, diseño, archivos, preprocessing, filtering y normalization, para que otro grupo pueda reproducir el análisis."]
+    ],
+    takeHomeClosing: "Ángulo de examen: si preguntan compare competitive and noncompetitive arrays, compara el workflow completo Stanford two-colour con el pipeline Affymetrix, no solo el número de colores."
   };
 }
 
@@ -767,7 +797,7 @@ function QCDecisionLabs({ lab, mode = "both" }) {
 function InlineInteractiveLab({ type, copy }) {
   const lab = getInteractiveCopy(copy);
   if (type === "decision") {
-    return <div className="mt-6 grid gap-5 lg:grid-cols-2"><QCDecisionLabs lab={lab} mode="decision"/><div className="rounded-[2rem] border border-red-200 bg-red-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{lab.takeHome}</div><p className="mt-2 text-sm font-black leading-7 text-red-950">{lab.takeHomeText}</p></div></div>;
+    return <div className="mt-6 grid gap-5 lg:grid-cols-2"><QCDecisionLabs lab={lab} mode="decision"/><div className="rounded-[2rem] border border-red-200 bg-red-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{lab.takeHome}</div><p className="mt-2 text-sm font-black leading-7 text-red-950">{lab.takeHomeText}</p><div className="mt-4 grid gap-3">{lab.takeHomeSteps.map(([title, body], idx) => <div key={title} className="rounded-2xl border border-red-100 bg-white/75 p-4"><div className="flex items-center gap-3"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-700 text-xs font-black text-white">{idx + 1}</span><h4 className="text-sm font-black text-red-950">{title}</h4></div><p className="mt-2 text-xs font-bold leading-6 text-red-900">{body}</p></div>)}</div><p className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-black leading-7 text-amber-950">{lab.takeHomeClosing}</p></div></div>;
   }
   if (type === "pm") return <div className="mt-6"><PMMMSimulator lab={lab}/></div>;
   if (type === "files") return <div className="mt-6 grid gap-5 lg:grid-cols-2"><FileWorkflowLab lab={lab}/><QCDecisionLabs lab={lab} mode="qc"/></div>;

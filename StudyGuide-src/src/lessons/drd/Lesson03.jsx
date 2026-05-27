@@ -580,7 +580,16 @@ function ProfessorNote({ children, copy }) {
   return <div className="mt-5 rounded-[1.75rem] border border-sky-200 bg-sky-50 p-5 text-sky-950"><div className="text-xs font-black uppercase tracking-[0.18em] text-sky-700">{copy.professor}</div><p className="mt-2 text-sm font-semibold leading-7">{children}</p></div>;
 }
 
-function LessonSection({ section, copy, onZoom, children }) {
+function TakeHomeCard({ lab }) {
+  return <div className="mt-6 rounded-[2rem] border border-red-200 bg-red-50 p-5 lg:p-6"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{lab.takeHome}</div><p className="mt-2 text-sm font-black leading-7 text-red-950">{lab.takeHomeText}</p><div className="mt-4 grid gap-3 md:grid-cols-2 xl:grid-cols-3">{lab.takeHomeSteps.map(([title, body], idx) => <div key={title} className="rounded-2xl border border-red-100 bg-white/75 p-4"><div className="flex items-center gap-3"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-700 text-xs font-black text-white">{idx + 1}</span><h4 className="text-sm font-black text-red-950">{title}</h4></div><p className="mt-2 text-xs font-bold leading-6 text-red-900">{body}</p></div>)}</div><p className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-black leading-7 text-amber-950">{lab.takeHomeClosing}</p></div>;
+}
+
+function LessonSection({ section, copy, onZoom, children, inlineType }) {
+  if (inlineType === "decision") {
+    const lab = getInteractiveCopy(copy);
+    const slides = section.slides || [];
+    return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={section.eyebrow} title={section.title}>{section.body}</SectionHeader><div className="mt-6 grid gap-4 lg:grid-cols-2">{slides.map((figure, idx) => { const isFull = Boolean(figure.spotlight); return <SlideFigure key={`${figure.key}-${idx}`} figure={figure} copy={copy} onZoom={onZoom} professor={section.professor} exam={section.exam} isFull={isFull} />; })}<QCDecisionLabs lab={lab} mode="decision"/></div><TakeHomeCard lab={lab}/></section>;
+  }
   return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={section.eyebrow} title={section.title}>{section.body}</SectionHeader><SlideGrid slides={section.slides} copy={copy} onZoom={onZoom} professor={section.professor} exam={section.exam}/>{children}</section>;
 }
 
@@ -796,9 +805,7 @@ function QCDecisionLabs({ lab, mode = "both" }) {
 
 function InlineInteractiveLab({ type, copy }) {
   const lab = getInteractiveCopy(copy);
-  if (type === "decision") {
-    return <div className="mt-6 grid gap-5 lg:grid-cols-2"><QCDecisionLabs lab={lab} mode="decision"/><div className="rounded-[2rem] border border-red-200 bg-red-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{lab.takeHome}</div><p className="mt-2 text-sm font-black leading-7 text-red-950">{lab.takeHomeText}</p><div className="mt-4 grid gap-3">{lab.takeHomeSteps.map(([title, body], idx) => <div key={title} className="rounded-2xl border border-red-100 bg-white/75 p-4"><div className="flex items-center gap-3"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-700 text-xs font-black text-white">{idx + 1}</span><h4 className="text-sm font-black text-red-950">{title}</h4></div><p className="mt-2 text-xs font-bold leading-6 text-red-900">{body}</p></div>)}</div><p className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-black leading-7 text-amber-950">{lab.takeHomeClosing}</p></div></div>;
-  }
+  if (type === "decision") return <TakeHomeCard lab={lab}/>;
   if (type === "pm") return <div className="mt-6"><PMMMSimulator lab={lab}/></div>;
   if (type === "files") return <div className="mt-6 grid gap-5 lg:grid-cols-2"><FileWorkflowLab lab={lab}/><QCDecisionLabs lab={lab} mode="qc"/></div>;
   if (type === "rma") return <div className="mt-6"><RMAMiniLab lab={lab}/></div>;
@@ -821,5 +828,5 @@ export default function DRDLesson03({ lang = "es", isDone = false, toggle = () =
   const copy = useMemo(() => getCopy(lang), [lang]);
   const [zoom, setZoom] = useState(null);
   const inlineLabs = { 0: "decision", 3: "pm", 5: "files", 7: "rma" };
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav copy={copy} isDone={isDone} toggle={toggle}/><Hero copy={copy}/>{copy.sections.map((section, idx) => <LessonSection key={section.eyebrow} section={section} copy={copy} onZoom={setZoom}>{inlineLabs[idx] && <InlineInteractiveLab type={inlineLabs[idx]} copy={copy}/>}</LessonSection>) }<KeyConcepts copy={copy}/><Quiz copy={copy}/><WrittenTrainer copy={copy}/><LessonNav copy={copy} isDone={isDone} toggle={toggle} position="bottom"/><ZoomModal item={zoom} copy={copy} onClose={() => setZoom(null)}/></main>;
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav copy={copy} isDone={isDone} toggle={toggle}/><Hero copy={copy}/>{copy.sections.map((section, idx) => { const inlineType = inlineLabs[idx]; return <LessonSection key={section.eyebrow} section={section} copy={copy} onZoom={setZoom} inlineType={inlineType === "decision" ? "decision" : undefined}>{inlineType && inlineType !== "decision" && <InlineInteractiveLab type={inlineType} copy={copy}/>}</LessonSection>; })}<KeyConcepts copy={copy}/><Quiz copy={copy}/><WrittenTrainer copy={copy}/><LessonNav copy={copy} isDone={isDone} toggle={toggle} position="bottom"/><ZoomModal item={zoom} copy={copy} onClose={() => setZoom(null)}/></main>;
 }

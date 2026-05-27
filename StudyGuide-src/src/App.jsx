@@ -24,6 +24,7 @@ import DRDLesson03 from "./lessons/drd/Lesson03.jsx";
 import DRDLesson04 from "./lessons/drd/Lesson04.jsx";
 import DRDLesson05 from "./lessons/drd/Lesson05.jsx";
 import DRDLesson06 from "./lessons/drd/Lesson06.jsx";
+import DRDLesson07 from "./lessons/drd/Lesson07.jsx";
 
 
 const LANGS = [
@@ -688,6 +689,7 @@ const DRD_MODULE1_UNITS = [
     desc: "Current point in the course: bootstrap validation, more-than-two-groups logic, one-way ANOVA, Kruskal–Wallis, multiple testing/FWER and the transition toward gene-set interpretation.",
     products: ["bootstrap walkthrough", "ANOVA/Kruskal decision lab", "multiple-testing traps"],
     tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER"],
+    lessonHref: "#/lesson/m1-deg-ii",
   },
   {
     id: "m1-samples-genes-i",
@@ -1071,6 +1073,9 @@ function DRDApp({ t, lang, hash }) {
   }
   if (lessonId === "m1-deg-i" || lessonId === "06") {
     return <DRDLesson06 lang={lang} isDone={!!progress["m1-deg-i"]} toggle={() => toggle("m1-deg-i")} />;
+  }
+  if (lessonId === "m1-deg-ii" || lessonId === "07") {
+    return <DRDLesson07 lang={lang} isDone={!!progress["m1-deg-ii"]} toggle={() => toggle("m1-deg-ii")} />;
   }
   const covered = allUnits.filter(unit => unit.status !== "upcoming").length;
   const upcoming = allUnits.filter(unit => unit.status === "upcoming").length;

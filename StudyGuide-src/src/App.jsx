@@ -21,7 +21,7 @@ import { PHYLO_WRITTEN_PRACTICE } from "./exams/phylogenetics/writtenPractice.js
 import DRDLesson01 from "./lessons/drd/Lesson01.jsx";
 import DRDLesson02 from "./lessons/drd/Lesson02.jsx";
 import DRDLesson03 from "./lessons/drd/Lesson03.jsx";
-import DRDLesson04 from "./lessons/drd/Lesson04.jsx";
+import DRDLesson05 from "./lessons/drd/Lesson05.jsx";
 
 
 const LANGS = [
@@ -654,6 +654,7 @@ const DRD_MODULE1_UNITS = [
     desc: "BeadArray design, optical decoding, transcriptomics, bisulfite logic, 27K/450K/EPIC coverage and CpG genomic context.",
     products: ["visual React lesson", "27K/450K/EPIC comparison", "bisulfite quiz"],
     tags: ["BeadChip", "bisulfite", "450K", "EPIC"],
+    lessonHref: "#/lesson/m1-illumina",
   },
   {
     id: "m1-methylation-biology",
@@ -727,7 +728,6 @@ const DRD_MODULE2_UNITS = [
     desc: "R basics, packages, scripts, SampleSheet logic, metadata and reproducible analysis habits.",
     products: ["guided setup", "SampleSheet exercise", "R object glossary"],
     tags: ["R", "Bioconductor", "SampleSheet", "metadata"],
-    lessonHref: "#/lesson/m2-r",
   },
   {
     id: "m2-manifest",
@@ -1059,8 +1059,8 @@ function DRDApp({ t, lang, hash }) {
   if (lessonId === "m1-affy" || lessonId === "03") {
     return <DRDLesson03 lang={lang} isDone={!!progress["m1-affy"]} toggle={() => toggle("m1-affy")} />;
   }
-  if (lessonId === "m2-r" || lessonId === "04") {
-    return <DRDLesson04 lang={lang} isDone={!!progress["m2-r"]} toggle={() => toggle("m2-r")} />;
+  if (lessonId === "m1-illumina" || lessonId === "04" || lessonId === "05") {
+    return <DRDLesson05 lang={lang} isDone={!!progress["m1-illumina"]} toggle={() => toggle("m1-illumina")} />;
   }
   const covered = allUnits.filter(unit => unit.status !== "upcoming").length;
   const upcoming = allUnits.filter(unit => unit.status === "upcoming").length;

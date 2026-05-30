@@ -1031,6 +1031,23 @@ function SubjectCard({ href, title, desc, progressKey, total, icon }) {
 }
 
 
+
+function drdLessonHref(unit) {
+  return unit?.lessonHref || `#/lesson/${unit?.id}`;
+}
+
+const DRD_PLACEHOLDER_ALIASES = {
+  "08": "m1-samples-genes-i",
+  "09": "m1-samples-genes-ii",
+  "10": "m1-scrna",
+  "m2-2": "m2-manifest",
+  "m2-3": "m2-import-qc",
+  "m2-4": "m2-normalization-1",
+  "m2-5": "m2-normalization-2",
+  "m2-6": "m2-dmp-dmr",
+  "m2-7": "m2-batch-clustering",
+};
+
 function DRDApp({ t, lang, hash }) {
   const copy = drdCopy(lang);
   const [progress, setProgress] = useState(() => getJSON("drd_progress_v1", {}));
@@ -1064,6 +1081,12 @@ function DRDApp({ t, lang, hash }) {
   }
   if (lessonId === "m1-deg-ii" || lessonId === "07") {
     return <DRDLesson07 lang={lang} isDone={!!progress["m1-deg-ii"]} toggle={() => toggle("m1-deg-ii")} />;
+  }
+  const placeholderId = DRD_PLACEHOLDER_ALIASES[lessonId] || lessonId;
+  const placeholderIndex = allUnits.findIndex(unit => unit.id === placeholderId && !unit.lessonHref);
+  if (placeholderIndex >= 0) {
+    const unit = allUnits[placeholderIndex];
+    return <DRDUnderConstructionLesson unit={unit} lang={lang} isDone={!!progress[unit.id]} toggle={() => toggle(unit.id)} prevUnit={allUnits[placeholderIndex - 1]} nextUnit={allUnits[placeholderIndex + 1]} />;
   }
   const covered = allUnits.filter(unit => unit.status !== "upcoming").length;
   const upcoming = allUnits.filter(unit => unit.status === "upcoming").length;
@@ -1192,7 +1215,7 @@ function DRDUnitCard({ unit, isDone, toggle, copy, lang }) {
           <p className="mt-2 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{localized.desc}</p>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2 md:justify-end">
-          {localized.lessonHref && <a href={localized.lessonHref} className="rounded-full bg-red-700 px-4 py-2 text-xs font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-800">{copy.openLesson || "Open lesson"}</a>}
+          <a href={drdLessonHref(localized)} className="rounded-full bg-red-700 px-4 py-2 text-xs font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-800">{copy.openLesson || "Open lesson"}</a>
           <button onClick={toggle} className={`rounded-full px-4 py-2 text-xs font-black ${isDone ? "bg-emerald-600 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{isDone ? "✓ " + copy.complete : "○ " + copy.mark}</button>
         </div>
       </div>
@@ -1209,6 +1232,134 @@ function DRDUnitCard({ unit, isDone, toggle, copy, lang }) {
     </div>
   );
 }
+
+
+function DRDUnderConstructionLesson({ unit, lang = "es", isDone, toggle, prevUnit, nextUnit }) {
+  const localized = localizeDRDUnit(unit, lang);
+  const prev = prevUnit ? localizeDRDUnit(prevUnit, lang) : null;
+  const next = nextUnit ? localizeDRDUnit(nextUnit, lang) : null;
+  const moduleName = localized.code?.startsWith("M2") ? "Module 2" : "Module 1";
+  const isModule2 = localized.code?.startsWith("M2");
+  const placeholderLabels = {
+    en: {
+      eyebrow: "Temporary page",
+      badge: "Under construction",
+      titlePrefix: "Coming soon",
+      body: "This temporary page keeps the route alive while the full React lesson is prepared from the official slides and transcript. It will later be replaced by the complete slide-guided version, with inline explanations, interactive labs, quizzes and exam/report practice where appropriate.",
+      planned: "Planned lesson",
+      plannedDate: "Scheduled date",
+      status: "Status",
+      statusText: "Placeholder active",
+      keep: "What will be added",
+      keepBody: "The final version will follow the same structure as the previous lessons: source slides in the lesson flow, professor emphasis, watch boxes, interactive checkpoints and practice tasks.",
+      deliverables: "Planned deliverables",
+      tags: "Key tags",
+      previous: "Previous",
+      next: "Next",
+      dashboard: "DRD dashboard",
+      markComplete: "Mark completed",
+      completed: "Completed",
+      noNext: "No next lesson yet",
+    },
+    es: {
+      eyebrow: "Página temporal",
+      badge: "En construcción",
+      titlePrefix: "Próximamente",
+      body: "Esta página temporal mantiene activa la ruta mientras se prepara la lección completa en React a partir de las diapositivas oficiales y la transcripción. Luego se sustituirá por la versión completa guiada por slides, con explicación intercalada, mini-labs interactivos, quizzes y práctica de examen/reporte cuando corresponda.",
+      planned: "Lección planeada",
+      plannedDate: "Fecha programada",
+      status: "Estado",
+      statusText: "Placeholder activo",
+      keep: "Qué se añadirá",
+      keepBody: "La versión final seguirá la misma estructura de las lecciones anteriores: slides fuente dentro del flujo, énfasis de la profesora, watch boxes, checkpoints interactivos y tareas de práctica.",
+      deliverables: "Entregables planeados",
+      tags: "Key tags",
+      previous: "Anterior",
+      next: "Siguiente",
+      dashboard: "DRD dashboard",
+      markComplete: "Marcar completada",
+      completed: "Completada",
+      noNext: "No hay siguiente aún",
+    },
+    fa: {
+      eyebrow: "صفحهٔ موقت",
+      badge: "در حال ساخت",
+      titlePrefix: "به‌زودی",
+      body: "این صفحهٔ موقت مسیر درس را فعال نگه می‌دارد تا نسخهٔ کامل React بر اساس اسلایدهای رسمی و transcript آماده شود. بعداً با نسخهٔ کامل شامل اسلایدهای منبع، توضیح مرحله‌ای، mini-labهای تعاملی، آزمونک و تمرین جایگزین می‌شود.",
+      planned: "درس برنامه‌ریزی‌شده",
+      plannedDate: "تاریخ برنامه",
+      status: "وضعیت",
+      statusText: "placeholder فعال",
+      keep: "چه چیزهایی اضافه می‌شود",
+      keepBody: "نسخهٔ نهایی مانند درس‌های قبلی خواهد بود: اسلایدهای منبع در جریان درس، تأکیدهای استاد، watch boxها، checkpointهای تعاملی و تمرین.",
+      deliverables: "خروجی‌های برنامه‌ریزی‌شده",
+      tags: "برچسب‌ها",
+      previous: "قبلی",
+      next: "بعدی",
+      dashboard: "داشبورد DRD",
+      markComplete: "علامت کامل‌شده",
+      completed: "کامل‌شده",
+      noNext: "درس بعدی هنوز نیست",
+    },
+  };
+  const labels = placeholderLabels[lang] || placeholderLabels.es;
+  const pillTone = isModule2 ? "border-emerald-200 bg-emerald-50 text-emerald-800" : "border-red-200 bg-red-50 text-red-700";
+  const accentText = isModule2 ? "text-emerald-700" : "text-red-700";
+  const accentBg = isModule2 ? "bg-emerald-700 hover:bg-emerald-800 shadow-emerald-900/10" : "bg-red-700 hover:bg-red-800 shadow-red-900/10";
+  return (
+    <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-6 md:pt-8">
+      <nav className="mb-6 rounded-[2rem] border border-stone-200 bg-white/90 p-3 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <a href={prev ? drdLessonHref(prev) : "#/"} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:shadow-sm">← {labels.previous}{prev ? `: ${prev.code}` : ""}</a>
+          <a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-stone-500 transition hover:-translate-y-0.5 hover:shadow-sm">{labels.dashboard}</a>
+          <button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? `✓ ${labels.completed}` : labels.markComplete}</button>
+          {next ? <a href={drdLessonHref(next)} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5">{labels.next}: {next.code} →</a> : <span className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-400">{labels.noNext}</span>}
+        </div>
+      </nav>
+
+      <section className="grid overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white/85 shadow-sm lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="bg-[#fbf4e8] p-8 md:p-12">
+          <div className={`inline-flex rounded-full border px-4 py-2 text-xs font-black uppercase tracking-[0.22em] ${pillTone}`}>{moduleName} · {localized.date} · {labels.badge}</div>
+          <h1 className="mt-7 max-w-3xl text-5xl font-black tracking-tight text-stone-950 md:text-6xl">{localized.title}</h1>
+          <p className="mt-6 max-w-2xl text-lg font-semibold leading-8 text-stone-700">{localized.desc}</p>
+          <div className="mt-6 flex flex-wrap gap-2">{localized.tags.map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-700">{tag}</span>)}</div>
+        </div>
+        <aside className="border-t border-stone-200 bg-white p-8 lg:border-l lg:border-t-0 md:p-10">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className={`rounded-3xl border p-5 ${pillTone}`}><div className="text-xs font-black uppercase tracking-[0.18em] opacity-70">{labels.status}</div><div className="mt-2 text-2xl font-black">{labels.badge}</div></div>
+            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.plannedDate}</div><div className="mt-2 text-2xl font-black text-stone-950">{localized.date}</div></div>
+            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Module</div><div className="mt-2 text-2xl font-black text-stone-950">{localized.code}</div></div>
+            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Route</div><div className="mt-2 text-sm font-black text-stone-950">#/lesson/{localized.id}</div></div>
+          </div>
+          <div className="mt-5 rounded-3xl bg-stone-950 p-6 text-white">
+            <div className={`text-xs font-black uppercase tracking-[0.18em] ${isModule2 ? "text-emerald-200" : "text-red-200"}`}>{labels.eyebrow}</div>
+            <p className="mt-3 text-base font-bold leading-7">{labels.body}</p>
+          </div>
+        </aside>
+      </section>
+
+      <section className="mt-8 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+        <article className="rounded-[2rem] border border-stone-200 bg-white/90 p-6 shadow-sm">
+          <div className={`text-xs font-black uppercase tracking-[0.22em] ${accentText}`}>{labels.deliverables}</div>
+          <div className="mt-4 flex flex-wrap gap-2">{localized.products.map(product => <span key={product} className={`rounded-full border px-3 py-1 text-xs font-black ${pillTone}`}>{product}</span>)}</div>
+        </article>
+        <article className="rounded-[2rem] border border-stone-200 bg-white/90 p-6 shadow-sm">
+          <div className={`text-xs font-black uppercase tracking-[0.22em] ${accentText}`}>{labels.keep}</div>
+          <p className="mt-3 text-sm font-semibold leading-7 text-stone-600">{labels.keepBody}</p>
+        </article>
+      </section>
+
+      <nav className="mt-8 rounded-[2rem] border border-stone-200 bg-white/90 p-3 shadow-sm">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <a href={prev ? drdLessonHref(prev) : "#/"} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:shadow-sm">← {labels.previous}{prev ? `: ${prev.code}` : ""}</a>
+          <a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:shadow-sm">{labels.dashboard}</a>
+          {next ? <a href={drdLessonHref(next)} className={`rounded-full px-4 py-2 text-sm font-black text-white shadow-lg transition hover:-translate-y-0.5 ${accentBg}`}>{labels.next}: {next.code} →</a> : <span className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-400">{labels.noNext}</span>}
+        </div>
+      </nav>
+    </main>
+  );
+}
+
 
 function DRDProductCard({ product, lang = "es" }) {
   const localized = localizeDRDProduct(product, lang);

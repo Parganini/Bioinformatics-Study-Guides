@@ -674,9 +674,9 @@ const DRD_MODULE1_UNITS = [
     id: "m1-deg-ii",
     code: "M1.6",
     date: "May 27",
-    status: "active",
+    status: "covered",
     title: "Differentially expressed genes II",
-    desc: "Current point in the course: bootstrap validation, more-than-two-groups logic, one-way ANOVA, Kruskal–Wallis, multiple testing/FWER and the transition toward gene-set interpretation.",
+    desc: "Bootstrap validation, more-than-two-groups logic, one-way ANOVA, Kruskal–Wallis, multiple testing/FWER and the transition toward gene-set interpretation.",
     products: ["bootstrap walkthrough", "ANOVA/Kruskal decision lab", "multiple-testing traps"],
     tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER"],
     lessonHref: "#/lesson/m1-deg-ii",
@@ -769,9 +769,9 @@ const DRD_MODULE2_UNITS = [
     id: "m2-dmp-dmr",
     code: "M2.6",
     date: "Jun 4",
-    status: "upcoming",
+    status: "active",
     title: "Pipeline 3: DMP/DMR + multiple testing + PCA",
-    desc: "Beta versus M values, design matrix, contrasts, differentially methylated positions, differentially methylated regions, FDR and PCA.",
+    desc: "Current next scheduled lesson: beta versus M values, design matrix, contrasts, DMP/DMR, FDR and PCA.",
     products: ["pipeline walkthrough", "design-matrix practice", "volcano/PCA interpretation"],
     tags: ["DMP", "DMR", "FDR", "PCA"],
   },
@@ -811,7 +811,7 @@ const DRD_UNIT_I18N = {
     "m2-import-qc": { title: "Pipeline 1: importación de datos + quality check", desc: "Datos crudos de methylation arrays, RGSet, MSet_raw, detection p-values, control probes, sample QC y probe QC.", products: ["diagrama RGSet→MSet", "práctica detection p-value", "checklist de filtrado"], tags: ["RGSet", "MSet", "detection p-value", "control probes"] },
     "m2-normalization-1": { title: "Pipeline 2: normalización 1", desc: "Por qué las señales crudas de metilación no son directamente comparables y cómo la normalización cambia distribuciones e interpretación downstream.", products: ["interpretación de density plots", "comparación raw vs normalized", "glosario de normalización"], tags: ["normalización", "beta values", "density plots", "raw data"] },
     "m2-normalization-2": { title: "Pipeline 2: normalización 2", desc: "Quantile, Noob, SWAN y functional normalization, incluyendo background, dye bias, sesgo por tipo de probe y corrección basada en control probes.", products: ["comparador de métodos", "quiz Noob/SWAN/Funnorm", "notas de decisión"], tags: ["Quantile", "Noob", "SWAN", "Funnorm"] },
-    "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "Beta vs M values, design matrix, contrasts, posiciones diferencialmente metiladas, regiones diferencialmente metiladas, FDR y PCA.", products: ["walkthrough de pipeline", "práctica design matrix", "interpretación volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
+    "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "Siguiente clase programada: beta vs M values, design matrix, contrasts, DMP/DMR, FDR y PCA.", products: ["walkthrough de pipeline", "práctica design matrix", "interpretación volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
     "m2-batch-clustering": { title: "Pipeline 4: batch effect, visualización y clustering", desc: "Detección/corrección de batch effect, ComBat, PCA antes/después de corrección, heatmaps, clustering e integración para verification test.", products: ["checklist de plots", "explicador ComBat", "simulador de team report"], tags: ["batch effect", "ComBat", "visualización", "clustering"] }
   },
   fa: {
@@ -820,7 +820,7 @@ const DRD_UNIT_I18N = {
     "m1-affy": { title: "Affymetrix / ThermoFisher GeneChip", desc: "آرایه‌های غیررقابتی one-colour، فوتولیتوگرافی، پروب‌های PM/MM، probe set، فایل‌های DAT/CEL/CDF/CHP، RMA و quantile normalization.", products: ["نمودار جریان فایل", "مقایسه PM/MM", "چک‌لیست RMA"], tags: ["one-colour", "PM/MM", "RMA", "CEL files"] },
     "m1-illumina": { title: "Illumina BeadChip و پلتفرم‌های متیلاسیون", desc: "طراحی BeadArray، optical decoding، transcriptomics، منطق bisulfite، پوشش 27K/450K/EPIC و زمینهٔ ژنومی CpG.", products: ["درس تصویری React", "مقایسه 27K/450K/EPIC", "آزمونک bisulfite"], tags: ["BeadChip", "bisulfite", "450K", "EPIC"] },
     "m1-deg-i": { title: "ژن‌های با بیان متفاوت I", desc: "fold change در برابر معنی‌داری آماری، log2 ratio، MA-plot، فرضیهٔ صفر/جایگزین، p-value، خطاهای آلفا/بتا، توان و آزمون‌های پارامتریک/ناپارامتریک.", products: ["درخت انتخاب آزمون", "تمرین p-value", "دام‌های fold change"], tags: ["fold change", "p-value", "power", "MA-plot"] },
-    "m1-deg-ii": { title: "ژن‌های با بیان متفاوت II", desc: "نقطهٔ فعلی درس: bootstrap، مقایسهٔ بیش از دو گروه، one-way ANOVA، Kruskal–Wallis، multiple testing/FWER و گذار به تفسیر gene set.", products: ["راهنمای bootstrap", "تمرین ANOVA/Kruskal", "دام‌های multiple testing"], tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER"] },
+    "m1-deg-ii": { title: "ژن‌های با بیان متفاوت II", desc: "bootstrap، مقایسهٔ بیش از دو گروه، one-way ANOVA، Kruskal–Wallis، multiple testing/FWER و گذار به تفسیر gene set.", products: ["راهنمای bootstrap", "تمرین ANOVA/Kruskal", "دام‌های multiple testing"], tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER"] },
     "m1-samples-genes-i": { title: "رابطهٔ نمونه‌ها و ژن‌ها I", desc: "ماتریس genes/probes × samples، شباهت، فاصله، ساختار نمونه‌ها، منطق اولیهٔ clustering و تفسیر الگوهای کلی.", products: ["درس خواندن ماتریس", "آزمونک فاصله نمونه", "تفسیر plot"], tags: ["ماتریس", "نمونه‌ها", "ژن‌ها", "فاصله"] },
     "m1-samples-genes-ii": { title: "رابطهٔ نمونه‌ها و ژن‌ها II", desc: "heatmap، clustering ژن/نمونه، outlier، منطق PCA و پیوند الگوها با phenotype، treatment، tissue یا batch.", products: ["تمرین heatmap", "تفسیر PCA", "خطاهای رایج"], tags: ["heatmap", "clustering", "PCA", "outlier"] },
     "m1-scrna": { title: "درس مهمان: scRNA-seq", desc: "bulk در برابر single-cell RNA-seq، ناهمگنی سلولی، counts/UMI، marker gene، کاهش بعد، clustering و تفسیر dropout.", products: ["مقایسه bulk/single-cell", "واژه‌نامه", "mock question"], tags: ["scRNA-seq", "UMI", "marker", "UMAP"] },
@@ -829,7 +829,7 @@ const DRD_UNIT_I18N = {
     "m2-import-qc": { title: "Pipeline 1: ورود داده + quality check", desc: "دادهٔ خام methylation array، RGSet، MSet_raw، detection p-value، control probe، sample QC و probe QC.", products: ["نمودار RGSet→MSet", "تمرین detection p-value", "چک‌لیست فیلتر"], tags: ["RGSet", "MSet", "detection p-value", "control probes"] },
     "m2-normalization-1": { title: "Pipeline 2: نرمال‌سازی 1", desc: "چرا سیگنال‌های خام متیلاسیون مستقیماً قابل مقایسه نیستند و normalisation چگونه توزیع و تفسیر downstream را تغییر می‌دهد.", products: ["تفسیر density plot", "مقایسه raw/normalized", "واژه‌نامه normalisation"], tags: ["normalisation", "beta values", "density plots", "raw data"] },
     "m2-normalization-2": { title: "Pipeline 2: نرمال‌سازی 2", desc: "Quantile، Noob، SWAN و functional normalisation، شامل background، dye bias، bias نوع probe و تصحیح با control probe.", products: ["مقایسه روش‌ها", "آزمونک Noob/SWAN/Funnorm", "یادداشت تصمیم"], tags: ["Quantile", "Noob", "SWAN", "Funnorm"] },
-    "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "Beta در برابر M values، design matrix، contrasts، DMP، DMR، FDR و PCA.", products: ["walkthrough پایپ‌لاین", "تمرین design matrix", "تفسیر volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
+    "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "کلاس بعدی برنامه‌ریزی‌شده: Beta در برابر M values، design matrix، contrasts، DMP/DMR، FDR و PCA.", products: ["walkthrough پایپ‌لاین", "تمرین design matrix", "تفسیر volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
     "m2-batch-clustering": { title: "Pipeline 4: batch effect، visualization و clustering", desc: "تشخیص/تصحیح batch effect، ComBat، PCA قبل/بعد از تصحیح، heatmap، clustering و یکپارچه‌سازی برای verification test.", products: ["چک‌لیست plot", "توضیح ComBat", "شبیه‌ساز team report"], tags: ["batch effect", "ComBat", "visualization", "clustering"] }
   }
 };
@@ -861,7 +861,7 @@ function drdCopy(lang) {
   return {
     en: {
       updated: "Updated status",
-      asOf: "as of 27 May 2026",
+      asOf: "next scheduled lesson: 4 June 2026",
       module1: "Module 1 — Theory and written-exam reasoning",
       module2: "Module 2 — R/Bioconductor methylation pipeline",
       module1Short: "Module 1",
@@ -882,13 +882,14 @@ function drdCopy(lang) {
       status: "Status",
       tags: "Key tags",
       openLesson: "Open lesson",
+      noMatches: "No matches.",
       deliverables: "Guide deliverables",
       sources: "Source folders considered",
       sourcesBody: "Module 1 PDFs plus the Module 2 Lesson1–Lesson5 folders, including scripts, SampleSheets, manifests, RData objects, normalization outputs and support papers.",
     },
     es: {
       updated: "Estado actualizado",
-      asOf: "al 27 de mayo de 2026",
+      asOf: "siguiente clase programada: 4 de junio de 2026",
       module1: "Module 1 — Teoría y razonamiento para el escrito",
       module2: "Module 2 — Pipeline de metilación en R/Bioconductor",
       module1Short: "Module 1",
@@ -909,13 +910,14 @@ function drdCopy(lang) {
       status: "Estado",
       tags: "Etiquetas clave",
       openLesson: "Abrir lección",
+      noMatches: "Sin resultados.",
       deliverables: "Entregables de la guía",
       sources: "Fuentes consideradas",
       sourcesBody: "PDFs del Module 1 y carpetas Lesson1–Lesson5 del Module 2, incluyendo scripts, SampleSheets, manifests, objetos RData, salidas de normalización y papers de apoyo.",
     },
     fa: {
       updated: "وضعیت به‌روز",
-      asOf: "تا ۲۷ مه ۲۰۲۶",
+      asOf: "کلاس بعدی برنامه‌ریزی‌شده: ۴ ژوئن ۲۰۲۶",
       module1: "ماژول ۱ — نظریه و استدلال برای امتحان نوشتاری",
       module2: "ماژول ۲ — پایپ‌لاین methylation در R/Bioconductor",
       module1Short: "ماژول ۱",
@@ -935,6 +937,8 @@ function drdCopy(lang) {
       incomplete: "ناقص",
       status: "وضعیت",
       tags: "برچسب‌های کلیدی",
+      openLesson: "باز کردن درس",
+      noMatches: "نتیجه‌ای پیدا نشد.",
       deliverables: "خروجی‌ها",
       sources: "منابع در نظر گرفته‌شده",
       sourcesBody: "PDFهای ماژول ۱ و پوشه‌های Lesson1–Lesson5 ماژول ۲، شامل scriptها، SampleSheetها، manifestها، آبجکت‌های RData، خروجی‌های normalization و مقاله‌های پشتیبان.",
@@ -1191,7 +1195,7 @@ function DRDModule({ title, units, progress, toggle, copy, lang }) {
         </div>
       </div>
       <div className="grid gap-4 p-5 md:p-6">
-        {units.length === 0 && <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5 text-sm font-black text-stone-500">No matches.</div>}
+        {units.length === 0 && <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5 text-sm font-black text-stone-500">{copy.noMatches || "No matches."}</div>}
         {units.map(unit => <DRDUnitCard key={unit.id} unit={unit} isDone={!!progress[unit.id]} toggle={() => toggle(unit.id)} copy={copy} lang={lang} />)}
       </div>
     </article>
@@ -1260,6 +1264,8 @@ function DRDUnderConstructionLesson({ unit, lang = "es", isDone, toggle, prevUni
       markComplete: "Mark completed",
       completed: "Completed",
       noNext: "No next lesson yet",
+      moduleLabel: "Module",
+      routeLabel: "Route",
     },
     es: {
       eyebrow: "Página temporal",
@@ -1273,13 +1279,15 @@ function DRDUnderConstructionLesson({ unit, lang = "es", isDone, toggle, prevUni
       keep: "Qué se añadirá",
       keepBody: "La versión final seguirá la misma estructura de las lecciones anteriores: slides fuente dentro del flujo, énfasis de la profesora, watch boxes, checkpoints interactivos y tareas de práctica.",
       deliverables: "Entregables planeados",
-      tags: "Key tags",
+      tags: "Etiquetas clave",
       previous: "Anterior",
       next: "Siguiente",
       dashboard: "DRD dashboard",
       markComplete: "Marcar completada",
       completed: "Completada",
       noNext: "No hay siguiente aún",
+      moduleLabel: "Módulo",
+      routeLabel: "Ruta",
     },
     fa: {
       eyebrow: "صفحهٔ موقت",
@@ -1300,6 +1308,8 @@ function DRDUnderConstructionLesson({ unit, lang = "es", isDone, toggle, prevUni
       markComplete: "علامت کامل‌شده",
       completed: "کامل‌شده",
       noNext: "درس بعدی هنوز نیست",
+      moduleLabel: "ماژول",
+      routeLabel: "مسیر",
     },
   };
   const labels = placeholderLabels[lang] || placeholderLabels.es;
@@ -1328,8 +1338,8 @@ function DRDUnderConstructionLesson({ unit, lang = "es", isDone, toggle, prevUni
           <div className="grid gap-3 sm:grid-cols-2">
             <div className={`rounded-3xl border p-5 ${pillTone}`}><div className="text-xs font-black uppercase tracking-[0.18em] opacity-70">{labels.status}</div><div className="mt-2 text-2xl font-black">{labels.badge}</div></div>
             <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.plannedDate}</div><div className="mt-2 text-2xl font-black text-stone-950">{localized.date}</div></div>
-            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Module</div><div className="mt-2 text-2xl font-black text-stone-950">{localized.code}</div></div>
-            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Route</div><div className="mt-2 text-sm font-black text-stone-950">#/lesson/{localized.id}</div></div>
+            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.moduleLabel}</div><div className="mt-2 text-2xl font-black text-stone-950">{localized.code}</div></div>
+            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.routeLabel}</div><div className="mt-2 text-sm font-black text-stone-950">#/lesson/{localized.id}</div></div>
           </div>
           <div className="mt-5 rounded-3xl bg-stone-950 p-6 text-white">
             <div className={`text-xs font-black uppercase tracking-[0.18em] ${isModule2 ? "text-emerald-200" : "text-red-200"}`}>{labels.eyebrow}</div>

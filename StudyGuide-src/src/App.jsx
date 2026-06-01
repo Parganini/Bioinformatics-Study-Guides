@@ -655,7 +655,7 @@ const DRD_MODULE1_UNITS = [
     status: "covered",
     title: "Illumina BeadChip and methylation platforms",
     desc: "BeadArray design, optical decoding, transcriptomics, bisulfite logic, 27K/450K/EPIC coverage and CpG genomic context.",
-    products: ["visual React lesson", "27K/450K/EPIC comparison", "bisulfite quiz"],
+    products: ["lección visual en React", "27K/450K/EPIC comparison", "bisulfite quiz"],
     tags: ["BeadChip", "bisulfite", "450K", "EPIC"],
     lessonHref: "#/lesson/m1-illumina",
   },
@@ -666,7 +666,7 @@ const DRD_MODULE1_UNITS = [
     status: "covered",
     title: "Differentially expressed genes I",
     desc: "Fold change versus statistical significance, log2 ratios, MA-plots, null and alternative hypotheses, p-values, alpha/beta errors, power and parametric versus non-parametric tests.",
-    products: ["test-selection tree", "p-value exercises", "fold-change traps"],
+    products: ["árbol de selección de test", "ejercicios de valor p", "fold-change traps"],
     tags: ["fold change", "p-value", "power", "MA-plot"],
     lessonHref: "#/lesson/m1-deg-i",
   },
@@ -677,7 +677,7 @@ const DRD_MODULE1_UNITS = [
     status: "covered",
     title: "Differentially expressed genes II",
     desc: "Bootstrap validation, more-than-two-groups logic, one-way ANOVA, Kruskal–Wallis, multiple testing/FWER and the transition toward gene-set interpretation.",
-    products: ["bootstrap walkthrough", "ANOVA/Kruskal decision lab", "multiple-testing traps"],
+    products: ["guía paso a paso de bootstrap", "ANOVA/Kruskal decision lab", "trampas de pruebas múltiples"],
     tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER"],
     lessonHref: "#/lesson/m1-deg-ii",
   },
@@ -688,7 +688,7 @@ const DRD_MODULE1_UNITS = [
     status: "upcoming",
     title: "Relationship between samples and genes I",
     desc: "Matrices of genes/probes by samples, similarity, distance, sample structure, early clustering logic and interpretation of global patterns.",
-    products: ["matrix-reading lesson", "sample-distance quiz", "plot interpretation"],
+    products: ["lección de lectura de matrices", "quiz de distancia entre muestras", "interpretación de plots"],
     tags: ["matrix", "samples", "genes", "distance"],
   },
   {
@@ -698,7 +698,7 @@ const DRD_MODULE1_UNITS = [
     status: "upcoming",
     title: "Relationship between samples and genes II",
     desc: "Heatmaps, gene/sample clustering, outliers, PCA-like reasoning and linking patterns to phenotype, treatment, tissue or batch.",
-    products: ["heatmap practice", "PCA interpretation", "common mistakes"],
+    products: ["práctica de heatmaps", "interpretación de PCA", "errores comunes"],
     tags: ["heatmap", "clustering", "PCA", "outliers"],
   },
   {
@@ -708,7 +708,7 @@ const DRD_MODULE1_UNITS = [
     status: "upcoming",
     title: "Guest lecture: scRNA-seq",
     desc: "Bulk versus single-cell RNA-seq, cellular heterogeneity, counts/UMIs, marker genes, dimensionality reduction, clustering and dropout-aware interpretation.",
-    products: ["bulk-vs-single-cell comparator", "glossary", "mock question"],
+    products: ["comparador bulk vs single-cell", "glossary", "pregunta simulada"],
     tags: ["scRNA-seq", "UMI", "markers", "UMAP"],
   },
 ];
@@ -721,7 +721,7 @@ const DRD_MODULE2_UNITS = [
     status: "covered",
     title: "R/Bioconductor introduction",
     desc: "R basics, packages, scripts, SampleSheet logic, metadata and reproducible analysis habits.",
-    products: ["guided setup", "SampleSheet exercise", "R object glossary"],
+    products: ["configuración guiada", "ejercicio de SampleSheet", "glosario de objetos R"],
     tags: ["R", "Bioconductor", "SampleSheet", "metadata"],
     lessonHref: "#/lesson/m2-r",
   },
@@ -732,7 +732,7 @@ const DRD_MODULE2_UNITS = [
     status: "covered",
     title: "DNA methylation and Illumina BeadChip chemistry",
     desc: "Manifest files, probe annotation, chromosome/position, genes, CpG island context and probe-level interpretation.",
-    products: ["probe annotation quiz", "manifest reading", "chemistry summary"],
+    products: ["quiz de anotación de probes", "lectura de manifest", "resumen de química"],
     tags: ["manifest", "probe ID", "CpG context", "Infinium"],
   },
   {
@@ -742,7 +742,7 @@ const DRD_MODULE2_UNITS = [
     status: "covered",
     title: "Pipeline 1: Data import + quality check",
     desc: "Raw methylation-array data, RGSet, MSet_raw, detection p-values, control probes, sample QC and probe QC.",
-    products: ["RGSet→MSet diagram", "detection p-value practice", "filtering checklist"],
+    products: ["RGSet→MSet diagram", "práctica de detection p-value", "checklist de filtrado"],
     tags: ["RGSet", "MSet", "detection p-value", "control probes"],
   },
   {
@@ -752,7 +752,7 @@ const DRD_MODULE2_UNITS = [
     status: "covered",
     title: "Pipeline 2: Normalization 1",
     desc: "Why raw methylation signals are not directly comparable and how normalization changes distributions and downstream interpretation.",
-    products: ["density-plot interpretation", "raw vs normalized comparison", "normalization glossary"],
+    products: ["density-interpretación de plots", "comparación raw vs normalizado", "glosario de normalización"],
     tags: ["normalization", "beta values", "density plots", "raw data"],
   },
   {
@@ -762,7 +762,7 @@ const DRD_MODULE2_UNITS = [
     status: "covered",
     title: "Pipeline 2: Normalization 2",
     desc: "Quantile, Noob, SWAN and functional normalization, including background, dye bias, probe-type bias and control-probe-based correction.",
-    products: ["method comparator", "Noob/SWAN/Funnorm quiz", "decision notes"],
+    products: ["comparador de métodos", "Noob/SWAN/Funnorm quiz", "notas de decisión"],
     tags: ["Quantile", "Noob", "SWAN", "Funnorm"],
   },
   {
@@ -772,7 +772,7 @@ const DRD_MODULE2_UNITS = [
     status: "active",
     title: "Pipeline 3: DMP/DMR + multiple testing + PCA",
     desc: "Current next scheduled lesson: beta versus M values, design matrix, contrasts, DMP/DMR, FDR and PCA.",
-    products: ["pipeline walkthrough", "design-matrix practice", "volcano/PCA interpretation"],
+    products: ["guía paso a paso del pipeline", "práctica de matriz de diseño", "volcano/interpretación de PCA"],
     tags: ["DMP", "DMR", "FDR", "PCA"],
   },
   {
@@ -782,14 +782,14 @@ const DRD_MODULE2_UNITS = [
     status: "upcoming",
     title: "Pipeline 4: Batch effect, visualization and clustering",
     desc: "Batch effect detection/correction, ComBat, PCA before/after correction, heatmaps, clustering and final verification-test integration.",
-    products: ["plot checklist", "ComBat explainer", "team-report simulator"],
+    products: ["checklist de plots", "explicación de ComBat", "simulador de reporte en equipo"],
     tags: ["batch effect", "ComBat", "visualization", "clustering"],
   },
 ];
 
 const DRD_STUDY_PRODUCTS = [
   { title: "React lessons", desc: "Short visual lessons for Module 1 theory and Module 2 workflow logic, matching the Filogenética style.", tags: ["concepts", "diagrams", "common traps"] },
-  { title: "Interactive quizzes", desc: "Vocabulary, workflow ordering, error spotting, statistical-test selection and plot interpretation.", tags: ["Cy3/Cy5", "RGSet", "FDR", "PCA"] },
+  { title: "Interactive quizzes", desc: "Vocabulary, workflow ordering, error spotting, statistical-test selection and interpretación de plots.", tags: ["Cy3/Cy5", "RGSet", "FDR", "PCA"] },
   { title: "Mock written exams", desc: "Four-question, 45-minute practice sets with 10–12-line model answers for the Module 1 written test.", tags: ["4 questions", "rubric", "model answers"] },
   { title: "Team report simulator", desc: "A Module 2 report scaffold from biological question to QC, normalization, DMP/DMR, PCA, batch effect and interpretation.", tags: ["report", "pipeline", "methylation"] },
 ];
@@ -797,22 +797,22 @@ const DRD_STUDY_PRODUCTS = [
 
 const DRD_UNIT_I18N = {
   es: {
-    "m1-foundations": { title: "Pregunta biológica, diseño experimental y variabilidad", desc: "Convertir una pregunta biológica enfocada en modelo, variables, sample size, técnica, datos cuantitativos e interpretación. Distinguir variabilidad biológica de variabilidad experimental.", products: ["React lesson", "quiz conceptual", "práctica escrita corta"], tags: ["pregunta biológica", "variables", "variabilidad", "ómicas"] },
+    "m1-foundations": { title: "Pregunta biológica, diseño experimental y variabilidad", desc: "Convertir una pregunta biológica enfocada en modelo, variables, sample size, técnica, datos cuantitativos e interpretación. Distinguir variabilidad biológica de variabilidad experimental.", products: ["lección React", "quiz conceptual", "práctica escrita corta"], tags: ["pregunta biológica", "variables", "variabilidad", "ómicas"] },
     "m1-stanford": { title: "Arrays competitivos two-colour: Stanford", desc: "Spotted arrays, targets Cy3/Cy5, dye bias, dye swap, imágenes TIFF/raw y control de calidad a nivel de imagen.", products: ["ordenar workflow", "quiz de errores técnicos", "respuesta tipo examen"], tags: ["two-colour", "Cy3/Cy5", "dye swap", "QC"] },
     "m1-affy": { title: "Affymetrix / ThermoFisher GeneChip", desc: "Arrays no competitivos one-colour, fotolitografía, probes PM/MM, probe sets, archivos DAT/CEL/CDF/CHP, RMA y normalización quantile.", products: ["diagrama de archivos", "comparación PM/MM", "checklist RMA"], tags: ["one-colour", "PM/MM", "RMA", "archivos CEL"] },
-    "m1-illumina": { title: "Illumina BeadChip y plataformas de metilación", desc: "Diseño BeadArray, optical decoding, transcriptómica, lógica de bisulfito, cobertura 27K/450K/EPIC y contexto genómico CpG.", products: ["React lesson visual", "comparación 27K/450K/EPIC", "quiz de bisulfito"], tags: ["BeadChip", "bisulfito", "450K", "EPIC"] },
+    "m1-illumina": { title: "Illumina BeadChip y plataformas de metilación", desc: "Diseño BeadArray, optical decoding, transcriptómica, lógica de bisulfito, cobertura 27K/450K/EPIC y contexto genómico CpG.", products: ["lección visual en React", "comparación 27K/450K/EPIC", "quiz de bisulfito"], tags: ["BeadChip", "bisulfito", "450K", "EPIC"] },
     "m1-deg-i": { title: "Genes diferencialmente expresados I", desc: "Fold change frente a significancia estadística, log2 ratios, MA-plots, hipótesis nula/alternativa, p-values, errores alfa/beta, potencia y tests paramétricos/no paramétricos.", products: ["árbol de selección de test", "ejercicios de p-value", "trampas de fold change"], tags: ["fold change", "p-value", "potencia", "MA-plot"] },
     "m1-deg-ii": { title: "Genes diferencialmente expresados II", desc: "Punto actual del curso: bootstrap, comparación de más de dos grupos, one-way ANOVA, Kruskal–Wallis, multiple testing/FWER y transición hacia interpretación por gene sets.", products: ["walkthrough de bootstrap", "lab ANOVA/Kruskal", "trampas de multiple testing"], tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER"] },
     "m1-samples-genes-i": { title: "Relación entre muestras y genes I", desc: "Matrices genes/probes × muestras, similitud, distancia, estructura de muestras, lógica inicial de clustering e interpretación de patrones globales.", products: ["lectura de matriz", "quiz de distancia entre muestras", "interpretación de plots"], tags: ["matriz", "muestras", "genes", "distancia"] },
     "m1-samples-genes-ii": { title: "Relación entre muestras y genes II", desc: "Heatmaps, clustering de genes/muestras, outliers, razonamiento tipo PCA y conexión de patrones con fenotipo, tratamiento, tejido o batch.", products: ["práctica de heatmap", "interpretación de PCA", "errores comunes"], tags: ["heatmap", "clustering", "PCA", "outliers"] },
-    "m1-scrna": { title: "Clase invitada: scRNA-seq", desc: "Bulk vs single-cell RNA-seq, heterogeneidad celular, counts/UMIs, marker genes, reducción de dimensionalidad, clustering e interpretación de dropouts.", products: ["comparador bulk vs single-cell", "glosario", "mock question"], tags: ["scRNA-seq", "UMI", "markers", "UMAP"] },
+    "m1-scrna": { title: "Clase invitada: scRNA-seq", desc: "Bulk vs single-cell RNA-seq, heterogeneidad celular, counts/UMIs, marker genes, reducción de dimensionalidad, clustering e interpretación de dropouts.", products: ["comparador bulk vs single-cell", "glosario", "pregunta simulada"], tags: ["scRNA-seq", "UMI", "markers", "UMAP"] },
     "m2-r": { title: "Introducción a R/Bioconductor", desc: "Bases de R, paquetes, scripts, lógica de SampleSheet, metadata y hábitos de análisis reproducible.", products: ["setup guiado", "ejercicio SampleSheet", "glosario de objetos R"], tags: ["R", "Bioconductor", "SampleSheet", "metadata"] },
     "m2-manifest": { title: "Metilación de DNA y química Illumina BeadChip", desc: "Manifest files, anotación de probes, cromosoma/posición, genes, contexto CpG island e interpretación a nivel de probe.", products: ["quiz de anotación de probes", "lectura de manifest", "resumen de química"], tags: ["manifest", "probe ID", "contexto CpG", "Infinium"] },
     "m2-import-qc": { title: "Pipeline 1: importación de datos + quality check", desc: "Datos crudos de methylation arrays, RGSet, MSet_raw, detection p-values, control probes, sample QC y probe QC.", products: ["diagrama RGSet→MSet", "práctica detection p-value", "checklist de filtrado"], tags: ["RGSet", "MSet", "detection p-value", "control probes"] },
     "m2-normalization-1": { title: "Pipeline 2: normalización 1", desc: "Por qué las señales crudas de metilación no son directamente comparables y cómo la normalización cambia distribuciones e interpretación downstream.", products: ["interpretación de density plots", "comparación raw vs normalized", "glosario de normalización"], tags: ["normalización", "beta values", "density plots", "raw data"] },
     "m2-normalization-2": { title: "Pipeline 2: normalización 2", desc: "Quantile, Noob, SWAN y functional normalization, incluyendo background, dye bias, sesgo por tipo de probe y corrección basada en control probes.", products: ["comparador de métodos", "quiz Noob/SWAN/Funnorm", "notas de decisión"], tags: ["Quantile", "Noob", "SWAN", "Funnorm"] },
     "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "Siguiente clase programada: beta vs M values, design matrix, contrasts, DMP/DMR, FDR y PCA.", products: ["walkthrough de pipeline", "práctica design matrix", "interpretación volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
-    "m2-batch-clustering": { title: "Pipeline 4: batch effect, visualización y clustering", desc: "Detección/corrección de batch effect, ComBat, PCA antes/después de corrección, heatmaps, clustering e integración para verification test.", products: ["checklist de plots", "explicador ComBat", "simulador de team report"], tags: ["batch effect", "ComBat", "visualización", "clustering"] }
+    "m2-batch-clustering": { title: "Pipeline 4: batch effect, visualización y clustering", desc: "Detección/corrección de batch effect, ComBat, PCA antes/después de corrección, heatmaps, clustering e integración para verification test.", products: ["checklist de plots", "explicador ComBat", "simulador de reporte en equipo"], tags: ["batch effect", "ComBat", "visualización", "clustering"] }
   },
   fa: {
     "m1-foundations": { title: "پرسش زیستی، طراحی آزمایش و تغییرپذیری", desc: "تبدیل پرسش زیستی متمرکز به مدل، متغیرها، اندازهٔ نمونه، تکنیک، دادهٔ کمی و تفسیر؛ تمایز تغییرپذیری زیستی از آزمایشی.", products: ["درس React", "آزمونک مفهومی", "تمرین نوشتاری کوتاه"], tags: ["پرسش زیستی", "متغیرها", "تغییرپذیری", "اومیکس"] },
@@ -823,14 +823,14 @@ const DRD_UNIT_I18N = {
     "m1-deg-ii": { title: "ژن‌های با بیان متفاوت II", desc: "bootstrap، مقایسهٔ بیش از دو گروه، one-way ANOVA، Kruskal–Wallis، multiple testing/FWER و گذار به تفسیر gene set.", products: ["راهنمای bootstrap", "تمرین ANOVA/Kruskal", "دام‌های multiple testing"], tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER"] },
     "m1-samples-genes-i": { title: "رابطهٔ نمونه‌ها و ژن‌ها I", desc: "ماتریس genes/probes × samples، شباهت، فاصله، ساختار نمونه‌ها، منطق اولیهٔ clustering و تفسیر الگوهای کلی.", products: ["درس خواندن ماتریس", "آزمونک فاصله نمونه", "تفسیر plot"], tags: ["ماتریس", "نمونه‌ها", "ژن‌ها", "فاصله"] },
     "m1-samples-genes-ii": { title: "رابطهٔ نمونه‌ها و ژن‌ها II", desc: "heatmap، clustering ژن/نمونه، outlier، منطق PCA و پیوند الگوها با phenotype، treatment، tissue یا batch.", products: ["تمرین heatmap", "تفسیر PCA", "خطاهای رایج"], tags: ["heatmap", "clustering", "PCA", "outlier"] },
-    "m1-scrna": { title: "درس مهمان: scRNA-seq", desc: "bulk در برابر single-cell RNA-seq، ناهمگنی سلولی، counts/UMI، marker gene، کاهش بعد، clustering و تفسیر dropout.", products: ["مقایسه bulk/single-cell", "واژه‌نامه", "mock question"], tags: ["scRNA-seq", "UMI", "marker", "UMAP"] },
+    "m1-scrna": { title: "درس مهمان: scRNA-seq", desc: "bulk در برابر single-cell RNA-seq، ناهمگنی سلولی، counts/UMI، marker gene، کاهش بعد، clustering و تفسیر dropout.", products: ["مقایسه bulk/single-cell", "واژه‌نامه", "pregunta simulada"], tags: ["scRNA-seq", "UMI", "marker", "UMAP"] },
     "m2-r": { title: "معرفی R/Bioconductor", desc: "مبانی R، پکیج‌ها، اسکریپت‌ها، منطق SampleSheet، metadata و عادت‌های تحلیل reproducible.", products: ["setup راهنما", "تمرین SampleSheet", "واژه‌نامه اشیای R"], tags: ["R", "Bioconductor", "SampleSheet", "metadata"] },
     "m2-manifest": { title: "متیلاسیون DNA و شیمی Illumina BeadChip", desc: "manifest file، annotation پروب، chromosome/position، gene، CpG island context و تفسیر در سطح probe.", products: ["آزمونک annotation probe", "خواندن manifest", "خلاصه شیمی"], tags: ["manifest", "probe ID", "CpG context", "Infinium"] },
     "m2-import-qc": { title: "Pipeline 1: ورود داده + quality check", desc: "دادهٔ خام methylation array، RGSet، MSet_raw، detection p-value، control probe، sample QC و probe QC.", products: ["نمودار RGSet→MSet", "تمرین detection p-value", "چک‌لیست فیلتر"], tags: ["RGSet", "MSet", "detection p-value", "control probes"] },
     "m2-normalization-1": { title: "Pipeline 2: نرمال‌سازی 1", desc: "چرا سیگنال‌های خام متیلاسیون مستقیماً قابل مقایسه نیستند و normalisation چگونه توزیع و تفسیر downstream را تغییر می‌دهد.", products: ["تفسیر density plot", "مقایسه raw/normalized", "واژه‌نامه normalisation"], tags: ["normalisation", "beta values", "density plots", "raw data"] },
     "m2-normalization-2": { title: "Pipeline 2: نرمال‌سازی 2", desc: "Quantile، Noob، SWAN و functional normalisation، شامل background، dye bias، bias نوع probe و تصحیح با control probe.", products: ["مقایسه روش‌ها", "آزمونک Noob/SWAN/Funnorm", "یادداشت تصمیم"], tags: ["Quantile", "Noob", "SWAN", "Funnorm"] },
     "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "کلاس بعدی برنامه‌ریزی‌شده: Beta در برابر M values، design matrix، contrasts، DMP/DMR، FDR و PCA.", products: ["walkthrough پایپ‌لاین", "تمرین design matrix", "تفسیر volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
-    "m2-batch-clustering": { title: "Pipeline 4: batch effect، visualization و clustering", desc: "تشخیص/تصحیح batch effect، ComBat، PCA قبل/بعد از تصحیح، heatmap، clustering و یکپارچه‌سازی برای verification test.", products: ["چک‌لیست plot", "توضیح ComBat", "شبیه‌ساز team report"], tags: ["batch effect", "ComBat", "visualization", "clustering"] }
+    "m2-batch-clustering": { title: "Pipeline 4: batch effect، visualization و clustering", desc: "تشخیص/تصحیح batch effect، ComBat، PCA قبل/بعد از تصحیح، heatmap، clustering و یکپارچه‌سازی برای verification test.", products: ["چک‌لیست plot", "توضیح ComBat", "شبیه‌ساز reporte en equipo"], tags: ["batch effect", "ComBat", "visualization", "clustering"] }
   }
 };
 
@@ -842,14 +842,14 @@ const DRD_PRODUCT_I18N = {
   es: {
     "React lessons": { title: "Lecciones React", desc: "Lecciones visuales breves para teoría de Module 1 y lógica de workflow de Module 2, con el estilo de Filogenética.", tags: ["conceptos", "diagramas", "trampas comunes"] },
     "Interactive quizzes": { title: "Quizzes interactivos", desc: "Vocabulario, ordenar workflows, detectar errores, elegir tests estadísticos e interpretar plots.", tags: ["Cy3/Cy5", "RGSet", "FDR", "PCA"] },
-    "Mock written exams": { title: "Mock exams escritos", desc: "Prácticas de 45 minutos con 4 preguntas y respuestas modelo de 10–12 líneas para Module 1.", tags: ["4 preguntas", "rúbrica", "respuestas modelo"] },
-    "Team report simulator": { title: "Simulador de team report", desc: "Estructura de reporte de Module 2 desde pregunta biológica hasta QC, normalización, DMP/DMR, PCA, batch effect e interpretación.", tags: ["reporte", "pipeline", "metilación"] }
+    "Mock written exams": { title: "Exámenes simulados escritos", desc: "Prácticas de 45 minutos con 4 preguntas y respuestas modelo de 10–12 líneas para Module 1.", tags: ["4 preguntas", "rúbrica", "respuestas modelo"] },
+    "Team report simulator": { title: "Simulador de reporte en equipo", desc: "Estructura de reporte de Module 2 desde pregunta biológica hasta QC, normalización, DMP/DMR, PCA, batch effect e interpretación.", tags: ["reporte", "pipeline", "metilación"] }
   },
   fa: {
     "React lessons": { title: "درس‌های React", desc: "درس‌های تصویری کوتاه برای نظریهٔ Module 1 و منطق workflow در Module 2، مشابه سبک Filogenética.", tags: ["مفهوم‌ها", "نمودارها", "دام‌های رایج"] },
     "Interactive quizzes": { title: "آزمونک‌های تعاملی", desc: "واژه‌ها، ترتیب workflow، تشخیص خطا، انتخاب آزمون آماری و تفسیر plot.", tags: ["Cy3/Cy5", "RGSet", "FDR", "PCA"] },
     "Mock written exams": { title: "امتحان‌های آزمایشی نوشتاری", desc: "تمرین‌های ۴۵ دقیقه‌ای با ۴ پرسش و پاسخ مدل ۱۰–۱۲ خطی برای Module 1.", tags: ["۴ پرسش", "rubric", "پاسخ مدل"] },
-    "Team report simulator": { title: "شبیه‌ساز team report", desc: "اسکلت گزارش Module 2 از پرسش زیستی تا QC، نرمال‌سازی، DMP/DMR، PCA، batch effect و تفسیر.", tags: ["گزارش", "پایپ‌لاین", "متیلاسیون"] }
+    "Team report simulator": { title: "شبیه‌ساز reporte en equipo", desc: "اسکلت گزارش Module 2 از پرسش زیستی تا QC، نرمال‌سازی، DMP/DMR، PCA، batch effect و تفسیر.", tags: ["گزارش", "پایپ‌لاین", "متیلاسیون"] }
   }
 };
 
@@ -864,8 +864,8 @@ function drdCopy(lang) {
       asOf: "next scheduled lesson: 4 June 2026",
       module1: "Module 1 — Theory and written-exam reasoning",
       module2: "Module 2 — R/Bioconductor methylation pipeline",
-      module1Short: "Module 1",
-      module2Short: "Module 2",
+      module1Short: "Módulo 1",
+      module2Short: "Módulo 2",
       coveredNow: "Covered or in progress",
       upcoming: "Still scheduled",
       evaluation: "Evaluation map",
@@ -873,7 +873,7 @@ function drdCopy(lang) {
       report: "Team report: methylation dataset analysis pipeline, delivered before the exam date.",
       products: "Study-guide products",
       productsBody: "This dashboard is the blueprint for the full guide: lessons, quizzes, mock exams and written/report practice.",
-      roadmap: "Roadmap",
+      roadmap: "Cronograma",
       search: "Search DNA/RNA topics...",
       pending: "Upcoming topics included from the programme",
       mark: "Mark",
@@ -890,18 +890,18 @@ function drdCopy(lang) {
     es: {
       updated: "Estado actualizado",
       asOf: "siguiente clase programada: 4 de junio de 2026",
-      module1: "Module 1 — Teoría y razonamiento para el escrito",
-      module2: "Module 2 — Pipeline de metilación en R/Bioconductor",
-      module1Short: "Module 1",
-      module2Short: "Module 2",
+      module1: "Módulo 1 — Teoría y razonamiento para el escrito",
+      module2: "Módulo 2 — Pipeline de metilación en R/Bioconductor",
+      module1Short: "Módulo 1",
+      module2Short: "Módulo 2",
       coveredNow: "Cubierto o en curso",
       upcoming: "Aún programado",
       evaluation: "Mapa de evaluación",
       writtenExam: "Test escrito: 45 min, 4 preguntas, unas 10–12 líneas por respuesta.",
-      report: "Team report: análisis de un dataset de metilación, entregado antes del examen.",
+      report: "Reporte en equipo: análisis de un dataset de metilación, entregado antes del examen.",
       products: "Productos de la guía",
       productsBody: "Este dashboard es el plano de la guía completa: lecciones, quizzes, mock exams y práctica escrita/de reporte.",
-      roadmap: "Roadmap",
+      roadmap: "Cronograma",
       search: "Buscar temas de DNA/RNA...",
       pending: "Temas pendientes incluidos desde el programa",
       mark: "Marcar",
@@ -913,7 +913,7 @@ function drdCopy(lang) {
       noMatches: "Sin resultados.",
       deliverables: "Entregables de la guía",
       sources: "Fuentes consideradas",
-      sourcesBody: "PDFs del Module 1 y carpetas Lesson1–Lesson5 del Module 2, incluyendo scripts, SampleSheets, manifests, objetos RData, salidas de normalización y papers de apoyo.",
+      sourcesBody: "PDFs del Módulo 1 y carpetas Lección 1–Lección 5 del Módulo 2, incluyendo scripts, SampleSheets, manifests, objetos RData, salidas de normalización y papers de apoyo.",
     },
     fa: {
       updated: "وضعیت به‌روز",
@@ -1127,7 +1127,7 @@ function DRDApp({ t, lang, hash }) {
       />
 
       <section className="mt-8 grid gap-5 lg:grid-cols-3">
-        <Stat label={copy.evaluation} value="20 + 10" note="Module 1 written score + Module 2 team report" />
+        <Stat label={copy.evaluation} value="20 + 10" note="Module 1 written score + Module 2 reporte en equipo" />
         <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm lg:col-span-2">
           <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.evaluation}</div>
           <div className="mt-4 grid gap-4 md:grid-cols-2">

@@ -52,8 +52,8 @@ const IMG = {
 };
 
 const UI = {
-  en: { current: "M1.6", dashboard: "DRD dashboard", previous: "Previous", next: "Next", previousTitle: "M1.5 DE genes I", nextTitle: "M1.7 Samples and genes I", mark: "Mark completed", done: "Completed", resources: "Class resources", slides: "Slides", transcript: "Transcript", recording: "Recording", slide: "Slide", zoom: "Click to zoom", close: "Close zoom", professor: "Professor emphasis", exam: "Exam watch", expand: "Open expanded answer", include: "What to include", trap: "Common trap", model: "Sample answer", checkpoint: "Checkpoint", words: "words", module: "Module", writtenExam: "Written test", answerLines: "Answer lines", core: "Core idea", bigIdea: "Big idea", heroEyebrow: "Module 1 · May 27 · Differentially expressed genes II", heroTitle: "From significant genes to reliable biological interpretation", heroSubtitle: "A slide-guided lesson on bootstrap confirmation, one-way ANOVA, Kruskal–Wallis, multiple testing, Bonferroni/FDR/BH correction and gene-set enrichment analysis.", tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER", "FDR", "GSEA"], bigIdeaText: "After you obtain p-values, the work is not finished: you must ask whether the signal is reproducible, whether the design has more than two groups, whether thousands of tests inflate false positives, and how the final list becomes a biological story." },
-  es: { current: "M1.6", dashboard: "Dashboard DRD", previous: "Anterior", next: "Siguiente", previousTitle: "M1.5 DE genes I", nextTitle: "M1.7 Muestras y genes I", mark: "Marcar completada", done: "Completada", resources: "Recursos de clase", slides: "Slides", transcript: "Transcripción", recording: "Grabación", slide: "Diapo", zoom: "Clic para ampliar", close: "Cerrar zoom", professor: "Énfasis de la profesora", exam: "Ojo para examen", expand: "Abrir respuesta desarrollada", include: "Qué incluir", trap: "Trampa frecuente", model: "Respuesta modelo", checkpoint: "Checkpoint", words: "palabras", module: "Módulo", writtenExam: "Examen escrito", answerLines: "Líneas", core: "Idea clave", bigIdea: "Idea central", heroEyebrow: "Módulo 1 · 27 de mayo · Differentially expressed genes II", heroTitle: "De genes significativos a interpretación biológica fiable", heroSubtitle: "Lección guiada por slides sobre bootstrap, one-way ANOVA, Kruskal–Wallis, multiple testing, correcciones Bonferroni/FDR/BH y gene-set enrichment analysis.", tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER", "FDR", "GSEA"], bigIdeaText: "Después de obtener p-values, el análisis no termina: hay que preguntar si la señal es reproducible, si el diseño tiene más de dos grupos, si miles de tests inflan falsos positivos y cómo la lista final se convierte en una historia biológica." },
+  en: { current: "M1.6", dashboard: "DRD dashboard", previous: "Previous", next: "Next", previousTitle: "M1.5 DE genes I", nextTitle: "M1.7 Samples and genes I", mark: "Mark completed", done: "Completed", resources: "Class resources", slides: "Diapositivas", transcript: "Transcript", recording: "Recording", slide: "Slide", zoom: "Click to zoom", close: "Close zoom", professor: "Professor emphasis", exam: "Exam watch", expand: "Open expanded answer", include: "What to include", trap: "Common trap", model: "Sample answer", checkpoint: "Punto de control", words: "words", module: "Module", writtenExam: "Written test", answerLines: "Answer lines", core: "Core idea", bigIdea: "Big idea", heroEyebrow: "Module 1 · May 27 · Differentially expressed genes II", heroTitle: "From significant genes to reliable biological interpretation", heroSubtitle: "A slide-guided lesson on bootstrap confirmation, one-way ANOVA, Kruskal–Wallis, multiple testing, Bonferroni/FDR/BH correction and gene-set enrichment analysis.", tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER", "FDR", "GSEA"], bigIdeaText: "After you obtain p-values, the work is not finished: you must ask whether the signal is reproducible, whether the design has more than two groups, whether thousands of tests inflate false positives, and how the final list becomes a biological story." },
+  es: { current: "M1.6", dashboard: "Dashboard DRD", previous: "Anterior", next: "Siguiente", previousTitle: "M1.5 DE genes I", nextTitle: "M1.7 Muestras y genes I", mark: "Marcar completada", done: "Completada", resources: "Recursos de clase", slides: "Diapositivas", transcript: "Transcripción", recording: "Grabación", slide: "Diapo", zoom: "Clic para ampliar", close: "Cerrar zoom", professor: "Énfasis de la profesora", exam: "Ojo para examen", expand: "Abrir respuesta desarrollada", include: "Qué incluir", trap: "Trampa frecuente", model: "Respuesta modelo", checkpoint: "Punto de control", words: "palabras", module: "Módulo", writtenExam: "Examen escrito", answerLines: "Líneas", core: "Idea clave", bigIdea: "Idea central", heroEyebrow: "Módulo 1 · 27 de mayo · Genes diferencialmente expresados II", heroTitle: "De genes significativos a interpretación biológica fiable", heroSubtitle: "Lección guiada por diapositivas sobre bootstrap, one-way ANOVA, Kruskal–Wallis, pruebas múltiples, correcciones Bonferroni/FDR/BH y análisis de enriquecimiento de conjuntos de genes.", tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER", "FDR", "GSEA"], bigIdeaText: "Después de obtener p-values, el análisis no termina: hay que preguntar si la señal es reproducible, si el diseño tiene más de dos grupos, si miles de tests inflan falsos positivos y cómo la lista final se convierte en una historia biológica." },
   fa: { current: "M1.6", dashboard: "داشبورد DRD", previous: "قبلی", next: "بعدی", previousTitle: "M1.5 DE genes I", nextTitle: "M1.7 نمونه‌ها و ژن‌ها I", mark: "علامت‌گذاری به‌عنوان کامل", done: "کامل شد", resources: "منابع کلاس", slides: "اسلایدها", transcript: "رونوشت", recording: "ضبط", slide: "اسلاید", zoom: "برای بزرگ‌نمایی کلیک کنید", close: "بستن بزرگ‌نمایی", professor: "تأکید استاد", exam: "نکتهٔ امتحان", expand: "پاسخ کامل را باز کنید", include: "چه چیزهایی بیاوریم", trap: "اشتباه رایج", model: "پاسخ نمونه", checkpoint: "چک‌پوینت", words: "کلمه", module: "ماژول", writtenExam: "آزمون کتبی", answerLines: "خط پاسخ", core: "ایدهٔ اصلی", bigIdea: "ایدهٔ مرکزی", heroEyebrow: "ماژول ۱ · ۲۷ مه · ژن‌های با بیان متفاوت II", heroTitle: "از ژن‌های معنی‌دار تا تفسیر زیستی قابل اعتماد", heroSubtitle: "درس مبتنی بر اسلاید دربارهٔ bootstrap، one-way ANOVA، Kruskal–Wallis، multiple testing، Bonferroni/FDR/BH و gene-set enrichment analysis.", tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER", "FDR", "GSEA"], bigIdeaText: "پس از گرفتن p-value کار تمام نمی‌شود: باید ببینید سیگنال پایدار است یا نه، طراحی بیش از دو گروه دارد یا نه، هزاران آزمون خطای مثبت کاذب را زیاد می‌کند یا نه، و فهرست نهایی چگونه به تفسیر زیستی تبدیل می‌شود." }
 };
 function getUi(lang = "es") { return UI[lang] || UI.es; }
@@ -169,7 +169,7 @@ COPY.fa = {
 
 const LAB_COPY = {
   en: {
-    h0: "Null hypothesis", pSoftware: "Auto p-value (approx.)", alpha: "Alpha decision", reject: "Reject H0", retain: "Do not reject H0", reset: "Reset example", group: "Group", labWarning: "This mini-lab calculates an approximate p-value in-browser. For real work, confirm exact p-values, assumptions and diagnostics in R/software.",
+    h0: "Null hypothesis", step: "Step", result: "Result", pSoftware: "Auto p-value (approx.)", alpha: "Alpha decision", reject: "Reject H0", retain: "Do not reject H0", reset: "Reset example", group: "Group", labWarning: "This mini-lab calculates an approximate p-value in-browser. For real work, confirm exact p-values, assumptions and diagnostics in R/software.",
     bootstrap: { title: "Bootstrap p-value mini-lab", intro: "Keep the preloaded result or change the number of bootstrap replicates and extreme statistics.", reps: "Bootstrap replicates", extreme: "Replicates as or more extreme than observed", observed: "Observed statistic", h0: "H0: the observed group difference could be produced by random reshuffling under the null." },
     anova: { title: "Editable one-way ANOVA walkthrough", intro: "Use three or more groups. The lab calculates group means, grand mean, SSB, SSW, MS, F and an approximate p-value automatically.", h0: "H0: all group means are equal.", groups: ["Normal / wild type", "Mutant", "Double mutant"] },
     kruskal: { title: "Editable Kruskal–Wallis walkthrough", intro: "Use three or more groups. The lab pools all values, assigns ranks with averaged ties, sums ranks by group and calculates H.", h0: "H0: the medians/rank distributions of all groups are equal.", groups: ["Control", "Treatment 1", "Treatment 2"] },
@@ -179,7 +179,7 @@ const LAB_COPY = {
     gsea: { title: "GSEA interpretation sorter", intro: "Select what each output tells you. The goal is to translate a long gene list into a biological interpretation.", items: ["NES", "FDR", "GO term", "KEGG/Reactome", "Permutation"], answers: { NES: "Normalized enrichment strength, adjusted for set size and permutations.", FDR: "Expected false-discovery proportion for the enriched term.", "GO term": "Functional category such as apoptosis or T-cell activation.", "KEGG/Reactome": "Pathway-level interpretation such as MAPK signaling or oxidative phosphorylation.", Permutation: "Internal reshuffling used to test whether enrichment is stronger than expected by chance." } }
   },
   es: {
-    h0: "Hipótesis nula", pSoftware: "p-value automático (aprox.)", alpha: "Decisión por alpha", reject: "Rechazar H0", retain: "No rechazar H0", reset: "Restaurar ejemplo", group: "Grupo", labWarning: "Este mini-lab calcula un p-value aproximado en el navegador. En un análisis real, confirma p-values exactos, supuestos y diagnósticos en R/software.",
+    h0: "Hipótesis nula", step: "Paso", result: "Resultado", pSoftware: "p-value automático (aprox.)", alpha: "Decisión por alpha", reject: "Rechazar H0", retain: "No rechazar H0", reset: "Restaurar ejemplo", group: "Grupo", labWarning: "Este mini-lab calcula un p-value aproximado en el navegador. En un análisis real, confirma p-values exactos, supuestos y diagnósticos en R/software.",
     bootstrap: { title: "Mini-lab de p-value bootstrap", intro: "Mantén el resultado precargado o cambia el número de réplicas bootstrap y estadísticas extremas.", reps: "Réplicas bootstrap", extreme: "Réplicas tan extremas o más que la observada", observed: "Estadístico observado", h0: "H0: la diferencia observada entre grupos podría producirse por remezcla aleatoria bajo la nula." },
     anova: { title: "Walkthrough editable de one-way ANOVA", intro: "Usa tres o más grupos. El lab calcula medias, grand mean, SSB, SSW, MS, F y un p-value aproximado automáticamente.", h0: "H0: todas las medias de grupo son iguales.", groups: ["Normal / wild type", "Mutant", "Double mutant"] },
     kruskal: { title: "Walkthrough editable de Kruskal–Wallis", intro: "Usa tres o más grupos. El lab junta valores, asigna rangos con empates promediados, suma rangos por grupo y calcula H.", h0: "H0: las medianas/distribuciones de rangos de todos los grupos son iguales.", groups: ["Control", "Treatment 1", "Treatment 2"] },
@@ -193,6 +193,7 @@ const LAB_COPY = {
 LAB_COPY.fa = {
   ...LAB_COPY.en,
   h0: "فرضیهٔ صفر",
+  step: "گام", result: "نتیجه",
   pSoftware: "p-value خودکار (تقریبی)",
   alpha: "تصمیم بر اساس alpha",
   reject: "رد H0",
@@ -208,6 +209,91 @@ LAB_COPY.fa = {
   bh: { title: "جدول قابل ویرایش Benjamini–Hochberg", intro: "p-valueها را وارد کنید، q را انتخاب کنید و بزرگ‌ترین p-value را پیدا کنید که p(i) ≤ (i/m)q را برآورده می‌کند.", pvalues: "p-valueها", q: "FDR q انتخابی", cutoff: "cutoff BH", significant: "p-valueهای معنی‌دار" },
   gsea: { title: "مرتب‌ساز تفسیر GSEA", intro: "انتخاب کنید هر output چه معنایی دارد. هدف تبدیل یک gene list بلند به تفسیر زیستی است.", items: ["NES", "FDR", "GO term", "KEGG/Reactome", "Permutation"], answers: { NES: "قدرت enrichment نرمال‌شده بر اساس اندازهٔ set و permutationها.", FDR: "نسبت مورد انتظار false discovery برای term غنی‌شده.", "GO term": "دستهٔ عملکردی مثل apoptosis یا T-cell activation.", "KEGG/Reactome": "تفسیر pathway مثل MAPK signaling یا oxidative phosphorylation.", Permutation: "reshuffling داخلی برای آزمودن اینکه enrichment قوی‌تر از شانس است یا نه." } }
 };
+
+
+const L07_ES_STRINGS = {
+  "H is approximately chi-square distributed": "H se distribuye aproximadamente como chi-square",
+  "Control, treatment 1 and treatment 2 are pooled into one ranked list.": "Control, tratamiento 1 y tratamiento 2 se combinan en una sola lista con rangos.",
+  "Familywise error rate": "Tasa de error familiar",
+  "Permutation": "Permutación",
+  "GSEA interpretation sorter": "Clasificador de interpretación GSEA",
+  "Sorter de interpretación GSEA": "Clasificador de interpretación GSEA"
+};
+const L07_FA_STRINGS = {
+  "Part II of differential expression": "بخش دوم بیان متفاوت ژن‌ها",
+  "The pipeline now moves from choosing a test to confirming results, handling more than two groups and interpreting gene lists.": "pipeline اکنون از انتخاب test به تأیید نتایج، مدیریت بیش از دو گروه و تفسیر فهرست ژن‌ها می‌رسد.",
+  "The starting problem: p < 0.01 is not the end": "مسئلهٔ شروع: p < 0.01 پایان کار نیست",
+  "RYK appears significant in ALL vs AML after Welch's t-test, but the professor asks whether the result could still be due to chance.": "RYK پس از Welch t-test در مقایسهٔ ALL و AML معنی‌دار به نظر می‌رسد، اما استاد می‌پرسد آیا هنوز ممکن است نتیجه تصادفی باشد یا نه.",
+  "Resampling under H0": "resampling تحت H0",
+  "Combine the two groups, reshuffle/resample while keeping the original group sizes, recompute t, and build a null distribution of t statistics.": "دو گروه را ترکیب کنید، با حفظ اندازهٔ گروه‌های اصلی reshuffle/resample کنید، t را دوباره محاسبه کنید و توزیع صفر برای t statistic بسازید.",
+  "Observed t at the edge": "t مشاهده‌شده در انتهای توزیع",
+  "If the original t is in the extreme tail of the bootstrap distribution, the first significant result is supported rather than dismissed as chance.": "اگر t اصلی در tail انتهایی توزیع bootstrap باشد، نتیجهٔ معنی‌دار اولیه پشتیبانی می‌شود و صرفاً شانس تلقی نمی‌شود.",
+  "She says the key idea is conceptual: compare your real statistic with a distribution generated from reshuffled data with similar properties.": "می‌گوید ایدهٔ اصلی مفهومی است: statistic واقعی خود را با توزیعی مقایسه کنید که از داده‌های reshuffled با ویژگی‌های مشابه ساخته شده است.",
+  "Student, non-parametric and bootstrap are not the same tool": "Student، non-parametric و bootstrap یک ابزار واحد نیستند",
+  "The professor contrasts power, robustness and goal: t-tests are powerful but assumption-sensitive; non-parametric tests are robust but less powerful; bootstrap confirms chance risk.": "استاد power، robustness و هدف را مقایسه می‌کند: t-testها پرقدرت اما حساس به assumption هستند؛ testهای non-parametric مقاوم‌تر اما کم‌قدرت‌ترند؛ bootstrap خطر شانس را تأیید/رد می‌کند.",
+  "One-way vs two-way ANOVA": "ANOVA یک‌طرفه در برابر دوطرفه",
+  "One-way means one explanatory variable with more than two levels. Two-way means two variables, for example sex plus treatment dose.": "one-way یعنی یک متغیر توضیحی با بیش از دو level. two-way یعنی دو متغیر، مثلاً جنس به‌علاوهٔ dose درمان.",
+  "F = MS between / MS within": "F = MS بین گروه‌ها / MS داخل گروه‌ها",
+  "The F statistic becomes large when differences among group means are large relative to variability inside groups.": "F statistic وقتی بزرگ می‌شود که اختلاف میانگین گروه‌ها نسبت به variability داخل گروه‌ها زیاد باشد.",
+  "Assumptions matter": "فرض‌ها مهم‌اند",
+  "Use ANOVA when distributions are treated as parametric and variances are similar. Otherwise, move toward Kruskal–Wallis.": "ANOVA را وقتی استفاده کنید که distributionها parametric در نظر گرفته می‌شوند و varianceها مشابه‌اند. در غیر این صورت به Kruskal–Wallis بروید.",
+  "From SS to MS to F": "از SS به MS و سپس F",
+  "The example produces F = 3.316 with df1 = 2 and df2 = 10.": "مثال F = 3.316 با df1 = 2 و df2 = 10 تولید می‌کند.",
+  "Decision and post-hoc logic": "تصمیم و منطق post-hoc",
+  "Because Fcritical = 4.10 is greater than Fobserved = 3.316, H0 is not rejected at 95% confidence. If ANOVA were significant, a post-hoc pairwise test would identify which groups differ.": "چون Fcritical = 4.10 بزرگ‌تر از Fobserved = 3.316 است، H0 در سطح confidence 95% رد نمی‌شود. اگر ANOVA معنی‌دار بود، post-hoc pairwise test مشخص می‌کرد کدام گروه‌ها فرق دارند.",
+  "H0: medians are equal": "H0: میانه‌ها برابرند",
+  "Kruskal–Wallis is non-parametric, rank-based and compares between-group rank variability with overall rank variability.": "Kruskal–Wallis non-parametric و rank-based است و variability رتبه‌ها بین گروه‌ها را با variability کلی رتبه‌ها مقایسه می‌کند.",
+  "H is approximately chi-square distributed": "H تقریباً توزیع chi-square دارد",
+  "The decision uses a chi-square-like distribution with k − 1 degrees of freedom.": "تصمیم با توزیعی شبیه chi-square و k − 1 درجهٔ آزادی انجام می‌شود.",
+  "The example starts with three groups": "مثال با سه گروه شروع می‌شود",
+  "Control, treatment 1 and treatment 2 are pooled into one ranked list.": "Control، treatment 1 و treatment 2 در یک فهرست رتبه‌بندی‌شده ترکیب می‌شوند.",
+  "Rank sums produce H = 6.72": "جمع رتبه‌ها H = 6.72 می‌دهد",
+  "The example sums ranks per group and inserts those sums into the simplified H formula.": "مثال rankهای هر گروه را جمع می‌کند و آن‌ها را در فرمول سادهٔ H قرار می‌دهد.",
+  "Hobs > Hcritical": "Hobs > Hcritical",
+  "With df = 2 and α = 0.05, Hcritical = 5.99. Because 6.72 is more extreme, H0 is rejected.": "با df = 2 و α = 0.05، Hcritical = 5.99 است. چون 6.72 extremeتر است، H0 رد می‌شود.",
+  "FWER grows with the number of tests": "FWER با تعداد testها افزایش می‌یابد",
+  "The familywise error rate is the probability of at least one Type I error across a family of hypothesis tests.": "familywise error rate احتمال حداقل یک خطای نوع I در مجموعه‌ای از hypothesis testهاست.",
+  "Only five tests already inflate the risk": "حتی پنج test هم ریسک را بالا می‌برد",
+  "With α = 0.05 and n = 5 tests, FWER is about 22.6%. The professor calls this an enormous error rate for only five hypotheses.": "با α = 0.05 و n = 5 test، FWER حدود 22.6% است. استاد آن را برای فقط پنج hypothesis نرخ خطای بسیار بزرگی می‌داند.",
+  "Bonferroni controls FWER": "Bonferroni، FWER را کنترل می‌کند",
+  "New α = 0.05 / m. For 1,000 genes this becomes 0.00005.": "alpha جدید = 0.05 / m. برای ۱۰۰۰ ژن این مقدار 0.00005 می‌شود.",
+  "A realistic matrix has thousands of rows": "یک matrix واقعی هزاران row دارد",
+  "In the example there are 6,350 mRNAs, two unrelated groups and one p-value for each gene.": "در مثال ۶۳۵۰ mRNA، دو گروه نامرتبط و یک p-value برای هر ژن وجود دارد.",
+  "Bonferroni can become too stringent": "Bonferroni می‌تواند بیش از حد سخت‌گیرانه شود",
+  "For 6,350 tests, α becomes 7.9 × 10⁻⁶. The professor says this can remove all significant genes in transcriptomics.": "برای ۶۳۵۰ test، α برابر 7.9 × 10⁻⁶ می‌شود. استاد می‌گوید این می‌تواند همهٔ ژن‌های معنی‌دار را در transcriptomics حذف کند.",
+  "Expected false positives at several thresholds": "false positiveهای مورد انتظار در چند threshold",
+  "The table compares expected false positives with observed significant genes under different α.": "جدول false positiveهای مورد انتظار را با ژن‌های معنی‌دار مشاهده‌شده در alphaهای مختلف مقایسه می‌کند.",
+  "FDR = expected false positives / observed genes": "FDR = false positive مورد انتظار / ژن‌های مشاهده‌شده",
+  "FDR estimates the proportion of false discoveries inside the selected results.": "FDR نسبت false discoveryها را در نتایج انتخاب‌شده تخمین می‌زند.",
+  "FDR logic in four steps": "منطق FDR در چهار گام",
+  "Choose thresholds, count significant genes, estimate expected false positives, choose an acceptable rate and correct p-values.": "threshold انتخاب کنید، ژن‌های معنی‌دار را بشمارید، false positiveهای مورد انتظار را تخمین بزنید، نرخ قابل قبول انتخاب کنید و p-valueها را اصلاح کنید.",
+  "BH ranks p-values and applies rank thresholds": "BH p-valueها را رتبه‌بندی می‌کند و threshold رتبه‌ای اعمال می‌کند",
+  "The p-values are ordered from lowest to highest; each rank receives a critical value (i/m)q.": "p-valueها از کم به زیاد مرتب می‌شوند؛ هر rank مقدار بحرانی (i/m)q می‌گیرد.",
+  "The BH critical cutoff": "cutoff بحرانی BH",
+  "The largest p-value satisfying p(i) ≤ (i/m)q is retained; genes below that rank are called significant.": "بزرگ‌ترین p-value که شرط p(i) ≤ (i/m)q را دارد نگه داشته می‌شود؛ ژن‌های زیر آن rank معنی‌دار در نظر گرفته می‌شوند.",
+  "Rules for identifying differentially expressed genes": "قواعد شناسایی ژن‌های با بیان متفاوت",
+  "Start from normalized data, define question/design, choose the correct test, correct multiple testing and interpret up/down lists.": "از دادهٔ normalize‌شده شروع کنید، پرسش/طراحی را تعریف کنید، test درست را انتخاب کنید، multiple testing را اصلاح کنید و فهرست‌های up/down را تفسیر کنید.",
+  "GSEA starts from gene lists": "GSEA از فهرست ژن‌ها شروع می‌کند",
+  "GSEA or functional enrichment asks whether biological classes are over-represented in a large set of modified genes.": "GSEA یا functional enrichment می‌پرسد آیا کلاس‌های زیستی در مجموعهٔ بزرگی از ژن‌های تغییرکرده بیش‌نمایی شده‌اند یا نه.",
+  "Defined gene sets are compared between states": "gene setهای تعریف‌شده بین stateها مقایسه می‌شوند",
+  "The GSEA definition emphasizes concordant and statistically significant differences between biological states.": "تعریف GSEA بر تفاوت‌های همسو و از نظر آماری معنی‌دار بین stateهای زیستی تأکید دارد.",
+  "Typical outputs: GO, KEGG, Reactome": "خروجی‌های معمول: GO، KEGG، Reactome",
+  "It can return apoptosis, T-cell activation, MAPK signaling, oxidative phosphorylation and up/down direction.": "می‌تواند apoptosis، T-cell activation، MAPK signaling، oxidative phosphorylation و جهت up/down را برگرداند.",
+  "NES normalizes enrichment": "NES enrichment را نرمال می‌کند",
+  "NES corrects enrichment score by gene-set size and variability across permutations.": "NES enrichment score را بر اساس اندازهٔ gene set و variability بین permutationها اصلاح می‌کند.",
+  "NES + FDR order the interpretation": "NES + FDR ترتیب تفسیر را می‌سازند",
+  "The professor says biologists often look at the top terms with high NES and low FDR to build the interpretation.": "استاد می‌گوید زیست‌شناسان معمولاً برای ساخت تفسیر به top termها با NES بالا و FDR پایین نگاه می‌کنند."
+};
+function translateDeep(value, dict) {
+  if (typeof value === "string") return dict[value] || value;
+  if (Array.isArray(value)) return value.map((item) => translateDeep(item, dict));
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, val]) => [key, translateDeep(val, dict)]));
+  return value;
+}
+COPY.es = translateDeep(COPY.es, L07_ES_STRINGS);
+COPY.fa = translateDeep(COPY.fa, L07_FA_STRINGS);
+LAB_COPY.es = translateDeep(LAB_COPY.es, L07_ES_STRINGS);
+LAB_COPY.fa = translateDeep(LAB_COPY.fa, L07_FA_STRINGS);
 
 const EXAM_BANK = {
   en: [

@@ -25,6 +25,7 @@ import DRDLesson04 from "./lessons/drd/Lesson04.jsx";
 import DRDLesson05 from "./lessons/drd/Lesson05.jsx";
 import DRDLesson06 from "./lessons/drd/Lesson06.jsx";
 import DRDLesson07 from "./lessons/drd/Lesson07.jsx";
+import DRDLesson08 from "./lessons/drd/Lesson08.jsx";
 
 
 const LANGS = [
@@ -734,6 +735,7 @@ const DRD_MODULE2_UNITS = [
     desc: "Manifest files, probe annotation, chromosome/position, genes, CpG island context and probe-level interpretation.",
     products: ["quiz de anotación de probes", "lectura de manifest", "resumen de química"],
     tags: ["manifest", "probe ID", "CpG context", "Infinium"],
+    lessonHref: "#/lesson/m2-manifest",
   },
   {
     id: "m2-import-qc",
@@ -1076,6 +1078,9 @@ function DRDApp({ t, lang, hash }) {
   }
   if (lessonId === "m2-r" || lessonId === "04") {
     return <DRDLesson04 lang={lang} isDone={!!progress["m2-r"]} toggle={() => toggle("m2-r")} />;
+  }
+  if (lessonId === "m2-manifest" || lessonId === "m2-2") {
+    return <DRDLesson08 lang={lang} isDone={!!progress["m2-manifest"]} toggle={() => toggle("m2-manifest")} />;
   }
   if (lessonId === "m1-illumina" || lessonId === "05") {
     return <DRDLesson05 lang={lang} isDone={!!progress["m1-illumina"]} toggle={() => toggle("m1-illumina")} />;

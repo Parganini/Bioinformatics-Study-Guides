@@ -25,13 +25,13 @@ const slideImages = [slide01, slide02, slide03, slide04, slide05, slide06, slide
 
 const ui = {
   en: {
-    mark: "Mark completed", done: "Completed", dashboard: "DRD dashboard", previous: "Previous", next: "Next", previousTitle: "M2.1 R/Bioconductor intro", nextTitle: "M2.3 Data import + QC", current: "M2.2", resources: "Class resources", slides: "Slides", transcript: "Transcript", recording: "Recording", open: "Open", zoom: "Click to zoom", close: "Close zoom", slide: "Slide", reportWatch: "Report watch", openAnswer: "Open expanded answer", include: "What to include", trap: "Common trap", model: "Report-ready wording", code: "R code", interpretation: "Interpretation", checkpoint: "Checkpoint", correct: "Correct", notQuite: "Not quite", showAnswer: "Show answer", hideAnswer: "Hide answer", words: "words", trainer: "Report paragraph trainer", placeholder: "Write a report-style paragraph here...", quiz: "Quick checkpoint quiz"
+    mark: "Mark completed", done: "Completed", dashboard: "DRD dashboard", previous: "Previous", next: "Next", previousTitle: "M2.1 R/Bioconductor intro", nextTitle: "M2.3 Data import + QC", current: "M2.2", resources: "Class resources", slides: "Slides", transcript: "Transcript", recording: "Recording", open: "Open", zoom: "Click to zoom", close: "Close zoom", slide: "Slide", reportWatch: "Report watch", openAnswer: "Open expanded answer", include: "What to include", trap: "Common trap", model: "Report-ready wording", code: "R code", interpretation: "Interpretation", checkpoint: "Checkpoint", correct: "Correct", notQuite: "Not quite", showAnswer: "Show answer", hideAnswer: "Hide answer", words: "words", trainer: "Report paragraph trainer", placeholder: "Write a report-style paragraph here...", quiz: "Quick checkpoint quiz", reportMove: "Report move"
   },
   es: {
-    mark: "Marcar completada", done: "Completada", dashboard: "Dashboard DRD", previous: "Anterior", next: "Siguiente", previousTitle: "M2.1 Intro R/Bioconductor", nextTitle: "M2.3 Importación + QC", current: "M2.2", resources: "Recursos de clase", slides: "Slides", transcript: "Transcripción", recording: "Recording", open: "Abrir", zoom: "Click para ampliar", close: "Cerrar zoom", slide: "Diapositiva", reportWatch: "Report watch", openAnswer: "Abrir respuesta desarrollada", include: "Qué incluir", trap: "Trampa común", model: "Redacción lista para report", code: "Código R", interpretation: "Interpretación", checkpoint: "Checkpoint", correct: "Correcto", notQuite: "Casi", showAnswer: "Mostrar respuesta", hideAnswer: "Ocultar respuesta", words: "palabras", trainer: "Entrenador de párrafo de report", placeholder: "Escribe aquí un párrafo estilo report...", quiz: "Quiz rápido de checkpoint"
+    mark: "Marcar completada", done: "Completada", dashboard: "Dashboard DRD", previous: "Anterior", next: "Siguiente", previousTitle: "M2.1 Intro R/Bioconductor", nextTitle: "M2.3 Importación + QC", current: "M2.2", resources: "Recursos de clase", slides: "Slides", transcript: "Transcripción", recording: "Recording", open: "Abrir", zoom: "Click para ampliar", close: "Cerrar zoom", slide: "Diapositiva", reportWatch: "Report watch", openAnswer: "Abrir respuesta desarrollada", include: "Qué incluir", trap: "Trampa común", model: "Redacción lista para report", code: "Código R", interpretation: "Interpretación", checkpoint: "Checkpoint", correct: "Correcto", notQuite: "Casi", showAnswer: "Mostrar respuesta", hideAnswer: "Ocultar respuesta", words: "palabras", trainer: "Entrenador de párrafo de report", placeholder: "Escribe aquí un párrafo estilo report...", quiz: "Quiz rápido de checkpoint", reportMove: "Movimiento para report"
   },
   fa: {
-    mark: "علامت کامل‌شده", done: "کامل شد", dashboard: "داشبورد DRD", previous: "قبلی", next: "بعدی", previousTitle: "M2.1 معرفی R/Bioconductor", nextTitle: "M2.3 ورود داده + QC", current: "M2.2", resources: "منابع کلاس", slides: "اسلایدها", transcript: "رونوشت", recording: "Recording", open: "باز کردن", zoom: "برای بزرگ‌نمایی کلیک کن", close: "بستن بزرگ‌نمایی", slide: "اسلاید", reportWatch: "نکته برای گزارش", openAnswer: "باز کردن پاسخ کامل", include: "چه چیزهایی باید بیاید", trap: "دام رایج", model: "عبارت آماده برای گزارش", code: "کد R", interpretation: "تفسیر", checkpoint: "Checkpoint", correct: "درست", notQuite: "نه کاملاً", showAnswer: "نمایش پاسخ", hideAnswer: "پنهان کردن پاسخ", words: "کلمه", trainer: "تمرین پاراگراف گزارش", placeholder: "یک پاراگراف به سبک گزارش بنویسید...", quiz: "کوئیز سریع"
+    mark: "علامت کامل‌شده", done: "کامل شد", dashboard: "داشبورد DRD", previous: "قبلی", next: "بعدی", previousTitle: "M2.1 معرفی R/Bioconductor", nextTitle: "M2.3 ورود داده + QC", current: "M2.2", resources: "منابع کلاس", slides: "اسلایدها", transcript: "رونوشت", recording: "Recording", open: "باز کردن", zoom: "برای بزرگ‌نمایی کلیک کن", close: "بستن بزرگ‌نمایی", slide: "اسلاید", reportWatch: "نکته برای گزارش", openAnswer: "باز کردن پاسخ کامل", include: "چه چیزهایی باید بیاید", trap: "دام رایج", model: "عبارت آماده برای گزارش", code: "کد R", interpretation: "تفسیر", checkpoint: "Checkpoint", correct: "درست", notQuite: "نه کاملاً", showAnswer: "نمایش پاسخ", hideAnswer: "پنهان کردن پاسخ", words: "کلمه", trainer: "تمرین پاراگراف گزارش", placeholder: "یک پاراگراف به سبک گزارش بنویسید...", quiz: "کوئیز سریع", reportMove: "حرکت مناسب گزارش"
   }
 };
 
@@ -41,13 +41,13 @@ const copy = {
     title: { en: "From Infinium chemistry to manifest-file analysis", es: "De la química Infinium al análisis del manifest file", fa: "از شیمی Infinium تا تحلیل manifest file" },
     subtitle: { en: "A practical lesson that first follows the PDF slides and then walks line by line through the R HTML code used to inspect the Illumina 450K manifest.", es: "Una lección práctica que primero sigue las diapositivas reales del PDF y después recorre, paso a paso, el HTML de código R para inspeccionar el manifest Illumina 450K.", fa: "این درس ابتدا اسلایدهای واقعی PDF را دنبال می‌کند و سپس کد R داخل HTML را مرحله‌به‌مرحله برای بررسی manifest 450K توضیح می‌دهد." },
     tags: { en: ["methylation", "CpG context", "bisulfite", "Infinium I/II", "manifest", "R walkthrough"], es: ["metilación", "contexto CpG", "bisulfito", "Infinium I/II", "manifest", "walkthrough R"], fa: ["متیلاسیون", "CpG context", "bisulfite", "Infinium I/II", "manifest", "R walkthrough"] },
-    bigIdea: { en: "The manifest is the bridge between wet-lab chemistry and analysis code: every probe row tells you what was measured, where it maps, how it was designed, and how its signal should be interpreted.", es: "El manifest es el puente entre la química de laboratorio y el código de análisis: cada fila de probe te dice qué se midió, dónde mapea, cómo se diseñó y cómo debe interpretarse su señal.", fa: "manifest پل بین شیمی آزمایشگاهی و کد تحلیل است: هر ردیف probe می‌گوید چه چیزی سنجیده شده، کجا map می‌شود، چگونه طراحی شده و سیگنال آن چگونه باید تفسیر شود." }
+    bigIdea: { en: "bisulfite chemistry → Infinium I/II design → manifest import → clean probes → table/plot → report", es: "química de bisulfito → diseño Infinium I/II → importar manifest → limpiar probes → tabla/gráfico → report", fa: "شیمی bisulfite → طراحی Infinium I/II → import manifest → پاک‌سازی probe → table/plot → گزارش" }
   },
   stats: [
-    { label: { en: "Module", es: "Módulo", fa: "ماژول" }, value: "2" },
-    { label: { en: "Assessment", es: "Evaluación", fa: "ارزیابی" }, value: "Report" },
-    { label: { en: "Source", es: "Fuente", fa: "منبع" }, value: "PDF + HTML" },
-    { label: { en: "Core idea", es: "Idea central", fa: "ایده اصلی" }, value: "manifest" }
+    { label: { en: "Module", es: "Módulo", fa: "ماژول" }, value: "2", tone: "green" },
+    { label: { en: "Date", es: "Fecha", fa: "تاریخ" }, value: "May 13/14" },
+    { label: { en: "Core", es: "Core", fa: "محور" }, value: "manifest", tone: "green" },
+    { label: { en: "Output", es: "Output", fa: "خروجی" }, value: "Report" }
   ],
   introSections: [
     {
@@ -296,8 +296,30 @@ barplot(ratio_I_II)`,
 
 function cx(...classes) { return classes.filter(Boolean).join(" "); }
 function t(value, lang) { return typeof value === "object" && value !== null ? (value[lang] || value.es || value.en || value.fa || "") : value; }
-function Pill({ children, className = "" }) { return <span className={cx("inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-emerald-700", className)}>{children}</span>; }
-function ResourceButton({ href, children, active = false }) { return <a href={href} target="_blank" rel="noreferrer" className={cx("flex-1 rounded-2xl border px-5 py-3 text-center text-sm font-black shadow-sm transition hover:-translate-y-0.5", active ? "border-emerald-500 bg-emerald-600 text-white" : "border-stone-200 bg-white text-stone-900 hover:border-emerald-200")}>{children}</a>; }
+function Pill({ children, className = "", tone = "green" }) {
+  const styles = tone === "stone"
+    ? "border-stone-200 bg-white px-3 py-1 text-stone-700"
+    : "border-emerald-200 bg-emerald-50 px-3 py-1 text-emerald-700";
+  return <span className={cx("inline-flex items-center rounded-full border text-xs font-black uppercase tracking-[0.16em]", styles, className)}>{children}</span>;
+}
+function StatCard({ label, value, tone = "stone" }) {
+  return <div className={cx("rounded-3xl border p-4", tone === "green" ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50")}>
+    <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{label}</div>
+    <div className="mt-2 text-3xl font-black text-stone-950">{value}</div>
+  </div>;
+}
+function ResourceLinks({ lang }) {
+  const labels = ui[lang] || ui.es;
+  const linkBase = "rounded-full border px-4 py-2 text-center text-sm font-black transition hover:-translate-y-0.5 hover:shadow-md";
+  return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4">
+    <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div>
+    <div className="grid gap-2 sm:grid-cols-3">
+      <a href={SLIDES_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-white")}>{labels.slides}</a>
+      <a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-200 bg-white text-stone-800 hover:bg-stone-50")}>{labels.transcript}</a>
+      <a href={RECORDING_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-800 bg-stone-950 text-white hover:bg-emerald-700")}>{labels.recording}</a>
+    </div>
+  </div>;
+}
 
 function LessonNav({ lang, isDone, toggle, bottom = false }) {
   const labels = ui[lang] || ui.es;
@@ -314,23 +336,28 @@ function LessonNav({ lang, isDone, toggle, bottom = false }) {
 }
 
 function Hero({ lang }) {
-  const labels = ui[lang] || ui.es;
-  return <header className="grid overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white shadow-sm lg:grid-cols-[1.1fr_0.9fr]">
-    <div className="bg-emerald-50/60 p-8 md:p-12">
-      <Pill>{t(copy.hero.eyebrow, lang)}</Pill>
-      <h1 className="mt-6 max-w-3xl text-5xl font-black leading-[0.95] tracking-[-0.05em] text-stone-950 md:text-7xl">{t(copy.hero.title, lang)}</h1>
-      <p className="mt-6 max-w-2xl text-lg font-semibold leading-8 text-stone-700">{t(copy.hero.subtitle, lang)}</p>
-      <div className="mt-7 flex flex-wrap gap-2">{t(copy.hero.tags, lang).map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black uppercase tracking-[0.12em] text-stone-700">{tag}</span>)}</div>
-    </div>
-    <aside className="bg-white p-6 md:p-8">
-      <div className="grid grid-cols-2 gap-3">{copy.stats.map(item => <div key={t(item.label, lang)} className="rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{t(item.label, lang)}</div><div className="mt-2 text-3xl font-black text-stone-950">{item.value}</div></div>)}</div>
-      <div className="mt-4 rounded-[1.5rem] bg-stone-950 p-6 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Big idea</div><p className="mt-3 text-lg font-black leading-7">{t(copy.hero.bigIdea, lang)}</p></div>
-      <div className="mt-4 rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4">
-        <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div>
-        <div className="mt-3 flex flex-col gap-2 sm:flex-row"><ResourceButton href={SLIDES_URL} active>{labels.slides} ↗</ResourceButton><ResourceButton href={TRANSCRIPT_URL}>{labels.transcript} ↗</ResourceButton><ResourceButton href={RECORDING_URL}>{labels.recording} ↗</ResourceButton></div>
+  return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#f3fff7]/95 shadow-xl shadow-stone-900/5">
+    <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="p-7 md:p-10 lg:p-12">
+        <Pill>{t(copy.hero.eyebrow, lang)}</Pill>
+        <h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{t(copy.hero.title, lang)}</h1>
+        <p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{t(copy.hero.subtitle, lang)}</p>
+        <div className="mt-6 flex flex-wrap gap-2">{t(copy.hero.tags, lang).map(tag => <Pill key={tag} tone="stone">{tag}</Pill>)}</div>
       </div>
-    </aside>
-  </header>;
+      <div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0">
+        <div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner">
+          <div className="grid grid-cols-2 gap-3">
+            {copy.stats.map(item => <StatCard key={t(item.label, lang)} label={t(item.label, lang)} value={item.value} tone={item.tone}/>) }
+          </div>
+          <div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Pipeline mindset</div>
+            <p className="mt-2 text-lg font-bold leading-7">{t(copy.hero.bigIdea, lang)}</p>
+          </div>
+          <ResourceLinks lang={lang}/>
+        </div>
+      </div>
+    </div>
+  </section>;
 }
 
 function SectionHeader({ eyebrow, title, children }) {
@@ -359,7 +386,7 @@ function IntroBlocks({ lang }) {
 function SlideDeck({ lang, onZoom }) {
   const labels = ui[lang] || ui.es;
   const slides = copy.slideNotes.map((note, index) => ({ ...note, src: slideImages[index], n: index + 1 }));
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-5 shadow-sm md:p-8">
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
     <SectionHeader eyebrow="PDF slides" title={lang === "es" ? "Diapositivas reales extraídas del PDF" : lang === "fa" ? "اسلایدهای واقعی استخراج‌شده از PDF" : "Real slides extracted from the PDF"}>{lang === "es" ? "Las tarjetas mantienen el flujo de la clase. Haz click para ampliar la slide original." : lang === "fa" ? "کارت‌ها جریان کلاس را حفظ می‌کنند. برای بزرگ‌نمایی اسلاید اصلی کلیک کنید." : "The cards preserve the class flow. Click to zoom into the original slide."}</SectionHeader>
     <div className="mt-6 grid gap-6 md:grid-cols-2">{slides.map((item, index) => <article key={item.n} className={cx("rounded-[2rem] border border-stone-200 bg-stone-50 p-4", slides.length % 2 === 1 && index === slides.length - 1 && "md:col-span-2")}>
       <button type="button" onClick={() => onZoom(item)} className="group block w-full text-left">
@@ -372,29 +399,54 @@ function SlideDeck({ lang, onZoom }) {
   </section>;
 }
 
-function CodeResult({ step, lang }) {
+function CodeStepArticle({ step, lang, index }) {
   const labels = ui[lang] || ui.es;
-  return <div className="mt-6 grid gap-4 lg:grid-cols-2">
-    <div className="rounded-[1.5rem] bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">{labels.code}</div><pre className="mt-3 overflow-x-auto whitespace-pre-wrap text-sm font-bold leading-7"><code>{step.code}</code></pre></div>
-    <div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.interpretation}</div><p className="mt-3 text-base font-bold leading-8 text-stone-800">{t(step.interpretation, lang)}</p><div className="mt-4 rounded-2xl border border-emerald-200 bg-white p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">Report</div><p className="mt-2 text-sm font-bold leading-7 text-emerald-950">{t(step.report, lang)}</p></div></div>
-  </div>;
+  return <article className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5 shadow-sm md:p-6">
+    <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+      <div>
+        <Pill tone="green">{t(step.label, lang)}</Pill>
+        <h3 className="mt-3 text-2xl font-black tracking-[-0.02em] text-stone-950">{t(step.title, lang)}</h3>
+      </div>
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-stone-950 text-sm font-black text-white">{index + 1}</div>
+    </div>
+    <div className="mt-5 grid gap-4 xl:grid-cols-[1.08fr_0.92fr]">
+      <div className="rounded-[1.5rem] bg-stone-950 p-5 text-white">
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">{labels.code}</div>
+        <pre className="mt-3 overflow-x-auto whitespace-pre-wrap text-sm font-bold leading-7"><code>{step.code}</code></pre>
+      </div>
+      <div className="space-y-4">
+        <div className="rounded-[1.5rem] border border-stone-200 bg-white p-5">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.interpretation}</div>
+          <p className="mt-3 text-base font-bold leading-8 text-stone-800">{t(step.interpretation, lang)}</p>
+        </div>
+        <div className="rounded-[1.5rem] border border-emerald-200 bg-emerald-50 p-5">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{labels.reportMove}</div>
+          <p className="mt-3 text-sm font-black leading-7 text-emerald-950">{t(step.report, lang)}</p>
+        </div>
+      </div>
+    </div>
+  </article>;
 }
 
 function CodeWalkthrough({ lang }) {
-  const labels = ui[lang] || ui.es;
-  const [active, setActive] = useState(copy.codeSteps[0].id);
-  const step = copy.codeSteps.find(item => item.id === active) || copy.codeSteps[0];
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-5 shadow-sm md:p-8">
-    <SectionHeader eyebrow="R HTML" title={lang === "es" ? "Walkthrough explicativo del código" : lang === "fa" ? "walkthrough توضیحی کد" : "Explanatory code walkthrough"}>{lang === "es" ? "Esta segunda parte sigue los chunks del HTML, pero los traduce a decisiones de análisis y frases que puedes usar en el report." : lang === "fa" ? "این بخش chunkهای HTML را دنبال می‌کند و آن‌ها را به تصمیم‌های تحلیلی و جملات مناسب گزارش تبدیل می‌کند." : "This second part follows the HTML chunks but translates them into analysis decisions and report-ready phrasing."}</SectionHeader>
-    <div className="mt-6 flex gap-2 overflow-x-auto pb-2">{copy.codeSteps.map(item => <button key={item.id} type="button" onClick={() => setActive(item.id)} className={cx("shrink-0 rounded-full border px-4 py-2 text-sm font-black transition", active === item.id ? "border-emerald-500 bg-emerald-600 text-white" : "border-stone-200 bg-white text-stone-700 hover:border-emerald-200")}>{t(item.label, lang)}</button>)}</div>
-    <div className="mt-6 rounded-[2rem] border border-stone-200 bg-stone-50 p-5"><Pill>{labels.checkpoint}</Pill><h3 className="mt-3 text-2xl font-black text-stone-950">{t(step.title, lang)}</h3><CodeResult step={step} lang={lang}/></div>
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+    <SectionHeader eyebrow="R HTML" title={lang === "es" ? "Walkthrough explicativo del código" : lang === "fa" ? "walkthrough توضیحی کد" : "Explanatory code walkthrough"}>
+      {lang === "es"
+        ? "La segunda mitad queda abierta en una secuencia vertical: no hay pestañas ni una única celda activa. Cada bloque muestra el código, qué objeto produce, cómo interpretarlo y qué frase podría convertirse en parte del report."
+        : lang === "fa"
+          ? "نیمه دوم به‌صورت یک توالی عمودی باز نمایش داده می‌شود؛ tab یا سلول فعال واحدی وجود ندارد. هر بلوک کد، object حاصل، تفسیر و جمله مناسب گزارش را نشان می‌دهد."
+          : "The second half is now a fully open vertical sequence: no tabs and no single active cell. Each block shows the code, the object it creates, how to interpret it, and how it can become report wording."}
+    </SectionHeader>
+    <div className="mt-6 space-y-6">
+      {copy.codeSteps.map((step, index) => <CodeStepArticle key={step.id} step={step} lang={lang} index={index}/>)}
+    </div>
   </section>;
 }
 
 function Checkpoints({ lang }) {
   const labels = ui[lang] || ui.es;
   const [selected, setSelected] = useState({});
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-5 shadow-sm md:p-8">
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
     <SectionHeader eyebrow={labels.checkpoint} title={lang === "es" ? "Comprobaciones rápidas de comprensión" : lang === "fa" ? "بررسی سریع فهم" : "Quick understanding checks"}>{lang === "es" ? "La opción seleccionada queda remarcada para que recuerdes qué respondiste." : lang === "fa" ? "گزینه انتخاب‌شده مشخص می‌ماند تا پاسخ خود را ببینید." : "The selected option stays highlighted so you can see what you chose."}</SectionHeader>
     <div className="mt-6 grid gap-4 lg:grid-cols-3">{copy.checks.map((item, idx) => <article key={t(item.q, lang)} className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5"><p className="font-black leading-7 text-stone-950">{t(item.q, lang)}</p><div className="mt-4 flex flex-col gap-2">{item.options.map(option => <button key={option.key} type="button" onClick={() => setSelected({ ...selected, [idx]: option.key })} className={cx("rounded-2xl border px-3 py-2 text-left text-sm font-bold", selected[idx] === option.key ? (option.key === item.correct ? "border-emerald-400 bg-emerald-100 text-emerald-900" : "border-red-300 bg-red-100 text-red-900") : "border-stone-200 bg-white text-stone-700")}>{t(option, lang)}</button>)}</div>{selected[idx] && <p className="mt-4 rounded-2xl bg-white p-4 text-sm font-bold leading-6 text-stone-700"><span className="font-black">{selected[idx] === item.correct ? labels.correct : labels.notQuite}.</span> {t(item.why, lang)}</p>}</article>)}</div>
   </section>;
@@ -403,7 +455,7 @@ function Checkpoints({ lang }) {
 function Quiz({ lang }) {
   const labels = ui[lang] || ui.es;
   const [open, setOpen] = useState({});
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-5 shadow-sm md:p-8">
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
     <SectionHeader eyebrow="Quiz" title={labels.quiz}>{lang === "es" ? "Preguntas cortas para repasar antes de pasar a M2.3." : lang === "fa" ? "پرسش‌های کوتاه برای مرور قبل از M2.3." : "Short questions to review before moving to M2.3."}</SectionHeader>
     <div className="mt-6 grid gap-3">{copy.quiz.map((item, idx) => <article key={t(item.q, lang)} className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="flex gap-4"><div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-stone-950 text-sm font-black text-white">{idx + 1}</div><div className="min-w-0 flex-1"><p className="font-bold text-stone-900">{t(item.q, lang)}</p><button type="button" onClick={() => setOpen({ ...open, [idx]: !open[idx] })} className="mt-4 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-bold text-emerald-700 hover:bg-emerald-100">{open[idx] ? labels.hideAnswer : labels.showAnswer}</button>{open[idx] && <p className="mt-4 rounded-2xl bg-white p-4 text-sm font-semibold leading-6 text-stone-700">{t(item.a, lang)}</p>}</div></div></article>)}</div>
   </section>;
@@ -414,7 +466,7 @@ function Trainer({ lang }) {
   const [text, setText] = useState("");
   const [show, setShow] = useState(false);
   const words = useMemo(() => (text.trim() ? text.trim().split(/\s+/).length : 0), [text]);
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-5 shadow-sm md:p-8">
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
     <SectionHeader eyebrow="Report" title={labels.trainer}>{t(copy.trainerPrompt, lang)}</SectionHeader>
     <textarea value={text} onChange={event => setText(event.target.value)} placeholder={labels.placeholder} className="mt-5 min-h-44 w-full rounded-3xl border border-stone-200 bg-white p-4 text-sm font-semibold leading-7 outline-none focus:border-emerald-300"/>
     <div className="mt-3 flex flex-wrap items-center justify-between gap-3"><span className="text-sm font-bold text-stone-500">{words} {labels.words}</span><button type="button" onClick={() => setShow(!show)} className="rounded-full bg-stone-950 px-5 py-3 text-sm font-black text-white hover:bg-emerald-700">{show ? labels.hideAnswer : labels.showAnswer}</button></div>

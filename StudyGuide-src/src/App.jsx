@@ -27,6 +27,7 @@ import DRDLesson06 from "./lessons/drd/Lesson06.jsx";
 import DRDLesson07 from "./lessons/drd/Lesson07.jsx";
 import DRDLesson08 from "./lessons/drd/Lesson08.jsx";
 import DRDLesson09 from "./lessons/drd/Lesson09.jsx";
+import DRDLesson10 from "./lessons/drd/Lesson10.jsx";
 
 
 const LANGS = [
@@ -758,6 +759,7 @@ const DRD_MODULE2_UNITS = [
     desc: "Why raw methylation signals are not directly comparable and how normalization changes distributions and downstream interpretation.",
     products: ["density-interpretación de plots", "comparación raw vs normalizado", "glosario de normalización"],
     tags: ["normalization", "beta values", "density plots", "raw data"],
+    lessonHref: "#/lesson/m2-normalization-1",
   },
   {
     id: "m2-normalization-2",
@@ -1087,6 +1089,9 @@ function DRDApp({ t, lang, hash }) {
 
   if (lessonId === "m2-import-qc" || lessonId === "m2-3") {
     return <DRDLesson09 lang={lang} isDone={!!progress["m2-import-qc"]} toggle={() => toggle("m2-import-qc")} />;
+  }
+  if (lessonId === "m2-normalization-1" || lessonId === "m2-4") {
+    return <DRDLesson10 lang={lang} isDone={!!progress["m2-normalization-1"]} toggle={() => toggle("m2-normalization-1")} />;
   }
   if (lessonId === "m1-illumina" || lessonId === "05") {
     return <DRDLesson05 lang={lang} isDone={!!progress["m1-illumina"]} toggle={() => toggle("m1-illumina")} />;

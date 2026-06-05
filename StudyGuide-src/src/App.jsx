@@ -26,6 +26,7 @@ import DRDLesson05 from "./lessons/drd/Lesson05.jsx";
 import DRDLesson06 from "./lessons/drd/Lesson06.jsx";
 import DRDLesson07 from "./lessons/drd/Lesson07.jsx";
 import DRDLesson08 from "./lessons/drd/Lesson08.jsx";
+import DRDLesson09 from "./lessons/drd/Lesson09.jsx";
 
 
 const LANGS = [
@@ -746,6 +747,7 @@ const DRD_MODULE2_UNITS = [
     desc: "Raw methylation-array data, RGSet, MSet_raw, detection p-values, control probes, sample QC and probe QC.",
     products: ["RGSet→MSet diagram", "práctica de detection p-value", "checklist de filtrado"],
     tags: ["RGSet", "MSet", "detection p-value", "control probes"],
+    lessonHref: "#/lesson/m2-import-qc",
   },
   {
     id: "m2-normalization-1",
@@ -1081,6 +1083,10 @@ function DRDApp({ t, lang, hash }) {
   }
   if (lessonId === "m2-manifest" || lessonId === "m2-2") {
     return <DRDLesson08 lang={lang} isDone={!!progress["m2-manifest"]} toggle={() => toggle("m2-manifest")} />;
+  }
+
+  if (lessonId === "m2-import-qc" || lessonId === "m2-3") {
+    return <DRDLesson09 lang={lang} isDone={!!progress["m2-import-qc"]} toggle={() => toggle("m2-import-qc")} />;
   }
   if (lessonId === "m1-illumina" || lessonId === "05") {
     return <DRDLesson05 lang={lang} isDone={!!progress["m1-illumina"]} toggle={() => toggle("m1-illumina")} />;

@@ -54,7 +54,7 @@ const COPY = {
     next: "Next",
     current: "M2.1",
     previousTitle: "M1.3 Affymetrix GeneChip",
-    nextTitle: "M1.4 Illumina BeadChip",
+    nextTitle: "M2.2 DNA methylation + BeadChip chemistry",
     heroEyebrow: "Module 2 · May 8 · R/Bioconductor introduction",
     heroTitle: "From R basics to SampleSheet thinking",
     heroSubtitle: "A practical bridge from biological metadata to reproducible methylation-array analysis in R.",
@@ -85,12 +85,6 @@ const COPY = {
     functionLabTitle: "Function lab: match command to purpose",
     dataTypeTitle: "Data-type classifier",
     subsetTitle: "Subsetting mini-practice",
-    functionEyebrow: "R commands",
-    functionIntro: "Match the command with the idea you should remember from the lesson.",
-    objectEyebrow: "Objects",
-    objectIntro: "Reveal the most appropriate R type for each piece of metadata.",
-    subsetEyebrow: "SampleSheet",
-    subsetQuestion: "Which command keeps all columns but selects only samples with Age > 50?",
     quizIntro: "Use these as quick active-recall checks before moving to the practical scripts.",
     showAnswer: "Show answer",
     hideAnswer: "Hide answer",
@@ -232,7 +226,7 @@ const COPY = {
     next: "Siguiente",
     current: "M2.1",
     previousTitle: "M1.3 Affymetrix GeneChip",
-    nextTitle: "M1.4 Illumina BeadChip",
+    nextTitle: "M2.2 Metilación de DNA + química BeadChip",
     heroEyebrow: "Module 2 · 8 de mayo · Introducción a R/Bioconductor",
     heroTitle: "De las bases de R al pensamiento SampleSheet",
     heroSubtitle: "Un puente práctico entre metadata biológica y análisis reproducible de methylation arrays en R.",
@@ -263,12 +257,6 @@ const COPY = {
     functionLabTitle: "Laboratorio de funciones: comando → propósito",
     dataTypeTitle: "Clasificador de tipos de datos",
     subsetTitle: "Mini-práctica de subsetting",
-    functionEyebrow: "Comandos de R",
-    functionIntro: "Relaciona cada comando con la idea que debes recordar de la clase.",
-    objectEyebrow: "Objetos",
-    objectIntro: "Revela el tipo de R más apropiado para cada pieza de metadata.",
-    subsetEyebrow: "SampleSheet",
-    subsetQuestion: "¿Qué comando conserva todas las columnas pero selecciona solo muestras con Age > 50?",
     quizIntro: "Úsalas como active recall antes de pasar a los scripts prácticos.",
     showAnswer: "Mostrar respuesta",
     hideAnswer: "Ocultar respuesta",
@@ -285,7 +273,7 @@ const COPY = {
     next: "بعدی",
     current: "M2.1",
     previousTitle: "M1.3 Affymetrix GeneChip",
-    nextTitle: "M1.4 Illumina BeadChip",
+    nextTitle: "M2.2 متیلاسیون DNA + شیمی BeadChip",
     heroEyebrow: "Module 2 · ۸ مه · معرفی R/Bioconductor",
     heroTitle: "از مبانی R تا منطق SampleSheet",
     heroSubtitle: "پلی عملی بین metadata زیستی و تحلیل reproducible برای methylation array در R.",
@@ -316,12 +304,6 @@ const COPY = {
     functionLabTitle: "آزمایشگاه function: دستور → هدف",
     dataTypeTitle: "طبقه‌بندی نوع داده",
     subsetTitle: "تمرین کوچک subsetting",
-    functionEyebrow: "دستورهای R",
-    functionIntro: "هر دستور را به هدفی که باید از درس به خاطر بسپارید وصل کنید.",
-    objectEyebrow: "آبجکت‌ها",
-    objectIntro: "مناسب‌ترین نوع R را برای هر بخش metadata آشکار کنید.",
-    subsetEyebrow: "SampleSheet",
-    subsetQuestion: "کدام دستور همهٔ ستون‌ها را نگه می‌دارد اما فقط نمونه‌های Age > 50 را انتخاب می‌کند؟",
     quizIntro: "پیش از رفتن سراغ scriptهای عملی، از این‌ها برای active recall استفاده کن.",
     showAnswer: "نمایش پاسخ",
     hideAnswer: "پنهان کردن پاسخ",
@@ -464,119 +446,14 @@ COPY.fa.sections = COPY.en.sections.map((section, index) => ([
   }
 ][index]));
 
-COPY.es.functions = [
-  ["library(minfi)", "Carga un paquete en el entorno de trabajo"],
-  ["rm(list = ls())", "Elimina los objetos actuales del workspace"],
-  ["getwd()", "Muestra el directorio de trabajo actual"],
-  ["str(sampleSheet)", "Inspecciona los tipos de columna en un data frame"],
-  ["table(group)", "Cuenta categorías o co-ocurrencias"]
-];
-COPY.fa.functions = [
-  ["library(minfi)", "یک package را در محیط کاری load می‌کند"],
-  ["rm(list = ls())", "objectهای فعلی workspace را حذف می‌کند"],
-  ["getwd()", "working directory فعلی را نشان می‌دهد"],
-  ["str(sampleSheet)", "نوع ستون‌ها را در یک data frame بررسی می‌کند"],
-  ["table(group)", "categoryها یا هم‌رخدادها را می‌شمارد"]
-];
+COPY.es.functions = COPY.en.functions;
+COPY.fa.functions = COPY.en.functions;
 COPY.es.typeItems = [["sample ID", "character"], ["edad", "numeric"], ["diagnóstico", "factor"], ["flag QC TRUE/FALSE", "logical"], ["valor desconocido", "NA"], ["SampleSheet", "data frame"]];
 COPY.fa.typeItems = [["sample ID", "character"], ["age", "numeric"], ["diagnosis", "factor"], ["TRUE/FALSE QC flag", "logical"], ["unknown value", "NA"], ["SampleSheet", "data frame"]];
-COPY.es.subsetOptions = [
-  { text: "sampleSheet[sampleSheet$Age > 50, ]", correct: true },
-  { text: "sampleSheet$Age > 50", correct: false },
-  { text: "sampleSheet[, sampleSheet$Age > 50]", correct: false }
-];
-COPY.fa.subsetOptions = [
-  { text: "sampleSheet[sampleSheet$Age > 50, ]", correct: true },
-  { text: "sampleSheet$Age > 50", correct: false },
-  { text: "sampleSheet[, sampleSheet$Age > 50]", correct: false }
-];
+COPY.es.subsetOptions = COPY.en.subsetOptions;
+COPY.fa.subsetOptions = COPY.en.subsetOptions;
 COPY.es.subsetExplanation = "La condición lógica debe seleccionar filas, por eso va antes de la coma. Dejar vacía la parte de columnas conserva todas las columnas.";
 COPY.fa.subsetExplanation = "شرط logical باید rowها را انتخاب کند، بنابراین قبل از comma می‌آید. خالی گذاشتن بخش column همهٔ ستون‌ها را نگه می‌دارد.";
-
-const L04_ES_SLIDE_STRINGS = {
-  "Theory + tutorial + practice": "Teoría + tutorial + práctica",
-  "The lecture roadmap is practical: understand the workflow, then run R code, then apply it to the report.": "La ruta de la clase es práctica: entender el workflow, ejecutar código R y aplicarlo al report.",
-  "Team report deliverable": "Entregable del report en equipo",
-  "The assessment is a group report with data analysis, code, comments and a final PDF/HTML output.": "La evaluación es un report grupal con análisis de datos, código, comentarios y salida final PDF/HTML.",
-  "Deadline rule": "Regla de entrega",
-  "The report is due one day before the exam date, so reproducibility and final export have to be planned in advance.": "El report se entrega un día antes del examen; por eso la reproducibilidad y la exportación final deben planearse con tiempo.",
-  "R is a statistical environment": "R es un entorno estadístico",
-  "The important idea is not syntax memorization, but reproducible statistical computation.": "La idea importante no es memorizar sintaxis, sino hacer computación estadística reproducible.",
-  "Packages extend R": "Los paquetes extienden R",
-  "Packages are collections of functions, data and documentation. Bioconductor is central for genomics.": "Los paquetes son colecciones de funciones, datos y documentación. Bioconductor es central para genómica.",
-  "minfi as methylation-array example": "minfi como ejemplo para methylation arrays",
-  "minfi is presented as the kind of package used later to import and analyse Illumina methylation data.": "minfi se presenta como el tipo de paquete que luego se usa para importar y analizar datos de metilación Illumina.",
-  "RStudio layout": "Layout de RStudio",
-  "Scripts, console, environment, files, plots and packages each have a different role in reproducibility.": "Scripts, consola, environment, archivos, plots y paquetes tienen papeles distintos en la reproducibilidad.",
-  "Workspace objects": "Objetos del workspace",
-  "Objects saved in the environment can help or mislead; a clean script should recreate them deliberately.": "Los objetos guardados en el environment pueden ayudar o confundir; un script limpio debe recrearlos deliberadamente.",
-  "Working directory": "Directorio de trabajo",
-  "Paths matter because every import/export depends on where R is reading and writing files.": "Los paths importan porque cada importación/exportación depende de dónde R lee y guarda archivos.",
-  "Objects and assignment": "Objetos y asignación",
-  "Assignment stores values under names. Those named objects are what later functions analyse.": "La asignación guarda valores bajo nombres. Esos objetos nombrados son lo que luego analizan las funciones.",
-  "Atomic types": "Tipos atómicos",
-  "Numeric, character, logical and missing values behave differently in calculations and metadata checks.": "Numeric, character, logical y valores perdidos se comportan distinto en cálculos y revisiones de metadata.",
-  "Data frames": "Data frames",
-  "A data frame is the natural structure for SampleSheet metadata: rows are samples, columns are variables.": "Un data frame es la estructura natural para la metadata del SampleSheet: filas son muestras y columnas son variables.",
-  "Factors": "Factores",
-  "Factors store categories as levels; these levels can control plotting order and model contrasts.": "Los factores guardan categorías como niveles; estos niveles pueden controlar el orden de plots y contrastes del modelo.",
-  "Changing level order": "Cambiar el orden de niveles",
-  "The displayed labels may look the same, but the internal order can change model interpretation.": "Las etiquetas pueden verse iguales, pero el orden interno puede cambiar la interpretación del modelo.",
-  "Why factors are tricky": "Por qué los factores son delicados",
-  "Converting factors incorrectly can silently produce wrong numeric values.": "Convertir factores incorrectamente puede producir valores numéricos erróneos sin avisar.",
-  "Operators": "Operadores",
-  "Logical operators produce TRUE/FALSE outputs that can be used to select rows or elements.": "Los operadores lógicos producen TRUE/FALSE que se usan para seleccionar filas o elementos.",
-  "Accessors and subsetting": "Accessors y subsetting",
-  "Square brackets, double brackets and the dollar sign are the syntax you need to extract data from vectors, lists and data frames.": "Corchetes, dobles corchetes y el signo dólar son la sintaxis para extraer datos de vectores, listas y data frames.",
-  "Explore first": "Explora primero",
-  "These commands are the first QC layer for metadata before any methylation pipeline step.": "Estos comandos son la primera capa de QC para metadata antes de cualquier paso del pipeline de metilación."
-};
-const L04_FA_SLIDE_STRINGS = {
-  "Theory + tutorial + practice": "نظریه + tutorial + تمرین",
-  "The lecture roadmap is practical: understand the workflow, then run R code, then apply it to the report.": "مسیر درس عملی است: ابتدا workflow را بفهمید، سپس کد R را اجرا کنید و در نهایت آن را در report به‌کار ببرید.",
-  "Team report deliverable": "خروجی report گروهی",
-  "The assessment is a group report with data analysis, code, comments and a final PDF/HTML output.": "ارزیابی یک report گروهی است که شامل تحلیل داده، code، comment و خروجی نهایی PDF/HTML می‌شود.",
-  "Deadline rule": "قاعدهٔ تحویل",
-  "The report is due one day before the exam date, so reproducibility and final export have to be planned in advance.": "report یک روز پیش از تاریخ امتحان تحویل داده می‌شود؛ بنابراین reproducibility و export نهایی باید از قبل برنامه‌ریزی شوند.",
-  "R is a statistical environment": "R یک محیط آماری است",
-  "The important idea is not syntax memorization, but reproducible statistical computation.": "ایدهٔ اصلی حفظ syntax نیست، بلکه انجام محاسبات آماری reproducible است.",
-  "Packages extend R": "packageها R را گسترش می‌دهند",
-  "Packages are collections of functions, data and documentation. Bioconductor is central for genomics.": "packageها مجموعه‌ای از function، داده و documentation هستند. Bioconductor برای genomics بسیار مهم است.",
-  "minfi as methylation-array example": "minfi به‌عنوان مثال methylation array",
-  "minfi is presented as the kind of package used later to import and analyse Illumina methylation data.": "minfi به‌عنوان نمونه‌ای از packageهایی معرفی می‌شود که بعداً برای import و analysis داده‌های Illumina methylation استفاده می‌شوند.",
-  "RStudio layout": "چیدمان RStudio",
-  "Scripts, console, environment, files, plots and packages each have a different role in reproducibility.": "script، console، environment، files، plots و packages هرکدام نقش متفاوتی در reproducibility دارند.",
-  "Workspace objects": "objectهای workspace",
-  "Objects saved in the environment can help or mislead; a clean script should recreate them deliberately.": "objectهای ذخیره‌شده در environment می‌توانند کمک کنند یا گمراه کنند؛ script تمیز باید آن‌ها را آگاهانه بازسازی کند.",
-  "Working directory": "working directory",
-  "Paths matter because every import/export depends on where R is reading and writing files.": "pathها مهم‌اند چون هر import/export به محل خواندن و نوشتن فایل‌ها در R بستگی دارد.",
-  "Objects and assignment": "objectها و assignment",
-  "Assignment stores values under names. Those named objects are what later functions analyse.": "assignment مقدارها را با نام ذخیره می‌کند. همین objectهای نام‌دار بعداً توسط functionها تحلیل می‌شوند.",
-  "Atomic types": "typeهای اتمی",
-  "Numeric, character, logical and missing values behave differently in calculations and metadata checks.": "numeric، character، logical و missing valueها در محاسبات و بررسی metadata رفتار متفاوتی دارند.",
-  "Data frames": "data frameها",
-  "A data frame is the natural structure for SampleSheet metadata: rows are samples, columns are variables.": "data frame ساختار طبیعی برای metadata در SampleSheet است: rowها نمونه و columnها variable هستند.",
-  "Factors": "factorها",
-  "Factors store categories as levels; these levels can control plotting order and model contrasts.": "factorها categoryها را به‌صورت level ذخیره می‌کنند؛ این levelها order plot و contrastهای model را کنترل می‌کنند.",
-  "Changing level order": "تغییر order سطح‌ها",
-  "The displayed labels may look the same, but the internal order can change model interpretation.": "labelهای نمایش‌داده‌شده ممکن است یکسان باشند، اما order داخلی می‌تواند تفسیر model را تغییر دهد.",
-  "Why factors are tricky": "چرا factorها tricky هستند",
-  "Converting factors incorrectly can silently produce wrong numeric values.": "تبدیل نادرست factorها می‌تواند بدون هشدار مقدارهای numeric غلط تولید کند.",
-  "Operators": "operatorها",
-  "Logical operators produce TRUE/FALSE outputs that can be used to select rows or elements.": "operatorهای logical خروجی TRUE/FALSE می‌سازند که برای انتخاب row یا element استفاده می‌شود.",
-  "Accessors and subsetting": "accessorها و subsetting",
-  "Square brackets, double brackets and the dollar sign are the syntax you need to extract data from vectors, lists and data frames.": "براکت، دوبل‌براکت و علامت دلار syntax لازم برای استخراج داده از vector، list و data frame هستند.",
-  "Explore first": "اول بررسی کن",
-  "These commands are the first QC layer for metadata before any methylation pipeline step.": "این دستورها نخستین لایهٔ QC برای metadata پیش از هر گام pipeline متیلاسیون هستند."
-};
-function localizeDeepText(value, dict) {
-  if (typeof value === "string") return dict[value] || value;
-  if (Array.isArray(value)) return value.map((item) => localizeDeepText(item, dict));
-  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, val]) => [key, localizeDeepText(val, dict)]));
-  return value;
-}
-COPY.es.sections = localizeDeepText(COPY.es.sections, L04_ES_SLIDE_STRINGS);
-COPY.fa.sections = localizeDeepText(COPY.fa.sections, L04_FA_SLIDE_STRINGS);
 COPY.es.quiz = [
   { q: "¿Por qué library(minfi) no es lo mismo que instalar minfi?", a: "Instalar/descargar deja el paquete disponible en la computadora; library(minfi) lo carga en la sesión actual para poder usar sus funciones." },
   { q: "¿Qué controla el working directory?", a: "Es la carpeta por defecto desde la cual R lee archivos y donde guarda archivos si no se da una ruta completa." },
@@ -613,7 +490,7 @@ function StatCard({ label, value, tone = "stone" }) {
   return <div className={`rounded-2xl border p-4 ${styles}`}><div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{label}</div><div className="mt-1 text-2xl font-black text-stone-950">{value}</div></div>;
 }
 function LessonNav({ copy, isDone, toggle, position = "top" }) {
-  return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m1-affy" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {copy.previous}: {copy.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{copy.current} · {copy.dashboard}</a><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? copy.done : copy.mark}</button></div><a href="#/lesson/m1-illumina" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">{copy.next}: {copy.nextTitle} →</a></div></nav>;
+  return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m1-affy" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {copy.previous}: {copy.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{copy.current} · {copy.dashboard}</a><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? copy.done : copy.mark}</button></div><a href="#/lesson/m2-manifest" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">{copy.next}: {copy.nextTitle} →</a></div></nav>;
 }
 function ResourceLinks({ copy }) {
   const linkBase = "rounded-full border px-4 py-2 text-center text-sm font-black transition hover:-translate-y-0.5 hover:shadow-md";
@@ -659,16 +536,16 @@ function LessonSection({ section, copy, onZoom }) {
 }
 function FunctionLab({ copy }) {
   const [selected, setSelected] = useState({});
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.functionEyebrow} title={copy.functionLabTitle}>{copy.functionIntro}</SectionHeader><div className="grid gap-3 md:grid-cols-2">{copy.functions.map(([cmd, purpose]) => <button key={cmd} type="button" onClick={() => setSelected({...selected, [cmd]: !selected[cmd]})} className={`rounded-3xl border p-5 text-left transition hover:-translate-y-0.5 ${selected[cmd] ? "border-emerald-300 bg-emerald-50 shadow-sm" : "border-stone-200 bg-stone-50"}`}><code className="text-lg font-black text-stone-950">{cmd}</code><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{selected[cmd] ? purpose : copy.tapReveal}</p></button>)}</div></section>;
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="R commands" title={copy.functionLabTitle}>Match the command with the idea you should remember from the lesson.</SectionHeader><div className="grid gap-3 md:grid-cols-2">{copy.functions.map(([cmd, purpose]) => <button key={cmd} type="button" onClick={() => setSelected({...selected, [cmd]: !selected[cmd]})} className={`rounded-3xl border p-5 text-left transition hover:-translate-y-0.5 ${selected[cmd] ? "border-emerald-300 bg-emerald-50 shadow-sm" : "border-stone-200 bg-stone-50"}`}><code className="text-lg font-black text-stone-950">{cmd}</code><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{selected[cmd] ? purpose : copy.tapReveal}</p></button>)}</div></section>;
 }
 function DataTypeClassifier({ copy }) {
   const [revealed, setRevealed] = useState({});
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.objectEyebrow} title={copy.dataTypeTitle}>{copy.objectIntro}</SectionHeader><div className="grid gap-3 md:grid-cols-3">{copy.typeItems.map(([label, kind]) => <button key={label} onClick={() => setRevealed({...revealed, [label]: !revealed[label]})} className={`rounded-3xl border p-5 text-left transition hover:-translate-y-0.5 ${revealed[label] ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50"}`}><div className="text-lg font-black text-stone-950">{label}</div><div className="mt-3 rounded-2xl bg-white px-3 py-2 text-sm font-black text-emerald-700 shadow-sm">{revealed[label] ? kind : "?"}</div></button>)}</div></section>;
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="Objects" title={copy.dataTypeTitle}>Reveal the most appropriate R type for each piece of metadata.</SectionHeader><div className="grid gap-3 md:grid-cols-3">{copy.typeItems.map(([label, kind]) => <button key={label} onClick={() => setRevealed({...revealed, [label]: !revealed[label]})} className={`rounded-3xl border p-5 text-left transition hover:-translate-y-0.5 ${revealed[label] ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50"}`}><div className="text-lg font-black text-stone-950">{label}</div><div className="mt-3 rounded-2xl bg-white px-3 py-2 text-sm font-black text-emerald-700 shadow-sm">{revealed[label] ? kind : "?"}</div></button>)}</div></section>;
 }
 function SubsetPractice({ copy }) {
   const [choice, setChoice] = useState(null);
   const picked = choice !== null ? copy.subsetOptions[choice] : null;
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={copy.subsetEyebrow} title={copy.subsetTitle}>{copy.subsetQuestion}</SectionHeader><div className="grid gap-3">{copy.subsetOptions.map((item, idx) => <button key={item.text} onClick={() => setChoice(idx)} className={`rounded-3xl border p-5 text-left font-mono text-sm font-black transition hover:-translate-y-0.5 ${choice === idx ? (item.correct ? "border-emerald-300 bg-emerald-50 text-emerald-900" : "border-red-300 bg-red-50 text-red-900") : "border-stone-200 bg-stone-50 text-stone-800"}`}>{item.text}</button>)}</div>{picked && <div className={`mt-4 rounded-3xl p-5 text-sm font-bold leading-7 ${picked.correct ? "bg-emerald-50 text-emerald-900" : "bg-red-50 text-red-900"}`}><div className="font-black">{picked.correct ? copy.correct : copy.tryAgain}</div><p className="mt-2">{copy.subsetExplanation}</p></div>}</section>;
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="SampleSheet" title={copy.subsetTitle}>Which command keeps all columns but selects only samples with Age &gt; 50?</SectionHeader><div className="grid gap-3">{copy.subsetOptions.map((item, idx) => <button key={item.text} onClick={() => setChoice(idx)} className={`rounded-3xl border p-5 text-left font-mono text-sm font-black transition hover:-translate-y-0.5 ${choice === idx ? (item.correct ? "border-emerald-300 bg-emerald-50 text-emerald-900" : "border-red-300 bg-red-50 text-red-900") : "border-stone-200 bg-stone-50 text-stone-800"}`}>{item.text}</button>)}</div>{picked && <div className={`mt-4 rounded-3xl p-5 text-sm font-bold leading-7 ${picked.correct ? "bg-emerald-50 text-emerald-900" : "bg-red-50 text-red-900"}`}><div className="font-black">{picked.correct ? copy.correct : copy.tryAgain}</div><p className="mt-2">{copy.subsetExplanation}</p></div>}</section>;
 }
 function Quiz({ copy }) {
   const [open, setOpen] = useState({});

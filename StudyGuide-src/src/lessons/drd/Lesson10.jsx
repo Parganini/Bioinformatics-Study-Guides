@@ -280,21 +280,255 @@ const trainer = {
   model: { en: "Before normalization, we inspected beta-value distributions using density plots and boxplots, and we also compared Type I and Type II probe distributions using manifest-based subsetting. Because the expected biological differences were not genome-wide and the raw plots showed probe-type and sample-distribution differences consistent with technical bias, preprocessQuantile was retained. We verified its effect by comparing raw and normalized mean-beta densities, standard-deviation densities and boxplots. If the design had included tumor/normal samples or a demethylating treatment with expected global shifts, functional normalization or Noob would have been safer.", es: "Antes de normalizar, inspeccionamos las distribuciones de beta values usando density plots y boxplots, y también comparamos distribuciones Type I y Type II mediante subsetting basado en el manifest. Como las diferencias biológicas esperadas no eran genome-wide y los plots raw mostraban diferencias por tipo de probe y por distribución de muestras compatibles con sesgo técnico, se retuvo preprocessQuantile. Verificamos su efecto comparando densities de media beta, densities de desviación estándar y boxplots en raw vs normalizado. Si el diseño hubiera incluido tumor/normal o un tratamiento demetilante con shifts globales esperados, functional normalization o Noob habrían sido opciones más seguras.", fa: "قبل از normalization، توزیع beta را با density plot و boxplot بررسی کردیم و distribution probeهای Type I و Type II را با subsetting بر اساس manifest مقایسه کردیم. چون تفاوت‌های زیستی مورد انتظار genome-wide نبود و plotهای raw تفاوت‌های سازگار با technical bias در probe-type و sample-distribution نشان می‌دادند، preprocessQuantile نگه داشته شد. اثر آن را با مقایسه density میانگین beta، density انحراف معیار و boxplot در raw و normalized بررسی کردیم. اگر طراحی شامل tumor/normal یا demethylating treatment با shiftهای global مورد انتظار بود، functional normalization یا Noob امن‌تر می‌بود." }
 };
 
-function tr(value, lang) { return typeof value === "string" ? value : (value?.[lang] || value?.es || value?.en || ""); }
-function cx(...classes) { return classes.filter(Boolean).join(" "); }
-function Pill({ children, className = "" }) { return <span className={cx("inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-emerald-800", className)}>{children}</span>; }
-function SectionHeader({ eyebrow, title, children }) { return <div><Pill>{eyebrow}</Pill><h2 className="mt-3 text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{title}</h2>{children && <p className="mt-3 max-w-3xl text-base font-semibold leading-8 text-stone-600">{children}</p>}</div>; }
-function LessonNav({ lang, isDone, toggle, bottom = false }) { const labels = ui[lang] || ui.es; return <nav className={cx("mb-6 flex flex-wrap items-center justify-between gap-3 rounded-full border border-stone-200 bg-white/90 p-3 shadow-sm", bottom && "mb-0 mt-10")}><a href="#/lesson/m2-import-qc" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 hover:border-emerald-300">← {labels.previous}: {labels.previousTitle}</a><a href="#/drd" className="rounded-full border border-stone-200 bg-white px-5 py-2 text-xs font-black uppercase tracking-[0.22em] text-stone-500">{labels.current} · {labels.dashboard}</a><button type="button" onClick={toggle} className={cx("rounded-full px-5 py-2 text-sm font-black", isDone ? "bg-emerald-700 text-white" : "bg-stone-950 text-white hover:bg-emerald-700")}>{isDone ? labels.done : labels.mark}</button><a href="#/lesson/m2-normalization-2" className="rounded-full bg-stone-950 px-5 py-2 text-sm font-black text-white hover:bg-emerald-700">{labels.next}: {labels.nextTitle} →</a></nav>; }
-function Hero({ lang }) { const labels = ui[lang] || ui.es; return <header className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm md:grid md:grid-cols-[1.05fr_0.95fr]"><section className="bg-emerald-50/60 p-8 md:p-12"><Pill>{tr(copy.hero.eyebrow, lang)}</Pill><h1 className="mt-6 max-w-3xl text-5xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-7xl">{tr(copy.hero.title, lang)}</h1><p className="mt-6 max-w-2xl text-lg font-semibold leading-8 text-stone-700">{tr(copy.hero.subtitle, lang)}</p><div className="mt-7 flex flex-wrap gap-2">{tr(copy.hero.tags, lang).map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-stone-700">{tag}</span>)}</div></section><aside className="border-t border-stone-200 bg-white p-6 md:border-l md:border-t-0 md:p-8"><div className="rounded-[1.8rem] border border-stone-200 bg-white p-5 shadow-sm"><div className="grid grid-cols-2 gap-3">{copy.stats.map(stat => <div key={tr(stat.label, lang)} className={cx("rounded-3xl border p-5", stat.tone === "green" ? "border-emerald-300 bg-emerald-50" : "border-stone-200 bg-stone-50")}><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{tr(stat.label, lang)}</div><div className="mt-2 text-3xl font-black text-stone-950">{stat.value}</div></div>)}</div><div className="mt-4 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">{lang === "es" ? "Pipeline mindset" : lang === "fa" ? "ذهنیت pipeline" : "Pipeline mindset"}</div><p className="mt-2 text-lg font-black leading-7">{tr(copy.hero.bigIdea, lang)}</p></div><div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div><div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4 md:grid-cols-2 xl:grid-cols-4"><ResourceButton href={SLIDES_URL} active>{labels.slides}</ResourceButton><ResourceButton href={CODE_URL}>{labels.code}</ResourceButton><ResourceButton href={TRANSCRIPT_URL}>{labels.transcript}</ResourceButton><ResourceButton href={RECORDING_URL} dark>{labels.recording}</ResourceButton></div></div></div></aside></header>; }
-function ResourceButton({ href, children, active = false, dark = false }) { return <a href={href} target="_blank" rel="noreferrer" className={cx("rounded-2xl border px-3 py-3 text-center text-sm font-black shadow-sm transition hover:-translate-y-0.5", dark ? "border-stone-950 bg-stone-950 text-white" : active ? "border-emerald-300 bg-emerald-100 text-emerald-800" : "border-stone-200 bg-white text-stone-800")}>{children} ↗</a>; }
-function SlideGrid({ slides, lang, onZoom }) { const labels = ui[lang] || ui.es; return <div className="mt-6 grid gap-5 md:grid-cols-2">{slides.map((item, index) => <button key={item.n} type="button" onClick={() => onZoom(item)} className={cx("group rounded-[1.7rem] border border-stone-200 bg-white p-4 text-left shadow-sm transition hover:-translate-y-1 hover:border-emerald-300 hover:shadow-md", slides.length % 2 === 1 && index === slides.length - 1 && "md:col-span-2")}><div className="overflow-hidden rounded-[1.2rem] border border-stone-200 bg-stone-50"><img src={slideImages[item.n - 1]} alt={`${labels.slide} ${item.n}`} className="aspect-[4/3] w-full object-contain transition duration-300 group-hover:scale-[1.02]"/></div><div className="mt-4"><Pill className="border-emerald-200 bg-white text-emerald-700">{labels.slide} {item.n}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{tr(item.title, lang)}</h3><p className="mt-2 text-sm font-semibold leading-7 text-stone-600">{tr(item.body, lang)}</p><p className="mt-3 text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{labels.zoom}</p></div></button>)}</div>; }
-function ReportWatch({ watch, lang }) { const labels = ui[lang] || ui.es; return <details className="mt-6 rounded-[1.8rem] border border-emerald-200 bg-emerald-50/60 p-5" open><summary className="cursor-pointer text-sm font-black uppercase tracking-[0.18em] text-emerald-800">{labels.reportWatch} · {tr(watch.title, lang)}</summary><div className="mt-5 grid gap-4 lg:grid-cols-[1fr_0.9fr]"><div><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{labels.include}</div><ul className="mt-3 space-y-2 text-sm font-bold leading-7 text-stone-800">{tr(watch.include, lang).map(item => <li key={item} className="flex gap-2"><span className="mt-2 h-2 w-2 rounded-full bg-emerald-500"/> <span>{item}</span></li>)}</ul></div><div className="space-y-4"><div className="rounded-3xl border border-amber-200 bg-amber-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-amber-700">{labels.trap}</div><p className="mt-2 text-sm font-bold leading-7 text-amber-950">{tr(watch.trap, lang)}</p></div><div className="rounded-3xl border border-stone-200 bg-white p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.model}</div><p className="mt-2 text-sm font-bold leading-7 text-stone-800">{tr(watch.model, lang)}</p></div></div></div></details>; }
-function CodeWalkthrough({ stepIds, lang }) { const labels = ui[lang] || ui.es; return <div className="mt-6 space-y-4">{stepIds.map(id => { const step = codeStepMap[id]; return <article key={id} className="rounded-[1.7rem] border border-stone-200 bg-stone-50 p-5"><Pill className="border-stone-200 bg-white text-stone-600">{tr(step.label, lang)}</Pill><h3 className="mt-3 text-xl font-black text-stone-950">{tr(step.title, lang)}</h3><div className="mt-4 overflow-x-auto rounded-2xl bg-stone-950 p-4 text-sm text-stone-100"><pre><code>{step.code}</code></pre></div><div className="mt-4 grid gap-3 md:grid-cols-2"><div className="rounded-2xl bg-white p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.interpretation}</div><p className="mt-2 text-sm font-bold leading-7 text-stone-700">{tr(step.interpretation, lang)}</p></div><div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{labels.reportMove}</div><p className="mt-2 text-sm font-bold leading-7 text-emerald-950">{tr(step.report, lang)}</p></div></div></article>; })}</div>; }
-function LearningBlock({ block, lang, onZoom }) { return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={tr(block.eyebrow, lang)} title={tr(block.title, lang)}>{tr(block.body, lang)}</SectionHeader><SlideGrid slides={block.slides} lang={lang} onZoom={onZoom}/><div className="mt-6 rounded-[2rem] border border-stone-200 bg-white p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{ui[lang]?.professor || ui.es.professor}</div><p className="mt-2 text-sm font-bold leading-7 text-stone-700">{lang === "es" ? "Este bloque conecta la slide con la explicación verbal y con el código del HTML, para que el report no quede como una lista de comandos sino como una decisión metodológica justificada." : lang === "fa" ? "این بخش اسلاید را به توضیح شفاهی و کد HTML وصل می‌کند تا report فقط لیست command نباشد، بلکه تصمیم methodologically justified باشد." : "This block connects the slide to the verbal explanation and to the HTML code, so the report becomes a justified methodological decision rather than a command list."}</p></div><CodeWalkthrough stepIds={block.codeSteps} lang={lang}/><ReportWatch watch={block.watch} lang={lang}/></section>; }
-function BetaMLab({ lang }) { const [meth, setMeth] = useState(800); const [unmeth, setUnmeth] = useState(200); const beta = meth + unmeth === 0 ? 0 : meth / (meth + unmeth); const m = Math.log2((meth + 1) / (unmeth + 1)); return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={ui[lang]?.quickLab || ui.es.quickLab} title={lang === "es" ? "Mini-lab beta ↔ M-value" : lang === "fa" ? "مینی‌لب beta ↔ M-value" : "Beta ↔ M-value mini-lab"}>{lang === "es" ? "Modifica las intensidades para ver cómo beta queda acotado y M cambia como log-ratio." : lang === "fa" ? "intensityها را تغییر دهید تا ببینید beta محدود می‌ماند اما M مثل log-ratio تغییر می‌کند." : "Edit the intensities to see beta stay bounded while M changes as a log-ratio."}</SectionHeader><div className="mt-6 grid gap-4 md:grid-cols-2"><label className="rounded-3xl border border-stone-200 bg-stone-50 p-4 text-sm font-black text-stone-700">Methylated intensity<input type="number" value={meth} onChange={e => setMeth(Number(e.target.value))} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white p-3 text-base outline-none focus:border-emerald-300"/></label><label className="rounded-3xl border border-stone-200 bg-stone-50 p-4 text-sm font-black text-stone-700">Unmethylated intensity<input type="number" value={unmeth} onChange={e => setUnmeth(Number(e.target.value))} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white p-3 text-base outline-none focus:border-emerald-300"/></label></div><div className="mt-5 grid gap-4 md:grid-cols-2"><div className="rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Beta</div><div className="mt-2 text-4xl font-black">{beta.toFixed(3)}</div><p className="mt-2 text-sm font-bold leading-6 text-stone-200">{beta < 0.33 ? (lang === "es" ? "hipometilado" : lang === "fa" ? "hypomethylated" : "hypomethylated") : beta > 0.66 ? (lang === "es" ? "hipermetilado" : lang === "fa" ? "hypermethylated" : "hypermethylated") : (lang === "es" ? "intermedio / hemi-like" : lang === "fa" ? "میانی / hemi-like" : "intermediate / hemi-like")}</p></div><div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">M-value</div><div className="mt-2 text-4xl font-black text-emerald-950">{Number.isFinite(m) ? m.toFixed(3) : "NA"}</div><p className="mt-2 text-sm font-bold leading-6 text-emerald-900">{m > 0 ? (lang === "es" ? "más methylated que unmethylated" : lang === "fa" ? "methylated بیشتر از unmethylated" : "more methylated than unmethylated") : m < 0 ? (lang === "es" ? "más unmethylated que methylated" : lang === "fa" ? "unmethylated بیشتر از methylated" : "more unmethylated than methylated") : (lang === "es" ? "señales similares" : lang === "fa" ? "signalها مشابه‌اند" : "similar signals")}</p></div></div></section>; }
-function MethodChoiceLab({ lang }) { const [choice, setChoice] = useState("subtle"); const scenarios = { subtle: { label: { en: "Subtle disease marker study", es: "Estudio de marcador sutil", fa: "مطالعه marker ظریف" }, method: "preprocessQuantile / preprocessFunnorm", reason: { en: "Quantile may be appropriate if global distributions should be similar; functional is safer if unsure.", es: "Quantile puede ser apropiada si las distribuciones globales deberían ser similares; functional es más segura si hay duda.", fa: "اگر distributionهای global باید مشابه باشند quantile مناسب است؛ اگر شک دارید functional امن‌تر است." } }, tumor: { label: { en: "Tumor vs normal with genome-wide shifts", es: "Tumor vs normal con shifts genome-wide", fa: "tumor vs normal با shiftهای genome-wide" }, method: "preprocessFunnorm or Noob", reason: { en: "Avoid forcing tumor and normal distributions to be the same when the difference may be biology.", es: "Evita forzar tumor y normal a tener la misma distribución cuando la diferencia puede ser biología.", fa: "وقتی تفاوت ممکن است biology باشد، tumor و normal را مجبور به distribution مشابه نکنید." } }, lowq: { label: { en: "Low-confidence data quality", es: "Calidad de datos incierta", fa: "کیفیت داده نامطمئن" }, method: "preprocessNoob / background correction", reason: { en: "A conservative correction removes background without strong global distribution assumptions.", es: "Una corrección conservadora elimina background sin asunciones globales fuertes.", fa: "یک correction محافظه‌کارانه background را بدون فرض global قوی حذف می‌کند." } } }; const current = scenarios[choice]; return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={ui[lang]?.quickLab || ui.es.quickLab} title={lang === "es" ? "Mini-lab de elección de normalización" : lang === "fa" ? "مینی‌لب انتخاب normalization" : "Normalization-choice mini-lab"}>{lang === "es" ? "Elige un escenario y observa cómo cambia la recomendación metodológica." : lang === "fa" ? "یک scenario انتخاب کنید و ببینید recommendation method چطور تغییر می‌کند." : "Choose a scenario and see how the methodological recommendation changes."}</SectionHeader><div className="mt-6 flex flex-wrap gap-2">{Object.entries(scenarios).map(([key, item]) => <button key={key} type="button" onClick={() => setChoice(key)} className={cx("rounded-full border px-4 py-2 text-sm font-black", choice === key ? "border-emerald-500 bg-emerald-100 text-emerald-900" : "border-stone-200 bg-white text-stone-700")}>{tr(item.label, lang)}</button>)}</div><div className="mt-5 rounded-3xl border border-emerald-200 bg-emerald-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{lang === "es" ? "Recomendación" : lang === "fa" ? "پیشنهاد" : "Recommendation"}</div><h3 className="mt-2 text-2xl font-black text-emerald-950">{current.method}</h3><p className="mt-2 text-sm font-bold leading-7 text-emerald-900">{tr(current.reason, lang)}</p></div></section>; }
-function Checkpoints({ lang }) { const labels = ui[lang] || ui.es; const [selected, setSelected] = useState({}); return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={labels.checkpoint} title={lang === "es" ? "Preguntas rápidas de comprensión" : lang === "fa" ? "پرسش‌های سریع فهم" : "Quick understanding checks"}>{lang === "es" ? "La opción seleccionada queda remarcada." : lang === "fa" ? "گزینه انتخاب‌شده مشخص می‌ماند." : "The selected option stays highlighted."}</SectionHeader><div className="mt-6 grid gap-4 lg:grid-cols-3">{checks.map((item, idx) => <article key={tr(item.q, lang)} className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5"><p className="font-black leading-7 text-stone-950">{tr(item.q, lang)}</p><div className="mt-4 flex flex-col gap-2">{item.options.map(option => <button key={option} type="button" onClick={() => setSelected({ ...selected, [idx]: option })} className={cx("rounded-2xl border px-3 py-2 text-left text-sm font-bold", selected[idx] === option ? (option === item.answer ? "border-emerald-400 bg-emerald-100 text-emerald-900" : "border-red-300 bg-red-100 text-red-900") : "border-stone-200 bg-white text-stone-700")}>{option}</button>)}</div>{selected[idx] && <p className="mt-4 rounded-2xl bg-white p-4 text-sm font-bold leading-6 text-stone-700"><span className="font-black">{selected[idx] === item.answer ? labels.correct : labels.notQuite}.</span> {tr(item.why, lang)}</p>}</article>)}</div></section>; }
-function Trainer({ lang }) { const labels = ui[lang] || ui.es; const [text, setText] = useState(""); const [show, setShow] = useState(false); const words = useMemo(() => text.trim() ? text.trim().split(/\s+/).length : 0, [text]); return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow="Report" title={labels.trainer}>{tr(trainer.prompt, lang)}</SectionHeader><textarea value={text} onChange={event => setText(event.target.value)} placeholder={labels.placeholder} className="mt-5 min-h-44 w-full rounded-3xl border border-stone-200 bg-white p-4 text-sm font-semibold leading-7 outline-none focus:border-emerald-300"/><div className="mt-3 flex flex-wrap items-center justify-between gap-3"><span className="text-sm font-bold text-stone-500">{words} {labels.words}</span><button type="button" onClick={() => setShow(!show)} className="rounded-full bg-stone-950 px-5 py-3 text-sm font-black text-white hover:bg-emerald-700">{show ? labels.hideAnswer : labels.showAnswer}</button></div>{show && <div className="mt-4 rounded-3xl border border-emerald-200 bg-emerald-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{labels.model}</div><p className="mt-3 text-sm font-bold leading-7 text-emerald-950">{tr(trainer.model, lang)}</p></div>}</section>; }
-function ZoomModal({ item, lang, onClose }) { const labels = ui[lang] || ui.es; if (!item) return null; return <div className="fixed inset-0 z-[100] flex items-center justify-center bg-stone-950/80 p-4" role="dialog" aria-modal="true" onClick={onClose}><div className="max-h-[94vh] w-[min(1100px,96vw)] overflow-auto rounded-[2rem] bg-white p-4 shadow-2xl" onClick={event => event.stopPropagation()}><div className="mb-3 flex items-center justify-between gap-3"><div><Pill>{labels.slide} {item.n}</Pill><h3 className="mt-2 text-xl font-black text-stone-950">{tr(item.title, lang)}</h3></div><button type="button" onClick={onClose} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white hover:bg-emerald-700">{labels.close}</button></div><img src={slideImages[item.n - 1]} alt={`${labels.slide} ${item.n}`} className="w-full rounded-[1.5rem] object-contain"/><p className="mt-3 text-sm font-semibold leading-7 text-stone-600">{tr(item.body, lang)}</p></div></div>; }
+function tr(value, lang) {
+  return typeof value === "string" ? value : (value?.[lang] || value?.es || value?.en || "");
+}
 
-export default function DRDLesson10({ lang = "es", isDone = false, toggle = () => {} }) { const [zoom, setZoom] = useState(null); return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><LessonNav lang={lang} isDone={isDone} toggle={toggle}/><Hero lang={lang}/>{learningBlocks.slice(0, 1).map(block => <LearningBlock key={block.id} block={block} lang={lang} onZoom={setZoom} />)}<BetaMLab lang={lang}/>{learningBlocks.slice(1).map(block => <LearningBlock key={block.id} block={block} lang={lang} onZoom={setZoom} />)}<MethodChoiceLab lang={lang}/><Checkpoints lang={lang}/><Trainer lang={lang}/><LessonNav lang={lang} isDone={isDone} toggle={toggle} bottom/><ZoomModal item={zoom} lang={lang} onClose={() => setZoom(null)}/></main>; }
+function cx(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
+function Pill({ children, tone = "green", className = "" }) {
+  const styles = tone === "stone"
+    ? "border-stone-200 bg-white px-3 py-1 text-stone-700"
+    : "border-emerald-200 bg-emerald-50 px-3 py-1 text-emerald-700";
+  return <span className={cx("inline-flex items-center rounded-full border text-xs font-black uppercase tracking-[0.16em]", styles, className)}>{children}</span>;
+}
+
+function StatCard({ label, value, tone = "stone" }) {
+  return <div className={cx("rounded-3xl border p-4", tone === "green" ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50")}>
+    <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{label}</div>
+    <div className="mt-2 text-3xl font-black text-stone-950">{value}</div>
+  </div>;
+}
+
+function ResourceLinks({ lang }) {
+  const labels = ui[lang] || ui.es;
+  const linkBase = "rounded-full border px-4 py-2 text-center text-sm font-black transition hover:-translate-y-0.5 hover:shadow-md";
+  return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4">
+    <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div>
+    <div className="grid gap-2 sm:grid-cols-4">
+      <a href={SLIDES_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-white")}>{labels.slides}</a>
+      <a href={CODE_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-200 bg-white text-stone-800 hover:bg-stone-50")}>{labels.code}</a>
+      <a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-200 bg-white text-stone-800 hover:bg-stone-50")}>{labels.transcript}</a>
+      <a href={RECORDING_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-800 bg-stone-950 text-white hover:bg-emerald-700")}>{labels.recording}</a>
+    </div>
+  </div>;
+}
+
+function LessonNav({ lang, isDone, toggle, bottom = false }) {
+  const labels = ui[lang] || ui.es;
+  return <nav className={cx("rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm", bottom ? "mt-10" : "mb-6")} aria-label="Lesson navigation">
+    <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+      <a href="#/lesson/m2-import-qc" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {labels.previous}: {labels.previousTitle}</a>
+      <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center">
+        <a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{labels.current} · {labels.dashboard}</a>
+        <button type="button" onClick={toggle} className={cx("rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5", isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white hover:bg-emerald-700")}>{isDone ? labels.done : labels.mark}</button>
+      </div>
+      <a href="#/lesson/m2-normalization-2" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">{labels.next}: {labels.nextTitle} →</a>
+    </div>
+  </nav>;
+}
+
+function Hero({ lang }) {
+  return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#f3fff7]/95 shadow-xl shadow-stone-900/5">
+    <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="p-7 md:p-10 lg:p-12">
+        <Pill>{tr(copy.hero.eyebrow, lang)}</Pill>
+        <h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{tr(copy.hero.title, lang)}</h1>
+        <p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{tr(copy.hero.subtitle, lang)}</p>
+        <div className="mt-6 flex flex-wrap gap-2">{tr(copy.hero.tags, lang).map(tag => <Pill key={tag} tone="stone">{tag}</Pill>)}</div>
+      </div>
+      <div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0">
+        <div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner">
+          <div className="grid grid-cols-2 gap-3">
+            {copy.stats.map(item => <StatCard key={tr(item.label, lang)} label={tr(item.label, lang)} value={item.value} tone={item.tone}/>) }
+          </div>
+          <div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">{lang === "es" ? "Pipeline mindset" : lang === "fa" ? "ذهنیت pipeline" : "Pipeline mindset"}</div>
+            <p className="mt-2 text-lg font-bold leading-7">{tr(copy.hero.bigIdea, lang)}</p>
+          </div>
+          <ResourceLinks lang={lang}/>
+        </div>
+      </div>
+    </div>
+  </section>;
+}
+
+function SectionHeader({ eyebrow, title, children }) {
+  return <div>
+    <Pill>{eyebrow}</Pill>
+    <h2 className="mt-4 text-3xl font-black tracking-[-0.03em] text-stone-950 md:text-4xl">{title}</h2>
+    {children && <p className="mt-4 max-w-4xl text-base font-semibold leading-8 text-stone-700">{children}</p>}
+  </div>;
+}
+
+function ReportWatch({ lang, watch }) {
+  const labels = ui[lang] || ui.es;
+  const [open, setOpen] = useState(false);
+  return <aside className="mt-6 rounded-[2rem] border border-emerald-200 bg-emerald-50/70 p-5">
+    <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{labels.reportWatch}</div>
+    <p className="mt-2 text-base font-black text-emerald-950">{tr(watch.title, lang)}</p>
+    <button type="button" onClick={() => setOpen(!open)} className="mt-4 rounded-full border border-emerald-300 bg-white px-4 py-2 text-sm font-black text-emerald-800 hover:bg-emerald-100">{open ? labels.hideAnswer : labels.openAnswer}</button>
+    {open && <div className="mt-5 space-y-4">
+      <div>
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.include}</div>
+        <ul className="mt-3 list-disc space-y-2 pl-5 text-sm font-bold leading-6 text-stone-800">{tr(watch.include, lang).map(item => <li key={item}>{item}</li>)}</ul>
+      </div>
+      <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-amber-700">{labels.trap}</div>
+        <p className="mt-2 text-sm font-black leading-6 text-amber-950">{tr(watch.trap, lang)}</p>
+      </div>
+      <div className="rounded-2xl border border-stone-200 bg-white p-4">
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.model}</div>
+        <p className="mt-2 text-sm font-bold leading-7 text-stone-800">{tr(watch.model, lang)}</p>
+      </div>
+    </div>}
+  </aside>;
+}
+
+function SlideCard({ item, lang, onZoom, full }) {
+  const labels = ui[lang] || ui.es;
+  return <article className={cx("rounded-[2rem] border border-stone-200 bg-stone-50 p-4", full && "md:col-span-2")}>
+    <button type="button" onClick={() => onZoom(item)} className="group block w-full text-left">
+      <div className="overflow-hidden rounded-[1.25rem] border border-stone-200 bg-white">
+        <img src={slideImages[item.n - 1]} alt={`${labels.slide} ${item.n}`} className="aspect-video w-full object-contain transition duration-300 group-hover:scale-[1.02]"/>
+      </div>
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <Pill className="bg-white">{labels.slide} {item.n}</Pill>
+        <span className="text-xs font-bold text-stone-500">{labels.zoom}</span>
+      </div>
+      <h3 className="mt-3 text-xl font-black text-stone-950">{tr(item.title, lang)}</h3>
+      <p className="mt-2 text-sm font-semibold leading-6 text-stone-700">{tr(item.body, lang)}</p>
+    </button>
+  </article>;
+}
+
+function CodeStepArticle({ step, lang, index }) {
+  const labels = ui[lang] || ui.es;
+  return <article className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5 shadow-sm md:p-6">
+    <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+      <div>
+        <Pill tone="green">{tr(step.label, lang)}</Pill>
+        <h3 className="mt-3 text-2xl font-black tracking-[-0.02em] text-stone-950">{tr(step.title, lang)}</h3>
+      </div>
+      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-stone-950 text-sm font-black text-white">{index + 1}</div>
+    </div>
+    <div className="mt-5 grid gap-4 xl:grid-cols-[1.08fr_0.92fr]">
+      <div className="rounded-[1.5rem] bg-stone-950 p-5 text-white">
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">{labels.rcode}</div>
+        <pre className="mt-3 overflow-x-auto whitespace-pre-wrap text-sm font-bold leading-7"><code>{step.code}</code></pre>
+      </div>
+      <div className="space-y-4">
+        <div className="rounded-[1.5rem] border border-stone-200 bg-white p-5">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.interpretation}</div>
+          <p className="mt-3 text-base font-bold leading-8 text-stone-800">{tr(step.interpretation, lang)}</p>
+        </div>
+        <div className="rounded-[1.5rem] border border-emerald-200 bg-emerald-50 p-5">
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{labels.reportMove}</div>
+          <p className="mt-3 text-sm font-black leading-7 text-emerald-950">{tr(step.report, lang)}</p>
+        </div>
+      </div>
+    </div>
+  </article>;
+}
+
+function LearningBlock({ block, lang, onZoom }) {
+  const labels = ui[lang] || ui.es;
+  const steps = block.codeSteps.map(key => codeStepMap[key]);
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+    <SectionHeader eyebrow={tr(block.eyebrow, lang)} title={tr(block.title, lang)}>{tr(block.body, lang)}</SectionHeader>
+    <ReportWatch lang={lang} watch={block.watch}/>
+    <div className="mt-6 grid gap-6 md:grid-cols-2">
+      {block.slides.map((item, index) => <SlideCard key={item.n} item={item} lang={lang} onZoom={onZoom} full={block.slides.length % 2 === 1 && index === block.slides.length - 1} />)}
+    </div>
+    <div className="mt-8 rounded-[2rem] border border-emerald-200 bg-[#f3fff7] p-5 md:p-6">
+      <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{labels.professor}</div>
+      <p className="mt-2 text-sm font-black leading-7 text-emerald-950">{lang === "es" ? "Estos bloques de código aparecen aquí porque corresponden exactamente al concepto de las diapositivas anteriores, no como una segunda parte separada." : lang === "fa" ? "این بلوک‌های کد اینجا آمده‌اند چون دقیقاً به مفهوم اسلایدهای قبلی مربوط‌اند، نه به‌عنوان بخش جدا." : "These code blocks are placed here because they correspond directly to the slides above, not as a separate second half."}</p>
+    </div>
+    <div className="mt-6 space-y-6">{steps.map((step, index) => <CodeStepArticle key={tr(step.label, "en")} step={step} lang={lang} index={index} />)}</div>
+  </section>;
+}
+
+function BetaMLab({ lang }) {
+  const [meth, setMeth] = useState(800);
+  const [unmeth, setUnmeth] = useState(200);
+  const beta = meth + unmeth === 0 ? 0 : meth / (meth + unmeth);
+  const m = Math.log2((meth + 1) / (unmeth + 1));
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+    <SectionHeader eyebrow={ui[lang]?.quickLab || ui.es.quickLab} title={lang === "es" ? "Mini-lab beta ↔ M-value" : lang === "fa" ? "مینی‌لب beta ↔ M-value" : "Beta ↔ M-value mini-lab"}>{lang === "es" ? "Modifica las intensidades para ver cómo beta queda acotado y M cambia como log-ratio." : lang === "fa" ? "intensityها را تغییر دهید تا ببینید beta محدود می‌ماند اما M مثل log-ratio تغییر می‌کند." : "Edit the intensities to see beta stay bounded while M changes as a log-ratio."}</SectionHeader>
+    <div className="mt-6 grid gap-4 md:grid-cols-2">
+      <label className="rounded-3xl border border-stone-200 bg-stone-50 p-4 text-sm font-black text-stone-700">Methylated intensity<input type="number" value={meth} onChange={event => setMeth(Number(event.target.value))} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white p-3 text-base outline-none focus:border-emerald-300"/></label>
+      <label className="rounded-3xl border border-stone-200 bg-stone-50 p-4 text-sm font-black text-stone-700">Unmethylated intensity<input type="number" value={unmeth} onChange={event => setUnmeth(Number(event.target.value))} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white p-3 text-base outline-none focus:border-emerald-300"/></label>
+    </div>
+    <div className="mt-5 grid gap-4 md:grid-cols-2">
+      <div className="rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Beta</div><div className="mt-2 text-4xl font-black">{beta.toFixed(3)}</div><p className="mt-2 text-sm font-bold leading-6 text-stone-200">{beta < 0.33 ? (lang === "es" ? "hipometilado" : lang === "fa" ? "hypomethylated" : "hypomethylated") : beta > 0.66 ? (lang === "es" ? "hipermetilado" : lang === "fa" ? "hypermethylated" : "hypermethylated") : (lang === "es" ? "intermedio / hemi-like" : lang === "fa" ? "میانی / hemi-like" : "intermediate / hemi-like")}</p></div>
+      <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">M-value</div><div className="mt-2 text-4xl font-black text-emerald-950">{Number.isFinite(m) ? m.toFixed(3) : "NA"}</div><p className="mt-2 text-sm font-bold leading-6 text-emerald-900">{m > 0 ? (lang === "es" ? "más methylated que unmethylated" : lang === "fa" ? "methylated بیشتر از unmethylated" : "more methylated than unmethylated") : m < 0 ? (lang === "es" ? "más unmethylated que methylated" : lang === "fa" ? "unmethylated بیشتر از methylated" : "more unmethylated than methylated") : (lang === "es" ? "señales similares" : lang === "fa" ? "signalها مشابه‌اند" : "similar signals")}</p></div>
+    </div>
+  </section>;
+}
+
+function MethodChoiceLab({ lang }) {
+  const [choice, setChoice] = useState("subtle");
+  const scenarios = {
+    subtle: { label: { en: "Subtle disease marker study", es: "Estudio de marcador sutil", fa: "مطالعه marker ظریف" }, method: "preprocessQuantile / preprocessFunnorm", reason: { en: "Quantile may be appropriate if global distributions should be similar; functional is safer if unsure.", es: "Quantile puede ser apropiada si las distribuciones globales deberían ser similares; functional es más segura si hay duda.", fa: "اگر distributionهای global باید مشابه باشند quantile مناسب است؛ اگر شک دارید functional امن‌تر است." } },
+    tumor: { label: { en: "Tumor vs normal with genome-wide shifts", es: "Tumor vs normal con shifts genome-wide", fa: "tumor vs normal با shiftهای genome-wide" }, method: "preprocessFunnorm or Noob", reason: { en: "Avoid forcing tumor and normal distributions to be the same when the difference may be biology.", es: "Evita forzar tumor y normal a tener la misma distribución cuando la diferencia puede ser biología.", fa: "وقتی تفاوت ممکن است biology باشد، tumor و normal را مجبور به distribution مشابه نکنید." } },
+    lowq: { label: { en: "Low-confidence data quality", es: "Calidad de datos incierta", fa: "کیفیت داده نامطمئن" }, method: "preprocessNoob / background correction", reason: { en: "A conservative correction removes background without strong global distribution assumptions.", es: "Una corrección conservadora elimina background sin asunciones globales fuertes.", fa: "یک correction محافظه‌کارانه background را بدون فرض global قوی حذف می‌کند." } }
+  };
+  const current = scenarios[choice];
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+    <SectionHeader eyebrow={ui[lang]?.quickLab || ui.es.quickLab} title={lang === "es" ? "Mini-lab de elección de normalización" : lang === "fa" ? "مینی‌لب انتخاب normalization" : "Normalization-choice mini-lab"}>{lang === "es" ? "Elige un escenario y observa cómo cambia la recomendación metodológica." : lang === "fa" ? "یک scenario انتخاب کنید و ببینید recommendation method چطور تغییر می‌کند." : "Choose a scenario and see how the methodological recommendation changes."}</SectionHeader>
+    <div className="mt-6 flex flex-wrap gap-2">{Object.entries(scenarios).map(([key, item]) => <button key={key} type="button" onClick={() => setChoice(key)} className={cx("rounded-full border px-4 py-2 text-sm font-black transition", choice === key ? "border-emerald-500 bg-emerald-100 text-emerald-900" : "border-stone-200 bg-white text-stone-700 hover:border-emerald-300")}>{tr(item.label, lang)}</button>)}</div>
+    <div className="mt-5 rounded-3xl border border-emerald-200 bg-emerald-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{lang === "es" ? "Recomendación" : lang === "fa" ? "پیشنهاد" : "Recommendation"}</div><h3 className="mt-2 text-2xl font-black text-emerald-950">{current.method}</h3><p className="mt-2 text-sm font-bold leading-7 text-emerald-900">{tr(current.reason, lang)}</p></div>
+  </section>;
+}
+
+function Checkpoints({ lang }) {
+  const labels = ui[lang] || ui.es;
+  const [selected, setSelected] = useState({});
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+    <SectionHeader eyebrow={labels.checkpoint} title={lang === "es" ? "Preguntas rápidas de comprensión" : lang === "fa" ? "پرسش‌های سریع فهم" : "Quick understanding checks"}>{lang === "es" ? "La opción seleccionada queda remarcada." : lang === "fa" ? "گزینه انتخاب‌شده مشخص می‌ماند." : "The selected option stays highlighted."}</SectionHeader>
+    <div className="mt-6 grid gap-4 lg:grid-cols-3">{checks.map((item, idx) => <article key={tr(item.q, lang)} className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-5"><p className="font-black leading-7 text-stone-950">{tr(item.q, lang)}</p><div className="mt-4 flex flex-col gap-2">{item.options.map(option => <button key={option} type="button" onClick={() => setSelected({ ...selected, [idx]: option })} className={cx("rounded-2xl border px-3 py-2 text-left text-sm font-bold", selected[idx] === option ? (option === item.answer ? "border-emerald-400 bg-emerald-100 text-emerald-900" : "border-red-300 bg-red-100 text-red-900") : "border-stone-200 bg-white text-stone-700")}>{option}</button>)}</div>{selected[idx] && <p className="mt-4 rounded-2xl bg-white p-4 text-sm font-bold leading-6 text-stone-700"><span className="font-black">{selected[idx] === item.answer ? labels.correct : labels.notQuite}.</span> {tr(item.why, lang)}</p>}</article>)}</div>
+  </section>;
+}
+
+function Trainer({ lang }) {
+  const labels = ui[lang] || ui.es;
+  const [text, setText] = useState("");
+  const [show, setShow] = useState(false);
+  const words = useMemo(() => text.trim() ? text.trim().split(/\s+/).length : 0, [text]);
+  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+    <SectionHeader eyebrow="Report" title={labels.trainer}>{tr(trainer.prompt, lang)}</SectionHeader>
+    <textarea value={text} onChange={event => setText(event.target.value)} placeholder={labels.placeholder} className="mt-5 min-h-44 w-full rounded-3xl border border-stone-200 bg-white p-4 text-sm font-semibold leading-7 outline-none focus:border-emerald-300"/>
+    <div className="mt-3 flex flex-wrap items-center justify-between gap-3"><span className="text-sm font-bold text-stone-500">{words} {labels.words}</span><button type="button" onClick={() => setShow(!show)} className="rounded-full bg-stone-950 px-5 py-3 text-sm font-black text-white hover:bg-emerald-700">{show ? labels.hideAnswer : labels.showAnswer}</button></div>
+    {show && <div className="mt-4 rounded-3xl border border-emerald-200 bg-emerald-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{labels.model}</div><p className="mt-3 text-sm font-bold leading-7 text-emerald-950">{tr(trainer.model, lang)}</p></div>}
+  </section>;
+}
+
+function ZoomModal({ item, lang, onClose }) {
+  const labels = ui[lang] || ui.es;
+  if (!item) return null;
+  return <div className="fixed inset-0 z-[100] flex items-center justify-center bg-stone-950/80 p-4" role="dialog" aria-modal="true" onClick={onClose}>
+    <div className="max-h-[94vh] w-[min(1100px,96vw)] overflow-auto rounded-[2rem] bg-white p-4 shadow-2xl" onClick={event => event.stopPropagation()}>
+      <div className="mb-3 flex items-center justify-between gap-3"><div><Pill>{labels.slide} {item.n}</Pill><h3 className="mt-2 text-xl font-black text-stone-950">{tr(item.title, lang)}</h3></div><button type="button" onClick={onClose} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white hover:bg-emerald-700">{labels.close}</button></div>
+      <img src={slideImages[item.n - 1]} alt={`${labels.slide} ${item.n}`} className="w-full rounded-[1.5rem] object-contain"/>
+      <p className="mt-3 text-sm font-semibold leading-7 text-stone-600">{tr(item.body, lang)}</p>
+    </div>
+  </div>;
+}
+
+export default function DRDLesson10({ lang = "es", isDone = false, toggle = () => {} }) {
+  const [zoom, setZoom] = useState(null);
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
+    <LessonNav lang={lang} isDone={isDone} toggle={toggle}/>
+    <Hero lang={lang}/>
+    {learningBlocks.slice(0, 1).map(block => <LearningBlock key={block.id} block={block} lang={lang} onZoom={setZoom} />)}
+    <BetaMLab lang={lang}/>
+    {learningBlocks.slice(1).map(block => <LearningBlock key={block.id} block={block} lang={lang} onZoom={setZoom} />)}
+    <MethodChoiceLab lang={lang}/>
+    <Checkpoints lang={lang}/>
+    <Trainer lang={lang}/>
+    <LessonNav lang={lang} isDone={isDone} toggle={toggle} bottom/>
+    <ZoomModal item={zoom} lang={lang} onClose={() => setZoom(null)}/>
+  </main>;
+}

@@ -5,6 +5,7 @@ The public site now has one unified interface for:
 - `index.html` — main Study Hub
 - `AMLB/index.html` — Applied Machine Learning dashboard
 - `MP/index.html` — Molecular Phylogenetics dashboard
+- `DRD/index.html` — DNA/RNA Dynamics dashboard with Module 1/Module 2 roadmap and exam/report kit
 
 The original AMLB material is preserved under `AMLB/legacy/`, so existing lecture content is not lost.
 

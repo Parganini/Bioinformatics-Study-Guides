@@ -802,6 +802,85 @@ const DRD_STUDY_PRODUCTS = [
   { title: "Team report simulator", desc: "A Module 2 report scaffold from biological question to QC, normalization, DMP/DMR, PCA, batch effect and interpretation.", tags: ["report", "pipeline", "methylation"] },
 ];
 
+const DRD_EXAM_REPORT_KIT = {
+  en: {
+    eyebrow: "Practical study kit",
+    title: "Exam + report route",
+    body: "Use this as the operating plan for turning the guide into daily practice: short written answers for Module 1 and a reproducible methylation-analysis report for Module 2.",
+    writtenTitle: "Module 1 written test trainer",
+    reportTitle: "Module 2 team-report scaffold",
+    rubricTitle: "Answer/checklist logic",
+    written: [
+      { title: "45-minute mock exam", body: "Train with four prompts and force each answer into 10–12 lines.", bullets: ["1 definition sentence", "2–3 lines of workflow", "1 line on variability or statistics", "1 biological interpretation sentence"] },
+      { title: "Test-selection drills", body: "Start from the experimental design before naming a test.", bullets: ["paired vs unpaired", "two groups vs more than two", "parametric vs rank-based", "multiple-testing correction"] },
+      { title: "Technology comparison answers", body: "Practise contrasting Stanford, Affymetrix and Illumina without turning the answer into a list of facts.", bullets: ["sample/chip logic", "main technical bias", "normalization/QC step", "what the output means"] }
+    ],
+    report: [
+      { title: "1 · Question and metadata", body: "State the biological comparison, phenotype, covariates and SampleSheet fields that drive the analysis.", checks: ["groups", "sample IDs", "batch variables", "expected contrast"] },
+      { title: "2 · Import, QC and filtering", body: "Explain RGSet/MSet objects, detection p-values, failed samples/probes and why each filter is justified.", checks: ["RGSet/MSet", "detection p-value", "control probes", "removed probes"] },
+      { title: "3 · Normalization choice", body: "Compare raw versus normalized distributions and justify the chosen method rather than only naming it.", checks: ["Quantile/Noob/SWAN/Funnorm", "density plot", "probe-type bias", "dye/background correction"] },
+      { title: "4 · Differential methylation and interpretation", body: "Connect design matrix, contrasts, DMP/DMR, FDR, PCA/batch effect and final biological meaning.", checks: ["beta vs M values", "design matrix", "FDR", "PCA/ComBat"] }
+    ],
+    rubric: [
+      { label: "Define", value: "open with the concept" },
+      { label: "Justify", value: "tie it to design/QC" },
+      { label: "Interpret", value: "state the biological meaning" }
+    ]
+  },
+  es: {
+    eyebrow: "Kit práctico de estudio",
+    title: "Ruta de examen + reporte",
+    body: "Úsalo como plan operativo para convertir la guía en práctica diaria: respuestas escritas cortas para el Módulo 1 y un reporte reproducible de análisis de metilación para el Módulo 2.",
+    writtenTitle: "Entrenador del escrito del Módulo 1",
+    reportTitle: "Estructura del reporte en equipo del Módulo 2",
+    rubricTitle: "Lógica de respuesta/checklist",
+    written: [
+      { title: "Mock exam de 45 minutos", body: "Entrena con cuatro prompts y obliga cada respuesta a entrar en 10–12 líneas.", bullets: ["1 frase de definición", "2–3 líneas de workflow", "1 línea sobre variabilidad o estadística", "1 frase de interpretación biológica"] },
+      { title: "Drills de selección de test", body: "Parte del diseño experimental antes de nombrar la prueba estadística.", bullets: ["paired vs unpaired", "dos grupos vs más de dos", "paramétrico vs basado en rangos", "corrección por múltiples tests"] },
+      { title: "Respuestas comparativas de tecnologías", body: "Practica comparar Stanford, Affymetrix e Illumina sin convertir la respuesta en una lista de datos sueltos.", bullets: ["lógica muestra/chip", "sesgo técnico principal", "paso de normalización/QC", "qué significa el output"] }
+    ],
+    report: [
+      { title: "1 · Pregunta y metadata", body: "Declara la comparación biológica, phenotype, covariables y campos de SampleSheet que controlan el análisis.", checks: ["grupos", "sample IDs", "variables de batch", "contraste esperado"] },
+      { title: "2 · Importación, QC y filtrado", body: "Explica objetos RGSet/MSet, detection p-values, muestras/probes fallidos y por qué se justifica cada filtro.", checks: ["RGSet/MSet", "detection p-value", "control probes", "probes removidos"] },
+      { title: "3 · Elección de normalización", body: "Compara distribuciones raw vs normalizadas y justifica el método elegido, no solo lo nombres.", checks: ["Quantile/Noob/SWAN/Funnorm", "density plot", "sesgo de tipo de probe", "corrección de dye/background"] },
+      { title: "4 · Metilación diferencial e interpretación", body: "Conecta design matrix, contrasts, DMP/DMR, FDR, PCA/batch effect y significado biológico final.", checks: ["beta vs M values", "design matrix", "FDR", "PCA/ComBat"] }
+    ],
+    rubric: [
+      { label: "Define", value: "abre con el concepto" },
+      { label: "Justifica", value: "conéctalo con diseño/QC" },
+      { label: "Interpreta", value: "cierra con significado biológico" }
+    ]
+  },
+  fa: {
+    eyebrow: "کیت عملی مطالعه",
+    title: "مسیر امتحان + گزارش",
+    body: "از این بخش به‌عنوان برنامهٔ عملی برای تبدیل راهنما به تمرین روزانه استفاده کنید: پاسخ‌های نوشتاری کوتاه برای Module 1 و گزارش reproducible تحلیل متیلاسیون برای Module 2.",
+    writtenTitle: "تمرین‌دهندهٔ امتحان نوشتاری Module 1",
+    reportTitle: "اسکلت گزارش تیمی Module 2",
+    rubricTitle: "منطق پاسخ/checklist",
+    written: [
+      { title: "امتحان آزمایشی ۴۵ دقیقه‌ای", body: "با چهار prompt تمرین کنید و هر پاسخ را در ۱۰–۱۲ خط نگه دارید.", bullets: ["۱ جمله تعریف", "۲–۳ خط workflow", "۱ خط دربارهٔ variability یا آمار", "۱ جمله تفسیر زیستی"] },
+      { title: "تمرین انتخاب آزمون", body: "قبل از نام‌بردن آزمون آماری، از طراحی آزمایش شروع کنید.", bullets: ["paired در برابر unpaired", "دو گروه در برابر بیش از دو گروه", "parametric در برابر rank-based", "تصحیح multiple testing"] },
+      { title: "پاسخ‌های مقایسهٔ تکنولوژی", body: "مقایسهٔ Stanford، Affymetrix و Illumina را تمرین کنید بدون اینکه پاسخ فقط فهرست اطلاعات باشد.", bullets: ["منطق sample/chip", "سوگیری فنی اصلی", "مرحلهٔ normalization/QC", "معنای output"] }
+    ],
+    report: [
+      { title: "۱ · پرسش و metadata", body: "مقایسهٔ زیستی، phenotype، covariateها و فیلدهای SampleSheet را که تحلیل را هدایت می‌کنند مشخص کنید.", checks: ["گروه‌ها", "sample IDها", "متغیرهای batch", "contrast مورد انتظار"] },
+      { title: "۲ · import، QC و filtering", body: "objectهای RGSet/MSet، detection p-value، sample/probeهای ناموفق و دلیل هر filter را توضیح دهید.", checks: ["RGSet/MSet", "detection p-value", "control probe", "probeهای حذف‌شده"] },
+      { title: "۳ · انتخاب normalization", body: "توزیع raw و normalized را مقایسه و روش انتخابی را توجیه کنید، نه اینکه فقط نام آن را بگویید.", checks: ["Quantile/Noob/SWAN/Funnorm", "density plot", "probe-type bias", "dye/background correction"] },
+      { title: "۴ · differential methylation و تفسیر", body: "design matrix، contrastها، DMP/DMR، FDR، PCA/batch effect و معنای زیستی نهایی را به هم وصل کنید.", checks: ["beta در برابر M value", "design matrix", "FDR", "PCA/ComBat"] }
+    ],
+    rubric: [
+      { label: "تعریف", value: "با مفهوم شروع کنید" },
+      { label: "توجیه", value: "به design/QC وصل کنید" },
+      { label: "تفسیر", value: "معنای زیستی را بگویید" }
+    ]
+  }
+};
+
+function getDRDExamReportKit(lang) {
+  return DRD_EXAM_REPORT_KIT[lang] || DRD_EXAM_REPORT_KIT.es;
+}
+
 
 const DRD_UNIT_I18N = {
   es: {
@@ -881,6 +960,7 @@ function drdCopy(lang) {
       report: "Team report: methylation dataset analysis pipeline, delivered before the exam date.",
       products: "Study-guide products",
       productsBody: "This dashboard is the blueprint for the full guide: lessons, quizzes, mock exams and written/report practice.",
+      examKit: "Exam + report kit",
       roadmap: "Cronograma",
       search: "Search DNA/RNA topics...",
       pending: "Upcoming topics included from the programme",
@@ -909,6 +989,7 @@ function drdCopy(lang) {
       report: "Reporte en equipo: análisis de un dataset de metilación, entregado antes del examen.",
       products: "Productos de la guía",
       productsBody: "Este dashboard es el plano de la guía completa: lecciones, quizzes, mock exams y práctica escrita/de reporte.",
+      examKit: "Kit examen + reporte",
       roadmap: "Cronograma",
       search: "Buscar temas de DNA/RNA...",
       pending: "Temas pendientes incluidos desde el programa",
@@ -937,6 +1018,7 @@ function drdCopy(lang) {
       report: "گزارش تیمی: تحلیل dataset متیلاسیون، تحویل پیش از تاریخ امتحان.",
       products: "خروجی‌های راهنمای مطالعه",
       productsBody: "این داشبورد نقشهٔ راهنمای کامل است: درس‌ها، آزمونک‌ها، آزمون‌های آزمایشی و تمرین نوشتاری/گزارشی.",
+      examKit: "کیت امتحان + گزارش",
       roadmap: "نقشهٔ راه",
       search: "جستجوی موضوعات DNA/RNA...",
       pending: "موضوعات آینده از برنامهٔ درس",
@@ -1127,6 +1209,7 @@ function DRDApp({ t, lang, hash }) {
             <a href="#module-1" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{copy.module1Short}</a>
             <a href="#module-2" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.module2Short}</a>
             <a href="#products" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.products}</a>
+            <a href="#exam-kit" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.examKit}</a>
           </>
         )}
         visual={(
@@ -1184,6 +1267,8 @@ function DRDApp({ t, lang, hash }) {
           {DRD_STUDY_PRODUCTS.map(product => <DRDProductCard key={product.title} product={product} lang={lang} />)}
         </div>
       </section>
+
+      <DRDExamReportKitSection lang={lang} />
 
       <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
         <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.sources}</div>
@@ -1391,6 +1476,55 @@ function DRDUnderConstructionLesson({ unit, lang = "es", isDone, toggle, prevUni
   );
 }
 
+
+function DRDExamReportKitSection({ lang = "es" }) {
+  const kit = getDRDExamReportKit(lang);
+  return (
+    <section id="exam-kit" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+        <div>
+          <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{kit.eyebrow}</div>
+          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{kit.title}</h2>
+          <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600">{kit.body}</p>
+          <div className="mt-5 grid gap-3 sm:grid-cols-3">
+            {kit.rubric.map(item => <div key={item.label} className="rounded-3xl border border-stone-200 bg-stone-50 p-4">
+              <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{item.label}</div>
+              <p className="mt-2 text-sm font-bold leading-6 text-stone-700">{item.value}</p>
+            </div>)}
+          </div>
+        </div>
+        <div className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-stone-500">{kit.rubricTitle}</div>
+          <p className="mt-3 text-sm font-semibold leading-7 text-stone-600">question → design → QC/normalization → statistics → interpretation → limitation</p>
+        </div>
+      </div>
+
+      <div className="mt-7 grid gap-5 lg:grid-cols-2">
+        <DRDExamKitColumn title={kit.writtenTitle} items={kit.written} tone="red" />
+        <DRDExamKitColumn title={kit.reportTitle} items={kit.report} tone="emerald" />
+      </div>
+    </section>
+  );
+}
+
+function DRDExamKitColumn({ title, items, tone = "red" }) {
+  const accent = tone === "emerald" ? "text-emerald-700" : "text-red-700";
+  const badge = tone === "emerald" ? "border-emerald-200 bg-emerald-50 text-emerald-800" : "border-red-200 bg-red-50 text-red-700";
+  return (
+    <article className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm">
+      <h3 className={`text-2xl font-black tracking-tight ${accent}`}>{title}</h3>
+      <div className="mt-4 grid gap-4">
+        {items.map(item => <div key={item.title} className="rounded-3xl border border-stone-200 bg-stone-50 p-5">
+          <h4 className="text-lg font-black leading-7 text-stone-950">{item.title}</h4>
+          <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {(item.bullets || item.checks || []).map(point => <span key={point} className={`rounded-full border px-3 py-1 text-xs font-black ${badge}`}>{point}</span>)}
+          </div>
+        </div>)}
+      </div>
+    </article>
+  );
+}
 
 function DRDProductCard({ product, lang = "es" }) {
   const localized = localizeDRDProduct(product, lang);

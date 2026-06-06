@@ -67,4 +67,6 @@ The published copies live in `favicons/` for GitHub Pages.
 
 ## DNA/RNA Dynamics
 
-The DNA/RNA Dynamics dashboard lives at `StudyGuide-src/DRD/index.html` and is implemented in `StudyGuide-src/src/App.jsx`. It currently adds the full guide blueprint split into Module 1 theory and Module 2 R/Bioconductor methylation-pipeline units, updated with the 26 May status and the upcoming scheduled topics.
+The DNA/RNA Dynamics dashboard lives at `StudyGuide-src/DRD/index.html` and is implemented in `StudyGuide-src/src/App.jsx`. It contains the guide blueprint split into Module 1 theory and Module 2 R/Bioconductor methylation-pipeline units, updated through the June 5 lesson status and keeping placeholders for the scheduled pending topics.
+
+The dashboard now also includes an exam/report kit section. That section turns the high-level proposal into practical study outputs: a 45-minute written-test trainer, statistical-test selection drills, technology-comparison practice, and a Module 2 report scaffold covering question/metadata, import/QC/filtering, normalization, differential methylation, PCA, batch effect and biological interpretation.

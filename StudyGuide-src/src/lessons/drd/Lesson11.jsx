@@ -256,8 +256,314 @@ const COPY = {
     }
   }
 };
-COPY.en = COPY.es;
-COPY.fa = COPY.es;
+
+const item = (img, title, body, professor, q, include, trap) => ({ img, title, body, professor, exam: { q, include, trap } });
+
+COPY.en = {
+  sections: [
+    {
+      title: "1. From a matrix to relationships among profiles",
+      intro: "The lesson moves from single-gene significance to the internal organization of the whole dataset. The central idea is unsupervised analysis: let the data show structure before imposing biological labels.",
+      lab: "matrix",
+      slides: [
+        item("s01", "Goal of the lesson", "The first slide defines the aim: understand intrinsic relationships in the data using unsupervised analysis and visualization.", "The dataset should first be allowed to reveal structure; biological interpretation comes after the pattern is visible.", "What does unsupervised analysis mean here?", ["No predefined groups are required", "It searches for internal structure", "It can be applied to genes, CpGs or samples"], "Do not present it as a differential-expression test; it is exploratory."),
+        item("s02", "Overall analysis pipeline", "The slide separates matrix construction, processing and statistics. Descriptive/exploratory statistics define similarity or distance.", "This connects with earlier lessons: after normalization and statistical testing, the global shape of the dataset still matters.", "Where does clustering fit in the pipeline?", ["After building and processing the matrix", "As an exploratory technique", "To visualize similarity and difference"], "Do not confuse clustering with normalization."),
+        item("s03", "One matrix, two readings", "The same matrix can be read by rows to compare genes or by columns to compare samples.", "The professor clarified that variables can be genes or samples; the important point is to state which profile is being compared.", "What changes when comparing genes versus samples?", ["Genes: profiles across samples", "Samples: profiles across genes", "The biological interpretation changes"], "Do not mix rows and columns without specifying the direction."),
+        item("s04", "Pairwise genes versus pairwise samples", "Two genes can be compared using all samples; two samples can be compared using all genes.", "The keyword is profile: a gene or a sample becomes a vector of quantitative values.", "What does each point represent in a gene-gene plot?", ["One sample or patient", "Coordinates given by two genes", "A way to evaluate similarity between gene profiles"], "Do not say that each point is a gene in this plot type.")
+      ]
+    },
+    {
+      title: "2. Similarity expressed as distance",
+      intro: "Algorithms need a numerical version of similarity. Close profiles are similar; distant profiles are dissimilar, always according to the selected metric.",
+      lab: "distance",
+      slides: [
+        item("s05", "Geometrical properties of distance", "A distance cannot be negative, the distance from a profile to itself is zero, and distances should be symmetric.", "This geometry is the reason maps and dendrograms can be built from expression profiles.", "What does a low distance mean?", ["High similarity", "Profiles are close", "The statement depends on the metric"], "Low distance does not prove causality or the same mechanism."),
+        item("s06", "Triangle inequality", "The slide uses the triangle inequality to build the geometric intuition behind distance measures.", "This prepares the idea of MDS: distances between profiles can be converted into a visual map.", "Why is the geometric view useful?", ["Profiles are treated as points", "Distances allow mapping", "Algorithms use proximity"], "You do not need to derive the theorem; explain its conceptual role.")
+      ]
+    },
+    {
+      title: "3. Pearson: linear correlation converted into distance",
+      intro: "Pearson measures linear association between two profiles. In this lesson it is converted into distance using d = 1 - |r|, so strong positive and strong negative correlations can both be close.",
+      lab: "pearson",
+      slides: [
+        item("s07", "Pearson correlation coefficient", "Pearson r quantifies a linear relationship: +1 is strong positive correlation, -1 is strong negative correlation, and 0 is no correlation.", "The professor stresses that correlation is not causality; it only describes relationships between profiles.", "What does Pearson measure?", ["A linear relationship", "Between two variables or profiles", "Not causality"], "Do not write that Pearson proves one gene regulates another."),
+        item("s08", "From correlation to distance", "The distance is d = 1 - |r|. If r is +1 or -1, distance is 0; if r is 0, distance is 1.", "This explains why opposite profiles can be grouped together when correlation distance is used.", "If r = -1, what is d and what does it mean?", ["d = 0", "Perfect negative correlation", "Close according to correlation distance"], "Do not write d = 2; the absolute value is used."),
+        item("s09", "DLBCL dataset", "The lesson uses a historical two-colour competitive array dataset from diffuse large B-cell lymphoma patients.", "The example links M1.7 to earlier technology lessons: expression values are centered and normalized log I/reference data.", "Why do competitive arrays reappear here?", ["The original dataset used two-colour arrays", "Values are log I/reference", "They provide expression profiles"], "Do not turn this into a methylation-array example."),
+        item("s10", "IGKC versus NKG7", "Each point is one patient. r = 0.97 indicates strong correlation and d = 0.03 indicates very low distance.", "This is an exam-perfect example of looking at genes across samples.", "Interpret r = 0.97 and d = 0.03.", ["Strong positive correlation", "Low distance", "Very similar profiles across patients"], "Do not say that IGKC causes NKG7."),
+        item("s11", "Significance of r", "Pearson correlation can be assessed with Student's t using n - 2 degrees of freedom.", "This reconnects with earlier statistics: correlations can also have p-values.", "Can Pearson have a p-value?", ["Yes", "Student's t can be used", "df = n - 2"], "Do not confuse the p-value of r with the distance value."),
+        item("s12", "Pearson and outliers", "The slide shows weak or absent correlations and warns that r can be skewed by outliers.", "This is the bridge to Spearman: when outliers are present, Pearson may not be the best metric.", "Name a limitation of Pearson.", ["It assumes linearity", "It is sensitive to outliers", "It should be interpreted together with the plot"], "Do not use Pearson automatically for every dataset.")
+      ]
+    },
+    {
+      title: "4. Time series: Spearman and Euclidean distance",
+      intro: "The yeast sporulation dataset shows why the metric must match the experimental design. Outliers, up/down direction, time order and scaling all matter.",
+      lab: "metric",
+      slides: [
+        item("s13", "Sporulation dataset", "Chu et al. followed gene expression in budding yeast at 30 min, 2, 5, 7, 9 and 11 hours using competitive arrays.", "A time series follows the same biological system through time, so trends become central.", "Why is a time series special?", ["It has time order", "The trend matters", "Up/down direction can change over time"], "Do not treat time points as unrelated observations."),
+        item("s14", "Pearson affected by an outlier", "ENB1 and NPR2 have r = 0.63 and d = 0.37, but one extreme point strongly affects the result.", "The professor notes that deleting the first point would greatly increase the correlation.", "What problem does this slide show?", ["An outlier", "Pearson sensitivity", "The metric can mislead"], "Do not conclude from r alone without looking at the plot."),
+        item("s15", "Spearman uses ranks", "Spearman is non-parametric, more robust to outliers, and replaces true values by ranks.", "Its strength is robustness; its cost is loss of magnitude and fine direction information.", "When can Spearman be useful?", ["Outliers are present", "Data can be ranked", "A monotonic relationship is expected"], "Do not say Spearman is always better because it is robust."),
+        item("s16", "Spearman problem in time series", "After ranking, rho = -0.09 and d = 0.91; the biological up/down direction can be lost.", "In time series with rises and falls, ranks may not capture the important biological pattern.", "Why can Spearman fail in time series?", ["It converts values to ranks", "It can lose up/down direction", "It can miss temporal pattern"], "Do not interpret ranks as expression magnitudes."),
+        item("s17", "Significance of Spearman", "Spearman rho can also be tested using a t distribution with n - 2 degrees of freedom.", "You do not need the computation by heart; understand that rho can be statistically assessed.", "Which symbol is used for Spearman?", ["rho", "Rank correlation", "It may have a p-value"], "Do not call it Pearson r."),
+        item("s18", "Euclidean distance", "Euclidean distance comes from the Pythagorean theorem and extends to high dimensions by summing squared differences.", "The interpretation is intuitive: larger number means larger distance.", "What does a large Euclidean distance mean?", ["Profiles are far", "They differ in magnitude/shape", "The exact value depends on scaling"], "Do not ignore normalization or scaling."),
+        item("s19", "Scaling changes Euclidean distance", "The same profiles can have Ed = 5.8 before scaling and Ed = 0.88 after scaling.", "Euclidean distance preserves direction, but it is sensitive to scale.", "Why does scaling matter for Euclidean distance?", ["Distance depends on units", "Large ranges dominate", "Normalization changes the numeric distance"], "Do not compare Euclidean distances across differently scaled datasets."),
+        item("s20", "Choosing the best measure", "In the DLBCL example Spearman may be best; in the time-series example Euclidean distance better captures opposite trends.", "There is no universal metric; the decision depends on the biological question and data structure.", "How do you choose a metric?", ["Look at the design", "Consider outliers and scaling", "Compare the resulting plots/clusters"], "Do not write that one metric is always correct."),
+        item("s21", "Strengths and weaknesses", "Pearson is powerful but outlier-sensitive, Spearman is robust but loses ranking detail, and Euclidean has geometric meaning but depends on scaling.", "This table is a good exam summary: every metric has pros and cons.", "Compare Pearson, Spearman and Euclidean distance.", ["Pearson: linear and powerful", "Spearman: robust to outliers", "Euclidean: geometric but scale-sensitive"], "Do not list only definitions; include limitations.")
+      ]
+    },
+    {
+      title: "5. MDS: mapping distances for visualization",
+      intro: "Multidimensional scaling is not a metric. It is an algorithm that takes a distance matrix and places objects in 2D or 3D while preserving distances as much as possible.",
+      lab: "mds",
+      slides: [
+        item("s22", "Unsupervised techniques", "Unsupervised methods let the data organize itself and then ask for biological meaning.", "The professor lists MDS, hierarchical clustering, k-means and PCA as exploratory approaches.", "What is the logic of unsupervised analysis?", ["No prior class labels", "Exploratory visualization", "Biological interpretation after the pattern"], "Do not make it a supervised classification method."),
+        item("s23", "Purpose of MDS", "MDS maps high-dimensional distances into lower-dimensional space without too much loss of information.", "In class, the professor clarified that MDS is an algorithm, not a metric.", "What is MDS?", ["An algorithm", "It maps distances", "It preserves relative proximity"], "Do not call MDS a distance metric."),
+        item("s24", "Triangular matrix", "The starting point is a triangular distance matrix, for example using Euclidean or correlation distance.", "The matrix contains pairwise distances; the values in parentheses are scaled MDS coordinates/distances.", "What is the input for MDS?", ["A distance matrix", "Pairwise distances", "Often after selecting variable transcripts"], "Do not start MDS from raw biological labels."),
+        item("s25", "Euclidean versus correlation MDS", "Different distances can produce similar or different maps. The important information is which profiles are near or far.", "The axis values themselves are less important than the relative distance between points.", "How do you interpret an MDS plot?", ["Near points are similar", "Far points are dissimilar", "Interpretation depends on the distance used"], "Do not overinterpret the names or values of the axes.")
+      ]
+    },
+    {
+      title: "6. Hierarchical clustering and linkage methods",
+      intro: "Hierarchical clustering is agglomerative: it starts from the nearest genes or samples, joins them into clusters, and builds a dendrogram.",
+      lab: "linkage",
+      slides: [
+        item("s26", "Agglomerative clustering", "Similar profiles have low distance and are placed close together in a binary tree or dendrogram.", "Short branches mean proximity; long branches mean dissimilarity.", "How does hierarchical clustering work?", ["It is bottom-up", "It joins nearest profiles first", "It produces a dendrogram"], "Do not describe it as a supervised classifier."),
+        item("s27", "Dendrogram intuition I", "The slide introduces how profiles begin as separate objects before clustering.", "Read the dendrogram as a sequence of joins, not as a simple bar chart.", "What does a dendrogram represent?", ["Cluster joins", "Relative distances", "Similarity structure"], "Do not interpret left-to-right order alone."),
+        item("s28", "Dendrogram intuition II", "Profiles are linked progressively as the algorithm finds shorter distances.", "The professor emphasizes the branch length: shorter is more similar.", "What does a short branch indicate?", ["Low distance", "High similarity", "Early joining"], "Do not ignore the branch lengths."),
+        item("s29", "Dendrogram intuition III", "Internal nodes mark joining events between profiles or clusters.", "Vocabulary matters: profiles, nodes, branches and clusters.", "What is an internal node?", ["A joining point", "A cluster formation event", "Part of the binary tree"], "Do not call every node a gene."),
+        item("s30", "Dendrogram intuition IV", "As more objects are joined, the tree summarizes the nested cluster structure.", "This is why the same data can be viewed globally, not only gene by gene.", "Why is the tree useful?", ["It compresses many pairwise distances", "It shows nested groups", "It supports exploratory interpretation"], "Do not claim it proves mechanism."),
+        item("s31", "Dendrogram intuition V", "The cluster tree continues until all profiles are linked.", "The final tree must still be interpreted with the metric and linkage in mind.", "What determines the tree?", ["Distance metric", "Linkage method", "Data preprocessing"], "Do not treat the dendrogram as unique and absolute."),
+        item("s32", "Dendrogram intuition VI", "The last joins correspond to the largest separations in the clustering process.", "Long branches identify profiles or groups that are relatively far from the others.", "What do long branches suggest?", ["Greater distance", "Lower similarity", "Possible separate group"], "Do not forget to validate important clusters."),
+        item("s33", "Four-step algorithm", "Look for the nearest entries, join them, compute new distances, and repeat until all objects are linked.", "This is the core written-exam answer for hierarchical clustering.", "List the steps of hierarchical clustering.", ["Find nearest profiles", "Join them", "Recalculate cluster distances", "Repeat until one tree remains"], "Do not skip the recalculation step."),
+        item("s34", "Distance matrix to first branch", "The nearest genes in the triangular matrix form the first short branch.", "The distance between two genes is symmetric, so the triangular matrix stores only useful pairwise values.", "Why use a triangular matrix?", ["Distances are symmetric", "Self-distance is zero", "It avoids redundant entries"], "Do not read both halves as different data."),
+        item("s35", "Linkage methods", "Single, complete and average linkage define how distances between clusters are recalculated.", "Average linkage is often a useful compromise, while single linkage may cause chaining.", "What is a linkage method?", ["A rule for cluster-to-cluster distance", "Applied after forming clusters", "It affects the dendrogram"], "Do not confuse metric and linkage."),
+        item("s36", "Linkage summary", "Single uses nearest neighbors, complete uses farthest neighbors, average uses average pairwise distance, and Ward minimizes variance increase.", "This table is exam-friendly because it links each method to a typical behavior.", "Which linkage often causes chaining?", ["Single linkage", "Nearest-neighbor rule", "Elongated clusters"], "Do not say average linkage is the same as single linkage."),
+        item("s37", "Average linkage recalculation", "After a first cluster is formed, the algorithm recalculates its distance to remaining genes.", "The height and structure of the dendrogram depend on both metric and linkage.", "What happens after two genes cluster?", ["Distances are recalculated", "The linkage rule is used", "The dendrogram grows"], "Do not keep using only the original pairwise distance."),
+        item("s38", "Average linkage example", "The slide shows the arithmetic averaging used to calculate new cluster distances.", "You do not need every number, but you must understand what is being averaged.", "What does average linkage average?", ["Pairwise distances", "Between two clusters", "Divided by n1 × n2"], "Do not average expression values instead of distances."),
+        item("s39", "New triangular matrix", "After each join, a new distance matrix summarizes distances among the new cluster and remaining genes.", "This repeats until the dendrogram is complete.", "Why does the matrix change?", ["Clusters replace individual genes", "Distances must be recomputed", "The algorithm is iterative"], "Do not think clustering is one single calculation."),
+        item("s40", "Shorter branches mean closer genes", "The slide reinforces the central visual rule: closer genes have shorter branches.", "This is the simplest way to read a dendrogram under the chosen metric.", "How do you read branch length?", ["Short = similar", "Long = dissimilar", "Always under the chosen metric"], "Do not ignore the scale/height."),
+        item("s41", "Isomorphisms", "Different drawings can represent the same tree; look at branch lengths and joins, not only visual layout.", "The professor says to always look up the tree and branch lengths to establish proximity.", "What is the risk with dendrogram layout?", ["Equivalent trees can look different", "Order can rotate", "Branch length matters most"], "Do not overinterpret left-right order."),
+        item("s42", "Yeast 15-gene time series", "The Chu dataset allows natural clusters such as persistent and transient transcripts.", "The time series design makes patterns visible across time points.", "What are natural clusters here?", ["Persistent transcripts", "Transient transcripts", "Profiles with similar time behavior"], "Do not define clusters only by gene names."),
+        item("s43", "Pearson + single linkage", "Single linkage finds one large persistent cluster but adds transient genes one by one: chaining.", "Chaining is a warning sign that the dendrogram structure may not be ideal.", "What is chaining?", ["Objects added one by one", "Often due to single linkage", "Weak cluster structure"], "Do not present chaining as a strong biological group."),
+        item("s44", "Pearson + complete/average", "Complete and average linkage define two main clusters more clearly, although not perfectly.", "Average linkage is often applied and worked well in this example.", "Why compare linkage methods?", ["They produce different trees", "Some separate persistent/transient profiles better", "It checks robustness"], "Do not accept the first dendrogram blindly."),
+        item("s45", "Spearman/Euclidean + average", "Spearman can produce distance 0 and lose fine structure; Euclidean can place opposite profiles far away.", "Different metric-linkage combinations emphasize different aspects of the data.", "Why can Spearman lose fine structure?", ["It uses ranks", "Many profiles can share rank patterns", "Distances may become zero"], "Do not say a clean-looking tree is automatically best."),
+        item("s46", "To remember", "Pearson and Spearman can bring opposite profiles close; Euclidean can keep them far. Spearman may produce distance zero; Euclidean can produce larger distances.", "This slide is one of the clearest exam summaries of metric behavior.", "Give one take-home about metrics in clustering.", ["Correlation distances may cluster opposite profiles", "Spearman may lose fine structure", "Euclidean distances are larger and scale-dependent"], "Do not discuss metrics without their drawbacks."),
+        item("s47", "Take-home message", "Hierarchical clustering identifies related genes or samples, but different metrics and linkages can produce different results; clusters should be validated.", "This is the written-exam conclusion: exploratory result plus validation.", "What must be done after cluster analysis?", ["Try different metrics/linkages", "Interpret biologically", "Validate important clusters"], "Do not stop at a pretty dendrogram.")
+      ]
+    },
+    {
+      title: "7. Bootstrap validation of clustering",
+      intro: "Bootstrap validation checks whether the same cluster is recovered repeatedly after resampling. It gives support to nodes in the dendrogram.",
+      lab: "bootstrap",
+      slides: [
+        item("s48", "Bootstrap method", "Generate bootstrap datasets, recluster them many times, and count how often a cluster is recovered.", "The professor connects this with uncertainty: when you doubt a node, validate it.", "What does bootstrap validation assess?", ["Cluster stability", "Reproducibility", "Support of nodes"], "Do not confuse it with normalization."),
+        item("s49", "Bootstrap support", "Support is the number of replicates containing the cluster divided by total replicates, times 100.", "95% is very strong; below 70% is weak and should be treated carefully.", "Interpret bootstrap support of 65%.", ["Weak support", "Unstable cluster", "Conclusion should be cautious"], "Do not call it strong because it is above 50%." )
+      ]
+    },
+    {
+      title: "8. Heatmaps: dendrogram plus visual pattern",
+      intro: "The end of the lesson combines dendrograms with heatmaps. Heatmaps make global patterns visible, but the legend determines what the colors mean.",
+      lab: "zscore",
+      slides: [
+        item("s50", "Heat map", "Rows usually represent genes and columns represent samples. Colors represent relative expression or up/down statistics.", "The professor insists: always read the legend; red and green can be inverted across examples.", "What should you inspect in a heatmap?", ["Rows and columns", "Legend", "Dendrogram", "Relative scale"], "Do not assume red always means up-regulation."),
+        item("s51", "Z-score concept", "A z-score tells how many standard deviations a value is above or below the mean.", "Here it is calculated for each gene across samples.", "What does a heatmap z-score measure?", ["Standard deviations", "Relative to the gene mean", "A relative value"], "Do not interpret it as absolute expression."),
+        item("s52", "Z-score formula", "Zij = (xij - μi) / σi. Example: 10, 20, 30 gives z = -1, 0, +1.", "This is a compact answer for how heatmap colors can be computed.", "Interpret z = +1.", ["Above the gene mean", "One standard deviation", "Relative to that gene"], "Do not compare z-scores as absolute expression between genes."),
+        item("s53", "Visual heatmap example", "The class example combines dendrograms and colors to show patterns across many samples.", "Good visualization is crucial for communicating large datasets.", "Why combine heatmap and dendrogram?", ["The dendrogram groups", "Color shows pattern", "Together they make interpretation easier"], "Do not use colors without looking at clusters."),
+        item("s54", "Legend and fold change", "Colors may represent fold change or another scale, not only z-score.", "The legend tells you what each color means.", "What is a common heatmap error?", ["Ignoring the legend", "Reversing up/down", "Assuming color equals absolute value"], "Do not translate colors without checking the scale."),
+        item("s55", "Fold change heatmap", "The historical example uses expression changes to separate large sample groups.", "A heatmap helps detect groups, but biological interpretation must return to the genes.", "What does the heatmap add to a paper?", ["Compact visualization", "Group patterns", "Clear communication"], "Do not claim a mechanism without checking specific genes."),
+        item("s56", "Cellular models", "DLBCL, FL, CLL, activated/normal lymphocytes and cell lines provide pathological and normal reference profiles.", "Pathological samples may share profiles with related normal B-cell conditions.", "Why compare with normal samples?", ["Biological context", "Cellular origin", "Distinguishing pathology from physiology"], "Do not interpret a close cluster as absolute identity."),
+        item("s57", "Final take-home", "Cluster analysis identifies similarity/dissimilarity and heatmaps visualize it; always pay attention to the legend.", "This is the final sentence of the lesson and a good exam ending.", "Summarize the final message of M1.7.", ["Clustering finds patterns", "Heatmap visualizes them", "The legend is essential"], "Do not forget to mention similarity/dissimilarity.")
+      ]
+    }
+  ],
+  labs: {
+    matrix: { title: "Mini-lab · Which direction of the matrix are you reading?", intro: "Choose whether the question compares genes across samples or samples across genes.", genes: "Genes", samples: "Samples", items: [
+      { q: "Do IGKC and NKG7 behave similarly across 38 DLBCL patients?", a: "genes", why: "You compare two genes using all patients as measurements." },
+      { q: "Are the 7 h and 9 h time-series samples similar when considering many transcripts?", a: "samples", why: "You compare two samples/time points using many gene profiles." },
+      { q: "Which transcripts show a persistent pattern during sporulation?", a: "genes", why: "You group genes by their behavior over time." }
+    ] },
+    distance: { title: "Mini-lab · Distance intuition", intro: "Mark which statements are compatible with a useful distance.", trueLabel: "True", falseLabel: "False", correct: "Correct", items: [
+      { q: "The distance of a profile from itself must be 0.", a: true, why: "An identical profile should not be separated from itself." },
+      { q: "A distance can be negative if the correlation is negative.", a: false, why: "Distance must not be negative; d = 1 - |r| uses the absolute value." },
+      { q: "Low distance means similar profiles according to the selected metric.", a: true, why: "Near/far always depends on the metric." }
+    ] },
+    pearson: { title: "Mini-lab · Pearson r → distance", intro: "Move r and observe d = 1 - |r|. Notice that +1 and -1 both give distance 0.", r: "Pearson r", d: "Distance d", meaning: "Interpretation" },
+    metric: { title: "Mini-lab · Choose a metric", intro: "Choose the most reasonable initial metric for each situation.", choose: "Choose", items: [
+      { q: "There is a large outlier and you want a robust relationship measure.", a: "Spearman", options: ["Pearson", "Spearman", "Euclidean"], why: "Spearman uses ranks and reduces the influence of extreme values." },
+      { q: "In a time series, two genes have opposite profiles and you want them to remain far apart.", a: "Euclidean", options: ["Pearson", "Spearman", "Euclidean"], why: "Euclidean distance can preserve geometric separation between opposite profiles." },
+      { q: "Normalized profiles appear linearly related and there are no strong outliers.", a: "Pearson", options: ["Pearson", "Spearman", "Euclidean"], why: "Pearson is powerful for linear relationships when assumptions are reasonable." }
+    ] },
+    mds: { title: "Mini-lab · MDS is not a metric", intro: "Change the distance matrix and watch the map reorganize. Interpret relative proximity, not axis values.", euclidean: "Euclidean distance", correlation: "Correlation distance", note: "What matters is near/far between points, not the axis names." },
+    linkage: { title: "Mini-lab · Linkage methods", intro: "Select a linkage and review the behavior it can produce.", methods: {
+      single: { name: "Single / minimum", text: "Uses nearest neighbors. It may capture elongated clusters, but can cause chaining." },
+      complete: { name: "Complete / maximum", text: "Uses farthest neighbors. It tends to form compact clusters and reduces chaining." },
+      average: { name: "Average / UPGMA", text: "Averages pairwise distances. It is a widely used general-purpose option." },
+      ward: { name: "Ward", text: "Joins elements by minimizing the increase in variance; often useful with compact Euclidean data." }
+    } },
+    bootstrap: { title: "Mini-lab · Bootstrap support", intro: "Compute support = recovered clusters / total replicates × 100.", total: "Total replicates", recovered: "Replicates with the cluster", support: "Support", verdict: "Verdict", strong: "Very strong", good: "Good", moderate: "Moderate", weak: "Weak" },
+    zscore: { title: "Mini-lab · Heatmap z-score", intro: "Enter expression values for one gene across samples. The z-score is calculated within that gene.", values: "Expression values", mean: "Mean", sd: "SD", z: "Z-scores" },
+    quiz: { title: "Final checkpoint", score: "Score", items: [
+      { q: "MDS is best described as…", options: ["a p-value correction", "a metric", "an algorithm that maps distances", "a paired test"], answer: 2 },
+      { q: "With d = 1 - |r|, if r = -1 then…", options: ["d = 2", "d = 1", "d = 0", "d = -1"], answer: 2 },
+      { q: "The classic warning for single linkage is…", options: ["heteroscedasticity", "chaining", "bisulfite failure", "FDR inflation"], answer: 1 },
+      { q: "Heatmap z-scores usually represent…", options: ["absolute expression", "relative values for each gene across samples", "raw CEL intensities", "bootstrap p-values"], answer: 1 },
+      { q: "Spearman can be problematic in time series because…", options: ["it has no p-value", "it uses ranks and can lose up/down direction", "it only works with two samples", "it requires methylation arrays"], answer: 1 }
+    ] },
+    written: { title: "Written exam trainer", prompt: "Answer in 10-12 lines: Explain hierarchical clustering and heatmaps in transcriptomic data.", placeholder: "Write your answer here…", model: "Hierarchical clustering is an unsupervised method used to identify similarity and dissimilarity among genes or samples. It starts from a matrix of profiles and calculates pairwise distances with a metric such as Pearson, Spearman or Euclidean distance. The algorithm is agglomerative: it first joins the closest profiles and then recalculates distances between clusters using a linkage method such as single, complete or average linkage. The result is a dendrogram, where short branches indicate similar profiles and long branches indicate greater distance. Because different metrics and linkage methods can produce different trees, important nodes should be compared and validated, for example with bootstrap support. A heatmap is often associated with the dendrogram to visualize expression patterns in a matrix, usually genes in rows and samples in columns. Colors represent relative values, such as z-scores or fold change, so the legend must always be read before interpreting up- or down-regulation." }
+  }
+};
+
+COPY.fa = {
+  sections: [
+    {
+      title: "۱. از ماتریس تا رابطه میان پروفایل‌ها",
+      intro: "در این درس تمرکز از معنی‌داری تک‌ژن به سازمان درونی کل dataset تغییر می‌کند. ایده اصلی unsupervised analysis است: اجازه می‌دهیم داده‌ها قبل از برچسب‌گذاری زیستی، ساختار خود را نشان دهند.",
+      lab: "matrix",
+      slides: [
+        item("s01", "هدف درس", "اسلاید اول هدف را تعریف می‌کند: فهم روابط درونی داده‌ها با unsupervised analysis و visualization.", "اول باید ساختار dataset دیده شود؛ تفسیر زیستی بعد از مشاهده pattern می‌آید.", "Unsupervised analysis در این درس یعنی چه؟", ["گروه‌های از پیش تعریف‌شده لازم نیست", "به دنبال ساختار درونی است", "برای ژن‌ها، CpGها یا نمونه‌ها قابل استفاده است"], "آن را مثل test بیان differential expression معرفی نکن؛ این بخش exploratory است."),
+        item("s02", "pipeline کلی تحلیل", "اسلاید matrix، processing و statistics را جدا می‌کند. descriptive/exploratory statistics برای تعریف similarity یا distance استفاده می‌شود.", "بعد از normalization و testing، شکل کلی dataset همچنان مهم است.", "Clustering کجای pipeline قرار می‌گیرد؟", ["بعد از ساخت و پردازش ماتریس", "به عنوان تکنیک exploratory", "برای visualization شباهت/تفاوت"], "آن را با normalization اشتباه نگیر."),
+        item("s03", "یک ماتریس، دو نوع خواندن", "همان ماتریس را می‌توان از روی ردیف‌ها برای مقایسه genes یا از روی ستون‌ها برای مقایسه samples خواند.", "استاد روشن کرد که variable می‌تواند gene یا sample باشد؛ مهم این است که بگویی کدام profile مقایسه می‌شود.", "در مقایسه genes و samples چه چیزی عوض می‌شود؟", ["Genes: profile در samples", "Samples: profile در genes", "تفسیر زیستی عوض می‌شود"], "ردیف و ستون را بدون مشخص کردن direction قاطی نکن."),
+        item("s04", "Pairwise genes در برابر pairwise samples", "دو gene با استفاده از همه samples مقایسه می‌شوند؛ دو sample با استفاده از همه genes مقایسه می‌شوند.", "کلمه کلیدی profile است: gene یا sample به vectorی از مقادیر کمی تبدیل می‌شود.", "هر نقطه در gene-gene plot چیست؟", ["یک sample یا patient", "مختصات داده‌شده توسط دو gene", "راهی برای ارزیابی similarity بین gene profiles"], "در این نوع نمودار نگو هر نقطه یک gene است.")
+      ]
+    },
+    {
+      title: "۲. بیان similarity به صورت distance",
+      intro: "الگوریتم‌ها به نسخه عددی similarity نیاز دارند. profileهای نزدیک مشابه‌ترند و profileهای دور dissimilar هستند؛ همیشه بر اساس metric انتخاب‌شده.",
+      lab: "distance",
+      slides: [
+        item("s05", "ویژگی‌های هندسی distance", "distance منفی نمی‌شود، distance یک profile با خودش صفر است، و distance باید symmetric باشد.", "این هندسه دلیل ساخت map و dendrogram از expression profiles است.", "distance کم یعنی چه؟", ["similarity بالا", "profileها نزدیک‌اند", "به metric وابسته است"], "distance کم causality یا mechanism مشترک را ثابت نمی‌کند."),
+        item("s06", "triangle inequality", "اسلاید از triangle inequality برای ساخت intuition هندسی پشت distance measures استفاده می‌کند.", "این بخش ایده MDS را آماده می‌کند: تبدیل distance بین profiles به نقشه قابل دیدن.", "چرا دید هندسی مهم است؟", ["profileها مثل points دیده می‌شوند", "distance امکان mapping می‌دهد", "الگوریتم‌ها از proximity استفاده می‌کنند"], "نیازی به اثبات قضیه نیست؛ نقش مفهومی آن را توضیح بده.")
+      ]
+    },
+    {
+      title: "۳. Pearson: تبدیل correlation خطی به distance",
+      intro: "Pearson رابطه خطی میان دو profile را اندازه می‌گیرد. در این درس با d = 1 - |r| به distance تبدیل می‌شود، بنابراین correlation مثبت یا منفی قوی هر دو می‌توانند نزدیک شوند.",
+      lab: "pearson",
+      slides: [
+        item("s07", "ضریب Pearson r", "Pearson r رابطه خطی را کمّی می‌کند: +1 correlation مثبت قوی، -1 correlation منفی قوی، و 0 یعنی بدون correlation.", "استاد تأکید می‌کند correlation برابر causality نیست؛ فقط رابطه profileها را توصیف می‌کند.", "Pearson چه چیزی را اندازه می‌گیرد؟", ["رابطه خطی", "بین دو variable/profile", "نه causality"], "ننویس Pearson ثابت می‌کند یک gene دیگری را regulate می‌کند."),
+        item("s08", "از correlation به distance", "فرمول distance برابر d = 1 - |r| است. اگر r برابر +1 یا -1 باشد، distance صفر است؛ اگر r صفر باشد، distance یک است.", "این توضیح می‌دهد چرا profileهای opposite با correlation distance می‌توانند کنار هم بیایند.", "اگر r = -1 باشد، d چیست؟", ["d = 0", "correlation منفی کامل", "بر اساس correlation distance نزدیک است"], "d = 2 ننویس؛ absolute value استفاده می‌شود."),
+        item("s09", "Dataset مربوط به DLBCL", "درس از dataset تاریخی two-colour competitive array از بیماران diffuse large B-cell lymphoma استفاده می‌کند.", "این مثال M1.7 را به platformهای قبلی وصل می‌کند: داده‌ها centered و normalized log I/reference هستند.", "چرا competitive arrays دوباره مطرح می‌شوند؟", ["dataset اصلی two-colour است", "مقادیر log I/reference هستند", "برای expression profiles استفاده می‌شوند"], "آن را به methylation array تبدیل نکن."),
+        item("s10", "IGKC در برابر NKG7", "هر نقطه یک بیمار است. r = 0.97 یعنی correlation قوی و d = 0.03 یعنی distance خیلی کم.", "این مثال عالی برای امتحان است: نگاه به genes در across samples.", "r = 0.97 و d = 0.03 را تفسیر کن.", ["correlation مثبت قوی", "distance کم", "profileهای بسیار مشابه بین بیماران"], "نگو IGKC باعث NKG7 می‌شود."),
+        item("s11", "معنی‌داری r", "Pearson correlation با Student's t و df = n - 2 قابل ارزیابی است.", "این بخش به آمار قبلی وصل می‌شود: correlation هم می‌تواند p-value داشته باشد.", "آیا Pearson p-value دارد؟", ["بله", "Student's t استفاده می‌شود", "df = n - 2"], "p-value مربوط به r را با distance اشتباه نگیر."),
+        item("s12", "Pearson و outlierها", "اسلاید correlation ضعیف/غایب را نشان می‌دهد و هشدار می‌دهد r ممکن است با outlier skew شود.", "این bridge به Spearman است: با outlier، Pearson همیشه بهترین metric نیست.", "یک محدودیت Pearson چیست؟", ["linearity فرض می‌کند", "به outlier حساس است", "باید همراه plot تفسیر شود"], "Pearson را خودکار برای همه datasetها استفاده نکن.")
+      ]
+    },
+    {
+      title: "۴. Time series: Spearman و Euclidean distance",
+      intro: "dataset مربوط به sporulation در yeast نشان می‌دهد metric باید با design آزمایش هماهنگ باشد. outlier، جهت up/down، ترتیب زمانی و scaling مهم‌اند.",
+      lab: "metric",
+      slides: [
+        item("s13", "Dataset sporulation", "Chu et al. expression در budding yeast را در 30 min، 2، 5، 7، 9 و 11 ساعت با competitive arrays دنبال کردند.", "time series همان سیستم زیستی را در طول زمان دنبال می‌کند، پس trend مهم می‌شود.", "چرا time series خاص است؟", ["ترتیب زمانی دارد", "trend مهم است", "جهت up/down در زمان تغییر می‌کند"], "time points را مثل observations بی‌ربط رفتار نکن."),
+        item("s14", "Pearson تحت تأثیر outlier", "ENB1 و NPR2 دارای r = 0.63 و d = 0.37 هستند، اما یک نقطه extreme نتیجه را شدیداً تغییر می‌دهد.", "استاد می‌گوید حذف نقطه اول correlation را خیلی بالا می‌برد.", "این اسلاید چه مشکلی را نشان می‌دهد؟", ["outlier", "حساسیت Pearson", "metric می‌تواند گمراه‌کننده باشد"], "فقط از روی r نتیجه نگیر؛ plot را ببین."),
+        item("s15", "Spearman از rank استفاده می‌کند", "Spearman non-parametric است، نسبت به outlier robustتر است و مقادیر واقعی را با rank جایگزین می‌کند.", "قوت آن robustness است؛ هزینه آن از دست دادن magnitude و direction ظریف است.", "Spearman چه زمانی مفید است؟", ["وجود outlier", "داده قابل rank شدن", "رابطه monotonic"], "نگو چون robust است همیشه بهتر است."),
+        item("s16", "مشکل Spearman در time series", "بعد از ranking، rho = -0.09 و d = 0.91 می‌شود؛ جهت زیستی up/down می‌تواند از دست برود.", "در time series با بالا و پایین شدن‌ها، rank ممکن است pattern زیستی را خوب نگیرد.", "چرا Spearman در time series مشکل‌ساز می‌شود؟", ["values را به ranks تبدیل می‌کند", "جهت up/down را از دست می‌دهد", "pattern زمانی را ممکن است گم کند"], "rank را مثل expression magnitude تفسیر نکن."),
+        item("s17", "معنی‌داری Spearman", "Spearman rho نیز با t distribution و df = n - 2 قابل test است.", "لازم نیست محاسبه را حفظ باشی؛ بفهم rho هم آماری قابل ارزیابی است.", "نماد Spearman چیست؟", ["rho", "rank correlation", "می‌تواند p-value داشته باشد"], "آن را Pearson r صدا نزن."),
+        item("s18", "Euclidean distance", "Euclidean distance از قضیه فیثاغورس می‌آید و با جمع squared differences به dimensions بالاتر گسترش می‌یابد.", "تفسیر ساده است: عدد بزرگ‌تر یعنی distance بیشتر.", "Euclidean distance بزرگ یعنی چه؟", ["profiles دورند", "در magnitude/shape فرق دارند", "مقدار دقیق به scaling وابسته است"], "normalization یا scaling را نادیده نگیر."),
+        item("s19", "Scaling distance را عوض می‌کند", "همان profiles می‌توانند قبل از scaling Ed = 5.8 و بعد از scaling Ed = 0.88 داشته باشند.", "Euclidean direction را حفظ می‌کند اما به scale حساس است.", "چرا scaling برای Euclidean مهم است؟", ["distance به واحدها وابسته است", "rangeهای بزرگ dominate می‌کنند", "normalization عدد distance را عوض می‌کند"], "Euclidean distances را بین datasetهای با scaling متفاوت مقایسه نکن."),
+        item("s20", "انتخاب بهترین measure", "در مثال DLBCL، Spearman ممکن است بهتر باشد؛ در time series، Euclidean opposite trends را بهتر دور نگه می‌دارد.", "هیچ metric جهانی وجود ندارد؛ انتخاب به سؤال زیستی و ساختار داده بستگی دارد.", "metric را چگونه انتخاب می‌کنی؟", ["design را ببین", "outliers و scaling را در نظر بگیر", "plots/clusters حاصل را مقایسه کن"], "ننویس یک metric همیشه درست است."),
+        item("s21", "نقاط قوت و ضعف", "Pearson قوی ولی حساس به outlier است؛ Spearman robust ولی detail rank را از دست می‌دهد؛ Euclidean هندسی ولی scale-sensitive است.", "این جدول خلاصه عالی برای امتحان است.", "Pearson، Spearman و Euclidean را مقایسه کن.", ["Pearson: linear و powerful", "Spearman: robust to outliers", "Euclidean: geometric but scale-sensitive"], "فقط تعریف نده؛ limitations را هم بیاور.")
+      ]
+    },
+    {
+      title: "۵. MDS: نقشه‌کردن distance برای visualization",
+      intro: "Multidimensional scaling یک metric نیست؛ الگوریتمی است که distance matrix را می‌گیرد و objects را در 2D یا 3D قرار می‌دهد تا distanceها تا حد ممکن حفظ شوند.",
+      lab: "mds",
+      slides: [
+        item("s22", "تکنیک‌های unsupervised", "روش‌های unsupervised اجازه می‌دهند داده‌ها خودشان organize شوند و بعد معنی زیستی جست‌وجو شود.", "استاد MDS، hierarchical clustering، k-means و PCA را به عنوان روش‌های exploratory معرفی می‌کند.", "منطق unsupervised analysis چیست؟", ["بدون labels قبلی", "exploratory visualization", "تفسیر زیستی بعد از pattern"], "آن را supervised classification نکن."),
+        item("s23", "هدف MDS", "MDS distanceهای high-dimensional را به فضای low-dimensional منتقل می‌کند بدون از دست رفتن زیاد اطلاعات.", "در کلاس استاد روشن کرد MDS الگوریتم است، نه metric.", "MDS چیست؟", ["یک algorithm", "distanceها را map می‌کند", "relative proximity را حفظ می‌کند"], "MDS را distance metric صدا نزن."),
+        item("s24", "Triangular matrix", "شروع کار یک triangular distance matrix است، مثلاً بر اساس Euclidean یا correlation distance.", "ماتریس حاوی pairwise distances است؛ مقادیر داخل پرانتز scaled MDS هستند.", "ورودی MDS چیست؟", ["distance matrix", "pairwise distances", "اغلب پس از انتخاب variable transcripts"], "MDS را از labels خام زیستی شروع نکن."),
+        item("s25", "Euclidean در برابر correlation MDS", "distanceهای متفاوت می‌توانند mapهای مشابه یا متفاوت بسازند. مهم این است که profileها نزدیک یا دورند.", "خود values محور مهم‌تر از relative distance بین نقاط نیستند.", "MDS plot را چگونه تفسیر می‌کنی؟", ["نقاط نزدیک مشابه‌اند", "نقاط دور dissimilar هستند", "تفسیر به distance استفاده‌شده وابسته است"], "نام یا مقدار محور‌ها را بیش از حد تفسیر نکن.")
+      ]
+    },
+    {
+      title: "۶. Hierarchical clustering و linkage methods",
+      intro: "Hierarchical clustering الگوریتمی agglomerative است: از نزدیک‌ترین genes یا samples شروع می‌کند، آن‌ها را cluster می‌کند و dendrogram می‌سازد.",
+      lab: "linkage",
+      slides: [
+        item("s26", "Agglomerative clustering", "profileهای مشابه distance کمی دارند و در binary tree یا dendrogram کنار هم قرار می‌گیرند.", "شاخه کوتاه یعنی proximity؛ شاخه بلند یعنی dissimilarity.", "Hierarchical clustering چگونه کار می‌کند؟", ["bottom-up است", "نزدیک‌ترین profiles را اول join می‌کند", "dendrogram می‌سازد"], "آن را supervised classifier توصیف نکن."),
+        item("s27", "intuition dendrogram I", "اسلاید نشان می‌دهد profiles ابتدا objects جداگانه هستند.", "dendrogram را sequence of joins بخوان، نه یک bar chart ساده.", "dendrogram چه چیزی را نشان می‌دهد؟", ["cluster joins", "relative distances", "ساختار similarity"], "فقط ترتیب چپ-راست را تفسیر نکن."),
+        item("s28", "intuition dendrogram II", "profiles به تدریج و بر اساس short distances به هم وصل می‌شوند.", "استاد روی branch length تأکید دارد: کوتاه‌تر یعنی similarتر.", "شاخه کوتاه چه معنی دارد؟", ["distance کم", "similarity بالا", "join زودتر"], "branch length را نادیده نگیر."),
+        item("s29", "intuition dendrogram III", "internal nodes رویدادهای join بین profiles یا clusters هستند.", "واژگان مهم‌اند: profiles، nodes، branches و clusters.", "internal node چیست؟", ["نقطه join", "رویداد تشکیل cluster", "بخشی از binary tree"], "هر node را gene صدا نزن."),
+        item("s30", "intuition dendrogram IV", "با joinهای بیشتر، tree ساختار nested cluster را خلاصه می‌کند.", "برای همین dataset به صورت global دیده می‌شود، نه فقط gene به gene.", "چرا tree مفید است؟", ["pairwise distances زیاد را فشرده می‌کند", "nested groups را نشان می‌دهد", "برای تفسیر exploratory کمک می‌کند"], "نگو mechanism را ثابت می‌کند."),
+        item("s31", "intuition dendrogram V", "cluster tree ادامه می‌یابد تا همه profiles link شوند.", "tree نهایی باید با metric و linkage انتخاب‌شده تفسیر شود.", "چه چیزهایی tree را تعیین می‌کنند؟", ["distance metric", "linkage method", "data preprocessing"], "dendrogram را unique و absolute فرض نکن."),
+        item("s32", "intuition dendrogram VI", "آخرین joinها بزرگ‌ترین separationهای clustering هستند.", "شاخه‌های بلند profiles یا groups دورتر از بقیه را نشان می‌دهند.", "شاخه بلند چه چیزی پیشنهاد می‌کند؟", ["distance بیشتر", "similarity کمتر", "احتمال group جدا"], "clusters مهم را بدون validation رها نکن."),
+        item("s33", "الگوریتم چهار مرحله‌ای", "nearest entries را پیدا کن، join کن، distances جدید را حساب کن، و تکرار کن تا همه objects link شوند.", "این core پاسخ امتحانی hierarchical clustering است.", "مراحل hierarchical clustering را بگو.", ["nearest profiles را پیدا کن", "آن‌ها را join کن", "cluster distances را دوباره حساب کن", "تا یک tree باقی بماند تکرار کن"], "مرحله recalculation را حذف نکن."),
+        item("s34", "از distance matrix تا branch اول", "نزدیک‌ترین genes در triangular matrix اولین branch کوتاه را می‌سازند.", "distance بین دو gene symmetric است؛ پس triangular matrix فقط مقادیر مفید pairwise را نگه می‌دارد.", "چرا triangular matrix؟", ["distances symmetric هستند", "self-distance صفر است", "entries تکراری را حذف می‌کند"], "دو نیمه matrix را data متفاوت نخوان."),
+        item("s35", "Linkage methods", "Single، complete و average linkage مشخص می‌کنند distance بین clusters چگونه recalculated شود.", "Average linkage اغلب compromise خوبی است؛ single linkage ممکن است chaining بدهد.", "linkage method چیست؟", ["قاعده‌ای برای cluster-to-cluster distance", "بعد از تشکیل cluster استفاده می‌شود", "dendrogram را تغییر می‌دهد"], "metric و linkage را قاطی نکن."),
+        item("s36", "خلاصه linkage", "Single از nearest، complete از farthest، average از average pairwise distance، و Ward از کمترین افزایش variance استفاده می‌کند.", "این جدول برای امتحان عالی است چون هر method را به رفتار معمول وصل می‌کند.", "کدام linkage اغلب chaining می‌دهد؟", ["Single linkage", "nearest-neighbor rule", "elongated clusters"], "average linkage را مساوی single linkage ندان."),
+        item("s37", "recalculation در average linkage", "بعد از cluster اول، الگوریتم distance آن cluster را با genes باقی‌مانده دوباره حساب می‌کند.", "height و ساختار dendrogram به metric و linkage وابسته است.", "بعد از cluster شدن دو gene چه رخ می‌دهد؟", ["distances دوباره حساب می‌شود", "linkage rule استفاده می‌شود", "dendrogram رشد می‌کند"], "فقط original pairwise distance را ادامه نده."),
+        item("s38", "مثال average linkage", "اسلاید averaging ریاضی برای محاسبه cluster distances جدید را نشان می‌دهد.", "لازم نیست همه اعداد را حفظ کنی؛ بفهم چه چیزی average می‌شود.", "average linkage چه چیزی را average می‌کند؟", ["pairwise distances", "بین دو cluster", "تقسیم بر n1 × n2"], "expression values را به جای distances average نکن."),
+        item("s39", "matrix جدید", "بعد از هر join، distance matrix جدید distances بین cluster جدید و genes باقی‌مانده را خلاصه می‌کند.", "این کار تا کامل شدن dendrogram تکرار می‌شود.", "چرا matrix تغییر می‌کند؟", ["clusters جایگزین genes منفرد می‌شوند", "distances باید recompute شوند", "algorithm iterative است"], "فکر نکن clustering یک محاسبه تکی است."),
+        item("s40", "شاخه‌های کوتاه‌تر = genes نزدیک‌تر", "اسلاید قانون visual اصلی را تکرار می‌کند: genes نزدیک branch کوتاه‌تر دارند.", "این ساده‌ترین روش خواندن dendrogram تحت metric انتخاب‌شده است.", "branch length را چگونه می‌خوانی؟", ["کوتاه = similar", "بلند = dissimilar", "همیشه تحت metric انتخاب‌شده"], "scale/height را نادیده نگیر."),
+        item("s41", "Isomorphisms", "نقاشی‌های متفاوت می‌توانند همان tree را نشان دهند؛ branch lengths و joins را ببین، نه فقط layout.", "استاد می‌گوید همیشه tree و branch lengths را برای proximity ببین.", "خطر layout dendrogram چیست؟", ["treeهای معادل متفاوت دیده می‌شوند", "order می‌تواند rotate شود", "branch length مهم‌تر است"], "ترتیب چپ-راست را بیش از حد تفسیر نکن."),
+        item("s42", "time series با ۱۵ gene در yeast", "dataset Chu امکان natural clusters مانند persistent و transient transcripts را می‌دهد.", "time series patternها را در طول زمان قابل دیدن می‌کند.", "natural clusters در اینجا چه هستند؟", ["persistent transcripts", "transient transcripts", "profiles با رفتار زمانی مشابه"], "clusters را فقط با اسم gene تعریف نکن."),
+        item("s43", "Pearson + single linkage", "single linkage یک cluster بزرگ persistent پیدا می‌کند اما transient genes را یکی‌یکی اضافه می‌کند: chaining.", "chaining نشانه هشدار است که ساختار dendrogram ایده‌آل نیست.", "chaining چیست؟", ["اضافه شدن objects یکی‌یکی", "اغلب به دلیل single linkage", "ساختار cluster ضعیف"], "chaining را مثل گروه زیستی قوی معرفی نکن."),
+        item("s44", "Pearson + complete/average", "complete و average linkage دو cluster اصلی را واضح‌تر جدا می‌کنند، هرچند کامل نیستند.", "average linkage اغلب استفاده می‌شود و در این مثال خوب کار کرد.", "چرا linkage methods را مقایسه کنیم؟", ["treeهای متفاوت می‌دهند", "بعضی persistent/transient را بهتر جدا می‌کنند", "robustness را بررسی می‌کند"], "اولین dendrogram را کورکورانه قبول نکن."),
+        item("s45", "Spearman/Euclidean + average", "Spearman ممکن است distance صفر بدهد و fine structure را از دست بدهد؛ Euclidean می‌تواند opposite profiles را دور نشان دهد.", "ترکیب metric-linkageهای مختلف جنبه‌های متفاوت داده را برجسته می‌کند.", "چرا Spearman fine structure را از دست می‌دهد؟", ["از ranks استفاده می‌کند", "profiles ممکن است rank pattern مشابه داشته باشند", "distances ممکن است صفر شوند"], "tree تمیز را خودکار بهترین ندان."),
+        item("s46", "برای یادآوری", "Pearson و Spearman می‌توانند opposite profiles را نزدیک کنند؛ Euclidean آن‌ها را دور نگه می‌دارد. Spearman گاهی distance صفر می‌دهد؛ Euclidean distance بزرگ‌تر می‌دهد.", "این اسلاید یکی از بهترین summaryهای امتحانی metric behavior است.", "یک take-home درباره metrics در clustering بده.", ["correlation distances می‌توانند opposite profiles را cluster کنند", "Spearman ممکن است fine structure را از دست بدهد", "Euclidean scale-dependent و بزرگ‌تر است"], "metrics را بدون drawbacks توضیح نده."),
+        item("s47", "take-home", "Hierarchical clustering related genes یا samples را پیدا می‌کند، اما metric و linkageهای مختلف نتایج متفاوت می‌دهند؛ clusters باید validate شوند.", "این conclusion مناسب برای امتحان است: exploratory result + validation.", "بعد از cluster analysis چه باید کرد؟", ["metric/linkageهای مختلف را امتحان کن", "زیستی تفسیر کن", "clusters مهم را validate کن"], "در یک dendrogram زیبا متوقف نشو.")
+      ]
+    },
+    {
+      title: "۷. Bootstrap validation برای clustering",
+      intro: "Bootstrap validation بررسی می‌کند آیا همان cluster پس از resampling بارها بازیابی می‌شود یا نه. این کار support برای nodes در dendrogram می‌دهد.",
+      lab: "bootstrap",
+      slides: [
+        item("s48", "روش bootstrap", "bootstrap datasets بساز، آن‌ها را چند بار recluster کن، و بشمار یک cluster چند بار recovered می‌شود.", "وقتی درباره یک node شک داری، آن را validate کن.", "Bootstrap validation چه چیزی را می‌سنجد؟", ["stability cluster", "reproducibility", "support nodes"], "آن را با normalization اشتباه نگیر."),
+        item("s49", "Bootstrap support", "support برابر است با تعداد replicates دارای cluster تقسیم بر total replicates ضربدر 100.", "95% خیلی قوی است؛ زیر 70% weak و باید با احتیاط تفسیر شود.", "support 65% را تفسیر کن.", ["support ضعیف", "cluster ناپایدار", "نتیجه‌گیری باید محتاط باشد"], "چون بالای 50% است آن را strong صدا نزن." )
+      ]
+    },
+    {
+      title: "۸. Heatmap: dendrogram همراه pattern visual",
+      intro: "پایان درس dendrogram را با heatmap ترکیب می‌کند. Heatmap patternهای global را قابل دیدن می‌کند، اما legend تعیین می‌کند رنگ‌ها چه معنی دارند.",
+      lab: "zscore",
+      slides: [
+        item("s50", "Heat map", "ردیف‌ها معمولاً genes و ستون‌ها samples هستند. رنگ‌ها expression relative یا آمار up/down را نشان می‌دهند.", "همیشه legend را بخوان؛ red/green در مثال‌های مختلف می‌توانند برعکس شوند.", "در heatmap چه چیزهایی را باید دید؟", ["rows و columns", "legend", "dendrogram", "relative scale"], "فرض نکن red همیشه up-regulation است."),
+        item("s51", "مفهوم Z-score", "z-score نشان می‌دهد یک مقدار چند standard deviation بالاتر یا پایین‌تر از mean است.", "اینجا برای هر gene across samples حساب می‌شود.", "z-score در heatmap چه می‌سنجد؟", ["standard deviations", "نسبت به mean همان gene", "یک مقدار relative"], "آن را expression absolute تفسیر نکن."),
+        item("s52", "فرمول Z-score", "Zij = (xij - μi) / σi. مثال: 10، 20، 30 می‌دهد z = -1، 0، +1.", "این پاسخ کوتاه خوبی برای نحوه محاسبه رنگ‌های heatmap است.", "z = +1 را تفسیر کن.", ["بالاتر از mean gene", "یک standard deviation", "relative به همان gene"], "z-score را به عنوان expression absolute بین genes مقایسه نکن."),
+        item("s53", "مثال visual heatmap", "مثال کلاس dendrogram و رنگ‌ها را ترکیب می‌کند تا pattern در samples زیاد دیده شود.", "visualization درست برای communication datasetهای بزرگ حیاتی است.", "چرا heatmap و dendrogram را ترکیب می‌کنیم؟", ["dendrogram گروه‌بندی می‌کند", "رنگ pattern را نشان می‌دهد", "با هم تفسیر را آسان می‌کنند"], "فقط با رنگ‌ها و بدون clusters تفسیر نکن."),
+        item("s54", "Legend و fold change", "رنگ‌ها ممکن است fold change یا scale دیگری را نشان دهند، نه فقط z-score.", "legend می‌گوید هر رنگ چه معنی دارد.", "اشتباه رایج heatmap چیست؟", ["نادیده گرفتن legend", "برعکس کردن up/down", "فرض color = value absolute"], "رنگ‌ها را بدون بررسی scale ترجمه نکن."),
+        item("s55", "Heatmap با fold change", "مثال تاریخی از expression changes برای جدا کردن sample groups بزرگ استفاده می‌کند.", "heatmap گروه‌ها را نشان می‌دهد، اما تفسیر زیستی باید دوباره به genes برگردد.", "heatmap در مقاله چه کمکی می‌کند؟", ["visualization فشرده", "patterns گروهی", "communication واضح"], "بدون بررسی genes خاص mechanism ادعا نکن."),
+        item("s56", "مدل‌های سلولی", "DLBCL، FL، CLL، lymphocytes فعال/نرمال و cell lines reference profiles پاتولوژیک و نرمال می‌دهند.", "نمونه‌های پاتولوژیک ممکن است با شرایط normal B-cell مرتبط profile مشترک داشته باشند.", "چرا با normal samples مقایسه می‌کنیم؟", ["context زیستی", "cellular origin", "تمایز pathology از physiology"], "cluster نزدیک را identity کامل ندان."),
+        item("s57", "take-home نهایی", "Cluster analysis similarity/dissimilarity را پیدا می‌کند و heatmap آن را visual می‌کند؛ همیشه به legend توجه کن.", "این جمله پایانی درس و پایان خوب برای پاسخ امتحانی است.", "پیام نهایی M1.7 را خلاصه کن.", ["clustering patterns را پیدا می‌کند", "heatmap آن‌ها را visualize می‌کند", "legend ضروری است"], "similarity/dissimilarity را فراموش نکن.")
+      ]
+    }
+  ],
+  labs: {
+    matrix: { title: "Mini-lab · کدام جهت ماتریس را می‌خوانی؟", intro: "انتخاب کن سؤال genes across samples را مقایسه می‌کند یا samples across genes را.", genes: "Genes", samples: "Samples", items: [
+      { q: "آیا IGKC و NKG7 در 38 بیمار DLBCL رفتار مشابه دارند؟", a: "genes", why: "دو gene را با استفاده از همه patients به عنوان measurements مقایسه می‌کنی." },
+      { q: "آیا samples 7h و 9h در time series با توجه به many transcripts مشابه‌اند؟", a: "samples", why: "دو sample/time point را با many gene profiles مقایسه می‌کنی." },
+      { q: "کدام transcripts در sporulation pattern پایدار نشان می‌دهند؟", a: "genes", why: "genes را بر اساس رفتارشان در طول زمان گروه‌بندی می‌کنی." }
+    ] },
+    distance: { title: "Mini-lab · intuition مربوط به distance", intro: "مشخص کن کدام جمله‌ها با یک distance مفید سازگارند.", trueLabel: "درست", falseLabel: "غلط", correct: "درست", items: [
+      { q: "distance یک profile با خودش باید 0 باشد.", a: true, why: "profile یکسان نباید از خودش جدا باشد." },
+      { q: "اگر correlation منفی باشد، distance می‌تواند منفی شود.", a: false, why: "distance نباید منفی باشد؛ d = 1 - |r| از absolute value استفاده می‌کند." },
+      { q: "distance کم یعنی profiles بر اساس metric انتخاب‌شده مشابه‌اند.", a: true, why: "near/far همیشه به metric بستگی دارد." }
+    ] },
+    pearson: { title: "Mini-lab · Pearson r → distance", intro: "r را حرکت بده و d = 1 - |r| را ببین. توجه کن +1 و -1 هر دو distance صفر می‌دهند.", r: "Pearson r", d: "Distance d", meaning: "Interpretation" },
+    metric: { title: "Mini-lab · انتخاب metric", intro: "برای هر موقعیت metric اولیه مناسب‌تر را انتخاب کن.", choose: "انتخاب", items: [
+      { q: "یک outlier بزرگ وجود دارد و measure robust می‌خواهی.", a: "Spearman", options: ["Pearson", "Spearman", "Euclidean"], why: "Spearman از ranks استفاده می‌کند و اثر extreme values را کم می‌کند." },
+      { q: "در time series دو gene profile opposite دارند و می‌خواهی دور بمانند.", a: "Euclidean", options: ["Pearson", "Spearman", "Euclidean"], why: "Euclidean می‌تواند separation هندسی profileهای opposite را حفظ کند." },
+      { q: "profiles normalized رابطه linear دارند و outlier شدید نیست.", a: "Pearson", options: ["Pearson", "Spearman", "Euclidean"], why: "Pearson برای روابط linear با assumptions مناسب powerful است." }
+    ] },
+    mds: { title: "Mini-lab · MDS metric نیست", intro: "distance matrix را عوض کن و ببین map دوباره organize می‌شود. proximity relative را تفسیر کن، نه values محور.", euclidean: "Euclidean distance", correlation: "Correlation distance", note: "مهم near/far بین points است، نه اسم محور‌ها." },
+    linkage: { title: "Mini-lab · Linkage methods", intro: "یک linkage انتخاب کن و رفتاری را که ایجاد می‌کند مرور کن.", methods: {
+      single: { name: "Single / minimum", text: "از nearest neighbors استفاده می‌کند. ممکن است elongated clusters بگیرد اما chaining ایجاد کند." },
+      complete: { name: "Complete / maximum", text: "از farthest neighbors استفاده می‌کند. معمولاً clusters compact می‌دهد و chaining را کم می‌کند." },
+      average: { name: "Average / UPGMA", text: "pairwise distances را average می‌کند و گزینه عمومی پرکاربردی است." },
+      ward: { name: "Ward", text: "با کمینه کردن افزایش variance join می‌کند؛ معمولاً با داده‌های compact Euclidean مفید است." }
+    } },
+    bootstrap: { title: "Mini-lab · Bootstrap support", intro: "support = recovered clusters / total replicates × 100 را حساب کن.", total: "Total replicates", recovered: "Replicates with cluster", support: "Support", verdict: "Verdict", strong: "خیلی قوی", good: "خوب", moderate: "متوسط", weak: "ضعیف" },
+    zscore: { title: "Mini-lab · z-score در heatmap", intro: "expression values یک gene را across samples وارد کن. z-score داخل همان gene حساب می‌شود.", values: "Expression values", mean: "Mean", sd: "SD", z: "Z-scores" },
+    quiz: { title: "Checkpoint نهایی", score: "امتیاز", items: [
+      { q: "MDS بهتر است چگونه توصیف شود؟", options: ["اصلاح p-value", "metric", "algorithm برای mapping distances", "paired test"], answer: 2 },
+      { q: "با d = 1 - |r|، اگر r = -1 باشد…", options: ["d = 2", "d = 1", "d = 0", "d = -1"], answer: 2 },
+      { q: "warning کلاسیک single linkage چیست؟", options: ["heteroscedasticity", "chaining", "bisulfite failure", "FDR inflation"], answer: 1 },
+      { q: "z-scoreهای heatmap معمولاً چه هستند؟", options: ["expression absolute", "values نسبی هر gene across samples", "raw CEL intensities", "bootstrap p-values"], answer: 1 },
+      { q: "Spearman در time series مشکل‌ساز می‌شود چون…", options: ["p-value ندارد", "از ranks استفاده می‌کند و ممکن است up/down direction را از دست بدهد", "فقط با دو sample کار می‌کند", "methylation array لازم دارد"], answer: 1 }
+    ] },
+    written: { title: "تمرین آزمون کتبی", prompt: "در ۱۰-۱۲ خط پاسخ بده: hierarchical clustering و heatmaps را در transcriptomic data توضیح بده.", placeholder: "پاسخت را اینجا بنویس…", model: "Hierarchical clustering یک روش unsupervised برای شناسایی similarity و dissimilarity میان genes یا samples است. از ماتریس profileها شروع می‌کند و pairwise distances را با metricهایی مثل Pearson، Spearman یا Euclidean distance محاسبه می‌کند. الگوریتم agglomerative است: ابتدا نزدیک‌ترین profiles را join می‌کند و سپس distance بین clusters را با linkage methodهایی مثل single، complete یا average دوباره محاسبه می‌کند. نتیجه dendrogram است؛ branch کوتاه profiles مشابه و branch بلند distance بیشتر را نشان می‌دهد. چون metric و linkageهای متفاوت treeهای متفاوت می‌سازند، nodes مهم باید مقایسه و مثلاً با bootstrap support validate شوند. Heatmap معمولاً همراه dendrogram برای visualizing expression patterns استفاده می‌شود، با genes در rows و samples در columns. رنگ‌ها values نسبی مانند z-score یا fold change را نشان می‌دهند، پس legend قبل از تفسیر up/down regulation ضروری است." }
+  }
+};
 function getCopy(lang = "es") { return COPY[lang] || COPY.es; }
 
 function parseNumbers(text) { return String(text).split(/[,;\s]+/).map((x) => Number(x.trim())).filter(Number.isFinite); }

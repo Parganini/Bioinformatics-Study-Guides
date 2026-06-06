@@ -28,6 +28,7 @@ import DRDLesson07 from "./lessons/drd/Lesson07.jsx";
 import DRDLesson08 from "./lessons/drd/Lesson08.jsx";
 import DRDLesson09 from "./lessons/drd/Lesson09.jsx";
 import DRDLesson10 from "./lessons/drd/Lesson10.jsx";
+import DRDLesson11 from "./lessons/drd/Lesson11.jsx";
 
 
 const LANGS = [
@@ -688,17 +689,18 @@ const DRD_MODULE1_UNITS = [
     id: "m1-samples-genes-i",
     code: "M1.7",
     date: "Jun 5",
-    status: "active",
+    status: "covered",
     title: "Relationship between samples and genes I",
-    desc: "Current June 5 lesson: matrices of genes/probes by samples, similarity, distance, sample structure, early clustering logic and interpretation of global patterns.",
+    desc: "Covered June 5 lesson: matrices of genes/probes by samples, similarity, distance, sample structure, Pearson correlation, heatmaps and hierarchical clustering logic.",
     products: ["lección de lectura de matrices", "quiz de distancia entre muestras", "interpretación de plots"],
     tags: ["matrix", "samples", "genes", "distance"],
+    lessonHref: "#/lesson/m1-samples-genes-i",
   },
   {
     id: "m1-samples-genes-ii",
     code: "M1.8",
     date: "Jun 9",
-    status: "upcoming",
+    status: "active",
     title: "Relationship between samples and genes II",
     desc: "Heatmaps, gene/sample clustering, outliers, PCA-like reasoning and linking patterns to phenotype, treatment, tissue or batch.",
     products: ["práctica de heatmaps", "interpretación de PCA", "errores comunes"],
@@ -809,7 +811,7 @@ const DRD_UNIT_I18N = {
     "m1-illumina": { title: "Illumina BeadChip y plataformas de metilación", desc: "Diseño BeadArray, optical decoding, transcriptómica, lógica de bisulfito, cobertura 27K/450K/EPIC y contexto genómico CpG.", products: ["lección visual en React", "comparación 27K/450K/EPIC", "quiz de bisulfito"], tags: ["BeadChip", "bisulfito", "450K", "EPIC"] },
     "m1-deg-i": { title: "Genes diferencialmente expresados I", desc: "Fold change frente a significancia estadística, log2 ratios, MA-plots, hipótesis nula/alternativa, p-values, errores alfa/beta, potencia y tests paramétricos/no paramétricos.", products: ["árbol de selección de test", "ejercicios de p-value", "trampas de fold change"], tags: ["fold change", "p-value", "potencia", "MA-plot"] },
     "m1-deg-ii": { title: "Genes diferencialmente expresados II", desc: "Punto actual del curso: bootstrap, comparación de más de dos grupos, one-way ANOVA, Kruskal–Wallis, multiple testing/FWER y transición hacia interpretación por gene sets.", products: ["walkthrough de bootstrap", "lab ANOVA/Kruskal", "trampas de multiple testing"], tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER"] },
-    "m1-samples-genes-i": { title: "Relación entre muestras y genes I", desc: "Clase actual del 5 de junio: matrices genes/probes × muestras, similitud, distancia, estructura de muestras, lógica inicial de clustering e interpretación de patrones globales.", products: ["lectura de matriz", "quiz de distancia entre muestras", "interpretación de plots"], tags: ["matriz", "muestras", "genes", "distancia"] },
+    "m1-samples-genes-i": { title: "Relación entre muestras y genes I", desc: "Clase cubierta el 5 de junio: matrices genes/probes × muestras, similitud, distancia, correlación de Pearson, heatmaps y lógica de clustering jerárquico.", products: ["lectura de matriz", "quiz de distancia entre muestras", "interpretación de plots"], tags: ["matriz", "muestras", "genes", "distancia"] },
     "m1-samples-genes-ii": { title: "Relación entre muestras y genes II", desc: "Heatmaps, clustering de genes/muestras, outliers, razonamiento tipo PCA y conexión de patrones con fenotipo, tratamiento, tejido o batch.", products: ["práctica de heatmap", "interpretación de PCA", "errores comunes"], tags: ["heatmap", "clustering", "PCA", "outliers"] },
     "m1-scrna": { title: "Clase invitada: scRNA-seq", desc: "Bulk vs single-cell RNA-seq, heterogeneidad celular, counts/UMIs, marker genes, reducción de dimensionalidad, clustering e interpretación de dropouts.", products: ["comparador bulk vs single-cell", "glosario", "pregunta simulada"], tags: ["scRNA-seq", "UMI", "markers", "UMAP"] },
     "m2-r": { title: "Introducción a R/Bioconductor", desc: "Bases de R, paquetes, scripts, lógica de SampleSheet, metadata y hábitos de análisis reproducible.", products: ["setup guiado", "ejercicio SampleSheet", "glosario de objetos R"], tags: ["R", "Bioconductor", "SampleSheet", "metadata"] },
@@ -867,7 +869,7 @@ function drdCopy(lang) {
   return {
     en: {
       updated: "Updated status",
-      asOf: "current lesson: 5 June 2026",
+      asOf: "last covered lesson: 5 June 2026",
       module1: "Module 1 — Theory and written-exam reasoning",
       module2: "Module 2 — R/Bioconductor methylation pipeline",
       module1Short: "Módulo 1",
@@ -895,7 +897,7 @@ function drdCopy(lang) {
     },
     es: {
       updated: "Estado actualizado",
-      asOf: "clase actual: 5 de junio de 2026",
+      asOf: "última clase cubierta: 5 de junio de 2026",
       module1: "Módulo 1 — Teoría y razonamiento para el escrito",
       module2: "Módulo 2 — Pipeline de metilación en R/Bioconductor",
       module1Short: "Módulo 1",
@@ -923,7 +925,7 @@ function drdCopy(lang) {
     },
     fa: {
       updated: "وضعیت به‌روز",
-      asOf: "کلاس فعلی: ۵ ژوئن ۲۰۲۶",
+      asOf: "آخرین کلاس پوشش‌داده‌شده: ۵ ژوئن ۲۰۲۶",
       module1: "ماژول ۱ — نظریه و استدلال برای امتحان نوشتاری",
       module2: "ماژول ۲ — پایپ‌لاین methylation در R/Bioconductor",
       module1Short: "ماژول ۱",
@@ -1101,6 +1103,9 @@ function DRDApp({ t, lang, hash }) {
   }
   if (lessonId === "m1-deg-ii" || lessonId === "07") {
     return <DRDLesson07 lang={lang} isDone={!!progress["m1-deg-ii"]} toggle={() => toggle("m1-deg-ii")} />;
+  }
+  if (lessonId === "m1-samples-genes-i" || lessonId === "08") {
+    return <DRDLesson11 lang={lang} isDone={!!progress["m1-samples-genes-i"]} toggle={() => toggle("m1-samples-genes-i")} />;
   }
   const placeholderId = DRD_PLACEHOLDER_ALIASES[lessonId] || lessonId;
   const placeholderIndex = allUnits.findIndex(unit => unit.id === placeholderId && !unit.lessonHref);

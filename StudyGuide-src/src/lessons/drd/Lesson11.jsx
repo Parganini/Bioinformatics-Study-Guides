@@ -4,831 +4,671 @@ const SLIDES_URL = "https://drive.google.com/file/d/1JSN_XP7mF2r39TUzdiSOMW2Rum5
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/13Wu08yLvUaTITj3PmAC8yupFHzC6g8_zXbmVaGxAsUA/edit?usp=drivesdk";
 const RECORDING_URL = "https://www.youtube.com/playlist?list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV";
 
-const ui = {
+const UI = {
   en: {
-    current: "M1.7",
+    current: "Lesson 11",
     dashboard: "DRD dashboard",
     previous: "Previous",
     next: "Next",
-    previousTitle: "M1.6 DE genes II",
+    previousTitle: "M1.6 Differentially expressed genes II",
     nextTitle: "M1.8 Samples and genes II",
     mark: "Mark completed",
     done: "Completed",
     resources: "Class resources",
     slides: "Slides",
     transcript: "Transcript",
-    recording: "Recording",
-    slide: "Source slide",
-    zoom: "Open detail",
+    recording: "Recording playlist",
+    slide: "Slide",
+    zoom: "Open slide notes",
     close: "Close",
-    professor: "Professor emphasis",
+    professor: "Professor notes",
     exam: "Exam watch",
     expand: "Open expanded answer",
-    hide: "Hide",
     include: "What to include",
     trap: "Common trap",
     model: "Sample answer",
     checkpoint: "Checkpoint",
-    written: "Written exam trainer",
-    yourAnswer: "Your answer",
-    reveal: "Reveal model answer",
+    words: "words",
     module: "Module",
     writtenExam: "Written test",
     answerLines: "Answer lines",
     core: "Core idea",
     bigIdea: "Big idea",
-    lab: "Mini-lab",
-    compare: "Compare",
-    interpretation: "Interpretation",
-    formula: "Formula",
-    source: "Source-based slide guide"
+    miniLab: "Mini-lab",
+    correct: "Correct",
+    notQuite: "Not quite",
+    tryThis: "Try this",
+    answer: "Answer",
+    scenario: "Scenario",
+    decision: "Decision",
+    heroEyebrow: "Module 1 · June 5 · Relationship between samples and genes I",
+    heroTitle: "From expression matrices to relationships, clusters and heatmaps",
+    heroSubtitle: "A slide- and transcript-guided theoretical lesson on unsupervised analysis: similarity, distance metrics, MDS, hierarchical clustering, bootstrap validation and heatmap interpretation.",
+    tags: ["unsupervised", "distance", "Pearson", "Spearman", "MDS", "clustering", "heatmap"],
+    bigIdeaText: "After normalization and differential testing, the dataset is still a matrix. This lesson asks a different question: how do genes, probes or samples organize themselves when we let the data reveal similarity and dissimilarity?"
   },
   es: {
-    current: "M1.7",
+    current: "Lección 11",
     dashboard: "Dashboard DRD",
     previous: "Anterior",
     next: "Siguiente",
-    previousTitle: "M1.6 Genes DE II",
+    previousTitle: "M1.6 Genes diferencialmente expresados II",
     nextTitle: "M1.8 Muestras y genes II",
     mark: "Marcar completada",
     done: "Completada",
     resources: "Recursos de clase",
     slides: "Slides",
     transcript: "Transcripción",
-    recording: "Grabación",
-    slide: "Diapo fuente",
-    zoom: "Abrir detalle",
+    recording: "Playlist de grabaciones",
+    slide: "Diapo",
+    zoom: "Abrir notas de diapo",
     close: "Cerrar",
-    professor: "Énfasis de la profesora",
+    professor: "Anotaciones de la profesora",
     exam: "Ojo para examen",
     expand: "Abrir respuesta desarrollada",
-    hide: "Ocultar",
     include: "Qué incluir",
     trap: "Trampa frecuente",
     model: "Respuesta modelo",
     checkpoint: "Checkpoint",
-    written: "Entrenador de examen escrito",
-    yourAnswer: "Tu respuesta",
-    reveal: "Mostrar respuesta modelo",
+    words: "palabras",
     module: "Módulo",
     writtenExam: "Examen escrito",
     answerLines: "Líneas",
     core: "Idea clave",
     bigIdea: "Idea central",
-    lab: "Mini-lab",
-    compare: "Comparar",
-    interpretation: "Interpretación",
-    formula: "Fórmula",
-    source: "Guía basada en las slides"
+    miniLab: "Mini-lab",
+    correct: "Correcto",
+    notQuite: "Casi",
+    tryThis: "Prueba esto",
+    answer: "Respuesta",
+    scenario: "Escenario",
+    decision: "Decisión",
+    heroEyebrow: "Módulo 1 · 5 de junio · Relationship between samples and genes I",
+    heroTitle: "De matrices de expresión a relaciones, clusters y heatmaps",
+    heroSubtitle: "Lección teórica guiada por slides y transcripción sobre análisis no supervisado: similitud, métricas de distancia, MDS, clustering jerárquico, validación bootstrap e interpretación de heatmaps.",
+    tags: ["unsupervised", "distance", "Pearson", "Spearman", "MDS", "clustering", "heatmap"],
+    bigIdeaText: "Después de normalización y tests diferenciales, el dataset sigue siendo una matriz. Esta lección pregunta otra cosa: ¿cómo se organizan genes, probes o muestras cuando dejamos que los datos revelen similitud y disimilitud?"
   },
   fa: {
-    current: "M1.7",
+    current: "درس ۱۱",
     dashboard: "داشبورد DRD",
     previous: "قبلی",
     next: "بعدی",
-    previousTitle: "M1.6 ژن‌های DE II",
-    nextTitle: "M1.8 نمونه‌ها و ژن‌ها II",
-    mark: "علامت‌گذاری به‌عنوان کامل",
+    previousTitle: "M1.6 Differentially expressed genes II",
+    nextTitle: "M1.8 Samples and genes II",
+    mark: "علامت کامل‌شده",
     done: "کامل شد",
     resources: "منابع کلاس",
     slides: "اسلایدها",
     transcript: "رونوشت",
-    recording: "ضبط",
-    slide: "اسلاید منبع",
-    zoom: "جزئیات",
+    recording: "فهرست ضبط‌ها",
+    slide: "اسلاید",
+    zoom: "باز کردن یادداشت اسلاید",
     close: "بستن",
-    professor: "تأکید استاد",
-    exam: "نکتهٔ امتحان",
+    professor: "یادداشت استاد",
+    exam: "نکته امتحان",
     expand: "باز کردن پاسخ کامل",
-    hide: "پنهان کردن",
-    include: "چه چیزهایی بیاوریم",
+    include: "چه مواردی بیاوریم",
     trap: "اشتباه رایج",
     model: "پاسخ نمونه",
-    checkpoint: "چک‌پوینت",
-    written: "تمرین امتحان کتبی",
-    yourAnswer: "پاسخ شما",
-    reveal: "نمایش پاسخ نمونه",
+    checkpoint: "Checkpoint",
+    words: "کلمه",
     module: "ماژول",
     writtenExam: "آزمون کتبی",
     answerLines: "خط پاسخ",
-    core: "ایدهٔ اصلی",
-    bigIdea: "ایدهٔ مرکزی",
-    lab: "مینی‌لب",
-    compare: "مقایسه",
-    interpretation: "تفسیر",
-    formula: "فرمول",
-    source: "راهنمای مبتنی بر اسلاید"
+    core: "ایده اصلی",
+    bigIdea: "ایده مرکزی",
+    miniLab: "مینی‌لب",
+    correct: "درست",
+    notQuite: "نه کاملاً",
+    tryThis: "امتحان کن",
+    answer: "پاسخ",
+    scenario: "سناریو",
+    decision: "تصمیم",
+    heroEyebrow: "Module 1 · June 5 · Relationship between samples and genes I",
+    heroTitle: "From expression matrices to relationships, clusters and heatmaps",
+    heroSubtitle: "A slide- and transcript-guided lesson on unsupervised analysis, distance metrics, MDS, hierarchical clustering, bootstrap validation and heatmaps.",
+    tags: ["unsupervised", "distance", "Pearson", "Spearman", "MDS", "clustering", "heatmap"],
+    bigIdeaText: "After normalization and differential tests, the dataset is still a matrix. Here we ask how genes, probes or samples organize themselves by similarity and dissimilarity."
   }
 };
 
-const copy = {
-  hero: {
-    eyebrow: {
-      en: "Module 1 · June 5 · Relationship between samples and genes I",
-      es: "Módulo 1 · 5 de junio · Relación entre muestras y genes I",
-      fa: "Module 1 · June 5 · Relationship between samples and genes I"
-    },
-    title: {
-      en: "From gene lists to sample-and-gene relationships",
-      es: "De listas de genes a relaciones entre muestras y genes",
-      fa: "از فهرست ژن‌ها تا رابطهٔ بین نمونه‌ها و ژن‌ها"
-    },
-    subtitle: {
-      en: "A theoretical Module 1 lesson on unsupervised analysis, similarity, distance metrics, Pearson and Spearman correlation, MDS, hierarchical clustering, bootstrap validation and heatmaps.",
-      es: "Lección teórica del Módulo 1 sobre análisis no supervisado, similitud, métricas de distancia, correlación Pearson y Spearman, MDS, clustering jerárquico, validación bootstrap y heatmaps.",
-      fa: "درسی نظری دربارهٔ تحلیل بدون‌ناظر، شباهت، distance metrics، Pearson/Spearman، MDS، hierarchical clustering، bootstrap validation و heatmap."
-    },
-    tags: {
-      en: ["matrix", "similarity", "Pearson", "Spearman", "MDS", "heatmap"],
-      es: ["matriz", "similitud", "Pearson", "Spearman", "MDS", "heatmap"],
-      fa: ["matrix", "similarity", "Pearson", "Spearman", "MDS", "heatmap"]
-    },
-    bigIdea: {
-      en: "After differential analysis, the question changes: not only which feature is significant, but whether samples and genes form coherent global patterns in the data matrix.",
-      es: "Después del análisis diferencial cambia la pregunta: no solo qué feature es significativo, sino si muestras y genes forman patrones globales coherentes dentro de la matriz.",
-      fa: "پس از تحلیل افتراقی، پرسش عوض می‌شود: فقط کدام feature معنی‌دار است مهم نیست؛ باید دید نمونه‌ها و ژن‌ها در ماتریس الگوهای کلی می‌سازند یا نه."
-    }
-  },
-  stats: [
-    { label: { en: "module", es: "módulo", fa: "ماژول" }, value: "1", tone: "red" },
-    { label: { en: "exam", es: "examen", fa: "آزمون" }, value: "4Q" },
-    { label: { en: "answer", es: "respuesta", fa: "پاسخ" }, value: "10–12" },
-    { label: { en: "core", es: "núcleo", fa: "هسته" }, value: "DIST", tone: "red" }
-  ],
-  sections: [
-    {
-      eyebrow: { en: "Bridge", es: "Puente", fa: "پل مفهومی" },
-      title: { en: "Why this lesson comes after differential expression", es: "Por qué esta lección viene después de expresión diferencial", fa: "چرا این درس بعد از differential expression می‌آید" },
-      body: {
-        en: "Differential analysis gives lists of genes or probes with p-values and adjusted p-values. This lesson asks a different, exploratory question: what relationships are already present in the whole matrix before we impose a supervised label?",
-        es: "El análisis diferencial produce listas de genes o probes con p-values y p-values ajustados. Esta lección hace otra pregunta, exploratoria: ¿qué relaciones existen en toda la matriz antes de imponer una etiqueta supervisada?",
-        fa: "تحلیل افتراقی فهرستی از ژن‌ها یا probeها با p-value و adjusted p-value می‌دهد. این درس پرسش اکتشافی دیگری دارد: چه روابطی در کل ماتریس وجود دارد؟"
+const COPY = {
+  en: {
+    sections: [
+      {
+        title: "1. Why relationships between samples and genes come after statistics",
+        intro: "The professor starts by positioning this class after data processing, normalization and statistical testing. The goal now is exploratory: understand intrinsic relationships inside the dataset itself.",
+        professor: "The class explicitly shifts from hypothesis tests toward exploratory techniques. Unsupervised methods do not start from labels or assumptions; they let the data organize itself and then require biological interpretation.",
+        slides: [
+          { n: 1, title: "Relationships between genes/samples", body: "Understanding intrinsic characteristics and relationships within the data itself: unsupervised analysis and data visualization." },
+          { n: 2, title: "Similarity of gene or sample profiles", body: "The same matrix can be read in two directions: pairwise genes measured by all samples, or pairwise samples measured by all genes." },
+          { n: 14, title: "Unsupervised analysis", body: "MDS, hierarchical clustering, k-means and PCA are exploratory approaches to understand whole-data structure." }
+        ],
+        exam: {
+          q: "Why do we study relationships between genes and samples?",
+          include: ["Start from the feature × sample matrix.", "Say this is unsupervised/exploratory analysis.", "Mention similarity/dissimilarity and visualization.", "Connect the result to biological interpretation, outliers or technical structure."],
+          trap: "Do not say that unsupervised analysis proves differential expression. It complements the statistical tests.",
+          answer: "After normalization and statistical testing, omics data are still organized as a matrix with genes or CpGs in rows and samples in columns. Differential tests identify individual features associated with conditions, but they do not describe the intrinsic structure of the dataset. Unsupervised analysis studies similarity and dissimilarity among samples or among genes without imposing a priori labels. If samples are close, they may share a phenotype, tissue, time point or batch; if genes are close, they may share a common expression or methylation profile. Therefore, these methods complement statistical testing and help generate biological interpretation."
+        }
       },
-      slides: [
-        { n: 1, title: { en: "Unsupervised analysis", es: "Análisis no supervisado", fa: "تحلیل بدون‌ناظر" }, text: { en: "The slides define this block as understanding intrinsic characteristics and relationships within the data itself.", es: "Las slides definen este bloque como entender características intrínsecas y relaciones dentro de los datos mismos.", fa: "اسلایدها این بخش را شناخت ویژگی‌ها و روابط درونی خود داده معرفی می‌کنند." } },
-        { n: 1, title: { en: "Data visualization", es: "Visualización de datos", fa: "visualization" }, text: { en: "Visualization is not decorative: it reveals sample groups, gene patterns, outliers and possible technical structure.", es: "La visualización no es decorativa: revela grupos de muestras, patrones de genes, outliers y posible estructura técnica.", fa: "visualization تزئینی نیست؛ گروه‌ها، الگوها، outlier و ساختار فنی را آشکار می‌کند." } }
-      ],
-      emphasis: {
-        en: "Do not present clustering as a replacement for hypothesis testing. It answers a complementary question: structure, similarity and pattern.",
-        es: "No presentes el clustering como reemplazo del test estadístico. Responde una pregunta complementaria: estructura, similitud y patrón.",
-        fa: "clustering جایگزین آزمون آماری نیست؛ پرسش مکملی دربارهٔ ساختار، شباهت و الگو پاسخ می‌دهد."
+      {
+        title: "2. Similarity becomes distance",
+        intro: "The class insists on a simple intuition: near means similar, far means dissimilar. To make this operational, gene or sample profiles are converted into distances.",
+        professor: "Before formulas, the professor reviews basic geometry: distance cannot be negative, distance to itself is zero, distance is symmetric, and the triangle inequality matters when we place profiles in Cartesian-like spaces.",
+        slides: [
+          { n: 3, title: "Geometrical properties", body: "Distance is non-negative, zero only for identical profiles, symmetric, and constrained by the triangle inequality." },
+          { n: 4, title: "Cartesian intuition", body: "Genes and samples are represented as profiles. Low distance means proximity and similarity; high distance means dissimilarity." }
+        ],
+        exam: {
+          q: "How do similarity and distance relate in gene/sample profiles?",
+          include: ["Define profiles as vectors across samples or genes.", "Explain near/far as similar/dissimilar.", "Mention that a distance matrix summarizes pairwise relationships.", "Add that metric choice affects the result."],
+          trap: "Do not treat distance as a biological conclusion by itself. It is a numerical summary that needs interpretation.",
+          answer: "A gene or sample profile can be represented as a vector of measurements. Similarity becomes measurable by defining a distance between two vectors. A small distance means that two profiles are close and therefore similar, while a large distance means dissimilarity. By computing all pairwise distances, we obtain a distance matrix that can be used for MDS, hierarchical clustering or heatmaps. However, the result depends on the chosen metric, so the biological interpretation must consider whether Pearson, Spearman or Euclidean distance is appropriate for the dataset."
+        }
       },
-      exam: {
-        q: { en: "Why do we study relationships between samples and genes after differential analysis?", es: "¿Por qué estudiamos relaciones entre muestras y genes después del análisis diferencial?", fa: "چرا بعد از تحلیل افتراقی رابطهٔ نمونه‌ها و ژن‌ها را بررسی می‌کنیم؟" },
-        include: {
-          en: ["Mention the feature × sample matrix.", "Separate feature significance from global structure.", "Explain unsupervised analysis as exploratory and descriptive.", "Connect patterns to biology, outliers or batch effects."],
-          es: ["Menciona la matriz feature × muestra.", "Separa significancia de features de estructura global.", "Explica el análisis no supervisado como exploratorio y descriptivo.", "Conecta patrones con biología, outliers o batch effects."],
-          fa: ["ماتریس feature × sample را ذکر کن.", "معنی‌داری feature را از ساختار کلی جدا کن.", "تحلیل بدون‌ناظر را اکتشافی توضیح بده.", "الگوها را به biology/outlier/batch وصل کن."]
-        },
-        trap: { en: "Do not say unsupervised analysis proves differential expression.", es: "No digas que el análisis no supervisado prueba expresión diferencial.", fa: "نگو تحلیل بدون‌ناظر differential expression را ثابت می‌کند." },
-        sample: {
-          en: "After normalization and statistical testing we usually have a matrix with genes or probes in rows and samples in columns. Differential tests identify individual features associated with conditions, but they do not fully describe the global organization of the dataset. Unsupervised analysis lets the data organize itself and helps us detect whether samples cluster by phenotype, treatment, tissue, outlier status or technical batch. It also shows whether genes have similar expression profiles across samples. Therefore it complements, rather than replaces, differential analysis.",
-          es: "Después de normalizar y aplicar tests estadísticos normalmente tenemos una matriz con genes o probes en filas y muestras en columnas. Los tests diferenciales identifican features individuales asociadas a condiciones, pero no describen por completo la organización global del dataset. El análisis no supervisado deja que los datos se organicen y ayuda a detectar si las muestras se agrupan por fenotipo, tratamiento, tejido, outliers o batch técnico. También muestra si los genes tienen perfiles similares a través de las muestras. Por eso complementa, no reemplaza, el análisis diferencial.",
-          fa: "پس از normalization و آزمون آماری معمولاً ماتریسی از gene/probe در ردیف‌ها و sample در ستون‌ها داریم. آزمون‌های افتراقی featureهای منفرد را پیدا می‌کنند، اما ساختار کلی dataset را کامل توضیح نمی‌دهند. تحلیل بدون‌ناظر نشان می‌دهد نمونه‌ها بر اساس phenotype، treatment، tissue، outlier یا batch گروه‌بندی می‌شوند یا نه و ژن‌ها الگوهای مشابه دارند یا نه. بنابراین مکمل differential analysis است."
+      {
+        title: "3. Pearson correlation distance: strong relationship, no causality",
+        intro: "Pearson r measures a linear relationship between two profiles. In this lesson it is transformed into a distance using d = 1 − |r|, so strong positive and strong negative correlations both become close.",
+        professor: "The professor explicitly says not to memorize the formula, but to understand the concept: Pearson studies covariance relative to variability, assumes linearity, gives r between −1 and +1, and correlation does not imply causality.",
+        slides: [
+          { n: 5, title: "Pearson r", body: "−1 is strong negative correlation, +1 strong positive correlation, 0 no correlation. It measures linear relationship, not causality." },
+          { n: 6, title: "Convert r into distance", body: "Using d = 1 − |r|: r = −1 or +1 gives distance 0; r = 0 gives distance 1." },
+          { n: 7, title: "DLBCL example", body: "In the Alizadeh DLBCL dataset, IGKC and NKG7 have r = 0.97, so d = 0.03: very similar profiles across patients." },
+          { n: 8, title: "Limits", body: "Pearson can be strongly skewed by outliers. Significance can be assessed with a t statistic and df = n − 2." }
+        ],
+        exam: {
+          q: "Explain Pearson correlation as a distance measure.",
+          include: ["Define r and its range.", "Say Pearson assumes linearity and does not imply causality.", "Use d = 1 − |r|.", "Give the r = 0.97 → d = 0.03 example.", "Mention sensitivity to outliers and possible p-value."],
+          trap: "Do not say that a negative correlation is far away if distance is defined with |r|. With d = 1 − |r|, r = −1 and r = +1 both give distance 0.",
+          answer: "Pearson r quantifies the strength of a linear relationship between two gene or sample profiles. It ranges from −1 to +1: +1 means strong positive correlation, −1 strong negative correlation, and values near 0 indicate no linear correlation. In this lesson Pearson is converted into a distance using d = 1 − |r|. Therefore, both perfect positive and perfect negative correlations have distance 0, while uncorrelated profiles have distance near 1. For example, r = 0.97 gives d = 0.03, indicating very similar profiles. The limitation is that Pearson is sensitive to outliers and correlation does not imply causality."
+        }
+      },
+      {
+        title: "4. Spearman and Euclidean distance: the metric must fit the design",
+        intro: "The professor then compares alternative metrics. Spearman is robust to outliers because it uses ranks, but ranks can erase direction in time-series designs. Euclidean distance is geometric and preserves opposite profiles, but depends on scaling.",
+        professor: "There is no universal best metric. The class repeatedly says to compare metrics and choose according to data structure: outliers, scaling, time series and the biological question.",
+        slides: [
+          { n: 10, title: "Outliers affect Pearson", body: "In a yeast sporulation time series, an outlier can make Pearson distance misleading." },
+          { n: 11, title: "Spearman correlation", body: "Measurements are replaced by ranks. This is non-parametric and robust to outliers, but direction of up/down regulation can be lost." },
+          { n: 13, title: "Euclidean distance", body: "Calculated from coordinate differences; the larger the number, the greater the distance. Scaling changes Euclidean distance." },
+          { n: 14, title: "Different strengths", body: "Pearson/Spearman may cluster opposite profiles as close; Euclidean can keep them far but may produce looser clusters." }
+        ],
+        exam: {
+          q: "Compare Pearson, Spearman and Euclidean distance.",
+          include: ["Pearson: linear, powerful, outlier-sensitive.", "Spearman: rank-based, robust to outliers, may lose direction.", "Euclidean: geometric, positive, scale-dependent.", "Say metric choice changes clustering/MDS."],
+          trap: "Do not choose Spearman automatically for time series: ranking may lose the up/down temporal behavior that matters biologically.",
+          answer: "Pearson correlation distance is useful when profiles have a linear relationship and data are normalized, but it is sensitive to outliers. Spearman is a non-parametric correlation based on ranks, so it is more robust to outliers and scale changes; however, in time-series data it may lose important up/down direction because true measurements are replaced by ranks. Euclidean distance has a direct geometrical meaning and can keep opposite profiles far apart, but it depends strongly on scaling. Because these metrics emphasize different aspects of the data, clustering or MDS should be interpreted together with the metric used."
+        }
+      },
+      {
+        title: "5. MDS: an algorithm, not a metric",
+        intro: "Multidimensional scaling starts from a distance matrix and tries to place objects in 2D or 3D so that distances among points are preserved as much as possible.",
+        professor: "A student asked whether MDS is another metric. The professor clarified: MDS is an algorithm, not a distance metric. The values on the axes are not the biological result; the important information is which profiles are close or far after mapping.",
+        slides: [
+          { n: 15, title: "MDS purpose", body: "Map distances from high-dimensional space into lower-dimensional space without too much loss of information." },
+          { n: 16, title: "Triangular matrix", body: "Start from pairwise distances. MDS scales them into points in 2D or 3D." },
+          { n: 17, title: "Compare metrics", body: "Euclidean and correlation distances can give similar or different MDS maps; this affects interpretation." }
+        ],
+        exam: {
+          q: "What is MDS and how should it be interpreted?",
+          include: ["Say it is an algorithm, not a metric.", "It starts from a distance matrix.", "It maps high-dimensional distances into low-dimensional coordinates.", "Interpret relative proximity, not axis values."],
+          trap: "Do not interpret MDS axis numbers as gene-expression values. The distances between points are the key information.",
+          answer: "Multidimensional scaling is an unsupervised visualization algorithm, not a metric. It starts from a matrix of pairwise distances, such as Euclidean or correlation distances, and places the objects in two- or three-dimensional space so that the distances among points are preserved as well as possible. It is useful because omics profiles are high-dimensional and difficult to visualize directly. In interpretation, the exact coordinate values are less important than the relative proximity: close points represent similar profiles and distant points represent dissimilar profiles."
+        }
+      },
+      {
+        title: "6. Hierarchical clustering: build a dendrogram from distances",
+        intro: "Hierarchical clustering is presented as an agglomerative, bottom-up algorithm. It starts from the closest genes or samples and progressively joins them into clusters shown as a dendrogram.",
+        professor: "The professor says hierarchical clustering is a possible exam question. The expected answer should state what the algorithm does, what task it solves, and how it helps identify similar genes or samples.",
+        slides: [
+          { n: 18, title: "Agglomerative clustering", body: "Similar profiles have low distance and appear close together with shorter branches in a dendrogram." },
+          { n: 20, title: "Distance matrix", body: "The algorithm starts from a triangular distance matrix. The nearest pair is joined first." },
+          { n: 22, title: "Linkage methods", body: "Single/minimum, complete/maximum, average/UPGMA and Ward define how distances between clusters are recalculated." },
+          { n: 28, title: "Different results", body: "Different combinations of metric and linkage can produce different dendrograms; the best one must be evaluated biologically and statistically." }
+        ],
+        exam: {
+          q: "Explain hierarchical clustering and linkage methods.",
+          include: ["Define it as unsupervised and agglomerative/bottom-up.", "Start from a distance matrix.", "Explain dendrogram, nodes and branch lengths.", "Mention linkage methods and different results.", "Add that clusters need validation."],
+          trap: "Do not read only left-right order in the dendrogram. Branch length and node height carry the distance information.",
+          answer: "Hierarchical clustering is an unsupervised agglomerative algorithm that starts from a distance matrix and progressively joins the closest genes or samples. The result is a dendrogram, where short branches indicate proximity and similarity, while long branches indicate greater distance. After the first pair is joined, the distance between a new cluster and other objects must be recalculated using a linkage method such as single, complete, average or Ward. Different metrics and linkage methods can produce different dendrograms, so the result must be interpreted carefully and, when possible, validated statistically."
+        }
+      },
+      {
+        title: "7. Bootstrap validation and heatmaps",
+        intro: "The final part connects cluster stability with visualization. Bootstrap validation asks whether a node or cluster is reproducible, while heatmaps make gene/sample structure visually readable.",
+        professor: "Heatmap is another likely exam question. The professor emphasizes that the legend is essential: colors may represent z-scores, fold changes or another statistic, so red/green cannot be interpreted without the legend.",
+        slides: [
+          { n: 33, title: "Bootstrap validation", body: "Repeat hierarchical clustering on bootstrap datasets and calculate how often a cluster is recovered." },
+          { n: 34, title: "Bootstrap support", body: "95% is very strong evidence, 80–95% good support, 70–80% moderate, and below 70% weak support." },
+          { n: 35, title: "Heatmap", body: "Rows usually represent genes, columns samples, and colors show relative expression or statistics such as up/down regulation." },
+          { n: 36, title: "Z-score", body: "Zij = (xij − μi) / σi: expression of gene i in sample j minus the mean of that gene across samples, divided by its standard deviation." },
+          { n: 37, title: "DLBCL heatmap example", body: "A large heatmap plus dendrogram separates patient samples from other lymphocyte or lymphoma-related samples, generating new biological questions." }
+        ],
+        exam: {
+          q: "Why are bootstrap validation and heatmaps useful after clustering?",
+          include: ["Bootstrap checks stability/reproducibility of clusters.", "Support is percentage of times a node is recovered.", "Heatmap displays matrix values with colors plus dendrograms.", "Explain z-score or fold-change legend.", "Warn that colors are relative and legend-dependent."],
+          trap: "Do not say color always means the same thing. In one heatmap red may be up-regulation; in another it may be down-regulation, depending on the legend.",
+          answer: "Bootstrap validation evaluates whether a cluster or dendrogram node is stable. The dataset is resampled many times, hierarchical clustering is repeated, and the percentage of replicates in which the same cluster appears is reported as bootstrap support. High support, for example around 95%, suggests a reproducible cluster, while low support raises doubts about the metric or linkage choice. Heatmaps complement this by displaying the gene × sample matrix as colors, often together with dendrograms. The interpretation depends on the legend: colors may represent z-scores, fold changes or another statistic, so heatmaps show relative patterns, not absolute biological truth by themselves."
         }
       }
-    },
-    {
-      eyebrow: { en: "Matrix logic", es: "Lógica de matriz", fa: "منطق ماتریس" },
-      title: { en: "Two directions: samples across genes, genes across samples", es: "Dos direcciones: muestras a través de genes, genes a través de muestras", fa: "دو جهت: نمونه‌ها روی ژن‌ها و ژن‌ها روی نمونه‌ها" },
-      body: {
-        en: "In omics, each sample is a vector of many genes/probes, and each gene is a vector across many samples. Similarity can therefore be studied sample-wise or gene-wise.",
-        es: "En ómicas, cada muestra es un vector de muchos genes/probes, y cada gen es un vector a través de muchas muestras. Por eso la similitud puede estudiarse entre muestras o entre genes.",
-        fa: "در omics هر sample برداری از تعداد زیادی gene/probe است و هر gene برداری روی sampleهاست. پس شباهت را می‌توان بین samples یا بین genes بررسی کرد."
-      },
-      slides: [
-        { n: 2, title: { en: "Relationships among genes", es: "Relaciones entre genes", fa: "رابطهٔ بین ژن‌ها" }, text: { en: "Pairwise genes are compared using their measurements across all samples.", es: "Los genes por pares se comparan usando sus mediciones a través de todas las muestras.", fa: "ژن‌ها جفت‌جفت با اندازه‌گیری‌هایشان در همهٔ نمونه‌ها مقایسه می‌شوند." } },
-        { n: 2, title: { en: "Relationships among samples", es: "Relaciones entre muestras", fa: "رابطهٔ بین نمونه‌ها" }, text: { en: "Pairwise samples are compared using all measured genes or probes.", es: "Las muestras por pares se comparan usando todos los genes o probes medidos.", fa: "نمونه‌ها جفت‌جفت با همهٔ gene/probeهای اندازه‌گیری‌شده مقایسه می‌شوند." } }
-      ],
-      emphasis: {
-        en: "Always say what the rows and columns are before interpreting any distance, heatmap or dendrogram.",
-        es: "Di siempre qué son filas y columnas antes de interpretar cualquier distancia, heatmap o dendrograma.",
-        fa: "قبل از تفسیر distance، heatmap یا dendrogram حتماً بگو ردیف‌ها و ستون‌ها چه هستند."
-      },
-      exam: {
-        q: { en: "How do you define similarity in a gene/sample matrix?", es: "¿Cómo defines similitud en una matriz gen/muestra?", fa: "در ماتریس gene/sample شباهت را چگونه تعریف می‌کنی؟" },
-        include: {
-          en: ["Define rows and columns.", "Describe vectors/profiles.", "Explain near/far as similar/dissimilar.", "Mention the metric choice."],
-          es: ["Define filas y columnas.", "Describe vectores/perfiles.", "Explica cerca/lejos como similar/disimilar.", "Menciona la elección de métrica."],
-          fa: ["ردیف و ستون را تعریف کن.", "profile/vector را توضیح بده.", "نزدیک/دور را به similarity/dissimilarity وصل کن.", "metric choice را ذکر کن."]
-        },
-        trap: { en: "The same data matrix can be transposed depending on whether you cluster samples or features.", es: "La misma matriz puede transponerse según si clusterizas muestras o features.", fa: "همان ماتریس بسته به clustering نمونه یا feature می‌تواند transpose شود." },
-        sample: {
-          en: "A gene/sample matrix can be read in two directions. If columns are samples and rows are genes, each sample can be represented as a vector of values across genes. Two samples are similar when their vectors are close according to a chosen distance or correlation measure. Conversely, each gene can be represented by its expression profile across samples, and genes with close profiles may be co-regulated or share biological behavior. Similarity is therefore not an absolute property; it depends on the selected metric and on whether we are comparing samples or features.",
-          es: "Una matriz gen/muestra puede leerse en dos direcciones. Si las columnas son muestras y las filas genes, cada muestra se representa como un vector de valores a través de genes. Dos muestras son similares cuando sus vectores están cerca según una distancia o correlación elegida. A la inversa, cada gen se representa por su perfil de expresión a través de muestras, y genes con perfiles cercanos pueden estar co-regulados o compartir comportamiento biológico. La similitud no es una propiedad absoluta: depende de la métrica seleccionada y de si comparamos muestras o features.",
-          fa: "ماتریس gene/sample دو جهت دارد. اگر ستون‌ها samples و ردیف‌ها genes باشند، هر sample برداری از مقادیر روی ژن‌هاست. دو sample وقتی مشابه‌اند که بردارهایشان طبق distance/correlation انتخاب‌شده نزدیک باشد. هر gene هم profileی روی sampleها دارد و ژن‌های با profile نزدیک ممکن است رفتار زیستی مشترک داشته باشند. بنابراین similarity مطلق نیست و به metric و جهت مقایسه بستگی دارد."
-        }
-      }
-    },
-    {
-      eyebrow: { en: "Distance", es: "Distancia", fa: "فاصله" },
-      title: { en: "Similarity becomes a geometrical problem", es: "La similitud se convierte en un problema geométrico", fa: "شباهت به مسئله‌ای هندسی تبدیل می‌شود" },
-      body: {
-        en: "A distance formalizes dissimilarity. The slides stress the geometrical rules: non-negativity, identity, symmetry and the triangle inequality.",
-        es: "Una distancia formaliza la disimilitud. Las slides enfatizan las reglas geométricas: no negatividad, identidad, simetría y desigualdad triangular.",
-        fa: "distance یعنی formal کردن dissimilarity. اسلایدها non-negativity، identity، symmetry و triangle inequality را تأکید می‌کنند."
-      },
-      slides: [
-        { n: 3, title: { en: "Geometrical properties", es: "Propiedades geométricas", fa: "ویژگی‌های هندسی" }, text: { en: "A valid distance is non-negative, zero for identical objects, symmetric and respects the triangle inequality.", es: "Una distancia válida es no negativa, cero para objetos idénticos, simétrica y respeta la desigualdad triangular.", fa: "distance معتبر منفی نیست، برای object یکسان صفر است، متقارن است و triangle inequality دارد." } },
-        { n: 3, title: { en: "Near means similar", es: "Cerca significa similar", fa: "نزدیک یعنی مشابه" }, text: { en: "Low distance means profiles are close; high distance means they are dissimilar.", es: "Distancia baja significa perfiles cercanos; distancia alta significa perfiles disimilares.", fa: "فاصلهٔ کم یعنی profile نزدیک؛ فاصلهٔ زیاد یعنی نامشابه." } }
-      ],
-      emphasis: {
-        en: "This is why distance matrices are central: they convert thousands of molecular measurements into pairwise relationships.",
-        es: "Por eso las matrices de distancia son centrales: convierten miles de mediciones moleculares en relaciones por pares.",
-        fa: "به همین دلیل distance matrix مرکزی است: هزاران اندازه‌گیری را به روابط جفتی تبدیل می‌کند."
-      },
-      exam: {
-        q: { en: "What is a distance metric and why is it useful in omics?", es: "¿Qué es una métrica de distancia y por qué es útil en ómicas?", fa: "distance metric چیست و چرا در omics مفید است؟" },
-        include: {
-          en: ["Define it as dissimilarity.", "List the basic metric properties.", "Connect it to gene/sample profiles.", "Mention distance matrices and clustering."],
-          es: ["Defínela como disimilitud.", "Lista propiedades básicas de métrica.", "Conéctala con perfiles de genes/muestras.", "Menciona matrices de distancia y clustering."],
-          fa: ["آن را dissimilarity تعریف کن.", "ویژگی‌های metric را بگو.", "به profile ژن/نمونه وصل کن.", "distance matrix و clustering را ذکر کن."]
-        },
-        trap: { en: "A negative correlation is not a negative distance; it must be transformed if used as distance.", es: "Una correlación negativa no es una distancia negativa; debe transformarse si se usa como distancia.", fa: "correlation منفی distance منفی نیست؛ باید تبدیل شود." },
-        sample: {
-          en: "A distance metric quantifies how dissimilar two profiles are. In omics, a profile can be a sample described by many genes or a gene described across many samples. A proper distance is non-negative, is zero for identical profiles, is symmetric and satisfies the triangle inequality. Once distances are computed for all pairs, they can be organized in a distance matrix. This matrix is the input for exploratory methods such as hierarchical clustering, MDS and heatmap dendrograms.",
-          es: "Una métrica de distancia cuantifica cuán disimilares son dos perfiles. En ómicas, un perfil puede ser una muestra descrita por muchos genes o un gen descrito a través de muchas muestras. Una distancia correcta es no negativa, vale cero para perfiles idénticos, es simétrica y cumple la desigualdad triangular. Cuando se calculan distancias para todos los pares, se organizan en una matriz de distancia. Esa matriz alimenta métodos exploratorios como clustering jerárquico, MDS y dendrogramas de heatmap.",
-          fa: "distance metric میزان dissimilarity دو profile را می‌سنجد. در omics profile می‌تواند sample بر اساس چندین gene یا gene بر اساس چندین sample باشد. distance درست non-negative، برای profile یکسان صفر، symmetric و دارای triangle inequality است. distanceهای pairwise در distance matrix قرار می‌گیرند و ورودی hierarchical clustering، MDS و heatmap dendrogram هستند."
-        }
-      }
-    },
-    {
-      eyebrow: { en: "Pearson", es: "Pearson", fa: "Pearson" },
-      title: { en: "Pearson r measures linear relationship, not causality", es: "Pearson r mide relación lineal, no causalidad", fa: "Pearson r رابطهٔ خطی را می‌سنجد، نه causality" },
-      body: {
-        en: "Pearson correlation quantifies the relationship between two sets of measurements under a linearity assumption. It ranges from -1 to +1, where strong positive and strong negative correlation can both represent strong patterned relationship.",
-        es: "La correlación de Pearson cuantifica la relación entre dos conjuntos de mediciones bajo un supuesto de linealidad. Va de -1 a +1, y tanto la correlación positiva fuerte como la negativa fuerte pueden representar una relación de patrón fuerte.",
-        fa: "Pearson correlation رابطهٔ دو مجموعه measurement را با فرض linearity می‌سنجد. از -1 تا +1 است و correlation مثبت یا منفی قوی هر دو نشان‌دهندهٔ pattern قوی هستند."
-      },
-      slides: [
-        { n: 4, title: { en: "r = +1, 0, -1", es: "r = +1, 0, -1", fa: "r = +1, 0, -1" }, text: { en: "+1 means strong positive correlation; -1 means strong negative correlation; 0 means no linear correlation.", es: "+1 significa correlación positiva fuerte; -1 correlación negativa fuerte; 0 ausencia de correlación lineal.", fa: "+1 correlation مثبت قوی، -1 correlation منفی قوی، و 0 نبود correlation خطی است." } },
-        { n: 5, title: { en: "Correlation distance", es: "Distancia de correlación", fa: "correlation distance" }, text: { en: "The slides convert Pearson into distance as d = 1 - |r|: perfect correlation gives d = 0, uncorrelated profiles give d = 1.", es: "Las slides convierten Pearson en distancia como d = 1 - |r|: correlación perfecta da d = 0, perfiles no correlacionados dan d = 1.", fa: "اسلایدها Pearson را به distance تبدیل می‌کنند: d = 1 - |r|؛ correlation کامل distance صفر می‌دهد." } },
-        { n: 6, title: { en: "DLBCL example", es: "Ejemplo DLBCL", fa: "مثال DLBCL" }, text: { en: "In the Alizadeh DLBCL data, IGKC and NKG7 have r ≈ 0.97, therefore d ≈ 0.03: very similar profiles across 38 patients.", es: "En el dataset DLBCL de Alizadeh, IGKC y NKG7 tienen r ≈ 0.97, por tanto d ≈ 0.03: perfiles muy similares a través de 38 pacientes.", fa: "در دادهٔ DLBCL، IGKC و NKG7 مقدار r≈0.97 دارند؛ بنابراین d≈0.03 و profileها بسیار مشابه‌اند." } }
-      ],
-      emphasis: {
-        en: "The professor explicitly warns: correlation is not causality, and r can be distorted by outliers.",
-        es: "La profesora advierte explícitamente: correlación no es causalidad, y r puede distorsionarse por outliers.",
-        fa: "استاد تأکید می‌کند: correlation به معنی causality نیست و outlier می‌تواند r را منحرف کند."
-      },
-      exam: {
-        q: { en: "Explain Pearson correlation and how it can be used as a distance.", es: "Explica la correlación de Pearson y cómo puede usarse como distancia.", fa: "Pearson correlation و تبدیل آن به distance را توضیح بده." },
-        include: {
-          en: ["r ranges from -1 to +1.", "It measures linear relationship, not causality.", "d = 1 - |r| transforms it into non-negative distance.", "Mention outlier sensitivity and significance with t-test/df n-2."],
-          es: ["r va de -1 a +1.", "Mide relación lineal, no causalidad.", "d = 1 - |r| lo transforma en distancia no negativa.", "Menciona sensibilidad a outliers y significancia con t-test/df n-2."],
-          fa: ["r از -1 تا +1 است.", "رابطهٔ خطی را می‌سنجد نه causality.", "d = 1 - |r| آن را به distance تبدیل می‌کند.", "outlier sensitivity و t-test با df=n-2 را ذکر کن."]
-        },
-        trap: { en: "Do not interpret r = -1 as far away if the course uses d = 1 - |r|; perfect anticorrelation also gives distance 0.", es: "No interpretes r = -1 como lejos si el curso usa d = 1 - |r|; la anticorrelación perfecta también da distancia 0.", fa: "اگر d=1-|r| استفاده شود، r=-1 دور نیست؛ anticorrelation کامل هم distance صفر می‌دهد." },
-        sample: {
-          en: "Pearson r measures the strength of a linear relationship between two profiles and ranges from -1 to +1. A value near +1 means strong positive correlation, near -1 strong negative correlation, and near 0 no linear correlation. In this course it can be converted to a distance using 1 - |r|, so strong positive and strong negative correlations both become small distances. This is useful for clustering genes with similar pattern shapes, but it has limitations: it does not prove causality, it is sensitive to outliers, and its statistical significance can be assessed using a t distribution with n - 2 degrees of freedom.",
-          es: "Pearson r mide la fuerza de una relación lineal entre dos perfiles y va de -1 a +1. Un valor cerca de +1 indica correlación positiva fuerte, cerca de -1 correlación negativa fuerte, y cerca de 0 ausencia de correlación lineal. En este curso puede convertirse en distancia usando 1 - |r|, por lo que correlaciones positivas y negativas fuertes dan distancias pequeñas. Esto sirve para clusterizar genes con formas de patrón similares, pero tiene límites: no prueba causalidad, es sensible a outliers y su significancia puede evaluarse con una distribución t con n - 2 grados de libertad.",
-          fa: "Pearson r قدرت رابطهٔ خطی بین دو profile را می‌سنجد و از -1 تا +1 است. نزدیک +1 یعنی correlation مثبت قوی، نزدیک -1 یعنی correlation منفی قوی، و نزدیک 0 یعنی عدم رابطهٔ خطی. در این درس با 1 - |r| به distance تبدیل می‌شود؛ بنابراین correlation مثبت و منفی قوی هر دو distance کوچک دارند. اما causality را ثابت نمی‌کند، به outlier حساس است و significance آن با t distribution و df=n-2 بررسی می‌شود."
-        }
-      }
-    },
-    {
-      eyebrow: { en: "Spearman", es: "Spearman", fa: "Spearman" },
-      title: { en: "Spearman uses ranks: robust, but it changes what information is kept", es: "Spearman usa rangos: robusto, pero cambia qué información se conserva", fa: "Spearman از rank استفاده می‌کند: robust است اما اطلاعات را تغییر می‌دهد" },
-      body: {
-        en: "Spearman correlation is a non-parametric measure. True measurements are replaced by ranks, which makes it robust to large outliers and scale invariant, but it may lose magnitude and direction details important in time-series data.",
-        es: "La correlación de Spearman es una medida no paramétrica. Las mediciones reales se reemplazan por rangos, lo que la hace robusta frente a outliers grandes y scale invariant, pero puede perder detalles de magnitud y dirección importantes en time-series.",
-        fa: "Spearman یک measure غیرپارامتریک است. اندازه‌گیری واقعی با rank جایگزین می‌شود؛ پس نسبت به outlier robust و scale invariant است، اما magnitude و direction را ممکن است از دست بدهد."
-      },
-      slides: [
-        { n: 9, title: { en: "Outlier problem", es: "Problema de outliers", fa: "مشکل outlier" }, text: { en: "The yeast time-series example shows Pearson can change strongly if one point is deleted.", es: "El ejemplo de time-series en levadura muestra que Pearson puede cambiar mucho si se elimina un punto.", fa: "مثال time-series مخمر نشان می‌دهد Pearson با حذف یک نقطه می‌تواند خیلی تغییر کند." } },
-        { n: 10, title: { en: "Ranked plot", es: "Ranked plot", fa: "ranked plot" }, text: { en: "Spearman replaces log ratios or true measurements with ranks from smallest to largest.", es: "Spearman reemplaza log ratios o mediciones reales por rangos de menor a mayor.", fa: "Spearman مقدار واقعی یا log ratio را با rank از کوچک به بزرگ جایگزین می‌کند." } },
-        { n: 10, title: { en: "Direction caveat", es: "Caveat de dirección", fa: "هشدار direction" }, text: { en: "Because ranks are used, up/down regulation direction can be lost in some competitive-array time-series interpretations.", es: "Como se usan rangos, la dirección up/down puede perderse en algunas interpretaciones de time-series con competitive arrays.", fa: "چون rank استفاده می‌شود، direction up/down در برخی time-seriesها ممکن است از بین برود." } }
-      ],
-      emphasis: {
-        en: "The point is not to choose Spearman always; choose it when rank-based robustness matches the biological question.",
-        es: "La idea no es elegir Spearman siempre; úsalo cuando la robustez basada en rangos encaje con la pregunta biológica.",
-        fa: "هدف این نیست Spearman همیشه انتخاب شود؛ وقتی rank-based robustness مناسب سؤال زیستی است استفاده کن."
-      },
-      exam: {
-        q: { en: "Compare Pearson and Spearman in this lesson.", es: "Compara Pearson y Spearman en esta lección.", fa: "Pearson و Spearman را در این درس مقایسه کن." },
-        include: {
-          en: ["Pearson uses actual values and assumes linearity.", "Spearman uses ranks and is non-parametric.", "Spearman is more robust to outliers.", "Rank transformation may lose magnitude/direction information."],
-          es: ["Pearson usa valores reales y asume linealidad.", "Spearman usa rangos y es no paramétrico.", "Spearman es más robusto a outliers.", "La transformación a rangos puede perder magnitud/dirección."],
-          fa: ["Pearson از values واقعی و linearity استفاده می‌کند.", "Spearman از rank و روش غیرپارامتریک استفاده می‌کند.", "Spearman نسبت به outlier robustتر است.", "rank transformation ممکن است magnitude/direction را از دست بدهد."]
-        },
-        trap: { en: "Robust does not mean always better; it means less sensitive to certain problems.", es: "Robusto no significa siempre mejor; significa menos sensible a ciertos problemas.", fa: "robust یعنی همیشه بهتر نیست؛ یعنی نسبت به بعضی مشکلات حساسیت کمتر دارد." },
-        sample: {
-          en: "Pearson correlation uses the actual quantitative measurements and measures linear association between two profiles. It can be converted into distance, but it is sensitive to outliers. Spearman is non-parametric: it replaces the original values by ranks and then measures correlation on those ranks. This makes it more robust to large outliers and independent of scale. However, by using ranks it can lose information about magnitude and, in some time-series competitive-array settings, about the biological direction of up- or down-regulation. Therefore the choice depends on the dataset and the question.",
-          es: "La correlación de Pearson usa las mediciones cuantitativas reales y mide asociación lineal entre dos perfiles. Puede convertirse en distancia, pero es sensible a outliers. Spearman es no paramétrico: reemplaza los valores originales por rangos y luego mide correlación sobre esos rangos. Esto lo hace más robusto a outliers grandes e independiente de la escala. Sin embargo, al usar rangos puede perder información sobre magnitud y, en algunos contextos time-series de competitive arrays, sobre la dirección biológica de up- o down-regulation. Por eso la elección depende del dataset y de la pregunta.",
-          fa: "Pearson از measurements واقعی استفاده می‌کند و association خطی را می‌سنجد، اما به outlier حساس است. Spearman غیرپارامتریک است: values اصلی را به rank تبدیل می‌کند و correlation را روی rankها می‌سنجد. این کار آن را نسبت به outlier robust و نسبت به scale مستقل‌تر می‌کند. اما rankها می‌توانند magnitude و در بعضی time-seriesها direction زیستی up/down را کم‌رنگ کنند. پس انتخاب به dataset و سؤال بستگی دارد."
-        }
-      }
-    },
-    {
-      eyebrow: { en: "Euclidean", es: "Euclídea", fa: "Euclidean" },
-      title: { en: "Euclidean distance preserves magnitude and is strongly affected by scaling", es: "La distancia Euclídea conserva magnitud y depende mucho del escalado", fa: "Euclidean magnitude را نگه می‌دارد و به scaling حساس است" },
-      body: {
-        en: "Euclidean distance is the straight-line distance. It can capture magnitude differences that correlation ignores, but the slides show that scaled versus unscaled data can produce very different distances.",
-        es: "La distancia Euclídea es la distancia en línea recta. Puede capturar diferencias de magnitud que la correlación ignora, pero las slides muestran que datos escalados y no escalados pueden producir distancias muy distintas.",
-        fa: "Euclidean distance همان فاصلهٔ مستقیم است. magnitude differences را که correlation گاهی نادیده می‌گیرد نشان می‌دهد، اما scaled/unscaled نتایج متفاوت می‌دهد."
-      },
-      slides: [
-        { n: 11, title: { en: "Pythagorean idea", es: "Idea pitagórica", fa: "ایدهٔ فیثاغورس" }, text: { en: "In two dimensions it is the Pythagorean distance; in many dimensions it generalizes across all coordinates.", es: "En dos dimensiones es la distancia pitagórica; en muchas dimensiones se generaliza a todas las coordenadas.", fa: "در دو بعد فاصلهٔ فیثاغورسی است و در ابعاد بیشتر روی همهٔ مختصات تعمیم می‌یابد." } },
-        { n: 11, title: { en: "Scaling matters", es: "El escalado importa", fa: "scaling مهم است" }, text: { en: "The slides compare unscaled and scaled data: the numerical Euclidean distance can change dramatically after scaling.", es: "Las slides comparan datos no escalados y escalados: la distancia Euclídea numérica puede cambiar mucho tras escalar.", fa: "اسلایدها نشان می‌دهند با scaling مقدار Euclidean distance می‌تواند شدیداً تغییر کند." } }
-      ],
-      emphasis: {
-        en: "Before comparing distances, ask whether the data are centered, normalized or scaled.",
-        es: "Antes de comparar distancias, pregunta si los datos están centrados, normalizados o escalados.",
-        fa: "قبل از مقایسهٔ distance بپرس داده‌ها centered، normalized یا scaled هستند یا نه."
-      },
-      exam: {
-        q: { en: "Why can Euclidean distance and correlation distance give different clustering results?", es: "¿Por qué la distancia Euclídea y la distancia de correlación pueden dar resultados de clustering distintos?", fa: "چرا Euclidean distance و correlation distance clustering متفاوت می‌دهند؟" },
-        include: {
-          en: ["Euclidean includes magnitude differences.", "Correlation focuses on profile shape/pattern.", "Scaling affects Euclidean distance strongly.", "Opposite profiles may be close by |correlation| but far by Euclidean distance."],
-          es: ["Euclídea incluye diferencias de magnitud.", "Correlación se centra en forma/patrón del perfil.", "El escalado afecta mucho a Euclídea.", "Perfiles opuestos pueden estar cerca por |correlación| pero lejos por Euclídea."],
-          fa: ["Euclidean magnitude differences را نگه می‌دارد.", "correlation روی shape/pattern تمرکز دارد.", "scaling روی Euclidean اثر زیاد دارد.", "opposite profiles ممکن است با |correlation| نزدیک ولی با Euclidean دور باشند."]
-        },
-        trap: { en: "Do not report a distance without saying which metric and preprocessing were used.", es: "No reportes una distancia sin decir qué métrica y preprocessing se usaron.", fa: "distance را بدون metric و preprocessing گزارش نکن." },
-        sample: {
-          en: "Euclidean distance measures straight-line distance between profiles and therefore preserves differences in magnitude. Correlation distance instead focuses mainly on similarity of shape or pattern. As a result, two genes with opposite but strong profiles may be considered close with 1 - |r|, while Euclidean distance can place them far apart because their coordinates differ strongly. Euclidean distance is also affected by scaling, centering and normalization. Therefore different metrics can produce different dendrograms and biological interpretations.",
-          es: "La distancia Euclídea mide distancia en línea recta entre perfiles y por tanto conserva diferencias de magnitud. La distancia de correlación se centra sobre todo en similitud de forma o patrón. Por eso dos genes con perfiles opuestos pero fuertes pueden considerarse cercanos con 1 - |r|, mientras que Euclídea puede colocarlos lejos porque sus coordenadas difieren mucho. Además, Euclídea se ve afectada por escalado, centrado y normalización. Por tanto, distintas métricas pueden producir dendrogramas e interpretaciones biológicas distintas.",
-          fa: "Euclidean distance فاصلهٔ مستقیم بین profileها را می‌سنجد و magnitude را حفظ می‌کند. correlation distance بیشتر روی shape/pattern تمرکز دارد. بنابراین دو ژن با pattern قوی اما مخالف ممکن است با 1-|r| نزدیک باشند، اما با Euclidean دور شوند چون مختصاتشان متفاوت است. Euclidean به scaling/centering/normalization حساس است. پس metricهای مختلف dendrogram و تفسیر متفاوت می‌دهند."
-        }
-      }
-    },
-    {
-      eyebrow: { en: "Unsupervised methods", es: "Métodos no supervisados", fa: "روش‌های بدون‌ناظر" },
-      title: { en: "The toolbox: MDS, hierarchical clustering, k-means and PCA", es: "La caja de herramientas: MDS, clustering jerárquico, k-means y PCA", fa: "ابزارها: MDS، hierarchical clustering، k-means و PCA" },
-      body: {
-        en: "The slides define unsupervised techniques as exploratory: let the data organize itself, then try to find biological meaning. The listed methods include MDS, hierarchical clustering, k-means clustering and PCA.",
-        es: "Las slides definen las técnicas no supervisadas como exploratorias: dejar que los datos se organicen y luego intentar encontrar significado biológico. Los métodos listados incluyen MDS, clustering jerárquico, k-means y PCA.",
-        fa: "اسلایدها روش‌های بدون‌ناظر را اکتشافی تعریف می‌کنند: بگذار داده خودش سازمان پیدا کند و سپس معنی زیستی پیدا کن. روش‌ها شامل MDS، hierarchical clustering، k-means و PCA هستند."
-      },
-      slides: [
-        { n: 12, title: { en: "Exploratory mindset", es: "Mentalidad exploratoria", fa: "ذهنیت اکتشافی" }, text: { en: "Unsupervised methods make no assumptions about how the data should behave.", es: "Los métodos no supervisados no asumen de antemano cómo deberían comportarse los datos.", fa: "روش بدون‌ناظر از قبل فرض نمی‌کند داده چگونه باید رفتار کند." } },
-        { n: 13, title: { en: "MDS goal", es: "Objetivo de MDS", fa: "هدف MDS" }, text: { en: "MDS maps high-dimensional distances into lower-dimensional space while preserving distances as well as possible.", es: "MDS mapea distancias de alta dimensión a un espacio de menor dimensión preservando las distancias lo mejor posible.", fa: "MDS فاصله‌های high-dimensional را به فضای lower-dimensional می‌برد و تا حد ممکن حفظ می‌کند." } },
-        { n: 14, title: { en: "Triangular distance matrix", es: "Matriz triangular de distancias", fa: "ماتریس فاصلهٔ مثلثی" }, text: { en: "The same pairwise distances can feed MDS or hierarchical clustering.", es: "Las mismas distancias por pares pueden alimentar MDS o clustering jerárquico.", fa: "همان pairwise distances می‌توانند ورودی MDS یا hierarchical clustering باشند." } }
-      ],
-      emphasis: {
-        en: "MDS and PCA are not the same, but both help compress high-dimensional variation into interpretable low-dimensional views.",
-        es: "MDS y PCA no son lo mismo, pero ambos ayudan a comprimir variación de alta dimensión en vistas interpretables de baja dimensión.",
-        fa: "MDS و PCA یکی نیستند، اما هر دو variation high-dimensional را به نمای low-dimensional قابل تفسیر تبدیل می‌کنند."
-      },
-      exam: {
-        q: { en: "What does unsupervised analysis mean in this course?", es: "¿Qué significa análisis no supervisado en esta materia?", fa: "در این درس unsupervised analysis یعنی چه؟" },
-        include: {
-          en: ["Exploratory analysis without predefined behavior assumptions.", "Let data organize itself.", "Use whole-data approaches and visualization.", "Examples: MDS, hierarchical clustering, k-means, PCA."],
-          es: ["Análisis exploratorio sin asumir comportamiento previo.", "Dejar que los datos se organicen.", "Usar enfoques globales y visualización.", "Ejemplos: MDS, clustering jerárquico, k-means, PCA."],
-          fa: ["تحلیل اکتشافی بدون فرض رفتار از پیش تعیین‌شده.", "داده خودش سازمان پیدا کند.", "whole-data approaches و visualization.", "مثال‌ها: MDS، hierarchical clustering، k-means، PCA."]
-        },
-        trap: { en: "Unsupervised does not mean objective without decisions; metric and preprocessing are choices.", es: "No supervisado no significa objetivo sin decisiones; métrica y preprocessing son elecciones.", fa: "بدون‌ناظر یعنی بدون تصمیم نیست؛ metric و preprocessing انتخاب هستند." },
-        sample: {
-          en: "Unsupervised analysis is an exploratory approach in which we do not impose predefined class labels as the main organizing principle. Instead, the data are allowed to organize themselves according to distances, correlations or variance structure. In omics it is used to study the whole matrix and visualize sample groups, gene modules, outliers and technical effects. The lesson lists methods such as MDS, hierarchical clustering, k-means and PCA. These methods are powerful but still depend on preprocessing, normalization and the chosen distance metric.",
-          es: "El análisis no supervisado es un enfoque exploratorio en el que no imponemos etiquetas de clase predefinidas como principio principal de organización. En cambio, dejamos que los datos se organicen según distancias, correlaciones o estructura de varianza. En ómicas se usa para estudiar toda la matriz y visualizar grupos de muestras, módulos de genes, outliers y efectos técnicos. La lección lista métodos como MDS, clustering jerárquico, k-means y PCA. Son métodos potentes, pero dependen de preprocessing, normalización y de la métrica de distancia elegida.",
-          fa: "تحلیل بدون‌ناظر رویکردی اکتشافی است که در آن برچسب‌های از پیش تعیین‌شده را اصل سازمان‌دهی قرار نمی‌دهیم. داده‌ها بر اساس distance، correlation یا variance structure سازمان می‌یابند. در omics برای دیدن کل ماتریس، sample groups، gene modules، outliers و technical effects استفاده می‌شود. روش‌ها شامل MDS، hierarchical clustering، k-means و PCA هستند. اما به preprocessing، normalization و metric انتخابی وابسته‌اند."
-        }
-      }
-    },
-    {
-      eyebrow: { en: "Hierarchical clustering", es: "Clustering jerárquico", fa: "Hierarchical clustering" },
-      title: { en: "Dendrograms summarize proximity between genes or samples", es: "Los dendrogramas resumen proximidad entre genes o muestras", fa: "dendrogram نزدیکی بین ژن‌ها یا نمونه‌ها را خلاصه می‌کند" },
-      body: {
-        en: "Hierarchical clustering turns a distance matrix into a tree. Similar profiles appear close together with shorter branches; the algorithm can be agglomerative, starting from single objects, or divisive.",
-        es: "El clustering jerárquico convierte una matriz de distancias en un árbol. Perfiles similares aparecen cerca con ramas más cortas; el algoritmo puede ser aglomerativo, empezando por objetos individuales, o divisivo.",
-        fa: "hierarchical clustering ماتریس distance را به درخت تبدیل می‌کند. profileهای مشابه با branchهای کوتاه نزدیک‌تر می‌آیند؛ الگوریتم می‌تواند agglomerative یا divisive باشد."
-      },
-      slides: [
-        { n: 15, title: { en: "AGNES", es: "AGNES", fa: "AGNES" }, text: { en: "Agglomerative clustering starts with individual genes/samples and joins the closest clusters step by step.", es: "El clustering aglomerativo empieza con genes/muestras individuales y une paso a paso los clusters más cercanos.", fa: "روش agglomerative از objectهای منفرد شروع می‌کند و نزدیک‌ترین clusterها را ادغام می‌کند." } },
-        { n: 15, title: { en: "Dendrogram", es: "Dendrograma", fa: "dendrogram" }, text: { en: "Branch length and node height depend on the metric and linkage method.", es: "La longitud de ramas y altura de nodos dependen de la métrica y del método de linkage.", fa: "طول branch و height node به metric و linkage method بستگی دارد." } },
-        { n: 20, title: { en: "Tree interpretation", es: "Interpretación del árbol", fa: "تفسیر درخت" }, text: { en: "For n genes, the tree has n - 1 internal nodes; always inspect branch lengths, not only left-right order.", es: "Para n genes, el árbol tiene n - 1 nodos internos; mira siempre la longitud de ramas, no solo el orden izquierda-derecha.", fa: "برای n ژن، tree دارای n-1 node داخلی است؛ فقط ترتیب چپ/راست را نگاه نکن، branch length مهم است." } }
-      ],
-      emphasis: {
-        en: "A dendrogram can be redrawn with different rotations: proximity is about branch structure and height, not the visual left-right order alone.",
-        es: "Un dendrograma puede rotarse: la proximidad depende de estructura y altura de ramas, no solo del orden visual izquierda-derecha.",
-        fa: "dendrogram می‌تواند rotate شود؛ proximity به branch structure و height مربوط است، نه فقط ترتیب چپ/راست."
-      },
-      exam: {
-        q: { en: "Explain hierarchical clustering and dendrogram interpretation.", es: "Explica clustering jerárquico e interpretación del dendrograma.", fa: "hierarchical clustering و تفسیر dendrogram را توضیح بده." },
-        include: {
-          en: ["Starts from a distance matrix.", "Agglomerative/bottom-up joins closest clusters.", "Dendrogram branches summarize proximity.", "Metric and linkage change the result."],
-          es: ["Parte de una matriz de distancias.", "El aglomerativo/bottom-up une clusters cercanos.", "Las ramas del dendrograma resumen proximidad.", "Métrica y linkage cambian el resultado."],
-          fa: ["از distance matrix شروع می‌کند.", "agglomerative نزدیک‌ترین clusterها را ادغام می‌کند.", "dendrogram proximity را خلاصه می‌کند.", "metric و linkage نتیجه را عوض می‌کنند."]
-        },
-        trap: { en: "Do not overinterpret clusters without validation; the tree is algorithm-dependent.", es: "No sobreinterpretes clusters sin validación; el árbol depende del algoritmo.", fa: "بدون validation clusterها را زیاد تفسیر نکن؛ tree به الگوریتم وابسته است." },
-        sample: {
-          en: "Hierarchical clustering uses a distance matrix to build a tree of similarity relationships among genes or samples. In agglomerative clustering, each profile starts as its own cluster and the closest clusters are joined step by step until one tree is produced. The dendrogram represents this process: shorter branches and lower joining heights indicate greater similarity. However, the result depends on the distance metric and linkage method, so different choices can produce different trees. For interpretation, we should inspect branch lengths and validate the stability of clusters.",
-          es: "El clustering jerárquico usa una matriz de distancias para construir un árbol de relaciones de similitud entre genes o muestras. En el clustering aglomerativo, cada perfil empieza como su propio cluster y los clusters más cercanos se unen paso a paso hasta formar un árbol. El dendrograma representa este proceso: ramas más cortas y alturas de unión más bajas indican mayor similitud. Sin embargo, el resultado depende de la métrica de distancia y del método de linkage, por lo que elecciones distintas pueden producir árboles distintos. Para interpretar, hay que mirar longitudes de ramas y validar la estabilidad de los clusters.",
-          fa: "hierarchical clustering از distance matrix برای ساخت درخت شباهت بین genes یا samples استفاده می‌کند. در روش agglomerative هر profile ابتدا cluster جداست و نزدیک‌ترین clusterها مرحله‌به‌مرحله ادغام می‌شوند. dendrogram این فرایند را نشان می‌دهد: branch کوتاه‌تر و joining height پایین‌تر یعنی similarity بیشتر. اما نتیجه به metric و linkage وابسته است؛ پس باید branch length و cluster stability بررسی شود."
-        }
-      }
-    },
-    {
-      eyebrow: { en: "Linkage", es: "Linkage", fa: "Linkage" },
-      title: { en: "Single, complete, average and Ward linkage answer different questions", es: "Single, complete, average y Ward responden preguntas distintas", fa: "single، complete، average و Ward پرسش‌های متفاوتی پاسخ می‌دهند" },
-      body: {
-        en: "When comparing two clusters, linkage defines which pairwise distances count: nearest neighbors, farthest neighbors, the average of all pairs, or increase in variance.",
-        es: "Al comparar dos clusters, el linkage define qué distancias por pares cuentan: vecinos más cercanos, vecinos más lejanos, promedio de todos los pares o aumento de varianza.",
-        fa: "هنگام مقایسهٔ دو cluster، linkage تعیین می‌کند کدام pairwise distances مهم‌اند: nearest، farthest، average یا افزایش variance."
-      },
-      slides: [
-        { n: 17, title: { en: "Single linkage", es: "Single linkage", fa: "Single linkage" }, text: { en: "Uses the minimum distance; can create chaining and is not recommended except for natural irregular clusters.", es: "Usa la distancia mínima; puede producir chaining y no se recomienda salvo clusters naturales irregulares.", fa: "minimum distance را استفاده می‌کند؛ ممکن است chaining بدهد و معمولاً جز برای clusters نامنظم توصیه نمی‌شود." } },
-        { n: 17, title: { en: "Complete linkage", es: "Complete linkage", fa: "Complete linkage" }, text: { en: "Uses maximum distance; tends to produce compact, well-defined clusters and avoids chaining.", es: "Usa la distancia máxima; tiende a producir clusters compactos y definidos, evitando chaining.", fa: "maximum distance را می‌گیرد؛ clusterهای compact می‌دهد و chaining را کاهش می‌دهد." } },
-        { n: 17, title: { en: "Average linkage", es: "Average linkage", fa: "Average linkage" }, text: { en: "Uses average pairwise distance; the slides mark it as useful in many applications.", es: "Usa la distancia promedio por pares; las slides lo marcan como útil en muchas aplicaciones.", fa: "average pairwise distance را استفاده می‌کند و در بسیاری کاربردها خوب است." } },
-        { n: 17, title: { en: "Ward", es: "Ward", fa: "Ward" }, text: { en: "Uses increase in variance and is often best for Euclidean data with compact, spherical clusters.", es: "Usa aumento de varianza y suele funcionar bien con datos Euclídeos y clusters compactos/esféricos.", fa: "increase in variance را می‌سنجد و برای Euclidean data و clusterهای compact مناسب است." } }
-      ],
-      emphasis: {
-        en: "Always report both: the distance metric and the linkage method.",
-        es: "Reporta siempre ambas cosas: métrica de distancia y método de linkage.",
-        fa: "همیشه هر دو را گزارش کن: distance metric و linkage method."
-      },
-      exam: {
-        q: { en: "Compare single, complete and average linkage.", es: "Compara single, complete y average linkage.", fa: "single، complete و average linkage را مقایسه کن." },
-        include: {
-          en: ["Single = minimum distance / nearest neighbor.", "Complete = maximum distance / farthest neighbor.", "Average = mean of pairwise distances.", "Different linkage choices produce different dendrograms."],
-          es: ["Single = distancia mínima / vecino más cercano.", "Complete = distancia máxima / vecino más lejano.", "Average = promedio de distancias por pares.", "Distintos linkages producen dendrogramas distintos."],
-          fa: ["Single یعنی minimum distance.", "Complete یعنی maximum distance.", "Average یعنی mean pairwise distances.", "linkageهای مختلف dendrogram متفاوت می‌دهند."]
-        },
-        trap: { en: "Do not call a cluster biologically real only because one linkage method found it.", es: "No llames biológicamente real a un cluster solo porque un método de linkage lo encontró.", fa: "فقط چون یک linkage cluster پیدا کرده، آن را real biology ندان." },
-        sample: {
-          en: "Linkage determines how distance is computed between clusters during hierarchical clustering. Single linkage uses the minimum distance between objects in two clusters, so it can connect elongated clusters and cause chaining. Complete linkage uses the maximum distance and tends to produce compact clusters, avoiding chaining. Average linkage uses the mean of all pairwise distances between clusters and is often a good general-purpose choice. Because the same distance matrix can yield different dendrograms with different linkage methods, the method must be reported and results should be compared or validated.",
-          es: "El linkage determina cómo se calcula la distancia entre clusters durante el clustering jerárquico. Single linkage usa la distancia mínima entre objetos de dos clusters, por lo que puede conectar clusters alargados y causar chaining. Complete linkage usa la distancia máxima y tiende a producir clusters compactos, evitando chaining. Average linkage usa la media de todas las distancias por pares entre clusters y suele ser una opción general útil. Como la misma matriz de distancias puede producir dendrogramas distintos con distintos métodos de linkage, el método debe reportarse y los resultados deben compararse o validarse.",
-          fa: "linkage تعیین می‌کند distance بین دو cluster چگونه محاسبه شود. Single linkage از minimum distance استفاده می‌کند و ممکن است chaining ایجاد کند. Complete linkage از maximum distance استفاده می‌کند و clusterهای compact می‌سازد. Average linkage میانگین همهٔ pairwise distanceها را می‌گیرد و انتخاب عمومی خوبی است. چون یک distance matrix با linkageهای مختلف dendrogram متفاوت می‌دهد، باید روش گزارش و validate شود."
-        }
-      }
-    },
-    {
-      eyebrow: { en: "Metric choice", es: "Elección de métrica", fa: "انتخاب metric" },
-      title: { en: "Different metrics and linkages can change the biological story", es: "Distintas métricas y linkages pueden cambiar la historia biológica", fa: "metric و linkage مختلف می‌توانند تفسیر زیستی را عوض کنند" },
-      body: {
-        en: "The yeast time-series example is a warning: Pearson, Spearman and Euclidean distance can cluster the same genes differently, especially when profiles are opposite, ranked or magnitude-separated.",
-        es: "El ejemplo de time-series en levadura es una advertencia: Pearson, Spearman y Euclídea pueden clusterizar los mismos genes de formas distintas, sobre todo cuando los perfiles son opuestos, rankeados o separados por magnitud.",
-        fa: "مثال time-series مخمر هشدار می‌دهد: Pearson، Spearman و Euclidean ممکن است همان ژن‌ها را متفاوت cluster کنند، مخصوصاً با profiles مخالف، rank شده یا magnitude متفاوت."
-      },
-      slides: [
-        { n: 21, title: { en: "Pearson/Spearman can place opposite profiles close", es: "Pearson/Spearman pueden acercar perfiles opuestos", fa: "Pearson/Spearman profiles مخالف را نزدیک می‌کنند" }, text: { en: "Because |correlation| is used as distance, opposite profiles can become close.", es: "Como se usa |correlación| como distancia, perfiles opuestos pueden volverse cercanos.", fa: "چون |correlation| استفاده می‌شود، profiles مخالف هم نزدیک می‌شوند." } },
-        { n: 21, title: { en: "Spearman may erase fine structure", es: "Spearman puede borrar estructura fina", fa: "Spearman ممکن است fine structure را حذف کند" }, text: { en: "If profiles have the same rank shape, Spearman can produce distance zero and hide fine quantitative differences.", es: "Si los perfiles tienen la misma forma de rangos, Spearman puede producir distancia cero y ocultar diferencias cuantitativas finas.", fa: "اگر profileها rank shape مشابه داشته باشند، Spearman distance صفر می‌دهد و تفاوت کمی پنهان می‌شود." } },
-        { n: 21, title: { en: "Euclidean makes looser clusters", es: "Euclídea genera clusters más sueltos", fa: "Euclidean clusters looser می‌دهد" }, text: { en: "Euclidean distance often produces larger distances and looser clusters because magnitude differences remain visible.", es: "La distancia Euclídea suele producir distancias mayores y clusters más sueltos porque las diferencias de magnitud siguen visibles.", fa: "Euclidean اغلب distance بزرگ‌تر و clusterهای loose می‌دهد چون magnitude باقی می‌ماند." } }
-      ],
-      emphasis: {
-        en: "The course take-home message is explicit: always try different linkage methods and distance metrics.",
-        es: "El take-home message del curso es explícito: prueba siempre distintos métodos de linkage y métricas de distancia.",
-        fa: "پیام اصلی درس: همیشه metricها و linkageهای مختلف را امتحان کن."
-      },
-      exam: {
-        q: { en: "Why should clustering results be checked with different metrics and linkage methods?", es: "¿Por qué hay que revisar clustering con distintas métricas y linkage methods?", fa: "چرا باید clustering را با metric و linkage متفاوت بررسی کرد؟" },
-        include: {
-          en: ["Different choices can produce different dendrograms.", "Correlation and Euclidean distance capture different aspects.", "Spearman rank transformation can remove fine structure.", "Biological interpretation depends on method robustness."],
-          es: ["Distintas elecciones pueden producir dendrogramas distintos.", "Correlación y Euclídea capturan aspectos diferentes.", "Spearman por rangos puede eliminar estructura fina.", "La interpretación biológica depende de robustez del método."],
-          fa: ["انتخاب‌های مختلف dendrogram متفاوت می‌دهند.", "correlation و Euclidean جنبه‌های مختلف می‌گیرند.", "Spearman fine structure را کم می‌کند.", "تفسیر زیستی به robustness روش وابسته است."]
-        },
-        trap: { en: "A cluster can be an algorithmic artifact if it disappears when the metric changes.", es: "Un cluster puede ser artefacto algorítmico si desaparece al cambiar la métrica.", fa: "اگر cluster با تغییر metric ناپدید شود، ممکن است artifact باشد." },
-        sample: {
-          en: "Clustering results depend on methodological choices. Pearson or Spearman correlation distance focuses on pattern shape and, when using absolute correlation, can place opposite profiles close together. Spearman uses ranks and can be robust to outliers, but may remove fine quantitative structure. Euclidean distance preserves magnitude and often produces larger, looser distances. Linkage methods also change how clusters are joined. Therefore we should compare metrics and linkage methods and validate clusters before building a biological interpretation.",
-          es: "Los resultados de clustering dependen de decisiones metodológicas. La distancia de correlación Pearson o Spearman se centra en la forma del patrón y, al usar correlación absoluta, puede colocar perfiles opuestos cerca. Spearman usa rangos y puede ser robusto a outliers, pero puede eliminar estructura cuantitativa fina. Euclídea conserva magnitud y suele producir distancias mayores y clusters más sueltos. Los métodos de linkage también cambian cómo se unen los clusters. Por eso hay que comparar métricas y linkages y validar los clusters antes de construir una interpretación biológica.",
-          fa: "clustering به انتخاب روش وابسته است. Pearson/Spearman correlation distance روی shape تمرکز دارد و با absolute correlation حتی profiles مخالف را نزدیک می‌کند. Spearman rank-based است و robust است اما fine quantitative structure را کم می‌کند. Euclidean magnitude را حفظ می‌کند و distanceهای بزرگ‌تر و clusterهای looser می‌دهد. linkage هم نتیجه را تغییر می‌دهد. پس قبل از تفسیر زیستی باید روش‌ها مقایسه و clusterها validate شوند."
-        }
-      }
-    },
-    {
-      eyebrow: { en: "Validation", es: "Validación", fa: "Validation" },
-      title: { en: "Bootstrap checks whether clusters are stable", es: "Bootstrap comprueba si los clusters son estables", fa: "Bootstrap پایداری cluster را بررسی می‌کند" },
-      body: {
-        en: "The slides extend the bootstrap idea from statistical testing to clustering. Resample the data, recluster many times, and count how often the same cluster is recovered.",
-        es: "Las slides extienden la idea de bootstrap desde tests estadísticos al clustering. Re-muestrea los datos, vuelve a clusterizar muchas veces y cuenta con qué frecuencia se recupera el mismo cluster.",
-        fa: "اسلایدها ایدهٔ bootstrap را از آزمون آماری به clustering می‌برند: داده را resample کن، دوباره cluster کن، و recovery cluster را بشمار."
-      },
-      slides: [
-        { n: 22, title: { en: "Bootstrap workflow", es: "Workflow de bootstrap", fa: "workflow bootstrap" }, text: { en: "Generate bootstrap datasets with replacement, perform clustering, repeat many times and calculate support.", es: "Genera datasets bootstrap con reemplazo, realiza clustering, repite muchas veces y calcula soporte.", fa: "dataset bootstrap با replacement بساز، cluster کن، تکرار کن و support را حساب کن." } },
-        { n: 22, title: { en: "Support thresholds", es: "Umbrales de soporte", fa: "آستانهٔ support" }, text: { en: "The slides classify support: >95% very strong, 80–95% good, 70–80% moderate, <70% weak.", es: "Las slides clasifican soporte: >95% muy fuerte, 80–95% bueno, 70–80% moderado, <70% débil.", fa: "اسلایدها support را طبقه‌بندی می‌کنند: >95% بسیار قوی، 80–95% خوب، 70–80% متوسط، <70% ضعیف." } },
-        { n: 22, title: { en: "pvclust", es: "pvclust", fa: "pvclust" }, text: { en: "The R package pvclust reports BP and AU p-values; AU > 95% is generally considered strong support.", es: "El paquete R pvclust reporta BP y AU p-values; AU > 95% suele considerarse soporte fuerte.", fa: "پکیج R به نام pvclust مقدار BP و AU می‌دهد؛ AU>95% معمولاً support قوی است." } }
-      ],
-      emphasis: {
-        en: "A beautiful dendrogram is not enough; stable clusters are more convincing than visually attractive clusters.",
-        es: "Un dendrograma bonito no basta; clusters estables convencen más que clusters visualmente atractivos.",
-        fa: "dendrogram زیبا کافی نیست؛ cluster پایدار مهم‌تر است."
-      },
-      exam: {
-        q: { en: "How does bootstrap validate hierarchical clustering?", es: "¿Cómo valida bootstrap el clustering jerárquico?", fa: "bootstrap چگونه hierarchical clustering را validate می‌کند؟" },
-        include: {
-          en: ["Resample observations or variables with replacement.", "Repeat clustering many times.", "Count cluster recovery frequency.", "Interpret high bootstrap support as stability, not absolute truth."],
-          es: ["Re-muestrea observaciones o variables con reemplazo.", "Repite clustering muchas veces.", "Cuenta frecuencia de recuperación del cluster.", "Interpreta soporte alto como estabilidad, no verdad absoluta."],
-          fa: ["observations/variables را با replacement resample کن.", "clustering را چندین بار تکرار کن.", "frequency recovery را بشمار.", "support بالا یعنی stability، نه حقیقت مطلق."]
-        },
-        trap: { en: "Bootstrap support validates stability under resampling, not biological mechanism by itself.", es: "Bootstrap valida estabilidad bajo re-muestreo, no mecanismo biológico por sí solo.", fa: "bootstrap stability را validate می‌کند، نه mechanism زیستی را به تنهایی." },
-        sample: {
-          en: "Bootstrap validation assesses the stability and reproducibility of clusters. A bootstrap dataset is generated by sampling observations or variables with replacement. Hierarchical clustering is performed again, and this process is repeated many times, for example 1000 replicates. For each cluster, we calculate how often it is recovered. High support, such as above 95%, suggests very strong stability, while low support suggests the cluster may be sensitive to sampling variation. This does not prove a biological mechanism, but it makes the cluster more reliable for interpretation.",
-          es: "La validación bootstrap evalúa la estabilidad y reproducibilidad de los clusters. Se genera un dataset bootstrap muestreando observaciones o variables con reemplazo. Se realiza de nuevo el clustering jerárquico y el proceso se repite muchas veces, por ejemplo 1000 réplicas. Para cada cluster se calcula con qué frecuencia se recupera. Un soporte alto, por ejemplo mayor del 95%, sugiere estabilidad muy fuerte; soporte bajo sugiere que el cluster puede ser sensible a la variación de muestreo. Esto no prueba un mecanismo biológico, pero hace el cluster más fiable para interpretar.",
-          fa: "bootstrap validation پایداری و reproducibility clusterها را بررسی می‌کند. یک bootstrap dataset با sampling with replacement ساخته می‌شود، hierarchical clustering دوباره انجام می‌شود و این فرایند مثلاً 1000 بار تکرار می‌شود. برای هر cluster محاسبه می‌کنیم چند بار recovery شده است. support بالای 95% پایداری بسیار قوی را نشان می‌دهد؛ support کم یعنی cluster به sampling variation حساس است. این mechanism زیستی را ثابت نمی‌کند اما تفسیر را قابل اعتمادتر می‌کند."
-        }
-      }
-    },
-    {
-      eyebrow: { en: "Heatmap", es: "Heatmap", fa: "Heatmap" },
-      title: { en: "Heatmaps combine matrix values with dendrograms", es: "Los heatmaps combinan valores de matriz con dendrogramas", fa: "heatmap مقدار ماتریس و dendrogram را ترکیب می‌کند" },
-      body: {
-        en: "A heatmap displays rows as genes, columns as samples and colors as relative expression or statistics. It is usually paired with dendrograms for better visualization of clustering results.",
-        es: "Un heatmap muestra filas como genes, columnas como muestras y colores como expresión relativa o estadísticos. Normalmente se combina con dendrogramas para visualizar mejor resultados de clustering.",
-        fa: "heatmap ردیف‌ها را genes، ستون‌ها را samples و رنگ‌ها را relative expression/statistics نشان می‌دهد و معمولاً همراه dendrogram است."
-      },
-      slides: [
-        { n: 23, title: { en: "Rows and columns", es: "Filas y columnas", fa: "ردیف و ستون" }, text: { en: "Rows usually represent genes and columns samples; colors encode expression or up/down regulation statistics.", es: "Las filas suelen representar genes y las columnas muestras; los colores codifican expresión o estadísticos de up/down regulation.", fa: "ردیف‌ها معمولاً genes و ستون‌ها samples هستند؛ رنگ expression یا up/down را نشان می‌دهد." } },
-        { n: 23, title: { en: "Relative, not absolute", es: "Relativo, no absoluto", fa: "نسبی، نه مطلق" }, text: { en: "Heatmap colors represent relative expression for each gene across samples, not absolute expression levels.", es: "Los colores de heatmap representan expresión relativa de cada gen a través de muestras, no niveles absolutos de expresión.", fa: "رنگ‌های heatmap expression نسبی هر gene در samples را نشان می‌دهند، نه absolute expression." } },
-        { n: 24, title: { en: "Z-score", es: "Z-score", fa: "Z-score" }, text: { en: "The slides define Zij = (xij - μi) / σi: how many standard deviations a sample is above or below the gene mean.", es: "Las slides definen Zij = (xij - μi) / σi: cuántas desviaciones estándar está una muestra por encima o debajo de la media del gen.", fa: "اسلایدها Zij = (xij - μi) / σi را تعریف می‌کنند: چند SD بالاتر/پایین‌تر از میانگین gene است." } },
-        { n: 25, title: { en: "Legend matters", es: "La leyenda importa", fa: "legend مهم است" }, text: { en: "The take-home message warns: heatmaps are relevant for visualization, but always pay attention to legends.", es: "El take-home message advierte: los heatmaps son relevantes para visualizar, pero siempre hay que mirar la leyenda.", fa: "پیام اصلی می‌گوید heatmap برای visualization مهم است، اما legend را همیشه ببین." } }
-      ],
-      emphasis: {
-        en: "Never interpret heatmap color without knowing whether it is raw expression, log expression, fold change, z-score or another statistic.",
-        es: "Nunca interpretes el color de un heatmap sin saber si es expresión cruda, log expression, fold change, z-score u otro estadístico.",
-        fa: "رنگ heatmap را بدون دانستن raw/log/fold change/z-score/statistic تفسیر نکن."
-      },
-      exam: {
-        q: { en: "How should a heatmap with clustering be interpreted?", es: "¿Cómo debe interpretarse un heatmap con clustering?", fa: "heatmap همراه clustering را چگونه تفسیر کنیم؟" },
-        include: {
-          en: ["Rows are genes/features, columns samples.", "Colors encode relative expression or statistics.", "Dendrograms summarize similarity.", "Legends and scaling are essential."],
-          es: ["Filas son genes/features, columnas muestras.", "Los colores codifican expresión relativa o estadísticos.", "Los dendrogramas resumen similitud.", "Leyenda y escalado son esenciales."],
-          fa: ["ردیف‌ها genes/features و ستون‌ها samples هستند.", "رنگ relative expression/statistic را نشان می‌دهد.", "dendrogram similarity را خلاصه می‌کند.", "legend و scaling ضروری‌اند."]
-        },
-        trap: { en: "A heatmap is a visualization of patterns; it is not by itself a statistical test.", es: "Un heatmap visualiza patrones; por sí solo no es un test estadístico.", fa: "heatmap فقط visualization است؛ به تنهایی آزمون آماری نیست." },
-        sample: {
-          en: "A heatmap displays a data matrix using colors, usually with genes or probes in rows and samples in columns. The color intensity represents relative expression or another statistic, often after scaling such as z-score transformation, so it should not be read as absolute expression unless specified. Dendrograms can be added to show hierarchical clustering of rows and/or columns. Biologically, clusters may suggest similar expression patterns, sample subgroups, outliers or technical batch effects. The legend, scaling method and distance/linkage choices must be checked before interpretation.",
-          es: "Un heatmap muestra una matriz de datos usando colores, normalmente con genes o probes en filas y muestras en columnas. La intensidad del color representa expresión relativa u otro estadístico, a menudo tras escalado como z-score, así que no debe leerse como expresión absoluta salvo que se especifique. Pueden añadirse dendrogramas para mostrar clustering jerárquico de filas y/o columnas. Biológicamente, los clusters pueden sugerir patrones de expresión similares, subgrupos de muestras, outliers o batch effects técnicos. Antes de interpretar hay que revisar la leyenda, el método de escalado y las elecciones de distancia/linkage.",
-          fa: "heatmap ماتریس داده را با رنگ نشان می‌دهد، معمولاً genes/probes در ردیف و samples در ستون. شدت رنگ relative expression یا statistic دیگری است، اغلب پس از z-score؛ پس نباید absolute expression تفسیر شود مگر مشخص باشد. dendrogram می‌تواند clustering ردیف/ستون را نشان دهد. از نظر زیستی clusterها ممکن است pattern مشابه، sample subgroup، outlier یا batch effect را نشان دهند. legend، scaling و distance/linkage باید بررسی شوند."
-        }
-      }
-    }
-  ],
-  labs: {
-    pearsonTitle: { en: "Pearson distance", es: "Distancia Pearson", fa: "Pearson distance" },
-    pearsonBody: { en: "Move r and see how d = 1 - |r| changes.", es: "Mueve r y observa cómo cambia d = 1 - |r|.", fa: "r را تغییر بده و d=1-|r| را ببین." },
-    r: { en: "Pearson r", es: "Pearson r", fa: "Pearson r" },
-    distance: { en: "Distance", es: "Distancia", fa: "Distance" },
-    near: { en: "very similar", es: "muy similar", fa: "بسیار مشابه" },
-    mid: { en: "moderately distant", es: "distancia moderada", fa: "فاصلهٔ متوسط" },
-    far: { en: "dissimilar", es: "disimilar", fa: "نامشابه" },
-    zTitle: { en: "Heatmap z-score", es: "Z-score de heatmap", fa: "Z-score heatmap" },
-    zBody: { en: "Type one gene profile across samples and standardize it.", es: "Escribe el perfil de un gen a través de muestras y estandarízalo.", fa: "profile یک gene را وارد کن و standardize کن." },
-    values: { en: "Values", es: "Valores", fa: "Values" },
-    mean: { en: "Mean", es: "Media", fa: "Mean" },
-    sd: { en: "SD", es: "SD", fa: "SD" },
-    zscores: { en: "Z-scores", es: "Z-scores", fa: "Z-scores" },
-    supportTitle: { en: "Bootstrap support", es: "Soporte bootstrap", fa: "Bootstrap support" },
-    supportBody: { en: "Compute cluster support from recovered bootstrap replicates.", es: "Calcula soporte del cluster a partir de réplicas bootstrap recuperadas.", fa: "از bootstrap replicates بازیابی‌شده support را حساب کن." },
-    recovered: { en: "Recovered", es: "Recuperadas", fa: "Recovered" },
-    total: { en: "Total replicates", es: "Réplicas totales", fa: "Total" },
-    support: { en: "Support", es: "Soporte", fa: "Support" },
-    linkTitle: { en: "Linkage quick check", es: "Chequeo rápido de linkage", fa: "Linkage quick check" },
-    linkBody: { en: "Match each linkage to its rule.", es: "Relaciona cada linkage con su regla.", fa: "هر linkage را به rule وصل کن." },
-    single: { en: "single", es: "single", fa: "single" },
-    complete: { en: "complete", es: "complete", fa: "complete" },
-    average: { en: "average", es: "average", fa: "average" },
-    correct: { en: "correct", es: "correcto", fa: "درست" },
-    wrong: { en: "try again", es: "intenta otra vez", fa: "دوباره تلاش کن" }
-  },
-  metricCards: [
-    { metric: "Pearson d = 1 - |r|", best: { en: "Pattern shape and linear co-variation", es: "Forma del patrón y covariación lineal", fa: "pattern shape و co-variation خطی" }, caveat: { en: "Sensitive to outliers; negative and positive strong correlations both become close", es: "Sensible a outliers; correlaciones fuertes positivas y negativas quedan cerca", fa: "به outlier حساس؛ correlation مثبت/منفی قوی هر دو نزدیک می‌شوند" } },
-    { metric: "Spearman", best: { en: "Rank-based robustness", es: "Robustez basada en rangos", fa: "rank-based robustness" }, caveat: { en: "Can lose magnitude, direction and fine structure", es: "Puede perder magnitud, dirección y estructura fina", fa: "ممکن است magnitude/direction/fine structure را از دست بدهد" } },
-    { metric: "Euclidean", best: { en: "Magnitude and coordinate differences", es: "Magnitud y diferencias por coordenada", fa: "magnitude و coordinate differences" }, caveat: { en: "Strongly affected by scaling and normalization", es: "Muy afectada por escalado y normalización", fa: "شدیداً تحت تأثیر scaling و normalization" } }
-  ],
-  questions: [
-    [
-      { en: "Explain unsupervised analysis in the context of gene/sample matrices.", es: "Explica el análisis no supervisado en el contexto de matrices gen/muestra.", fa: "تحلیل بدون‌ناظر را در ماتریس gene/sample توضیح بده." },
-      { en: "Unsupervised analysis explores intrinsic structure without using predefined class labels as the main guide. In a gene/sample matrix, genes or probes are usually rows and samples are columns. The analysis asks whether samples or genes show global patterns of similarity, clusters, outliers or technical structure. Methods include MDS, hierarchical clustering, k-means and PCA. These methods do not replace differential testing; they complement it by revealing whole-dataset organization and helping biological interpretation.", es: "El análisis no supervisado explora la estructura intrínseca sin usar etiquetas de clase predefinidas como guía principal. En una matriz gen/muestra, los genes o probes suelen estar en filas y las muestras en columnas. El análisis pregunta si muestras o genes muestran patrones globales de similitud, clusters, outliers o estructura técnica. Los métodos incluyen MDS, clustering jerárquico, k-means y PCA. No reemplazan los tests diferenciales; los complementan revelando la organización global del dataset y ayudando a la interpretación biológica.", fa: "تحلیل بدون‌ناظر ساختار درونی داده را بدون class label از پیش تعیین‌شده بررسی می‌کند. در ماتریس gene/sample، ژن‌ها یا probes معمولاً ردیف و samples ستون‌اند. این تحلیل similarity، clusters، outliers و technical structure را در کل dataset نشان می‌دهد. روش‌ها شامل MDS، hierarchical clustering، k-means و PCA هستند و جایگزین differential testing نیستند؛ آن را تکمیل می‌کنند." }
     ],
-    [
-      { en: "Compare Pearson, Spearman and Euclidean distance for clustering.", es: "Compara Pearson, Spearman y distancia Euclídea para clustering.", fa: "Pearson، Spearman و Euclidean را برای clustering مقایسه کن." },
-      { en: "Pearson measures linear correlation using the original values and can be converted to distance as 1 - |r|. It captures profile shape but is sensitive to outliers and can place opposite strong profiles close together. Spearman uses ranks, so it is more robust to outliers and scale differences, but it may lose magnitude, direction and fine structure. Euclidean distance measures straight-line coordinate distance, preserving magnitude differences, but it is strongly affected by scaling and normalization. Therefore each metric can produce a different dendrogram.", es: "Pearson mide correlación lineal usando los valores originales y puede convertirse en distancia como 1 - |r|. Captura la forma del perfil, pero es sensible a outliers y puede colocar perfiles opuestos fuertes cerca. Spearman usa rangos, por lo que es más robusto a outliers y diferencias de escala, pero puede perder magnitud, dirección y estructura fina. La distancia Euclídea mide distancia directa por coordenadas, conservando diferencias de magnitud, pero se ve muy afectada por escalado y normalización. Por eso cada métrica puede producir un dendrograma distinto.", fa: "Pearson correlation خطی را با values اصلی می‌سنجد و به 1-|r| تبدیل می‌شود. shape را می‌گیرد اما به outlier حساس است و profiles مخالف قوی را نزدیک می‌کند. Spearman از rank استفاده می‌کند و robustتر است اما magnitude/direction/fine structure را کم می‌کند. Euclidean distance فاصلهٔ مستقیم مختصات را می‌سنجد و magnitude را حفظ می‌کند اما به scaling/normalization حساس است. بنابراین dendrogramها می‌توانند متفاوت باشند." }
-    ],
-    [
-      { en: "Explain hierarchical clustering and the role of linkage methods.", es: "Explica clustering jerárquico y el papel de los métodos de linkage.", fa: "hierarchical clustering و نقش linkage methods را توضیح بده." },
-      { en: "Hierarchical clustering starts from a distance matrix and builds a dendrogram of relationships among genes or samples. In agglomerative clustering, each object begins as its own cluster and the closest clusters are joined step by step. Linkage defines how distance between clusters is computed. Single linkage uses the minimum distance and may produce chaining; complete linkage uses maximum distance and tends to make compact clusters; average linkage uses mean pairwise distance and is often useful. Metric and linkage choices must be reported because they affect the final tree.", es: "El clustering jerárquico parte de una matriz de distancias y construye un dendrograma de relaciones entre genes o muestras. En el clustering aglomerativo, cada objeto empieza como su propio cluster y los clusters más cercanos se unen paso a paso. El linkage define cómo se calcula la distancia entre clusters. Single usa distancia mínima y puede producir chaining; complete usa distancia máxima y tiende a formar clusters compactos; average usa distancia media por pares y suele ser útil. Hay que reportar métrica y linkage porque afectan el árbol final.", fa: "hierarchical clustering از distance matrix شروع می‌کند و dendrogram روابط بین genes/samples می‌سازد. در agglomerative clustering هر object ابتدا cluster جداست و نزدیک‌ترین clusterها ادغام می‌شوند. linkage تعیین می‌کند distance بین clusterها چگونه محاسبه شود: single minimum distance، complete maximum distance، average mean pairwise distance. metric و linkage باید گزارش شوند چون tree را تغییر می‌دهند." }
-    ],
-    [
-      { en: "How does bootstrap validation support cluster interpretation?", es: "¿Cómo apoya bootstrap validation la interpretación de clusters?", fa: "bootstrap validation چگونه تفسیر cluster را پشتیبانی می‌کند؟" },
-      { en: "Bootstrap validation assesses cluster stability. A bootstrap dataset is generated by sampling with replacement; hierarchical clustering is repeated on the resampled data many times; then we calculate how often each cluster is recovered. A cluster recovered in more than 95% of replicates has very strong support, while less than 70% is weak. This makes the cluster more trustworthy, but it does not prove a biological mechanism by itself. It validates reproducibility under resampling.", es: "La validación bootstrap evalúa estabilidad de clusters. Se genera un dataset bootstrap por muestreo con reemplazo; se repite el clustering jerárquico sobre datos remuestreados muchas veces; luego se calcula con qué frecuencia se recupera cada cluster. Un cluster recuperado en más del 95% de réplicas tiene soporte muy fuerte, mientras que menos del 70% es débil. Esto hace el cluster más fiable, pero no prueba por sí solo un mecanismo biológico. Valida reproducibilidad bajo remuestreo.", fa: "bootstrap validation پایداری cluster را می‌سنجد. dataset با sampling with replacement ساخته می‌شود؛ hierarchical clustering چندین بار روی resampled data تکرار می‌شود؛ سپس frequency recovery هر cluster محاسبه می‌شود. بیش از 95% support بسیار قوی و کمتر از 70% ضعیف است. این cluster را قابل اعتمادتر می‌کند اما به تنهایی mechanism زیستی را ثابت نمی‌کند." }
-    ],
-    [
-      { en: "How should a heatmap be interpreted in this lesson?", es: "¿Cómo debe interpretarse un heatmap en esta lección?", fa: "heatmap را در این درس چگونه تفسیر کنیم؟" },
-      { en: "A heatmap visualizes a matrix using color intensity. Rows usually represent genes or probes, columns represent samples, and the color scale represents relative expression or statistics such as z-scores. Dendrograms may be added to summarize similarity among rows or columns. The key is to read the legend: colors may not represent absolute expression. A heatmap helps identify patterns, sample subgroups, outliers and potential batch effects, but it is a visualization and not a statistical test by itself.", es: "Un heatmap visualiza una matriz usando intensidad de color. Las filas suelen representar genes o probes, las columnas muestras y la escala de color expresión relativa o estadísticos como z-scores. Se pueden añadir dendrogramas para resumir similitud entre filas o columnas. La clave es leer la leyenda: los colores pueden no representar expresión absoluta. Un heatmap ayuda a identificar patrones, subgrupos de muestras, outliers y posibles batch effects, pero es una visualización y no un test estadístico por sí solo.", fa: "heatmap ماتریس را با شدت رنگ نشان می‌دهد. ردیف‌ها معمولاً genes/probes و ستون‌ها samples هستند و رنگ relative expression یا z-score را نشان می‌دهد. dendrogram similarity را خلاصه می‌کند. باید legend را خواند چون رنگ لزوماً absolute expression نیست. heatmap pattern، subgroup، outlier و batch effect را نشان می‌دهد اما به تنهایی آزمون آماری نیست." }
+    labs: {
+      pearson: {
+        title: "Pearson r → distance",
+        intro: "The slide example uses r = 0.97 and d = 1 − |r|, giving d = 0.03.",
+        rLabel: "Pearson r",
+        distance: "distance d",
+        veryClose: "very close / very similar",
+        moderate: "intermediate distance",
+        far: "far / dissimilar",
+        hint: "Because the absolute value is used, both strong positive and strong negative correlations become short distances."
+      },
+      metric: {
+        title: "Choose the metric",
+        intro: "Pick the most defensible metric for each situation.",
+        options: ["Pearson", "Spearman", "Euclidean"],
+        items: [
+          { prompt: "Normalized profiles, expected linear co-variation, no major outliers.", answer: "Pearson", why: "Pearson is powerful for linear relationships, but only if outliers are not driving the result." },
+          { prompt: "Profiles contain outliers and you mainly care about monotonic rank order.", answer: "Spearman", why: "Spearman replaces measurements by ranks and is more robust to outliers." },
+          { prompt: "Time-series genes show opposite up/down trends and direction must be preserved.", answer: "Euclidean", why: "Euclidean can keep opposite profiles far, while Spearman may lose direction after ranking." }
+        ]
+      },
+      mds: {
+        title: "MDS interpretation",
+        intro: "Select the pair that should be interpreted as most similar in a 2D MDS map.",
+        pairs: ["A–B: close points", "A–D: far points", "B–C: medium distance"],
+        answer: "A–B: close points",
+        why: "In MDS, axis values are not the main biological message. Relative distance between points is what matters."
+      },
+      bootstrap: {
+        title: "Bootstrap support",
+        intro: "Compute cluster support from recovered replicates / total replicates × 100.",
+        recovered: "Recovered replicates",
+        total: "Total replicates",
+        support: "support",
+        veryStrong: "very strong evidence",
+        good: "good support",
+        moderate: "moderate support",
+        weak: "weak support"
+      },
+      zscore: {
+        title: "Heatmap z-score",
+        intro: "Compute how many standard deviations each gene value is above or below its gene mean across samples.",
+        values: "Gene values across samples",
+        mean: "mean",
+        sd: "SD",
+        zscores: "z-scores",
+        interpretation: "Positive means higher than that gene average, near 0 means near average, negative means lower than average."
+      }
+    },
+    quiz: [
+      { q: "Unsupervised analysis mainly means…", options: ["letting data structure emerge before assigning interpretation", "testing one pre-defined gene only", "normalizing raw TIFF files"], answer: 0 },
+      { q: "With d = 1 − |r|, r = −1 gives…", options: ["distance 2", "distance 1", "distance 0"], answer: 2 },
+      { q: "Spearman is useful with outliers because…", options: ["it uses ranks", "it ignores sample size", "it is a heatmap color scale"], answer: 0 },
+      { q: "MDS is…", options: ["a metric", "an algorithm for mapping distances", "a post-hoc ANOVA test"], answer: 1 },
+      { q: "Single linkage may cause…", options: ["chaining", "bisulfite conversion", "FDR correction"], answer: 0 },
+      { q: "Heatmap colors should be interpreted…", options: ["only with the legend", "always as absolute expression", "without the dendrogram"], answer: 0 }
     ]
+  },
+  es: {
+    sections: [
+      {
+        title: "1. Por qué las relaciones entre muestras y genes vienen después de la estadística",
+        intro: "La profesora empieza ubicando esta clase después del procesamiento, la normalización y los tests estadísticos. Ahora el objetivo es exploratorio: entender las relaciones intrínsecas dentro del dataset.",
+        professor: "La clase cambia explícitamente de los tests de hipótesis hacia técnicas exploratorias. Los métodos no supervisados no parten de etiquetas ni supuestos previos: dejan que los datos se organicen y luego exigen interpretación biológica.",
+        slides: [
+          { n: 1, title: "Relationships between genes/samples", body: "Entender características y relaciones intrínsecas dentro de los datos: análisis no supervisado y visualización." },
+          { n: 2, title: "Similarity of gene or sample profiles", body: "La misma matriz puede leerse en dos direcciones: genes por pares medidos en todas las muestras, o muestras por pares medidas por todos los genes." },
+          { n: 14, title: "Unsupervised analysis", body: "MDS, hierarchical clustering, k-means y PCA son enfoques exploratorios para entender la estructura global de los datos." }
+        ],
+        exam: {
+          q: "¿Por qué estudiamos relaciones entre genes y muestras?",
+          include: ["Partir de la matriz feature × sample.", "Decir que es análisis no supervisado/exploratorio.", "Mencionar similitud/disimilitud y visualización.", "Conectar el resultado con interpretación biológica, outliers o estructura técnica."],
+          trap: "No digas que el análisis no supervisado demuestra expresión diferencial. Complementa los tests estadísticos.",
+          answer: "Después de la normalización y los tests estadísticos, los datos ómicos siguen organizados como una matriz con genes o CpGs en filas y muestras en columnas. Los tests diferenciales identifican features individuales asociadas a una condición, pero no describen la estructura intrínseca del dataset. El análisis no supervisado estudia la similitud y disimilitud entre muestras o entre genes sin imponer etiquetas a priori. Si las muestras están cerca, pueden compartir fenotipo, tejido, tiempo o batch; si los genes están cerca, pueden compartir un perfil de expresión o metilación. Por eso estos métodos complementan la estadística y ayudan a construir interpretación biológica."
+        }
+      },
+      {
+        title: "2. La similitud se convierte en distancia",
+        intro: "La clase insiste en una intuición simple: cerca significa similar, lejos significa disimilar. Para operativizarlo, los perfiles de genes o muestras se convierten en distancias.",
+        professor: "Antes de las fórmulas, la profesora repasa geometría básica: la distancia no puede ser negativa, la distancia de un perfil consigo mismo es cero, la distancia es simétrica y la desigualdad triangular importa cuando colocamos perfiles en espacios tipo cartesiano.",
+        slides: [
+          { n: 3, title: "Geometrical properties", body: "La distancia es no negativa, cero solo para perfiles idénticos, simétrica y limitada por la desigualdad triangular." },
+          { n: 4, title: "Intuición cartesiana", body: "Genes y muestras se representan como perfiles. Distancia baja significa proximidad y similitud; distancia alta significa disimilitud." }
+        ],
+        exam: {
+          q: "¿Cómo se relacionan similitud y distancia en perfiles gen/muestra?",
+          include: ["Definir perfiles como vectores a través de muestras o genes.", "Explicar cerca/lejos como similar/disimilar.", "Mencionar que una matriz de distancias resume relaciones por pares.", "Añadir que la métrica elegida afecta el resultado."],
+          trap: "No trates la distancia como conclusión biológica por sí sola. Es un resumen numérico que necesita interpretación.",
+          answer: "Un perfil de gen o de muestra puede representarse como un vector de mediciones. La similitud se vuelve medible al definir una distancia entre dos vectores. Una distancia pequeña significa que dos perfiles están cerca y por tanto son similares, mientras que una distancia grande indica disimilitud. Al calcular todas las distancias por pares se obtiene una matriz de distancias que puede usarse para MDS, clustering jerárquico o heatmaps. Sin embargo, el resultado depende de la métrica elegida, por lo que la interpretación biológica debe considerar si Pearson, Spearman o Euclidean distance son adecuados para el dataset."
+        }
+      },
+      {
+        title: "3. Pearson correlation distance: relación fuerte, no causalidad",
+        intro: "Pearson r mide una relación lineal entre dos perfiles. En esta lección se transforma en distancia usando d = 1 − |r|, de modo que correlaciones positivas fuertes y negativas fuertes se vuelven cercanas.",
+        professor: "La profesora dice explícitamente que no quiere que memorices la fórmula, sino el concepto: Pearson estudia covarianza relativa a la variabilidad, asume linealidad, da r entre −1 y +1, y correlación no significa causalidad.",
+        slides: [
+          { n: 5, title: "Pearson r", body: "−1 es correlación negativa fuerte, +1 correlación positiva fuerte, 0 no correlación. Mide relación lineal, no causalidad." },
+          { n: 6, title: "Convertir r en distancia", body: "Con d = 1 − |r|: r = −1 o +1 da distancia 0; r = 0 da distancia 1." },
+          { n: 7, title: "Ejemplo DLBCL", body: "En el dataset DLBCL de Alizadeh, IGKC y NKG7 tienen r = 0.97, por tanto d = 0.03: perfiles muy similares entre pacientes." },
+          { n: 8, title: "Límites", body: "Pearson puede sesgarse fuertemente por outliers. Su significancia se puede evaluar con t y df = n − 2." }
+        ],
+        exam: {
+          q: "Explica Pearson correlation como medida de distancia.",
+          include: ["Definir r y su rango.", "Decir que Pearson asume linealidad y no implica causalidad.", "Usar d = 1 − |r|.", "Dar el ejemplo r = 0.97 → d = 0.03.", "Mencionar sensibilidad a outliers y posible p-value."],
+          trap: "No digas que una correlación negativa es lejana si la distancia se define con |r|. Con d = 1 − |r|, r = −1 y r = +1 dan distancia 0.",
+          answer: "Pearson r cuantifica la fuerza de una relación lineal entre dos perfiles de genes o muestras. Su rango va de −1 a +1: +1 significa correlación positiva fuerte, −1 correlación negativa fuerte y valores cercanos a 0 ausencia de correlación lineal. En esta lección Pearson se convierte en distancia mediante d = 1 − |r|. Por eso tanto una correlación positiva perfecta como una negativa perfecta tienen distancia 0, mientras que perfiles no correlacionados tienen distancia cercana a 1. Por ejemplo, r = 0.97 da d = 0.03, lo que indica perfiles muy similares. La limitación es que Pearson es sensible a outliers y que correlación no implica causalidad."
+        }
+      },
+      {
+        title: "4. Spearman y Euclidean distance: la métrica debe encajar con el diseño",
+        intro: "Luego la profesora compara métricas alternativas. Spearman es robusto a outliers porque usa rangos, pero los rangos pueden borrar la dirección en series temporales. Euclidean distance es geométrica y conserva perfiles opuestos, pero depende del scaling.",
+        professor: "No hay una métrica universalmente mejor. La clase repite que hay que comparar métricas y elegir según la estructura de los datos: outliers, scaling, series temporales y pregunta biológica.",
+        slides: [
+          { n: 10, title: "Outliers afectan Pearson", body: "En una serie temporal de esporulación de levadura, un outlier puede hacer engañosa la distancia basada en Pearson." },
+          { n: 11, title: "Spearman correlation", body: "Las mediciones se sustituyen por rangos. Es no paramétrico y robusto a outliers, pero puede perderse la dirección up/down." },
+          { n: 13, title: "Euclidean distance", body: "Se calcula a partir de diferencias de coordenadas; cuanto mayor el número, mayor la distancia. El scaling cambia la distancia euclídea." },
+          { n: 14, title: "Diferentes fortalezas", body: "Pearson/Spearman pueden agrupar como cercanos perfiles opuestos; Euclidean puede mantenerlos lejos, pero puede producir clusters más laxos." }
+        ],
+        exam: {
+          q: "Compara Pearson, Spearman y Euclidean distance.",
+          include: ["Pearson: lineal, potente, sensible a outliers.", "Spearman: basado en rangos, robusto a outliers, puede perder dirección.", "Euclidean: geométrico, positivo, dependiente de scaling.", "Decir que la métrica cambia clustering/MDS."],
+          trap: "No elijas Spearman automáticamente en series temporales: el ranking puede perder el comportamiento temporal up/down que importa biológicamente.",
+          answer: "Pearson correlation distance es útil cuando los perfiles tienen una relación lineal y los datos están normalizados, pero es sensible a outliers. Spearman es una correlación no paramétrica basada en rangos, por lo que es más robusta a outliers y cambios de escala; sin embargo, en series temporales puede perder dirección importante porque sustituye las mediciones reales por rangos. Euclidean distance tiene una interpretación geométrica directa y puede mantener perfiles opuestos como lejanos, pero depende mucho del scaling. Como estas métricas enfatizan aspectos distintos de los datos, cualquier clustering o MDS debe interpretarse junto con la métrica usada."
+        }
+      },
+      {
+        title: "5. MDS: un algoritmo, no una métrica",
+        intro: "Multidimensional scaling parte de una matriz de distancias e intenta colocar objetos en 2D o 3D de forma que las distancias entre puntos se preserven lo mejor posible.",
+        professor: "Una estudiante preguntó si MDS era otra métrica. La profesora aclaró: MDS es un algoritmo, no una distancia. Los valores de los ejes no son el resultado biológico; lo importante es qué perfiles quedan cerca o lejos después del mapeo.",
+        slides: [
+          { n: 15, title: "Objetivo de MDS", body: "Mapear distancias desde un espacio de alta dimensión a un espacio de menor dimensión sin demasiada pérdida de información." },
+          { n: 16, title: "Matriz triangular", body: "Se parte de distancias por pares. MDS las escala a puntos en 2D o 3D." },
+          { n: 17, title: "Comparar métricas", body: "Distancia euclídea y distancia de correlación pueden dar mapas MDS parecidos o distintos; eso afecta la interpretación." }
+        ],
+        exam: {
+          q: "¿Qué es MDS y cómo se interpreta?",
+          include: ["Decir que es un algoritmo, no una métrica.", "Parte de una matriz de distancias.", "Mapea distancias de alta dimensión a coordenadas de baja dimensión.", "Interpretar proximidad relativa, no valores de los ejes."],
+          trap: "No interpretes los números de los ejes MDS como valores de expresión génica. La información clave son las distancias entre puntos.",
+          answer: "Multidimensional scaling es un algoritmo de visualización no supervisado, no una métrica. Parte de una matriz de distancias por pares, como distancias euclídeas o de correlación, y coloca los objetos en un espacio de dos o tres dimensiones intentando preservar lo mejor posible las distancias originales. Es útil porque los perfiles ómicos son de alta dimensión y no se pueden visualizar directamente. En la interpretación, los valores exactos de las coordenadas importan menos que la proximidad relativa: puntos cercanos representan perfiles similares y puntos alejados representan perfiles disimilares."
+        }
+      },
+      {
+        title: "6. Hierarchical clustering: construir un dendrograma desde distancias",
+        intro: "Hierarchical clustering se presenta como un algoritmo aglomerativo, bottom-up. Empieza desde los genes o muestras más cercanos y los va uniendo en clusters representados como dendrograma.",
+        professor: "La profesora dice que hierarchical clustering es una posible pregunta de examen. La respuesta esperada debe decir qué hace el algoritmo, cuál es su tarea y cómo ayuda a identificar genes o muestras similares.",
+        slides: [
+          { n: 18, title: "Clustering aglomerativo", body: "Perfiles similares tienen baja distancia y aparecen juntos con ramas más cortas en un dendrograma." },
+          { n: 20, title: "Distance matrix", body: "El algoritmo parte de una matriz triangular de distancias. El par más cercano se une primero." },
+          { n: 22, title: "Linkage methods", body: "Single/minimum, complete/maximum, average/UPGMA y Ward definen cómo recalcular distancias entre clusters." },
+          { n: 28, title: "Resultados diferentes", body: "Diferentes combinaciones de métrica y linkage pueden producir dendrogramas distintos; el mejor debe evaluarse biológica y estadísticamente." }
+        ],
+        exam: {
+          q: "Explica hierarchical clustering y linkage methods.",
+          include: ["Definirlo como no supervisado y aglomerativo/bottom-up.", "Partir de una matriz de distancias.", "Explicar dendrograma, nodos y longitud de ramas.", "Mencionar linkage methods y resultados diferentes.", "Añadir que los clusters necesitan validación."],
+          trap: "No leas solo el orden izquierda-derecha del dendrograma. La longitud de ramas y altura de nodos contienen la información de distancia.",
+          answer: "Hierarchical clustering es un algoritmo no supervisado y aglomerativo que parte de una matriz de distancias y une progresivamente los genes o muestras más cercanos. El resultado es un dendrograma, donde ramas cortas indican proximidad y similitud, mientras que ramas largas indican mayor distancia. Después de unir el primer par, la distancia entre el nuevo cluster y los demás objetos debe recalcularse usando un linkage method como single, complete, average o Ward. Distintas métricas y métodos de linkage pueden producir dendrogramas diferentes, por lo que el resultado debe interpretarse con cuidado y, si es posible, validarse estadísticamente."
+        }
+      },
+      {
+        title: "7. Bootstrap validation y heatmaps",
+        intro: "La parte final conecta estabilidad de clusters con visualización. Bootstrap validation pregunta si un nodo o cluster es reproducible, mientras que los heatmaps hacen legible visualmente la estructura genes/muestras.",
+        professor: "Heatmap es otra pregunta probable de examen. La profesora enfatiza que la leyenda es esencial: los colores pueden representar z-scores, fold changes u otro estadístico, así que rojo/verde no se interpreta sin leyenda.",
+        slides: [
+          { n: 33, title: "Bootstrap validation", body: "Repetir hierarchical clustering en datasets bootstrap y calcular cuántas veces se recupera un cluster." },
+          { n: 34, title: "Bootstrap support", body: "95% es evidencia muy fuerte, 80–95% buen soporte, 70–80% moderado y menos de 70% débil." },
+          { n: 35, title: "Heatmap", body: "Las filas suelen representar genes, las columnas muestras, y los colores muestran expresión relativa o estadísticas como up/down regulation." },
+          { n: 36, title: "Z-score", body: "Zij = (xij − μi) / σi: expresión del gen i en la muestra j menos la media de ese gen en todas las muestras, dividido por su desviación estándar." },
+          { n: 37, title: "Ejemplo DLBCL", body: "Un heatmap grande con dendrograma separa muestras de pacientes de otras muestras linfocitarias o relacionadas con linfoma, generando nuevas preguntas biológicas." }
+        ],
+        exam: {
+          q: "¿Por qué son útiles bootstrap validation y heatmaps después del clustering?",
+          include: ["Bootstrap revisa estabilidad/reproducibilidad de clusters.", "El soporte es porcentaje de veces que se recupera un nodo.", "Heatmap muestra la matriz con colores y dendrogramas.", "Explicar z-score o leyenda de fold-change.", "Advertir que los colores son relativos y dependen de la leyenda."],
+          trap: "No digas que el color siempre significa lo mismo. En un heatmap rojo puede ser up-regulation; en otro puede ser down-regulation, según la leyenda.",
+          answer: "Bootstrap validation evalúa si un cluster o nodo del dendrograma es estable. El dataset se remuestrea muchas veces, se repite el hierarchical clustering y se calcula en qué porcentaje de réplicas aparece el mismo cluster. Un soporte alto, por ejemplo alrededor de 95%, sugiere un cluster reproducible, mientras que un soporte bajo genera dudas sobre la métrica o el linkage elegido. Los heatmaps complementan esto mostrando la matriz gen × muestra mediante colores, a menudo junto con dendrogramas. La interpretación depende de la leyenda: los colores pueden representar z-scores, fold changes u otro estadístico, por lo que muestran patrones relativos, no una verdad biológica absoluta por sí solos."
+        }
+      }
+    ],
+    labs: {
+      pearson: {
+        title: "Pearson r → distancia",
+        intro: "El ejemplo de la slide usa r = 0.97 y d = 1 − |r|, dando d = 0.03.",
+        rLabel: "Pearson r",
+        distance: "distancia d",
+        veryClose: "muy cerca / muy similar",
+        moderate: "distancia intermedia",
+        far: "lejos / disimilar",
+        hint: "Como se usa valor absoluto, tanto correlaciones positivas fuertes como negativas fuertes se vuelven distancias cortas."
+      },
+      metric: {
+        title: "Elige la métrica",
+        intro: "Escoge la métrica más defendible para cada situación.",
+        options: ["Pearson", "Spearman", "Euclidean"],
+        items: [
+          { prompt: "Perfiles normalizados, co-variación lineal esperada y sin outliers fuertes.", answer: "Pearson", why: "Pearson es potente para relaciones lineales, pero solo si los outliers no dominan el resultado." },
+          { prompt: "Los perfiles tienen outliers y te interesa sobre todo el orden monotónico por rangos.", answer: "Spearman", why: "Spearman sustituye mediciones por rangos y es más robusto a outliers." },
+          { prompt: "Genes de una serie temporal muestran tendencias opuestas up/down y hay que preservar dirección.", answer: "Euclidean", why: "Euclidean puede mantener lejos perfiles opuestos, mientras Spearman puede perder dirección tras rankear." }
+        ]
+      },
+      mds: {
+        title: "Interpretación de MDS",
+        intro: "Selecciona el par que debería interpretarse como más similar en un mapa MDS 2D.",
+        pairs: ["A–B: puntos cercanos", "A–D: puntos lejanos", "B–C: distancia media"],
+        answer: "A–B: puntos cercanos",
+        why: "En MDS, los valores de los ejes no son el mensaje biológico principal. Lo que importa es la distancia relativa entre puntos."
+      },
+      bootstrap: {
+        title: "Bootstrap support",
+        intro: "Calcula el soporte de cluster como réplicas recuperadas / réplicas totales × 100.",
+        recovered: "Réplicas recuperadas",
+        total: "Réplicas totales",
+        support: "soporte",
+        veryStrong: "evidencia muy fuerte",
+        good: "buen soporte",
+        moderate: "soporte moderado",
+        weak: "soporte débil"
+      },
+      zscore: {
+        title: "Z-score de heatmap",
+        intro: "Calcula cuántas desviaciones estándar está cada valor de gen por encima o debajo de su media en todas las muestras.",
+        values: "Valores del gen en muestras",
+        mean: "media",
+        sd: "SD",
+        zscores: "z-scores",
+        interpretation: "Positivo significa mayor que la media de ese gen; cerca de 0 significa cerca de la media; negativo significa menor que la media."
+      }
+    },
+    quiz: [
+      { q: "El análisis no supervisado significa principalmente…", options: ["dejar emerger la estructura de datos antes de asignar interpretación", "testear solo un gen predefinido", "normalizar archivos TIFF crudos"], answer: 0 },
+      { q: "Con d = 1 − |r|, r = −1 da…", options: ["distancia 2", "distancia 1", "distancia 0"], answer: 2 },
+      { q: "Spearman es útil con outliers porque…", options: ["usa rangos", "ignora el tamaño muestral", "es una escala de color de heatmap"], answer: 0 },
+      { q: "MDS es…", options: ["una métrica", "un algoritmo para mapear distancias", "un test post-hoc de ANOVA"], answer: 1 },
+      { q: "Single linkage puede causar…", options: ["chaining", "conversión con bisulfito", "corrección FDR"], answer: 0 },
+      { q: "Los colores de un heatmap se interpretan…", options: ["solo con la leyenda", "siempre como expresión absoluta", "sin dendrograma"], answer: 0 }
+    ]
+  }
+};
+COPY.fa = COPY.en;
+
+const EXAM_BANK = {
+  en: [
+    { q: "Explain the goal of studying relationships between samples and genes.", a: COPY.en.sections[0].exam.answer },
+    { q: "Explain Pearson correlation distance and its limitations.", a: COPY.en.sections[2].exam.answer },
+    { q: "Compare Pearson, Spearman and Euclidean distance.", a: COPY.en.sections[3].exam.answer },
+    { q: "What is multidimensional scaling and how do you interpret it?", a: COPY.en.sections[4].exam.answer },
+    { q: "Explain hierarchical clustering, dendrograms and linkage methods.", a: COPY.en.sections[5].exam.answer },
+    { q: "What is bootstrap validation of hierarchical clustering?", a: "Bootstrap validation tests the stability of clusters. A bootstrap dataset is generated by resampling observations or variables with replacement, hierarchical clustering is performed again, and the process is repeated many times, often around 1000 replicates. For each cluster or node, we calculate how often it is recovered. A high percentage, such as 95%, indicates very strong support; 80–95% is good, 70–80% moderate, and below 70% weak. It is useful because different metrics and linkage methods can generate different dendrograms, so cluster stability should be checked before strong biological interpretation." },
+    { q: "Explain what a heatmap shows and how z-scores are used.", a: "A heatmap visualizes a gene × sample matrix using colors. Usually each row is a gene or feature and each column is a sample. The color intensity represents a statistic such as relative expression, fold change or z-score, so the legend is essential. A z-score is calculated for each gene in each sample as Zij = (xij − μi) / σi, where μi and σi are the mean and standard deviation of that gene across samples. Positive values mean higher than the gene average, values near zero mean close to average, and negative values mean lower than average. Heatmaps are often combined with dendrograms to visualize clusters." }
+  ],
+  es: [
+    { q: "Explica el objetivo de estudiar relaciones entre muestras y genes.", a: COPY.es.sections[0].exam.answer },
+    { q: "Explica Pearson correlation distance y sus limitaciones.", a: COPY.es.sections[2].exam.answer },
+    { q: "Compara Pearson, Spearman y Euclidean distance.", a: COPY.es.sections[3].exam.answer },
+    { q: "¿Qué es multidimensional scaling y cómo se interpreta?", a: COPY.es.sections[4].exam.answer },
+    { q: "Explica hierarchical clustering, dendrogramas y linkage methods.", a: COPY.es.sections[5].exam.answer },
+    { q: "¿Qué es bootstrap validation del hierarchical clustering?", a: "Bootstrap validation evalúa la estabilidad de los clusters. Se genera un dataset bootstrap remuestreando observaciones o variables con reemplazo, se repite el hierarchical clustering y el proceso se repite muchas veces, por ejemplo 1000 réplicas. Para cada cluster o nodo se calcula cuántas veces se recupera. Un porcentaje alto, como 95%, indica soporte muy fuerte; 80–95% buen soporte; 70–80% moderado; y menos de 70% débil. Es útil porque diferentes métricas y linkage methods pueden generar dendrogramas distintos, así que la estabilidad debe revisarse antes de hacer una interpretación biológica fuerte." },
+    { q: "Explica qué muestra un heatmap y cómo se usan los z-scores.", a: "Un heatmap visualiza una matriz gen × muestra usando colores. Normalmente cada fila es un gen o feature y cada columna una muestra. La intensidad de color representa un estadístico, como expresión relativa, fold change o z-score, por lo que la leyenda es esencial. El z-score se calcula para cada gen en cada muestra como Zij = (xij − μi) / σi, donde μi y σi son la media y desviación estándar de ese gen a través de las muestras. Valores positivos indican más que la media del gen, valores cercanos a cero indican cercanía a la media y valores negativos indican menos que la media. Los heatmaps suelen combinarse con dendrogramas para visualizar clusters." }
   ]
 };
+EXAM_BANK.fa = EXAM_BANK.en;
 
-function getUi(lang) { return ui[lang] || ui.es; }
-function tr(value, lang) {
-  if (Array.isArray(value)) return value.map((item) => tr(item, lang));
-  if (value && typeof value === "object") return value[lang] || value.es || value.en || value.fa || "";
-  return value ?? "";
-}
+function getUi(lang) { return UI[lang] || UI.es; }
+function getCopy(lang) { return COPY[lang] || COPY.es; }
+function tr(value, lang) { return typeof value === "string" ? value : (value?.[lang] || value?.es || value?.en || ""); }
+function cx(...classes) { return classes.filter(Boolean).join(" "); }
+function fmt(x, digits = 2) { return Number.isFinite(x) ? x.toFixed(digits).replace(/\.00$/, "") : "—"; }
 function parseNums(text) { return String(text || "").split(/[\s,;]+/).map(Number).filter(Number.isFinite); }
 function mean(values) { return values.length ? values.reduce((a, b) => a + b, 0) / values.length : NaN; }
 function sd(values) { const m = mean(values); if (!values.length) return NaN; return Math.sqrt(values.reduce((a, b) => a + (b - m) ** 2, 0) / values.length); }
-function fmt(x, digits = 2) { return Number.isFinite(x) ? x.toFixed(digits).replace(/\.00$/, "") : "—"; }
-function supportLabel(p, lang) {
-  if (p >= 95) return tr({ en: "very strong", es: "muy fuerte", fa: "بسیار قوی" }, lang);
-  if (p >= 80) return tr({ en: "good", es: "bueno", fa: "خوب" }, lang);
-  if (p >= 70) return tr({ en: "moderate", es: "moderado", fa: "متوسط" }, lang);
-  return tr({ en: "weak", es: "débil", fa: "ضعیف" }, lang);
-}
-
-export default function DRDLesson11({ lang = "es", isDone = false, toggle = () => {} }) {
-  const labels = getUi(lang);
-  const [zoom, setZoom] = useState(null);
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-6 text-stone-950">
-    <Navigation labels={labels} isDone={isDone} toggle={toggle} />
-    <Hero labels={labels} lang={lang} />
-
-    <section className="mt-8 grid gap-6">
-      {copy.sections.map((section, idx) => <FlowBlock key={tr(section.title, lang)} labels={labels} section={section} idx={idx} lang={lang} setZoom={setZoom} />)}
-    </section>
-
-    <MetricCompare labels={labels} lang={lang} />
-    <LabSuite labels={labels} lang={lang} />
-    <WrittenTrainer labels={labels} lang={lang} />
-    <Navigation labels={labels} isDone={isDone} toggle={toggle} position="bottom" />
-    {zoom ? <ZoomModal labels={labels} slide={zoom} lang={lang} onClose={() => setZoom(null)} /> : null}
-  </main>;
-}
-
-function Navigation({ labels, isDone, toggle, position = "top" }) {
-  return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation">
-    <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-      <a href="#/lesson/m1-deg-ii" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {labels.previous}: {labels.previousTitle}</a>
-      <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center">
-        <a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{labels.current} · {labels.dashboard}</a>
-        <button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? labels.done : labels.mark}</button>
-      </div>
-      <a href="#/lesson/m1-samples-genes-ii" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-md">{labels.next}: {labels.nextTitle} →</a>
-    </div>
-  </nav>;
-}
-
-function Hero({ labels, lang }) {
-  const tags = tr(copy.hero.tags, lang);
-  return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white shadow-sm">
-    <div className="grid lg:grid-cols-[1.08fr_0.92fr]">
-      <div className="bg-[#fff8ee] p-8 md:p-12">
-        <HeroEyebrow>{tr(copy.hero.eyebrow, lang)}</HeroEyebrow>
-        <h1 className="mt-7 max-w-3xl text-5xl font-black leading-[0.94] tracking-[-0.06em] md:text-6xl lg:text-7xl">{tr(copy.hero.title, lang)}</h1>
-        <p className="mt-7 max-w-3xl text-lg font-semibold leading-8 text-stone-700 md:text-xl">{tr(copy.hero.subtitle, lang)}</p>
-        <div className="mt-7 flex flex-wrap gap-2">{tags.map((tag, i) => <Pill key={tag} tone={i === 2 ? "red" : "stone"}>{tag}</Pill>)}</div>
-      </div>
-      <aside className="border-t border-stone-200 bg-white p-8 lg:border-l lg:border-t-0">
-        <div className="grid grid-cols-2 gap-3">
-          {copy.stats.map((stat) => <StatCard key={tr(stat.label, lang)} label={tr(stat.label, lang)} value={stat.value} tone={stat.tone} />)}
-        </div>
-        <div className="mt-5 rounded-3xl bg-stone-950 p-6 text-white">
-          <div className="text-xs font-black uppercase tracking-[0.2em] text-red-200">{labels.bigIdea}</div>
-          <p className="mt-3 text-lg font-black leading-7">{tr(copy.hero.bigIdea, lang)}</p>
-        </div>
-        <ResourceLinks labels={labels} />
-      </aside>
-    </div>
-  </section>;
-}
+function supportLabel(pct, labs) { if (pct >= 95) return labs.veryStrong; if (pct >= 80) return labs.good; if (pct >= 70) return labs.moderate; return labs.weak; }
 
 function HeroEyebrow({ children }) { return <div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{children}</div>; }
 function Pill({ children, tone = "stone" }) { const cls = tone === "red" ? "border-red-200 bg-red-50 text-red-700" : "border-stone-200 bg-white/80 text-stone-700"; return <span className={`rounded-full border px-3 py-1 text-xs font-black uppercase tracking-[0.16em] ${cls}`}>{children}</span>; }
 function StatCard({ label, value, tone = "stone" }) { return <div className={`rounded-2xl border p-4 ${tone === "red" ? "border-red-200 bg-red-50" : "border-stone-200 bg-stone-50"}`}><div className="text-xs font-black uppercase tracking-[0.2em] text-stone-500">{label}</div><div className="mt-2 text-2xl font-black text-stone-950">{value}</div></div>; }
-function ResourceLinks({ labels }) { const linkBase = "rounded-2xl border px-4 py-3 text-sm font-black transition hover:-translate-y-0.5 hover:shadow-sm"; return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div><div className="grid gap-2 sm:grid-cols-3"><a href={SLIDES_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-red-200 bg-red-50 text-red-800 hover:bg-white`}>{labels.slides}</a><a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-200 bg-white text-stone-800 hover:bg-stone-50`}>{labels.transcript}</a><a href={RECORDING_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-800 bg-stone-950 text-white hover:bg-red-700`}>{labels.recording}</a></div></div>; }
 function SectionHeader({ eyebrow, title, children }) { return <div className="mb-6"><div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{eyebrow}</div><h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{title}</h2>{children ? <p className="mt-3 max-w-4xl text-base font-semibold leading-7 text-stone-600">{children}</p> : null}</div>; }
-function NoteBox({ labels, type, children }) { const isExam = type === "exam"; return <div className={`mt-4 rounded-2xl border p-4 ${isExam ? "border-red-200 bg-red-50" : "border-amber-200 bg-amber-50"}`}><div className={`text-xs font-black uppercase tracking-[0.2em] ${isExam ? "text-red-700" : "text-amber-800"}`}>{isExam ? labels.exam : labels.professor}</div><div className="mt-2 text-sm font-bold leading-6 text-stone-800">{children}</div></div>; }
 
-function FlowBlock({ labels, section, idx, lang, setZoom }) {
-  const full = idx % 3 === 0;
-  return <article className="rounded-[2.5rem] border border-stone-200 bg-white/90 p-5 shadow-sm md:p-6">
-    <SectionHeader eyebrow={tr(section.eyebrow, lang)} title={tr(section.title, lang)}>{tr(section.body, lang)}</SectionHeader>
-    <div className={`grid gap-5 ${full ? "lg:grid-cols-1" : "lg:grid-cols-2"}`}>
-      {section.slides.map((slide) => <SlideTextCard key={`${slide.n}-${tr(slide.title, lang)}`} labels={labels} slide={slide} lang={lang} setZoom={setZoom} />)}
+function ResourceLinks({ ui }) {
+  const linkBase = "rounded-2xl border px-4 py-3 text-sm font-black transition hover:-translate-y-0.5 hover:shadow-sm";
+  return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4">
+    <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{ui.resources}</div>
+    <div className="grid gap-2 sm:grid-cols-3">
+      <a href={SLIDES_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-red-200 bg-red-50 text-red-800 hover:bg-white`}>{ui.slides}</a>
+      <a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-200 bg-white text-stone-800 hover:bg-stone-50`}>{ui.transcript}</a>
+      <a href={RECORDING_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-800 bg-stone-950 text-white hover:bg-red-700`}>{ui.recording}</a>
     </div>
-    <NoteBox labels={labels}>{tr(section.emphasis, lang)}</NoteBox>
-    <ExamWatch labels={labels} exam={section.exam} lang={lang} />
-  </article>;
+  </div>;
 }
-function SlideTextCard({ labels, slide, lang, setZoom }) {
-  return <button onClick={() => setZoom(slide)} className="group rounded-[2rem] border border-stone-200 bg-[#fffaf0] p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-    <div className="rounded-[1.4rem] border border-stone-200 bg-white p-5">
-      <div className="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{labels.slide} {slide.n}</div>
-      <h3 className="mt-4 text-2xl font-black tracking-tight text-stone-950">{tr(slide.title, lang)}</h3>
-      <p className="mt-3 text-sm font-bold leading-6 text-stone-700">{tr(slide.text, lang)}</p>
-      <div className="mt-4 text-xs font-black uppercase tracking-[0.18em] text-stone-400">{labels.zoom}</div>
+
+function Navigation({ ui, isDone, toggle, position = "top" }) {
+  return <nav className={`mb-6 flex flex-wrap items-center justify-between gap-3 ${position === "bottom" ? "mt-10" : ""}`}>
+    <a href="#/drd" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 hover:bg-stone-50">← {ui.dashboard}</a>
+    <div className="flex flex-wrap gap-2">
+      <a href="#/lesson/m1-deg-ii" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 hover:bg-stone-50">← {ui.previous}: {ui.previousTitle}</a>
+      <a href="#/drd" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 hover:bg-stone-50">{ui.next}: {ui.nextTitle} →</a>
+      <button onClick={toggle} className={cx("rounded-full px-4 py-2 text-sm font-black", isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white hover:bg-red-700")}>{isDone ? ui.done : ui.mark}</button>
     </div>
+  </nav>;
+}
+
+function SlideNoteCard({ ui, slide, open }) {
+  return <button type="button" onClick={() => open(slide)} className="group rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4 text-left transition hover:-translate-y-0.5 hover:border-red-200 hover:bg-white hover:shadow-sm">
+    <div className="flex items-center justify-between gap-3"><Pill tone="red">{ui.slide} {slide.n}</Pill><span className="text-xs font-black uppercase tracking-[0.16em] text-stone-400 group-hover:text-red-600">{ui.zoom}</span></div>
+    <h3 className="mt-3 text-lg font-black leading-6 text-stone-950">{slide.title}</h3>
+    <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{slide.body}</p>
   </button>;
 }
-function ZoomModal({ labels, slide, lang, onClose }) {
-  return <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/75 p-4" onClick={onClose}>
-    <div className="w-[min(900px,95vw)] rounded-[2rem] border border-white/20 bg-white p-6 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-      <div className="flex items-center justify-between gap-4"><div className="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{labels.slide} {slide.n}</div><button onClick={onClose} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white">{labels.close}</button></div>
-      <h3 className="mt-5 text-4xl font-black tracking-tight text-stone-950">{tr(slide.title, lang)}</h3>
-      <p className="mt-4 text-lg font-bold leading-8 text-stone-700">{tr(slide.text, lang)}</p>
-      <a href={SLIDES_URL} target="_blank" rel="noreferrer" className="mt-6 inline-flex rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700">{labels.slides} ↗</a>
-    </div>
-  </div>;
-}
-function ExamWatch({ labels, exam, lang }) {
+function SlideGrid({ ui, slides, open }) { return <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">{slides.map((slide) => <SlideNoteCard key={`${slide.n}-${slide.title}`} ui={ui} slide={slide} open={open}/>)}</div>; }
+
+function ExamWatch({ ui, exam }) {
   const [open, setOpen] = useState(false);
-  const include = tr(exam.include, lang);
-  return <div className="mt-5 rounded-[2rem] border border-red-200 bg-red-50 p-5">
-    <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{labels.exam}</div>
-    <p className="mt-2 text-base font-black leading-7 text-stone-900">{tr(exam.q, lang)}</p>
-    <button onClick={() => setOpen(!open)} className="mt-4 rounded-2xl border border-red-200 bg-white px-4 py-3 text-sm font-black text-red-800 shadow-sm">{open ? labels.hide : labels.expand}</button>
-    {open ? <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_1.2fr]">
-      <div className="rounded-2xl border border-red-100 bg-white p-4">
-        <div className="text-xs font-black uppercase tracking-[0.2em] text-stone-500">{labels.include}</div>
-        <ul className="mt-3 space-y-2 text-sm font-bold leading-6 text-stone-700">{include.map((item) => <li key={item}>• {item}</li>)}</ul>
-        <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4"><div className="text-xs font-black uppercase tracking-[0.2em] text-amber-800">{labels.trap}</div><p className="mt-2 text-sm font-black leading-6 text-stone-800">{tr(exam.trap, lang)}</p></div>
-      </div>
-      <div className="rounded-2xl border border-stone-200 bg-white p-4"><div className="text-xs font-black uppercase tracking-[0.2em] text-stone-500">{labels.model}</div><p className="mt-3 text-sm font-black leading-7 text-stone-900">{tr(exam.sample, lang)}</p></div>
-    </div> : null}
+  return <div className="mt-6 rounded-[1.5rem] border border-red-200 bg-red-50 p-5">
+    <div className="text-xs font-black uppercase tracking-[0.2em] text-red-700">{ui.exam}</div>
+    <p className="mt-2 text-lg font-black leading-7 text-stone-950">{exam.q}</p>
+    <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="rounded-2xl bg-white/80 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{ui.include}</div><ul className="mt-3 list-disc space-y-2 pl-5 text-sm font-bold leading-6 text-stone-700">{exam.include.map((item) => <li key={item}>{item}</li>)}</ul></div>
+      <div className="rounded-2xl bg-white/80 p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{ui.trap}</div><p className="mt-3 text-sm font-bold leading-6 text-stone-700">{exam.trap}</p></div>
+    </div>
+    <button onClick={() => setOpen(!open)} className="mt-4 rounded-full bg-stone-950 px-5 py-3 text-sm font-black text-white hover:bg-red-700">{open ? ui.close : ui.expand}</button>
+    {open && <div className="mt-4 rounded-2xl bg-white p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-red-700">{ui.model}</div><p className="mt-3 text-sm font-semibold leading-7 text-stone-700">{exam.answer}</p></div>}
   </div>;
 }
 
-function MetricCompare({ labels, lang }) {
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/90 p-6 shadow-sm md:p-8">
-    <SectionHeader eyebrow={labels.compare} title={tr({ en: "Metric choice changes interpretation", es: "La elección de métrica cambia la interpretación", fa: "انتخاب metric تفسیر را عوض می‌کند" }, lang)}>{tr({ en: "Use this as a quick exam table: each metric highlights a different aspect of the same matrix.", es: "Úsalo como tabla rápida de examen: cada métrica resalta un aspecto distinto de la misma matriz.", fa: "این یک جدول سریع امتحانی است: هر metric جنبهٔ متفاوتی از ماتریس را برجسته می‌کند." }, lang)}</SectionHeader>
-    <div className="grid gap-4 lg:grid-cols-3">
-      {copy.metricCards.map((card) => <div key={card.metric} className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5">
-        <div className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-red-700">{card.metric}</div>
-        <div className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-stone-500">{tr({ en: "Best for", es: "Sirve para", fa: "مناسب برای" }, lang)}</div>
-        <p className="mt-2 text-sm font-black leading-6 text-stone-900">{tr(card.best, lang)}</p>
-        <div className="mt-4 text-xs font-black uppercase tracking-[0.2em] text-stone-500">Caveat</div>
-        <p className="mt-2 text-sm font-bold leading-6 text-stone-700">{tr(card.caveat, lang)}</p>
-      </div>)}
-    </div>
-  </section>;
+function ProfessorBox({ ui, children }) { return <div className="mt-6 rounded-[1.5rem] border border-amber-200 bg-amber-50 p-5"><div className="text-xs font-black uppercase tracking-[0.2em] text-amber-800">{ui.professor}</div><p className="mt-2 text-sm font-bold leading-7 text-stone-800">{children}</p></div>; }
+
+function NumberInput({ label, value, setValue, min, max, step = "0.01" }) { return <label className="block"><span className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{label}</span><input type="number" value={value} min={min} max={max} step={step} onChange={(e) => setValue(e.target.value)} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-lg font-black outline-none focus:border-red-300"/></label>; }
+function ResultPill({ label, value, tone = "stone" }) { return <div className={`rounded-2xl border p-4 ${tone === "red" ? "border-red-200 bg-red-50" : "border-stone-200 bg-white"}`}><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{label}</div><div className="mt-2 text-2xl font-black text-stone-950">{value}</div></div>; }
+function LabShell({ ui, title, intro, children }) { return <div className="mt-5 rounded-[1.75rem] border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.2em] text-red-700">{ui.miniLab}</div><h3 className="mt-2 text-2xl font-black text-stone-950">{title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{intro}</p>{children}</div>; }
+
+function PearsonLab({ ui, labs }) {
+  const [r, setR] = useState("0.97");
+  const rv = Math.max(-1, Math.min(1, Number(r)));
+  const d = 1 - Math.abs(rv);
+  const label = d < 0.1 ? labs.veryClose : d < 0.55 ? labs.moderate : labs.far;
+  return <LabShell ui={ui} title={labs.title} intro={labs.intro}>
+    <div className="mt-4 grid gap-4 md:grid-cols-[0.8fr_1.2fr]"><NumberInput label={labs.rLabel} value={r} setValue={setR} min="-1" max="1" step="0.01"/><div className="grid gap-3 md:grid-cols-2"><ResultPill label={labs.distance} value={fmt(d, 3)} tone="red"/><ResultPill label={ui.decision} value={label}/></div></div>
+    <p className="mt-4 rounded-2xl bg-white p-4 text-sm font-bold leading-6 text-stone-700">{labs.hint}</p>
+  </LabShell>;
 }
 
-function LabSuite({ labels, lang }) {
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/90 p-6 shadow-sm md:p-8">
-    <SectionHeader eyebrow={labels.lab} title={tr({ en: "Three small checks for the concepts", es: "Tres chequeos pequeños para fijar conceptos", fa: "سه تمرین کوچک برای تثبیت مفاهیم" }, lang)}>{tr({ en: "They are not meant to replace R, only to make the logic memorable for the written exam.", es: "No reemplazan R; solo fijan la lógica para el examen escrito.", fa: "جایگزین R نیستند؛ فقط منطق را برای امتحان تثبیت می‌کنند." }, lang)}</SectionHeader>
-    <div className="grid gap-5 lg:grid-cols-3">
-      <PearsonLab labels={labels} lang={lang} />
-      <ZScoreLab labels={labels} lang={lang} />
-      <BootstrapSupportLab labels={labels} lang={lang} />
-    </div>
-    <div className="mt-5"><LinkageLab labels={labels} lang={lang} /></div>
-  </section>;
+function MetricLab({ ui, labs }) {
+  const [answers, setAnswers] = useState({});
+  return <LabShell ui={ui} title={labs.title} intro={labs.intro}>
+    <div className="mt-4 grid gap-4 lg:grid-cols-3">{labs.items.map((item, idx) => <article key={item.prompt} className="rounded-2xl border border-stone-200 bg-white p-4"><div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{ui.scenario} {idx + 1}</div><p className="mt-2 min-h-24 text-sm font-bold leading-6 text-stone-800">{item.prompt}</p><div className="mt-3 grid gap-2">{labs.options.map((option) => <button key={option} onClick={() => setAnswers({ ...answers, [idx]: option })} className={cx("rounded-xl border px-3 py-2 text-left text-sm font-black", answers[idx] === option ? (option === item.answer ? "border-emerald-300 bg-emerald-50 text-emerald-800" : "border-red-300 bg-red-50 text-red-800") : "border-stone-200 bg-stone-50 text-stone-700")}>{option}</button>)}</div>{answers[idx] && <p className="mt-3 text-sm font-semibold leading-6 text-stone-600"><span className="font-black">{answers[idx] === item.answer ? ui.correct : ui.notQuite}.</span> {item.why}</p>}</article>)}</div>
+  </LabShell>;
 }
-function PearsonLab({ labels, lang }) {
-  const [r, setR] = useState(0.97);
-  const dist = 1 - Math.abs(Number(r));
-  const label = dist < 0.1 ? tr(copy.labs.near, lang) : dist < 0.6 ? tr(copy.labs.mid, lang) : tr(copy.labs.far, lang);
-  return <div className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm">
-    <h3 className="text-xl font-black">{tr(copy.labs.pearsonTitle, lang)}</h3>
-    <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{tr(copy.labs.pearsonBody, lang)}</p>
-    <input type="range" min="-1" max="1" step="0.01" value={r} onChange={(e) => setR(Number(e.target.value))} className="mt-4 w-full" />
-    <div className="mt-4 grid grid-cols-2 gap-3"><StatCard label={tr(copy.labs.r, lang)} value={fmt(Number(r), 2)} /><StatCard label={tr(copy.labs.distance, lang)} value={fmt(dist, 2)} tone="red" /></div>
-    <div className="mt-4 rounded-2xl bg-stone-950 p-4 text-white"><div className="text-xs font-black uppercase tracking-[0.2em] text-red-200">{labels.interpretation}</div><div className="mt-2 text-2xl font-black">{label}</div></div>
-  </div>;
+
+function MdsLab({ ui, labs }) {
+  const [selected, setSelected] = useState(labs.pairs[0]);
+  return <LabShell ui={ui} title={labs.title} intro={labs.intro}>
+    <div className="mt-4 grid gap-4 lg:grid-cols-[0.8fr_1.2fr]"><div className="grid gap-2">{labs.pairs.map((pair) => <button key={pair} onClick={() => setSelected(pair)} className={cx("rounded-2xl border px-4 py-3 text-left text-sm font-black", selected === pair ? "border-red-200 bg-red-50 text-red-800" : "border-stone-200 bg-white text-stone-700")}>{pair}</button>)}</div><div className="rounded-2xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{selected === labs.answer ? ui.correct : ui.notQuite}</div><p className="mt-3 text-lg font-black leading-7">{labs.why}</p></div></div>
+  </LabShell>;
 }
-function ZScoreLab({ lang }) {
+
+function BootstrapLab({ ui, labs }) {
+  const [recovered, setRecovered] = useState("955");
+  const [total, setTotal] = useState("1000");
+  const pct = Number(total) > 0 ? (Number(recovered) / Number(total)) * 100 : NaN;
+  return <LabShell ui={ui} title={labs.title} intro={labs.intro}>
+    <div className="mt-4 grid gap-4 md:grid-cols-2"><NumberInput label={labs.recovered} value={recovered} setValue={setRecovered}/><NumberInput label={labs.total} value={total} setValue={setTotal}/></div>
+    <div className="mt-4 grid gap-3 md:grid-cols-2"><ResultPill label={labs.support} value={`${fmt(pct, 1)}%`} tone="red"/><ResultPill label={ui.decision} value={supportLabel(pct, labs)}/></div>
+  </LabShell>;
+}
+
+function ZScoreLab({ ui, labs }) {
   const [values, setValues] = useState("10, 20, 30");
   const nums = parseNums(values);
   const m = mean(nums);
   const s = sd(nums);
   const z = nums.map((x) => s ? (x - m) / s : 0);
-  return <div className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm">
-    <h3 className="text-xl font-black">{tr(copy.labs.zTitle, lang)}</h3>
-    <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{tr(copy.labs.zBody, lang)}</p>
-    <label className="mt-4 block text-xs font-black uppercase tracking-[0.18em] text-stone-500">{tr(copy.labs.values, lang)}</label>
-    <input value={values} onChange={(e) => setValues(e.target.value)} className="mt-2 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm font-bold outline-none focus:border-red-300" />
-    <div className="mt-4 grid grid-cols-2 gap-3"><StatCard label={tr(copy.labs.mean, lang)} value={fmt(m)} /><StatCard label={tr(copy.labs.sd, lang)} value={fmt(s)} tone="red" /></div>
-    <div className="mt-4 rounded-2xl border border-stone-200 bg-stone-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{tr(copy.labs.zscores, lang)}</div><p className="mt-2 break-words text-sm font-black text-stone-900">{z.map((x) => fmt(x, 2)).join(", ") || "—"}</p></div>
-  </div>;
+  return <LabShell ui={ui} title={labs.title} intro={labs.intro}>
+    <label className="mt-4 block"><span className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labs.values}</span><textarea value={values} onChange={(e) => setValues(e.target.value)} rows={3} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white p-4 text-sm font-bold outline-none focus:border-red-300"/></label>
+    <div className="mt-4 grid gap-3 md:grid-cols-3"><ResultPill label={labs.mean} value={fmt(m, 2)}/><ResultPill label={labs.sd} value={fmt(s, 2)}/><ResultPill label={labs.zscores} value={z.map((v) => fmt(v, 2)).join(", ")} tone="red"/></div>
+    <p className="mt-4 rounded-2xl bg-white p-4 text-sm font-bold leading-6 text-stone-700">{labs.interpretation}</p>
+  </LabShell>;
 }
-function BootstrapSupportLab({ lang }) {
-  const [recovered, setRecovered] = useState(955);
-  const [total, setTotal] = useState(1000);
-  const pct = Number(total) > 0 ? (Number(recovered) / Number(total)) * 100 : NaN;
-  return <div className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm">
-    <h3 className="text-xl font-black">{tr(copy.labs.supportTitle, lang)}</h3>
-    <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{tr(copy.labs.supportBody, lang)}</p>
-    <label className="mt-4 block text-xs font-black uppercase tracking-[0.18em] text-stone-500">{tr(copy.labs.recovered, lang)}</label>
-    <input type="number" value={recovered} onChange={(e) => setRecovered(e.target.value)} className="mt-2 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm font-bold outline-none focus:border-red-300" />
-    <label className="mt-3 block text-xs font-black uppercase tracking-[0.18em] text-stone-500">{tr(copy.labs.total, lang)}</label>
-    <input type="number" value={total} onChange={(e) => setTotal(e.target.value)} className="mt-2 w-full rounded-2xl border border-stone-200 px-4 py-3 text-sm font-bold outline-none focus:border-red-300" />
-    <div className="mt-4 grid grid-cols-2 gap-3"><StatCard label={tr(copy.labs.support, lang)} value={`${fmt(pct, 1)}%`} tone="red" /><StatCard label="class" value={supportLabel(pct, lang)} /></div>
-  </div>;
+
+function MiniLabs({ ui, copy }) { const labs = copy.labs; return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={ui.miniLab} title="Interactive reasoning labs">{ui.tryThis}: Pearson distance, metric choice, MDS interpretation, bootstrap support and heatmap z-scores.</SectionHeader><PearsonLab ui={ui} labs={labs.pearson}/><MetricLab ui={ui} labs={labs.metric}/><MdsLab ui={ui} labs={labs.mds}/><BootstrapLab ui={ui} labs={labs.bootstrap}/><ZScoreLab ui={ui} labs={labs.zscore}/></section>; }
+
+function Quiz({ ui, copy }) {
+  const [answers, setAnswers] = useState({});
+  const items = copy.quiz;
+  const score = items.reduce((acc, item, idx) => acc + (answers[idx] === item.answer ? 1 : 0), 0);
+  return <section className="mt-10 rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm"><SectionHeader eyebrow={ui.checkpoint} title="Interactive quiz">Score: {score}/{items.length}</SectionHeader><div className="grid gap-4 md:grid-cols-2">{items.map((item, idx) => <div key={item.q} className="rounded-2xl border border-stone-200 bg-stone-50 p-4"><p className="font-black text-stone-950">{idx + 1}. {item.q}</p><div className="mt-3 grid gap-2">{item.options.map((option, j) => <button key={option} onClick={() => setAnswers({ ...answers, [idx]: j })} className={cx("rounded-xl border px-3 py-2 text-left text-sm font-bold", answers[idx] === j ? (j === item.answer ? "border-emerald-300 bg-emerald-50 text-emerald-800" : "border-red-300 bg-red-50 text-red-800") : "border-stone-200 bg-white text-stone-700")}>{option}</button>)}</div></div>)}</div></section>;
 }
-function LinkageLab({ lang }) {
-  const labels = [tr(copy.labs.single, lang), tr(copy.labs.complete, lang), tr(copy.labs.average, lang)];
-  const questions = useMemo(() => [
-    { q: tr({ en: "minimum distance / nearest neighbor", es: "distancia mínima / vecino más cercano", fa: "minimum distance / nearest neighbor" }, lang), a: labels[0] },
-    { q: tr({ en: "maximum distance / farthest neighbor", es: "distancia máxima / vecino más lejano", fa: "maximum distance / farthest neighbor" }, lang), a: labels[1] },
-    { q: tr({ en: "mean of all pairwise distances", es: "media de todas las distancias por pares", fa: "mean of pairwise distances" }, lang), a: labels[2] }
-  ], [lang]);
-  const [ans, setAns] = useState({});
-  return <div className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm">
-    <h3 className="text-xl font-black">{tr(copy.labs.linkTitle, lang)}</h3>
-    <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{tr(copy.labs.linkBody, lang)}</p>
-    <div className="mt-4 grid gap-3 md:grid-cols-3">{questions.map((item, idx) => <div key={item.q} className="rounded-2xl border border-stone-200 bg-stone-50 p-4"><div className="text-sm font-black text-stone-900">{item.q}</div><div className="mt-3 flex flex-wrap gap-2">{labels.map((opt) => <button key={opt} onClick={() => setAns({ ...ans, [idx]: opt })} className={`rounded-full border px-3 py-1 text-xs font-black ${ans[idx] === opt ? (opt === item.a ? "border-emerald-300 bg-emerald-50 text-emerald-800" : "border-red-300 bg-red-50 text-red-800") : "border-stone-200 bg-white text-stone-700"}`}>{opt}</button>)}</div>{ans[idx] ? <div className="mt-2 text-xs font-black uppercase tracking-[0.14em] text-stone-500">{ans[idx] === item.a ? tr(copy.labs.correct, lang) : tr(copy.labs.wrong, lang)}</div> : null}</div>)}</div>
+
+function WrittenTrainer({ ui, lang }) {
+  const questions = EXAM_BANK[lang] || EXAM_BANK.es;
+  const [idx, setIdx] = useState(0);
+  const [text, setText] = useState("");
+  const wc = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const current = questions[idx];
+  return <section className="mt-10 rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm"><SectionHeader eyebrow={ui.exam} title="Written exam trainer">{questions.length} possible questions from this lesson</SectionHeader><div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]"><div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Prompts</div><div className="mt-3 grid gap-2">{questions.map((item, i) => <button key={item.q} onClick={() => { setIdx(i); setText(""); }} className={cx("rounded-2xl border px-4 py-3 text-left text-sm font-black", idx === i ? "border-red-300 bg-red-50 text-red-800" : "border-stone-200 bg-white text-stone-700")}>{i + 1}. {item.q}</button>)}</div></div><div><div className="rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Selected prompt</div><p className="mt-2 text-lg font-black leading-7 text-stone-950">{current.q}</p></div><textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Write your 10–12 line answer here…" className="mt-4 min-h-[230px] w-full rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4 text-sm font-semibold leading-6 outline-none focus:border-red-300"/><div className="mt-2 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{wc} {ui.words}</div><details className="mt-4 rounded-[1.5rem] border border-stone-200 bg-stone-50 p-4"><summary className="cursor-pointer font-black text-red-800">{ui.model}</summary><p className="mt-3 text-sm font-semibold leading-7 text-stone-700">{current.a}</p></details></div></div></section>;
+}
+
+function ZoomModal({ ui, slide, onClose }) {
+  if (!slide) return null;
+  return <div className="fixed inset-0 z-[100] flex items-center justify-center bg-stone-950/75 p-4" role="dialog" aria-modal="true" onClick={onClose}>
+    <div className="max-h-[92vh] w-[min(820px,94vw)] overflow-auto rounded-[2rem] bg-white p-5 shadow-2xl" onClick={(e) => e.stopPropagation()}>
+      <div className="flex items-start justify-between gap-3"><div><Pill tone="red">{ui.slide} {slide.n}</Pill><h3 className="mt-3 text-2xl font-black text-stone-950">{slide.title}</h3></div><button onClick={onClose} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white hover:bg-red-700">{ui.close}</button></div>
+      <div className="mt-5 rounded-[1.5rem] border border-stone-200 bg-stone-50 p-6"><p className="text-lg font-bold leading-8 text-stone-700">{slide.body}</p></div>
+    </div>
   </div>;
 }
 
-function WrittenTrainer({ labels, lang }) {
-  const [open, setOpen] = useState({});
-  const [answers, setAnswers] = useState({});
-  return <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/90 p-6 shadow-sm md:p-8">
-    <SectionHeader eyebrow={labels.written} title={labels.written}>{tr({ en: "Write a 10–12 line answer first, then open the model answer.", es: "Escribe primero una respuesta de 10–12 líneas y luego abre la respuesta modelo.", fa: "ابتدا پاسخ ۱۰ تا ۱۲ خطی بنویس، سپس پاسخ نمونه را باز کن." }, lang)}</SectionHeader>
-    <div className="grid gap-5">{copy.questions.map(([q, a], idx) => <div key={tr(q, lang)} className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5">
-      <h3 className="text-xl font-black text-stone-950">{idx + 1}. {tr(q, lang)}</h3>
-      <label className="mt-4 block text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.yourAnswer}</label>
-      <textarea value={answers[idx] || ""} onChange={(e) => setAnswers({ ...answers, [idx]: e.target.value })} className="mt-2 min-h-32 w-full rounded-2xl border border-stone-200 bg-white p-4 text-sm font-semibold leading-6 outline-none focus:border-red-300" />
-      <button onClick={() => setOpen({ ...open, [idx]: !open[idx] })} className="mt-3 rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white">{open[idx] ? labels.hide : labels.reveal}</button>
-      {open[idx] ? <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4"><div className="text-xs font-black uppercase tracking-[0.2em] text-red-700">{labels.model}</div><p className="mt-2 text-sm font-black leading-7 text-stone-900">{tr(a, lang)}</p></div> : null}
-    </div>)}</div>
-  </section>;
+export default function DRDLesson11({ lang = "es", isDone = false, toggle = () => {} }) {
+  const ui = getUi(lang);
+  const copy = getCopy(lang);
+  const sections = useMemo(() => copy.sections, [copy]);
+  const [zoom, setZoom] = useState(null);
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12 text-stone-900">
+    <Navigation ui={ui} isDone={isDone} toggle={toggle}/>
+    <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><HeroEyebrow>{ui.heroEyebrow}</HeroEyebrow><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{ui.heroTitle}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{ui.heroSubtitle}</p><div className="mt-6 flex flex-wrap gap-2">{ui.tags.map((tag) => <Pill key={tag} tone={tag === "distance" || tag === "MDS" || tag === "clustering" ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={ui.module} value="1" tone="red"/><StatCard label={ui.writtenExam} value="4Q"/><StatCard label={ui.answerLines} value="10–12"/><StatCard label={ui.core} value="MDS/HC" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{ui.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{ui.bigIdeaText}</p></div><ResourceLinks ui={ui}/></div></div></div></section>
+    {sections.map((section, idx) => <section key={section.title} className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={`Part ${idx + 1}`} title={section.title}>{section.intro}</SectionHeader><SlideGrid ui={ui} slides={section.slides} open={setZoom}/><ProfessorBox ui={ui}>{section.professor}</ProfessorBox><ExamWatch ui={ui} exam={section.exam}/></section>)}
+    <MiniLabs ui={ui} copy={copy}/>
+    <Quiz ui={ui} copy={copy}/>
+    <WrittenTrainer ui={ui} lang={lang}/>
+    <Navigation ui={ui} isDone={isDone} toggle={toggle} position="bottom"/>
+    <ZoomModal ui={ui} slide={zoom} onClose={() => setZoom(null)}/>
+  </main>;
 }

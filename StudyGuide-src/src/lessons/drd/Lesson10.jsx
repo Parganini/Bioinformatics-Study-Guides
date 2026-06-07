@@ -29,6 +29,11 @@ import slide27 from "../../assets/drd/lesson10/slide-27.png";
 import slide28 from "../../assets/drd/lesson10/slide-28.png";
 import slide29 from "../../assets/drd/lesson10/slide-29.png";
 import slide30 from "../../assets/drd/lesson10/slide-30.png";
+import plotPicture1 from "../../assets/drd/lesson10/plot-picture1.png";
+import plotComparisonFunnorm from "../../assets/drd/lesson10/plot-comparison-funnorm.png";
+import plotComparisonNoob from "../../assets/drd/lesson10/plot-comparison-noob.png";
+import plotComparisonQuantile from "../../assets/drd/lesson10/plot-comparison-quantile.png";
+import plotComparisonSwan from "../../assets/drd/lesson10/plot-comparison-swan.png";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1k2pszA-h2YXwEfr3SCQPk9ZRb-tfKaMS/view?usp=drivesdk";
 const CODE_URL = "https://drive.google.com/file/d/1PCExfbK5Eegc5OvnCEUhUaaMGD_iwXtx/view?usp=drivesdk";
@@ -38,9 +43,9 @@ const RECORDING_URL = "https://www.youtube.com/watch?v=aBVSPgrVB7I&list=PLZSGWjL
 const slideImages = [slide01, slide02, slide03, slide04, slide05, slide06, slide07, slide08, slide09, slide10, slide11, slide12, slide13, slide14, slide15, slide16, slide17, slide18, slide19, slide20, slide21, slide22, slide23, slide24, slide25, slide26, slide27, slide28, slide29, slide30];
 
 const ui = {
-  en: { mark: "Mark completed", done: "Completed", dashboard: "DRD dashboard", previous: "Previous", next: "Next", previousTitle: "M2.3 Data import + QC", nextTitle: "M2.5 Normalization II", current: "M2.4", resources: "Class resources", slides: "Slides", code: "Code HTML", transcript: "Transcript", recording: "Recording", slide: "Slide", zoom: "Click to zoom", close: "Close zoom", reportWatch: "Report watch", openAnswer: "Open expanded answer", hideAnswer: "Hide answer", include: "What to include", trap: "Common trap", model: "Report-ready wording", rcode: "R code", interpretation: "Interpretation", professor: "Professor emphasis", reportMove: "Report move", checkpoint: "Checkpoint", correct: "Correct", notQuite: "Not quite", trainer: "Report paragraph trainer", placeholder: "Write a report-style paragraph here...", words: "words", showAnswer: "Show answer", quickLab: "Mini-lab" },
-  es: { mark: "Marcar completada", done: "Completada", dashboard: "Dashboard DRD", previous: "Anterior", next: "Siguiente", previousTitle: "M2.3 Importación + QC", nextTitle: "M2.5 Normalización II", current: "M2.4", resources: "Recursos de clase", slides: "Slides", code: "Código HTML", transcript: "Transcripción", recording: "Recording", slide: "Diapositiva", zoom: "Click para ampliar", close: "Cerrar zoom", reportWatch: "Report watch", openAnswer: "Abrir respuesta desarrollada", hideAnswer: "Ocultar respuesta", include: "Qué incluir", trap: "Trampa común", model: "Redacción lista para report", rcode: "Código R", interpretation: "Interpretación", professor: "Énfasis del profesor", reportMove: "Movimiento para report", checkpoint: "Checkpoint", correct: "Correcto", notQuite: "Casi", trainer: "Entrenador de párrafo de report", placeholder: "Escribe aquí un párrafo estilo report...", words: "palabras", showAnswer: "Mostrar respuesta", quickLab: "Mini-lab" },
-  fa: { mark: "علامت کامل‌شده", done: "کامل شد", dashboard: "داشبورد DRD", previous: "قبلی", next: "بعدی", previousTitle: "M2.3 ورود داده + QC", nextTitle: "M2.5 نرمال‌سازی II", current: "M2.4", resources: "منابع کلاس", slides: "اسلایدها", code: "HTML کد", transcript: "رونوشت", recording: "Recording", slide: "اسلاید", zoom: "برای بزرگ‌نمایی کلیک کن", close: "بستن بزرگ‌نمایی", reportWatch: "نکته برای گزارش", openAnswer: "باز کردن پاسخ کامل", hideAnswer: "پنهان کردن پاسخ", include: "چه چیزهایی باید بیاید", trap: "دام رایج", model: "عبارت آماده برای گزارش", rcode: "کد R", interpretation: "تفسیر", professor: "تأکید استاد", reportMove: "حرکت مناسب گزارش", checkpoint: "Checkpoint", correct: "درست", notQuite: "نه کاملاً", trainer: "تمرین پاراگراف گزارش", placeholder: "یک پاراگراف به سبک گزارش بنویسید...", words: "کلمه", showAnswer: "نمایش پاسخ", quickLab: "مینی‌لب" }
+  en: { mark: "Mark completed", done: "Completed", dashboard: "DRD dashboard", previous: "Previous", next: "Next", previousTitle: "M2.3 Data import + QC", nextTitle: "M2.5 Normalization II", current: "M2.4", resources: "Class resources", slides: "Slides", code: "Code HTML", transcript: "Transcript", recording: "Recording", slide: "Slide", zoom: "Click to zoom", close: "Close zoom", reportWatch: "Report watch", openAnswer: "Open expanded answer", hideAnswer: "Hide answer", include: "What to include", trap: "Common trap", model: "Report-ready wording", rcode: "R code", interpretation: "Interpretation", professor: "Professor emphasis", reportMove: "Report move", checkpoint: "Checkpoint", correct: "Correct", notQuite: "Not quite", trainer: "Report paragraph trainer", placeholder: "Write a report-style paragraph here...", words: "words", showAnswer: "Show answer", quickLab: "Mini-lab", generatedFigure: "Generated figure" },
+  es: { mark: "Marcar completada", done: "Completada", dashboard: "Dashboard DRD", previous: "Anterior", next: "Siguiente", previousTitle: "M2.3 Importación + QC", nextTitle: "M2.5 Normalización II", current: "M2.4", resources: "Recursos de clase", slides: "Slides", code: "Código HTML", transcript: "Transcripción", recording: "Recording", slide: "Diapositiva", zoom: "Click para ampliar", close: "Cerrar zoom", reportWatch: "Report watch", openAnswer: "Abrir respuesta desarrollada", hideAnswer: "Ocultar respuesta", include: "Qué incluir", trap: "Trampa común", model: "Redacción lista para report", rcode: "Código R", interpretation: "Interpretación", professor: "Énfasis del profesor", reportMove: "Movimiento para report", checkpoint: "Checkpoint", correct: "Correcto", notQuite: "Casi", trainer: "Entrenador de párrafo de report", placeholder: "Escribe aquí un párrafo estilo report...", words: "palabras", showAnswer: "Mostrar respuesta", quickLab: "Mini-lab", generatedFigure: "Figura generada" },
+  fa: { mark: "علامت کامل‌شده", done: "کامل شد", dashboard: "داشبورد DRD", previous: "قبلی", next: "بعدی", previousTitle: "M2.3 ورود داده + QC", nextTitle: "M2.5 نرمال‌سازی II", current: "M2.4", resources: "منابع کلاس", slides: "اسلایدها", code: "HTML کد", transcript: "رونوشت", recording: "Recording", slide: "اسلاید", zoom: "برای بزرگ‌نمایی کلیک کن", close: "بستن بزرگ‌نمایی", reportWatch: "نکته برای گزارش", openAnswer: "باز کردن پاسخ کامل", hideAnswer: "پنهان کردن پاسخ", include: "چه چیزهایی باید بیاید", trap: "دام رایج", model: "عبارت آماده برای گزارش", rcode: "کد R", interpretation: "تفسیر", professor: "تأکید استاد", reportMove: "حرکت مناسب گزارش", checkpoint: "Checkpoint", correct: "درست", notQuite: "نه کاملاً", trainer: "تمرین پاراگراف گزارش", placeholder: "یک پاراگراف به سبک گزارش بنویسید...", words: "کلمه", showAnswer: "نمایش پاسخ", quickLab: "مینی‌لب", generatedFigure: "شکل تولیدشده" }
 };
 
 const copy = {
@@ -216,7 +221,14 @@ const codeStepMap = {
     title: { en: "Save the diagnostic plot for the report", es: "Guardar el plot diagnóstico para el report", fa: "ذخیره diagnostic plot برای report" },
     code: `pdf("Picture1.pdf", width = 10, height = 5)\npar(mfrow = c(1, 2))\nplot(d_mean_of_beta, main = "Density of Beta Values", col = "blue")\nboxplot(beta)\ndev.off()`,
     interpretation: { en: "pdf() opens a graphics device; dev.off() closes it. If you forget dev.off(), the file may remain incomplete.", es: "pdf() abre un dispositivo gráfico; dev.off() lo cierra. Si olvidas dev.off(), el archivo puede quedar incompleto.", fa: "pdf یک graphics device باز می‌کند؛ dev.off آن را می‌بندد. اگر dev.off فراموش شود، فایل ممکن است ناقص بماند." },
-    report: { en: "Save one compact multi-panel figure comparing raw and normalized data.", es: "Guarda una figura multipanel compacta comparando raw y normalized.", fa: "یک figure چندپنلی فشرده برای مقایسه raw و normalized ذخیره کنید." }
+    report: { en: "Save one compact multi-panel figure comparing raw and normalized data.", es: "Guarda una figura multipanel compacta comparando raw y normalized.", fa: "یک figure چندپنلی فشرده برای مقایسه raw و normalized ذخیره کنید." },
+    figures: [
+      {
+        src: plotPicture1,
+        title: { en: "Picture1.pdf diagnostic output", es: "Salida diagnóstica Picture1.pdf", fa: "خروجی diagnostic فایل Picture1.pdf" },
+        caption: { en: "The saved plot combines the beta-density curve with the per-sample beta boxplots generated by the code in this step.", es: "El plot guardado combina la curva de densidad beta con los boxplots de beta por muestra generados por el código de este paso.", fa: "این plot ذخیره‌شده density curve مربوط به beta را با boxplotهای beta برای sampleها که همین کد تولید می‌کند ترکیب می‌کند." }
+      }
+    ]
   },
   noobSwap: {
     label: { en: "6 · noob option", es: "6 · opción noob", fa: "۶ · گزینه noob" },
@@ -258,14 +270,38 @@ const codeStepMap = {
     title: { en: "Try another minfi normalization with the same plotting code", es: "Probar otra normalización minfi con el mismo código de plots", fa: "امتحان method دیگر minfi با همان کد plot" },
     code: `noob_results <- preprocessNoob(RGset)\nfun_results <- preprocessFunnorm(RGset)\n# Then reuse getBeta(), Type I/II subsetting, density(), sd(), and boxplot()`,
     interpretation: { en: "The professor explicitly tells students that the code is the same: change the preprocessing function, regenerate beta values and interpret the final plots.", es: "El profesor dice explícitamente que el código es el mismo: cambia la función de preprocesamiento, regenera beta values e interpreta los plots finales.", fa: "استاد صریح می‌گوید کد همان است: function preprocessing را عوض کن، beta را دوباره بساز و plotهای نهایی را تفسیر کن." },
-    report: { en: "The method comparison is part of the reasoning, not just extra code.", es: "La comparación de métodos es parte del razonamiento, no solo código extra.", fa: "مقایسه method بخشی از reasoning است، نه فقط کد اضافه." }
+    report: { en: "The method comparison is part of the reasoning, not just extra code.", es: "La comparación de métodos es parte del razonamiento, no solo código extra.", fa: "مقایسه method بخشی از reasoning است، نه فقط کد اضافه." },
+    figures: [
+      {
+        src: plotComparisonNoob,
+        title: { en: "Raw vs preprocessNoob", es: "Raw vs preprocessNoob", fa: "raw در برابر preprocessNoob" },
+        caption: { en: "Same six-panel diagnostic layout after swapping the preprocessing function to preprocessNoob.", es: "Mismo layout diagnóstico de seis paneles después de cambiar la función de preprocesamiento a preprocessNoob.", fa: "همان layout diagnostic شش‌پنلی بعد از جایگزینی function preprocessing با preprocessNoob." }
+      },
+      {
+        src: plotComparisonSwan,
+        title: { en: "Raw vs preprocessSWAN", es: "Raw vs preprocessSWAN", fa: "raw در برابر preprocessSWAN" },
+        caption: { en: "Use this to compare how SWAN affects Type I/II beta-density and variability patterns.", es: "Úsalo para comparar cómo SWAN afecta los patrones de densidad beta y variabilidad Type I/II.", fa: "از این برای مقایسه اثر SWAN روی patternهای beta-density و variability نوع I/II استفاده کنید." }
+      },
+      {
+        src: plotComparisonFunnorm,
+        title: { en: "Raw vs preprocessFunnorm", es: "Raw vs preprocessFunnorm", fa: "raw در برابر preprocessFunnorm" },
+        caption: { en: "Functional normalization is shown as an alternative method comparison for the same raw dataset.", es: "Functional normalization se muestra como comparación metodológica alternativa para el mismo dataset raw.", fa: "functional normalization به‌عنوان comparison method جایگزین برای همان dataset خام نشان داده می‌شود." }
+      }
+    ]
   },
   finalReportFigure: {
     label: { en: "12 · final figure", es: "12 · figura final", fa: "۱۲ · figure نهایی" },
     title: { en: "Save one final comparison figure", es: "Guardar una figura final comparativa", fa: "ذخیره یک figure نهایی مقایسه‌ای" },
     code: `pdf("Plot_comparison_raw_preprocessQuantile.pdf", height = 7, width = 15)\npar(mfrow = c(2, 3))\nplot(d_mean_of_beta_I, col = "blue", main = "raw beta", xlim = c(0, 1), ylim = c(0, 5))\nlines(d_mean_of_beta_II, col = "red")\nplot(d_sd_of_beta_I, col = "blue", main = "raw sd", xlim = c(0, 0.6), ylim = c(0, 60))\nlines(d_sd_of_beta_II, col = "red")\nboxplot(beta, ylim = c(0, 1))\nplot(d_mean_of_beta_preprocessQuantile_I, col = "blue", main = "preprocessQuantile beta", xlim = c(0, 1), ylim = c(0, 5))\nlines(d_mean_of_beta_preprocessQuantile_II, col = "red")\nplot(d_sd_of_beta_preprocessQuantile_I, col = "blue", main = "preprocessQuantile sd", xlim = c(0, 0.6), ylim = c(0, 60))\nlines(d_sd_of_beta_preprocessQuantile_II, col = "red")\nboxplot(beta_preprocessQuantile, ylim = c(0, 1))\ndev.off()`,
     interpretation: { en: "This is the report-ready evidence: raw versus normalized Type I/II mean beta, Type I/II variability, and sample distributions.", es: "Esta es la evidencia lista para report: raw vs normalizado para media beta Type I/II, variabilidad Type I/II y distribuciones de muestras.", fa: "این evidence آماده report است: raw در برابر normalized برای mean beta نوع I/II، variability نوع I/II و distribution sampleها." },
-    report: { en: "Explain the plot, do not just paste it.", es: "Explica el plot, no solo lo pegues.", fa: "plot را توضیح بدهید، فقط paste نکنید." }
+    report: { en: "Explain the plot, do not just paste it.", es: "Explica el plot, no solo lo pegues.", fa: "plot را توضیح بدهید، فقط paste نکنید." },
+    figures: [
+      {
+        src: plotComparisonQuantile,
+        title: { en: "Raw vs preprocessQuantile", es: "Raw vs preprocessQuantile", fa: "raw در برابر preprocessQuantile" },
+        caption: { en: "The final report figure compares raw beta density, raw SD density and raw boxplots against the same diagnostics after preprocessQuantile.", es: "La figura final del report compara density beta raw, density SD raw y boxplots raw contra los mismos diagnósticos después de preprocessQuantile.", fa: "figure نهایی report، density beta خام، density SD خام و boxplotهای خام را با همان diagnosticها پس از preprocessQuantile مقایسه می‌کند." }
+      }
+    ]
   }
 };
 
@@ -404,6 +440,26 @@ function SlideCard({ item, lang, onZoom, full }) {
   </article>;
 }
 
+function FigureCard({ figure, lang, full }) {
+  return <article className={cx("rounded-[1.5rem] border border-stone-200 bg-white p-4 shadow-sm", full && "lg:col-span-2")}>
+    <div className="overflow-hidden rounded-[1.25rem] border border-stone-200 bg-stone-50">
+      <img src={figure.src} alt={tr(figure.title, lang)} className="w-full object-contain"/>
+    </div>
+    <div className="mt-4 flex flex-wrap items-center gap-2">
+      <Pill tone="stone">{ui[lang]?.generatedFigure || ui.es.generatedFigure}</Pill>
+    </div>
+    <h4 className="mt-3 text-lg font-black text-stone-950">{tr(figure.title, lang)}</h4>
+    <p className="mt-2 text-sm font-semibold leading-6 text-stone-700">{tr(figure.caption, lang)}</p>
+  </article>;
+}
+
+function StepFigures({ figures, lang }) {
+  if (!figures?.length) return null;
+  return <div className="mt-5 grid gap-4 lg:grid-cols-2">
+    {figures.map((figure, index) => <FigureCard key={tr(figure.title, "en")} figure={figure} lang={lang} full={figures.length === 1 || (figures.length % 2 === 1 && index === figures.length - 1)} />)}
+  </div>;
+}
+
 function CodeStepArticle({ step, lang, index }) {
   const labels = ui[lang] || ui.es;
   return <article className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5 shadow-sm md:p-6">
@@ -430,6 +486,7 @@ function CodeStepArticle({ step, lang, index }) {
         </div>
       </div>
     </div>
+    <StepFigures figures={step.figures} lang={lang}/>
   </article>;
 }
 

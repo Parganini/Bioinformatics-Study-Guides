@@ -68,3 +68,31 @@ export function M1ResourceLinks({ ui, links, columns = 3 }) {
     </div>
   );
 }
+
+export function M1LessonNav({ labels, isDone = false, toggle = () => {}, position = "top", previousHref, previousTitle, nextHref, showDashboardInCurrent = true, dashboardHref = "#/" }) {
+  const previousLabel = previousTitle || labels.previousTitle || labels.dashboard;
+  const currentLabel = showDashboardInCurrent ? `${labels.current} · ${labels.dashboard}` : labels.current;
+
+  return (
+    <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <a href={previousHref} className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">
+          ← {labels.previous}: {previousLabel}
+        </a>
+        <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center">
+          {showDashboardInCurrent ? (
+            <a href={dashboardHref} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{currentLabel}</a>
+          ) : (
+            <div className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500">{currentLabel}</div>
+          )}
+          <button type="button" onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>
+            {isDone ? labels.done : labels.mark}
+          </button>
+        </div>
+        <a href={nextHref} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-md">
+          {labels.next}: {labels.nextTitle} →
+        </a>
+      </div>
+    </nav>
+  );
+}

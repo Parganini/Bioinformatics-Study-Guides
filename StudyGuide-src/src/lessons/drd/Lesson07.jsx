@@ -42,7 +42,7 @@ import gseaDefinitionSlide from "../../assets/drd/lesson07/gsea-definition.jpg";
 import gseaOutputsSlide from "../../assets/drd/lesson07/gsea-outputs.jpg";
 import nesDefinitionSlide from "../../assets/drd/lesson07/nes-definition.jpg";
 import nesFdrSlide from "../../assets/drd/lesson07/nes-fdr.jpg";
-import { M1HeroEyebrow as HeroEyebrow, M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks } from "./module1Shared.jsx";
+import { M1HeroEyebrow as HeroEyebrow, M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks, M1LessonNav } from "./module1Shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1mgvgsmiFN2nAh6nT3-RRiUslcDaMZWvX/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/145GkBXGfP4tngdTcFf5LjMxFMI8Hqi5QgeZy2aJtnkA/edit?usp=drivesdk";
@@ -232,7 +232,7 @@ function alphaRows(p, lab) {
   return [0.05, 0.01, 0.001].map((alpha) => ({ alpha, decision: p <= alpha ? lab.reject : lab.retain, confidence: `${fmt((1 - alpha) * 100, 1)}%` }));
 }
 
-function Navigation({ ui, isDone, toggle, position = "top" }) { return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m1-deg-i" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {ui.previous}: {ui.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{ui.current} · {ui.dashboard}</a><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? ui.done : ui.mark}</button></div><a href="#/lesson/m1-samples-genes-i" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-md">{ui.next}: {ui.nextTitle} →</a></div></nav>; }
+function Navigation({ ui, isDone, toggle, position = "top" }) { return <M1LessonNav labels={ui} isDone={isDone} toggle={toggle} position={position} previousHref="#/lesson/m1-deg-i" nextHref="#/lesson/m1-samples-genes-i" />; }
 function ResourceLinks({ ui }) {
   const links = [
     { label: ui.slides, href: SLIDES_URL, tone: "accent" },

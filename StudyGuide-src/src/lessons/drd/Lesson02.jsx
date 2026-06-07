@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks } from "./module1Shared.jsx";
+import { M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks, M1LessonNav } from "./module1Shared.jsx";
 import targetsProbesSlide from "../../assets/drd/lesson02/targets-probes.jpg";
 import threeArrayTypesSlide from "../../assets/drd/lesson02/three-array-types.jpg";
 import spottingSlide from "../../assets/drd/lesson02/spotting-slide.jpg";
@@ -672,7 +672,7 @@ const NAV = {
 };
 function LessonNav({ lang = "es", position = "top", isDone = false, toggle = () => {}, copy }) {
   const nav = NAV[lang] || NAV.es;
-  return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m1-foundations" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {nav.previous}: {nav.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{nav.current} · {nav.dashboard}</a><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? copy.done : copy.mark}</button></div><a href="#/lesson/m1-affy" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-md">{nav.next}: {nav.nextTitle} →</a></div></nav>;
+  return <M1LessonNav labels={{ ...nav, done: copy.done, mark: copy.mark }} isDone={isDone} toggle={toggle} position={position} previousHref="#/lesson/m1-foundations" nextHref="#/lesson/m1-affy" />;
 }
 function SlideVisualNotes({ lang = "es" }) {
   const local = LESSON2_SLIDE_COPY[lang] || LESSON2_SLIDE_COPY.es;

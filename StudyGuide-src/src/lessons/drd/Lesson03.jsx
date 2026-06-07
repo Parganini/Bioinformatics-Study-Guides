@@ -38,7 +38,7 @@ import annotationFilesSlide from "../../assets/drd/lesson03/annotation-files.jpg
 import miameStandardsSlide from "../../assets/drd/lesson03/miame-standards.jpg";
 import geoRepositorySlide from "../../assets/drd/lesson03/geo-repository.jpg";
 import geoCelFilesExampleSlide from "../../assets/drd/lesson03/geo-cel-files-example.jpg";
-import { M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks } from "./module1Shared.jsx";
+import { M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks, M1LessonNav } from "./module1Shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1bkgvJ-w8Sgrqt5FSOSi29iOEUc5vJCQL/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1MLeSACuOeUinq637GK8sci2isNKzBgZ-V7K2SVF7nZc/edit?usp=drivesdk";
@@ -512,7 +512,7 @@ function ResourceLinks({ copy }) {
 }
 
 function LessonNav({ copy, isDone, toggle, position = "top" }) {
-  return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m1-stanford" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {copy.previous}: {copy.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{copy.current} · {copy.dashboard}</a><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? copy.done : copy.mark}</button></div><a href="#/lesson/m1-illumina" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-md">{copy.next}: {copy.nextTitle} →</a></div></nav>;
+  return <M1LessonNav labels={copy} isDone={isDone} toggle={toggle} position={position} previousHref="#/lesson/m1-stanford" nextHref="#/lesson/m1-illumina" />;
 }
 
 function Hero({ copy }) {

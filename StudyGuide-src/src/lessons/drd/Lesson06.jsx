@@ -41,7 +41,7 @@ import mannWhitneyDecisionSlide from "../../assets/drd/lesson06/mann-whitney-dec
 import mannWhitneyExampleSlide from "../../assets/drd/lesson06/mann-whitney-example-result.jpg";
 import rulesDegSlide from "../../assets/drd/lesson06/rules-deg.jpg";
 import summarySlide from "../../assets/drd/lesson06/test-selection-summary.jpg";
-import { M1HeroEyebrow as HeroEyebrow, M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks } from "./module1Shared.jsx";
+import { M1HeroEyebrow as HeroEyebrow, M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks, M1LessonNav } from "./module1Shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/11JJiEdxJCS4OQT58pBYtnxZjPfXV3hgF/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1I4lojrT4VHQYJ6VIzncIHRaaxC426vJvZH_Y0azZT6Y/edit?usp=drivesdk";
@@ -323,7 +323,7 @@ COPY.es.sections = translateDeep(COPY.es.sections, L06_ES_STRINGS);
 COPY.fa = translateDeep(COPY.fa, L06_FA_STRINGS);
 function getCopy(lang = "es") { return COPY[lang] || COPY.es; }
 
-function Navigation({ ui, isDone, toggle, position = "top" }) { return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m1-illumina" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {ui.previous}: {ui.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{ui.current} · {ui.dashboard}</a><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? ui.done : ui.mark}</button></div><a href="#/lesson/m1-deg-ii" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-md">{ui.next}: {ui.nextTitle} →</a></div></nav>; }
+function Navigation({ ui, isDone, toggle, position = "top" }) { return <M1LessonNav labels={ui} isDone={isDone} toggle={toggle} position={position} previousHref="#/lesson/m1-illumina" nextHref="#/lesson/m1-deg-ii" />; }
 function ResourceLinks({ ui }) {
   const links = [
     { label: ui.slides, href: SLIDES_URL, tone: "accent" },

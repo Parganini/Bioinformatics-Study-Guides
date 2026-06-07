@@ -28,8 +28,8 @@ import betaMHetero from "../../assets/drd/lesson12/beta-m-heteroscedasticity.png
 import vennDmp from "../../assets/drd/lesson12/venn-dmp.png";
 import { cx, tr, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks, DRDLessonNav } from "./shared.jsx";
 
-const SLIDES_URL = "#";
-const CODE_URL = "#";
+const SLIDES_URL = "https://drive.google.com/file/d/1wrmgaByWIWoyTD9XCB_bRCbl3Q_wr6sH/view?usp=drivesdk";
+const CODE_URL = "https://drive.google.com/file/d/11QW15qCOJShDJnKl4YbkCcDq7JEPRuKQ/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1TTRiPgi9LakpSVHeghxpKaZOyLACQ3bzcOZrIsFHMHk/edit";
 const RECORDING_URL = "https://www.youtube.com/watch?v=zpHD8CYhF48&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=9";
 

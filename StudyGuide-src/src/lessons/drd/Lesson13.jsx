@@ -19,10 +19,10 @@ import slide17 from "../../assets/drd/lesson13/slide-17.png";
 import { cx, tr, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks, DRDLessonNav } from "./shared.jsx";
 
 
-const SLIDES_URL = "#";
-const CODE_URL = "#";
+const SLIDES_URL = "https://drive.google.com/file/d/1gKWjGYlPriXXt1xH5aurc6GJHakDJl4T/view?usp=drivesdk";
+const CODE_URL = "https://drive.google.com/file/d/1bL9wAf60TYlHqWcn48f-2Jk9ZyUwoi2S/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/19sBK8F7QXrdj3T2o_be2Fc9c7cA760qToVHukmiFuzw/edit";
-const RECORDING_URL = "#";
+const RECORDING_URL = "https://www.youtube.com/watch?v=KwAHEd8OEtI&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=12";
 const slideImages = [slide01, slide02, slide03, slide04, slide05, slide06, slide07, slide08, slide09, slide10, slide11, slide12, slide13, slide14, slide15, slide16, slide17];
 
 const ui = {

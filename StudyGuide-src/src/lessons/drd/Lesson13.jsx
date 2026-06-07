@@ -20,9 +20,10 @@ import { cx, tr, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as S
 
 
 const SLIDES_URL = "https://drive.google.com/file/d/1gKWjGYlPriXXt1xH5aurc6GJHakDJl4T/view?usp=drivesdk";
-const CODE_URL = "https://drive.google.com/file/d/1bL9wAf60TYlHqWcn48f-2Jk9ZyUwoi2S/view?usp=drivesdk";
+const CODE_URL = "https://drive.google.com/file/d/154I5LREJNqZBY9X5qVH_rsCJsw50AZgX/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/19sBK8F7QXrdj3T2o_be2Fc9c7cA760qToVHukmiFuzw/edit";
 const RECORDING_URL = "https://www.youtube.com/watch?v=KwAHEd8OEtI&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=12";
+const CODE_LABEL = { en: "Code walkthrough", es: "HTML del código R", fa: "راهنمای کد R" };
 const slideImages = [slide01, slide02, slide03, slide04, slide05, slide06, slide07, slide08, slide09, slide10, slide11, slide12, slide13, slide14, slide15, slide16, slide17];
 
 const ui = {
@@ -248,7 +249,7 @@ function ResourceLinks({ lang }) {
   const labels = ui[lang] || ui.es;
   const links = [
     { label: labels.slides, href: SLIDES_URL, tone: "accent" },
-    { label: labels.code, href: CODE_URL },
+    { label: tr(CODE_LABEL, lang), href: CODE_URL },
     { label: labels.transcript, href: TRANSCRIPT_URL },
     { label: labels.recording, href: RECORDING_URL, tone: "dark" }
   ];

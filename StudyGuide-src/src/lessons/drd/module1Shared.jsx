@@ -9,8 +9,15 @@ export function M1HeroEyebrow({ children }) {
 }
 
 export function M1Pill({ children, tone = "stone" }) {
-  const cls = tone === "red" ? "border-red-200 bg-red-50 text-red-700" : "border-stone-200 bg-white/80 text-stone-700";
-  return <span className={`rounded-full border px-3 py-1 text-xs font-black uppercase tracking-[0.16em] ${cls}`}>{children}</span>;
+  const toneClasses = {
+    red: "border-red-200 bg-red-50 text-red-700",
+    amber: "border-amber-200 bg-amber-50 text-amber-800",
+    emerald: "border-emerald-200 bg-emerald-50 text-emerald-800",
+    sky: "border-sky-200 bg-sky-50 text-sky-800",
+    stone: "border-stone-200 bg-white/80 text-stone-700"
+  };
+  const cls = toneClasses[tone] || toneClasses.stone;
+  return <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-black uppercase tracking-[0.16em] ${cls}`}>{children}</span>;
 }
 
 export function M1StatCard({ label, value, tone = "stone" }) {

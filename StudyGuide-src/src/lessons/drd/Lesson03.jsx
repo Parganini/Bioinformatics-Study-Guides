@@ -38,6 +38,7 @@ import annotationFilesSlide from "../../assets/drd/lesson03/annotation-files.jpg
 import miameStandardsSlide from "../../assets/drd/lesson03/miame-standards.jpg";
 import geoRepositorySlide from "../../assets/drd/lesson03/geo-repository.jpg";
 import geoCelFilesExampleSlide from "../../assets/drd/lesson03/geo-cel-files-example.jpg";
+import { M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks } from "./module1Shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1bkgvJ-w8Sgrqt5FSOSi29iOEUc5vJCQL/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1MLeSACuOeUinq637GK8sci2isNKzBgZ-V7K2SVF7nZc/edit?usp=drivesdk";
@@ -470,14 +471,6 @@ COPY.fa.sections = COPY.en.sections.map((section, idx) => {
   return { ...section, eyebrow, title, body, professor };
 });
 
-const toneClasses = {
-  red: "border-red-200 bg-red-50 text-red-800",
-  amber: "border-amber-200 bg-amber-50 text-amber-800",
-  emerald: "border-emerald-200 bg-emerald-50 text-emerald-800",
-  stone: "border-stone-200 bg-stone-50 text-stone-700",
-  sky: "border-sky-200 bg-sky-50 text-sky-800"
-};
-
 function getCopy(lang = "es") { return COPY[lang] || COPY.es; }
 function cn(...classes) { return classes.filter(Boolean).join(" "); }
 function wordCount(text = "") { return text.trim() ? text.trim().split(/\s+/).length : 0; }
@@ -508,21 +501,14 @@ function getHeroMeta(copy) {
   };
 }
 
-function Pill({ children, tone = "red" }) {
-  return <span className={cn("inline-flex rounded-full border px-3 py-1 text-xs font-black", toneClasses[tone] || toneClasses.red)}>{children}</span>;
-}
-
-function SectionHeader({ eyebrow, title, children }) {
-  return <div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{eyebrow}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{title}</h2>{children && <p className="mt-3 max-w-4xl text-base font-semibold leading-8 text-stone-600">{children}</p>}</div>;
-}
-
-function StatCard({ label, value, tone = "stone" }) {
-  return <div className={`rounded-2xl border p-4 ${tone === "red" ? "border-red-200 bg-red-50" : "border-stone-200 bg-stone-50"}`}><div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{label}</div><div className="mt-1 text-2xl font-black text-stone-950">{value}</div></div>;
-}
-
 function ResourceLinks({ copy }) {
-  const linkBase = "rounded-2xl border px-4 py-3 text-sm font-black transition hover:-translate-y-0.5 hover:shadow-sm";
-  return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.resources}</div><div className="grid gap-2 sm:grid-cols-3"><a href={SLIDES_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-red-200 bg-red-50 text-red-800 hover:bg-white`}>{copy.slides}</a><a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-200 bg-white text-stone-800 hover:bg-stone-50`}>{copy.transcript}</a><a href={CLASS_RECORDING_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-800 bg-stone-950 text-white hover:bg-red-700`}>{copy.recording}</a></div></div>;
+  const ui = { resources: copy.resources };
+  const links = [
+    { label: copy.slides, href: SLIDES_URL, tone: "accent" },
+    { label: copy.transcript, href: TRANSCRIPT_URL },
+    { label: copy.recording, href: CLASS_RECORDING_URL, tone: "dark" }
+  ];
+  return <M1ResourceLinks ui={ui} links={links} />;
 }
 
 function LessonNav({ copy, isDone, toggle, position = "top" }) {

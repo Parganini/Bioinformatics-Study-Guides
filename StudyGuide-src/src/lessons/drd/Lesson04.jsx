@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { cx, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader, DRDResourceLinks } from "./shared.jsx";
 import module2OverviewVisual from "../../assets/drd/lesson04/module2-overview.png";
 import reportRequirementsVisual from "../../assets/drd/lesson04/report-requirements.png";
 import reportDeadlineVisual from "../../assets/drd/lesson04/report-deadline.png";
@@ -469,32 +470,19 @@ COPY.fa.quiz = [
   { q: "چرا بعد از خواندن SampleSheet باید str() یا summary() اجرا کرد؟", a: "برای بررسی structure، type ستون‌ها، توزیع‌ها و missing valueهای احتمالی پیش از analysis." }
 ];
 
-function cx(...items) {
-  return items.filter(Boolean).join(" ");
-}
-function Pill({ children, tone = "green" }) {
-  const styles = {
-    green: "border-emerald-200 bg-emerald-50 text-emerald-800",
-    red: "border-red-200 bg-red-50 text-red-800",
-    amber: "border-amber-200 bg-amber-50 text-amber-800",
-    stone: "border-stone-200 bg-stone-50 text-stone-700",
-    dark: "border-stone-800 bg-stone-950 text-white"
-  }[tone] || "border-emerald-200 bg-emerald-50 text-emerald-800";
-  return <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-black uppercase tracking-[0.16em] ${styles}`}>{children}</span>;
-}
-function SectionHeader({ eyebrow, title, children }) {
-  return <div className="mb-5"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-emerald-700">{eyebrow}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{title}</h2>{children && <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600 md:text-base">{children}</p>}</div>;
-}
-function StatCard({ label, value, tone = "stone" }) {
-  const styles = tone === "green" ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50";
-  return <div className={`rounded-2xl border p-4 ${styles}`}><div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{label}</div><div className="mt-1 text-2xl font-black text-stone-950">{value}</div></div>;
-}
 function LessonNav({ copy, isDone, toggle, position = "top" }) {
   return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m1-affy" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {copy.previous}: {copy.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{copy.current} · {copy.dashboard}</a><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? copy.done : copy.mark}</button></div><a href="#/lesson/m2-manifest" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">{copy.next}: {copy.nextTitle} →</a></div></nav>;
 }
+function SectionHeader({ eyebrow, title, children }) {
+  return <div className="mb-5"><DRDSectionHeader eyebrow={eyebrow} title={title}>{children}</DRDSectionHeader></div>;
+}
 function ResourceLinks({ copy }) {
-  const linkBase = "rounded-full border px-4 py-2 text-center text-sm font-black transition hover:-translate-y-0.5 hover:shadow-md";
-  return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.resources}</div><div className="grid gap-2 sm:grid-cols-3"><a href={SLIDES_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-white`}>{copy.slides}</a><a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-200 bg-white text-stone-800 hover:bg-stone-50`}>{copy.transcript}</a><a href={CLASS_RECORDING_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-800 bg-stone-950 text-white hover:bg-emerald-700`}>{copy.recording}</a></div></div>;
+  const links = [
+    { label: copy.slides, href: SLIDES_URL, tone: "accent" },
+    { label: copy.transcript, href: TRANSCRIPT_URL },
+    { label: copy.recording, href: CLASS_RECORDING_URL, tone: "dark" }
+  ];
+  return <DRDResourceLinks title={copy.resources} links={links} columns={3} />;
 }
 function Hero({ copy }) {
   return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#f3fff7]/95 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{copy.heroEyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.heroTitle}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.heroSubtitle}</p><div className="mt-6 flex flex-wrap gap-2">{copy.flow.map(step => <Pill key={step} tone="stone">{step}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label="Module" value="2" tone="green"/><StatCard label="Date" value="May 8"/><StatCard label="Core" value="R" tone="green"/><StatCard label="Output" value="Report"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Pipeline mindset</div><p className="mt-2 text-lg font-bold leading-7">metadata → object type → inspect → subset → model/report</p></div><ResourceLinks copy={copy}/></div></div></div></section>;

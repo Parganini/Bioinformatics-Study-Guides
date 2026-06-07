@@ -14,6 +14,7 @@ export function M1Pill({ children, tone = "stone" }) {
     amber: "border-amber-200 bg-amber-50 text-amber-800",
     emerald: "border-emerald-200 bg-emerald-50 text-emerald-800",
     sky: "border-sky-200 bg-sky-50 text-sky-800",
+    dark: "border-stone-800 bg-stone-950 text-white",
     stone: "border-stone-200 bg-white/80 text-stone-700"
   };
   const cls = toneClasses[tone] || toneClasses.stone;

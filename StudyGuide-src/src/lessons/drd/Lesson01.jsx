@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks } from "./module1Shared.jsx";
 import wetLabFlowSlide from "../../assets/drd/lesson01/wet-lab-flow.jpg";
 import biologicalQuestionSlide from "../../assets/drd/lesson01/biological-question.jpg";
 import omicsMapSlide from "../../assets/drd/lesson01/omics-map.jpg";
@@ -1265,32 +1266,16 @@ const RESOURCE_COPY = {
 
 function ResourceLinks({ copy, lang = "es" }) {
   const labels = RESOURCE_COPY[lang] || RESOURCE_COPY.es;
-  const recordingReady = CLASS_RECORDING_URL && CLASS_RECORDING_URL !== "#";
-  const linkBase = "rounded-2xl border px-4 py-3 text-sm font-black transition hover:-translate-y-0.5 hover:shadow-sm";
-  return (
-    <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4">
-      <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div>
-      <div className="grid gap-2 sm:grid-cols-3">
-        <a href={SLIDES_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-red-200 bg-red-50 text-red-800 hover:bg-white`}>{copy.slides}</a>
-        <a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-200 bg-white text-stone-800 hover:bg-stone-50`}>{copy.transcript}</a>
-        {recordingReady ? (
-          <a href={CLASS_RECORDING_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-800 bg-stone-950 text-white hover:bg-red-700`}>{labels.recording}</a>
-        ) : (
-          <span className={`${linkBase} cursor-not-allowed border-stone-200 bg-white text-stone-400`} aria-disabled="true">{labels.recordingPending}</span>
-        )}
-      </div>
-    </div>
-  );
+  const links = [
+    { label: copy.slides, href: SLIDES_URL, tone: "accent" },
+    { label: copy.transcript, href: TRANSCRIPT_URL },
+    { label: CLASS_RECORDING_URL && CLASS_RECORDING_URL !== "#" ? labels.recording : labels.recordingPending, href: CLASS_RECORDING_URL, tone: "dark" }
+  ];
+  return <M1ResourceLinks ui={labels} links={links} />;
 }
 
 function fmt(template, values) { return Object.entries(values).reduce((acc, [k, v]) => acc.replaceAll(`{${k}}`, v), template); }
-function Pill({ children, tone = "stone" }) {
-  const tones = { red: "border-red-200 bg-red-50 text-red-700", amber: "border-amber-200 bg-amber-50 text-amber-800", emerald: "border-emerald-200 bg-emerald-50 text-emerald-800", stone: "border-stone-200 bg-white text-stone-700", dark: "border-stone-800 bg-stone-950 text-white" };
-  return <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-black ${tones[tone] || tones.stone}`}>{children}</span>;
-}
-function SectionHeader({ eyebrow, title, children }) { return <div className="mb-5"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{eyebrow}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{title}</h2>{children && <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600">{children}</p>}</div>; }
 function ProgressDots({ active }) { return <div className="flex gap-1.5">{[0,1,2,3,4].map(i => <span key={i} className={`h-2.5 w-2.5 rounded-full ${i <= active ? "bg-red-700" : "bg-stone-200"}`} />)}</div>; }
-function StatCard({ label, value, tone = "stone" }) { return <div className={`rounded-2xl border p-4 ${tone === "red" ? "border-red-200 bg-red-50" : "border-stone-200 bg-stone-50"}`}><div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{label}</div><div className="mt-1 text-2xl font-black text-stone-950">{value}</div></div>; }
 function SelectBox({ label, value, setValue, options }) { return <label className="block rounded-2xl border border-stone-200 bg-stone-50 p-4"><span className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{label}</span><select value={value} onChange={e => setValue(e.target.value)} className="mt-2 w-full rounded-xl border border-stone-200 bg-white px-3 py-2 text-sm font-bold text-stone-800 outline-none focus:border-red-300 focus:ring-4 focus:ring-red-100">{options.map(option => <option key={option}>{option}</option>)}</select></label>; }
 function BiologicalQuestionBuilder({ copy }) {
   const [model, setModel] = useState(copy.models[0]); const [independent, setIndependent] = useState(copy.independentOptions[0]); const [dependent, setDependent] = useState(copy.dependentOptions[0]); const [technique, setTechnique] = useState(copy.techniqueOptions[0]);

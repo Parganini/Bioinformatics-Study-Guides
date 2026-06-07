@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks } from "./module1Shared.jsx";
 import targetsProbesSlide from "../../assets/drd/lesson02/targets-probes.jpg";
 import threeArrayTypesSlide from "../../assets/drd/lesson02/three-array-types.jpg";
 import spottingSlide from "../../assets/drd/lesson02/spotting-slide.jpg";
@@ -656,17 +657,13 @@ const COPY = {
 };
 
 function getCopy(lang) { return COPY[lang] || COPY.es; }
-function Pill({ children, tone = "stone" }) {
-  const tones = { red: "border-red-200 bg-red-50 text-red-700", amber: "border-amber-200 bg-amber-50 text-amber-800", emerald: "border-emerald-200 bg-emerald-50 text-emerald-800", sky: "border-sky-200 bg-sky-50 text-sky-800", stone: "border-stone-200 bg-white text-stone-700", dark: "border-stone-800 bg-stone-950 text-white" };
-  return <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-black ${tones[tone] || tones.stone}`}>{children}</span>;
-}
-function SectionHeader({ eyebrow, title, children }) {
-  return <div className="mb-5"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{eyebrow}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{title}</h2>{children && <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600">{children}</p>}</div>;
-}
-function StatCard({ label, value, tone = "stone" }) { return <div className={`rounded-2xl border p-4 ${tone === "red" ? "border-red-200 bg-red-50" : "border-stone-200 bg-stone-50"}`}><div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{label}</div><div className="mt-1 text-2xl font-black text-stone-950">{value}</div></div>; }
 function ResourceLinks({ copy }) {
-  const linkBase = "rounded-2xl border px-4 py-3 text-sm font-black transition hover:-translate-y-0.5 hover:shadow-sm";
-  return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.resources}</div><div className="grid gap-2 sm:grid-cols-3"><a href={SLIDES_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-red-200 bg-red-50 text-red-800 hover:bg-white`}>{copy.slides}</a><a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-200 bg-white text-stone-800 hover:bg-stone-50`}>{copy.transcript}</a><a href={CLASS_RECORDING_URL} target="_blank" rel="noreferrer" className={`${linkBase} border-stone-800 bg-stone-950 text-white hover:bg-red-700`}>{copy.recording}</a></div></div>;
+  const links = [
+    { label: copy.slides, href: SLIDES_URL, tone: "accent" },
+    { label: copy.transcript, href: TRANSCRIPT_URL },
+    { label: copy.recording, href: CLASS_RECORDING_URL, tone: "dark" }
+  ];
+  return <M1ResourceLinks ui={copy} links={links} />;
 }
 const NAV = {
   en: { dashboard: "DRD dashboard", previous: "Previous", next: "Next", current: "Lesson 2", previousTitle: "M1.1 Biological question", nextTitle: "M1.3 Affymetrix GeneChip" },

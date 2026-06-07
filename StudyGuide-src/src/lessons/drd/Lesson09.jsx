@@ -31,6 +31,7 @@ import slide29 from "../../assets/drd/lesson09/slide-29.png";
 import slide30 from "../../assets/drd/lesson09/slide-30.png";
 import slide31 from "../../assets/drd/lesson09/slide-31.png";
 import slide32 from "../../assets/drd/lesson09/slide-32.png";
+import { cx, tr, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks } from "./shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/18mE84-kSZ83x9t7B3Wrj_FfUN9-H5Ev_/view?usp=drivesdk";
 const CODE_URL = "https://drive.google.com/file/d/1VeUyh13Un4Gger5-NAdYoY2LTvR0S1Ad/view?usp=drivesdk";
@@ -314,23 +315,15 @@ const trainer = {
   model: { en: "The raw Illumina 450K pipeline begins with paired red and green IDAT files for each sample. minfi imports these fluorescence intensities into an RGChannelSet, an S4 object organized by technical probe addresses and red/green channels. Using preprocessRaw(), the data can be reorganized into a MethylSet, where rows are CpG probe IDs and the two channels are methylated and unmethylated signals. Quality control should not rely only on the QC plot, because low median intensity may reflect low DNA input rather than true failure. Control probes are used to diagnose staining, extension, hybridization, bisulfite conversion and negative-control background. detectionP() provides an objective probe-level p-value comparing signal with background. A common workflow defines failed probes as detP above a threshold, removes samples with too many failed probes first using colMeans(), and then records probe names for later removal after normalization using rowMeans().", es: "El pipeline crudo Illumina 450K empieza con archivos IDAT pareados rojo y verde por muestra. minfi importa estas intensidades de fluorescencia en un RGChannelSet, un objeto S4 organizado por addresses técnicos y canales red/green. Con preprocessRaw(), los datos se reorganizan en un MethylSet, donde las filas son IDs de probes CpG y los canales son señales methylated y unmethylated. El control de calidad no debe depender solo del QC plot, porque una baja median intensity puede reflejar bajo input de DNA y no una falla real. Las control probes diagnostican staining, extension, hybridization, bisulfite conversion y background de negative controls. detectionP() da un p-value objetivo por probe comparando señal con background. Un flujo común define probes fallidas como detP por encima de un threshold, elimina primero muestras con demasiadas probes fallidas usando colMeans(), y luego guarda nombres de probes para eliminarlas después de normalización usando rowMeans().", fa: "pipeline خام Illumina 450K با فایل‌های red و green IDAT برای هر sample شروع می‌شود. minfi این intensityها را به RGChannelSet وارد می‌کند؛ یک object نوع S4 که بر اساس address فنی و کانال red/green سازمان‌دهی شده است. با preprocessRaw داده به MethylSet تبدیل می‌شود، جایی که ردیف‌ها CpG probe ID و کانال‌ها methylated/unmethylated هستند. QC نباید فقط بر QC plot تکیه کند، چون median intensity پایین ممکن است به‌دلیل DNA input کمتر باشد، نه failure واقعی. control probeها staining، extension، hybridization، bisulfite conversion و negative-control background را بررسی می‌کنند. detectionP برای هر probe یک p-value عینی از مقایسه signal با background می‌دهد. workflow معمول probeهای failed را detP بالاتر از threshold تعریف می‌کند، ابتدا sampleهای با failed probe زیاد را با colMeans حذف می‌کند و سپس نام probeها را برای حذف بعد از normalization با rowMeans ذخیره می‌کند." }
 };
 
-function tr(value, lang) {
-  if (Array.isArray(value)) return value;
-  if (typeof value === "string") return value;
-  return value?.[lang] ?? value?.en ?? "";
-}
-function cx(...classes) { return classes.filter(Boolean).join(" "); }
-function Pill({ children, tone = "green", className = "" }) {
-  const styles = tone === "stone" ? "border-stone-200 bg-white px-3 py-1 text-stone-700" : "border-emerald-200 bg-emerald-50 px-3 py-1 text-emerald-700";
-  return <span className={cx("inline-flex items-center rounded-full border text-xs font-black uppercase tracking-[0.16em]", styles, className)}>{children}</span>;
-}
-function StatCard({ label, value, tone = "stone" }) {
-  return <div className={cx("rounded-3xl border p-4", tone === "green" ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50")}><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{label}</div><div className="mt-2 text-3xl font-black text-stone-950">{value}</div></div>;
-}
 function ResourceLinks({ lang }) {
   const labels = ui[lang] || ui.es;
-  const linkBase = "rounded-full border px-4 py-2 text-center text-sm font-black transition hover:-translate-y-0.5 hover:shadow-md";
-  return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div><div className="grid gap-2 sm:grid-cols-4"><a href={SLIDES_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-white")}>{labels.slides}</a><a href={CODE_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-200 bg-white text-stone-800 hover:bg-stone-50")}>{labels.code}</a><a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-200 bg-white text-stone-800 hover:bg-stone-50")}>{labels.transcript}</a><a href={RECORDING_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-800 bg-stone-950 text-white hover:bg-emerald-700")}>{labels.recording}</a></div></div>;
+  const links = [
+    { label: labels.slides, href: SLIDES_URL, tone: "accent" },
+    { label: labels.code, href: CODE_URL },
+    { label: labels.transcript, href: TRANSCRIPT_URL },
+    { label: labels.recording, href: RECORDING_URL, tone: "dark" }
+  ];
+  return <DRDResourceLinks title={labels.resources} links={links} />;
 }
 function LessonNav({ lang, isDone, toggle, bottom = false }) {
   const labels = ui[lang] || ui.es;
@@ -338,9 +331,6 @@ function LessonNav({ lang, isDone, toggle, bottom = false }) {
 }
 function Hero({ lang }) {
   return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#f3fff7]/95 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><Pill>{tr(copy.hero.eyebrow, lang)}</Pill><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{tr(copy.hero.title, lang)}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{tr(copy.hero.subtitle, lang)}</p><div className="mt-6 flex flex-wrap gap-2">{tr(copy.hero.tags, lang).map(tag => <Pill key={tag} tone="stone">{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3">{copy.stats.map(item => <StatCard key={tr(item.label, lang)} label={tr(item.label, lang)} value={item.value} tone={item.tone}/>)}</div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Pipeline mindset</div><p className="mt-2 text-lg font-bold leading-7">{tr(copy.hero.bigIdea, lang)}</p></div><ResourceLinks lang={lang}/></div></div></div></section>;
-}
-function SectionHeader({ eyebrow, title, children }) {
-  return <div><Pill>{eyebrow}</Pill><h2 className="mt-4 text-3xl font-black tracking-[-0.03em] text-stone-950 md:text-4xl">{title}</h2>{children && <p className="mt-4 max-w-4xl text-base font-semibold leading-8 text-stone-700">{children}</p>}</div>;
 }
 function ReportWatch({ lang, watch }) {
   const labels = ui[lang] || ui.es;

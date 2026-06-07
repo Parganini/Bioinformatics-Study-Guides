@@ -34,6 +34,7 @@ import plotComparisonFunnorm from "../../assets/drd/lesson10/plot-comparison-fun
 import plotComparisonNoob from "../../assets/drd/lesson10/plot-comparison-noob.png";
 import plotComparisonQuantile from "../../assets/drd/lesson10/plot-comparison-quantile.png";
 import plotComparisonSwan from "../../assets/drd/lesson10/plot-comparison-swan.png";
+import { cx, tr, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks } from "./shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1k2pszA-h2YXwEfr3SCQPk9ZRb-tfKaMS/view?usp=drivesdk";
 const CODE_URL = "https://drive.google.com/file/d/1PCExfbK5Eegc5OvnCEUhUaaMGD_iwXtx/view?usp=drivesdk";
@@ -316,40 +317,15 @@ const trainer = {
   model: { en: "Before normalization, we inspected beta-value distributions using density plots and boxplots, and we also compared Type I and Type II probe distributions using manifest-based subsetting. Because the expected biological differences were not genome-wide and the raw plots showed probe-type and sample-distribution differences consistent with technical bias, preprocessQuantile was retained. We verified its effect by comparing raw and normalized mean-beta densities, standard-deviation densities and boxplots. If the design had included tumor/normal samples or a demethylating treatment with expected global shifts, functional normalization or Noob would have been safer.", es: "Antes de normalizar, inspeccionamos las distribuciones de beta values usando density plots y boxplots, y también comparamos distribuciones Type I y Type II mediante subsetting basado en el manifest. Como las diferencias biológicas esperadas no eran genome-wide y los plots raw mostraban diferencias por tipo de probe y por distribución de muestras compatibles con sesgo técnico, se retuvo preprocessQuantile. Verificamos su efecto comparando densities de media beta, densities de desviación estándar y boxplots en raw vs normalizado. Si el diseño hubiera incluido tumor/normal o un tratamiento demetilante con shifts globales esperados, functional normalization o Noob habrían sido opciones más seguras.", fa: "قبل از normalization، توزیع beta را با density plot و boxplot بررسی کردیم و distribution probeهای Type I و Type II را با subsetting بر اساس manifest مقایسه کردیم. چون تفاوت‌های زیستی مورد انتظار genome-wide نبود و plotهای raw تفاوت‌های سازگار با technical bias در probe-type و sample-distribution نشان می‌دادند، preprocessQuantile نگه داشته شد. اثر آن را با مقایسه density میانگین beta، density انحراف معیار و boxplot در raw و normalized بررسی کردیم. اگر طراحی شامل tumor/normal یا demethylating treatment با shiftهای global مورد انتظار بود، functional normalization یا Noob امن‌تر می‌بود." }
 };
 
-function tr(value, lang) {
-  return typeof value === "string" ? value : (value?.[lang] || value?.es || value?.en || "");
-}
-
-function cx(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
-
-function Pill({ children, tone = "green", className = "" }) {
-  const styles = tone === "stone"
-    ? "border-stone-200 bg-white px-3 py-1 text-stone-700"
-    : "border-emerald-200 bg-emerald-50 px-3 py-1 text-emerald-700";
-  return <span className={cx("inline-flex items-center rounded-full border text-xs font-black uppercase tracking-[0.16em]", styles, className)}>{children}</span>;
-}
-
-function StatCard({ label, value, tone = "stone" }) {
-  return <div className={cx("rounded-3xl border p-4", tone === "green" ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50")}>
-    <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{label}</div>
-    <div className="mt-2 text-3xl font-black text-stone-950">{value}</div>
-  </div>;
-}
-
 function ResourceLinks({ lang }) {
   const labels = ui[lang] || ui.es;
-  const linkBase = "rounded-full border px-4 py-2 text-center text-sm font-black transition hover:-translate-y-0.5 hover:shadow-md";
-  return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4">
-    <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div>
-    <div className="grid gap-2 sm:grid-cols-4">
-      <a href={SLIDES_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-white")}>{labels.slides}</a>
-      <a href={CODE_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-200 bg-white text-stone-800 hover:bg-stone-50")}>{labels.code}</a>
-      <a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-200 bg-white text-stone-800 hover:bg-stone-50")}>{labels.transcript}</a>
-      <a href={RECORDING_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-800 bg-stone-950 text-white hover:bg-emerald-700")}>{labels.recording}</a>
-    </div>
-  </div>;
+  const links = [
+    { label: labels.slides, href: SLIDES_URL, tone: "accent" },
+    { label: labels.code, href: CODE_URL },
+    { label: labels.transcript, href: TRANSCRIPT_URL },
+    { label: labels.recording, href: RECORDING_URL, tone: "dark" }
+  ];
+  return <DRDResourceLinks title={labels.resources} links={links} />;
 }
 
 function LessonNav({ lang, isDone, toggle, bottom = false }) {
@@ -389,14 +365,6 @@ function Hero({ lang }) {
       </div>
     </div>
   </section>;
-}
-
-function SectionHeader({ eyebrow, title, children }) {
-  return <div>
-    <Pill>{eyebrow}</Pill>
-    <h2 className="mt-4 text-3xl font-black tracking-[-0.03em] text-stone-950 md:text-4xl">{title}</h2>
-    {children && <p className="mt-4 max-w-4xl text-base font-semibold leading-8 text-stone-700">{children}</p>}
-  </div>;
 }
 
 function ReportWatch({ lang, watch }) {

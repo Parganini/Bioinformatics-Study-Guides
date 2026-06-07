@@ -16,6 +16,7 @@ import slide14 from "../../assets/drd/lesson08/slide-14.png";
 import slide15 from "../../assets/drd/lesson08/slide-15.png";
 import slide16 from "../../assets/drd/lesson08/slide-16.png";
 import slide17 from "../../assets/drd/lesson08/slide-17.png";
+import { cx, tr as t, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks } from "./shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1sN2mGi86239wfQ8w8K-PYtKeF4pWQXAR/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1StKS_UrrCBaIIvwsyz-vhmfrFQoxWy5HiAo8JFN3kHs/edit?usp=drivesdk";
@@ -294,31 +295,14 @@ barplot(ratio_I_II)`,
   ]
 };
 
-function cx(...classes) { return classes.filter(Boolean).join(" "); }
-function t(value, lang) { return typeof value === "object" && value !== null ? (value[lang] || value.es || value.en || value.fa || "") : value; }
-function Pill({ children, className = "", tone = "green" }) {
-  const styles = tone === "stone"
-    ? "border-stone-200 bg-white px-3 py-1 text-stone-700"
-    : "border-emerald-200 bg-emerald-50 px-3 py-1 text-emerald-700";
-  return <span className={cx("inline-flex items-center rounded-full border text-xs font-black uppercase tracking-[0.16em]", styles, className)}>{children}</span>;
-}
-function StatCard({ label, value, tone = "stone" }) {
-  return <div className={cx("rounded-3xl border p-4", tone === "green" ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50")}>
-    <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{label}</div>
-    <div className="mt-2 text-3xl font-black text-stone-950">{value}</div>
-  </div>;
-}
 function ResourceLinks({ lang }) {
   const labels = ui[lang] || ui.es;
-  const linkBase = "rounded-full border px-4 py-2 text-center text-sm font-black transition hover:-translate-y-0.5 hover:shadow-md";
-  return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4">
-    <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div>
-    <div className="grid gap-2 sm:grid-cols-3">
-      <a href={SLIDES_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-white")}>{labels.slides}</a>
-      <a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-200 bg-white text-stone-800 hover:bg-stone-50")}>{labels.transcript}</a>
-      <a href={RECORDING_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-800 bg-stone-950 text-white hover:bg-emerald-700")}>{labels.recording}</a>
-    </div>
-  </div>;
+  const links = [
+    { label: labels.slides, href: SLIDES_URL, tone: "accent" },
+    { label: labels.transcript, href: TRANSCRIPT_URL },
+    { label: labels.recording, href: RECORDING_URL, tone: "dark" }
+  ];
+  return <DRDResourceLinks title={labels.resources} links={links} columns={3} />;
 }
 
 function LessonNav({ lang, isDone, toggle, bottom = false }) {
@@ -358,10 +342,6 @@ function Hero({ lang }) {
       </div>
     </div>
   </section>;
-}
-
-function SectionHeader({ eyebrow, title, children }) {
-  return <div><Pill>{eyebrow}</Pill><h2 className="mt-4 text-3xl font-black tracking-[-0.03em] text-stone-950 md:text-4xl">{title}</h2>{children && <p className="mt-4 max-w-4xl text-base font-semibold leading-8 text-stone-700">{children}</p>}</div>;
 }
 
 function ReportWatch({ lang, watch }) {

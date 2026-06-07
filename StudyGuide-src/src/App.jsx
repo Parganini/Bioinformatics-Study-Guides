@@ -30,6 +30,7 @@ import DRDLesson09 from "./lessons/drd/Lesson09.jsx";
 import DRDLesson10 from "./lessons/drd/Lesson10.jsx";
 import DRDLesson11 from "./lessons/drd/Lesson11.jsx";
 import DRDLesson12 from "./lessons/drd/Lesson12.jsx";
+import DRDLesson13 from "./lessons/drd/Lesson13.jsx";
 
 
 const LANGS = [
@@ -784,6 +785,7 @@ const DRD_MODULE2_UNITS = [
     desc: "Covered on June 4: beta versus M values, design matrix, contrasts, DMP/DMR, FDR and PCA.",
     products: ["guía paso a paso del pipeline", "práctica de matriz de diseño", "volcano/interpretación de PCA"],
     tags: ["DMP", "DMR", "FDR", "PCA"],
+    lessonHref: "#/lesson/m2-dmp-dmr",
   },
   {
     id: "m2-batch-clustering",
@@ -1181,6 +1183,9 @@ function DRDApp({ t, lang, hash }) {
   }
   if (lessonId === "m2-normalization-2" || lessonId === "m2-5") {
     return <DRDLesson12 lang={lang} isDone={!!progress["m2-normalization-2"]} toggle={() => toggle("m2-normalization-2")} />;
+  }
+  if (lessonId === "m2-dmp-dmr" || lessonId === "m2-6") {
+    return <DRDLesson13 lang={lang} isDone={!!progress["m2-dmp-dmr"]} toggle={() => toggle("m2-dmp-dmr")} />;
   }
   if (lessonId === "m1-illumina" || lessonId === "05") {
     return <DRDLesson05 lang={lang} isDone={!!progress["m1-illumina"]} toggle={() => toggle("m1-illumina")} />;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { cx, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader, DRDResourceLinks } from "./shared.jsx";
+import { cx, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader, DRDResourceLinks, DRDLessonNav } from "./shared.jsx";
 import module2OverviewVisual from "../../assets/drd/lesson04/module2-overview.png";
 import reportRequirementsVisual from "../../assets/drd/lesson04/report-requirements.png";
 import reportDeadlineVisual from "../../assets/drd/lesson04/report-deadline.png";
@@ -471,7 +471,7 @@ COPY.fa.quiz = [
 ];
 
 function LessonNav({ copy, isDone, toggle, position = "top" }) {
-  return <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m1-affy" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {copy.previous}: {copy.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{copy.current} · {copy.dashboard}</a><button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? copy.done : copy.mark}</button></div><a href="#/lesson/m2-manifest" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">{copy.next}: {copy.nextTitle} →</a></div></nav>;
+  return <DRDLessonNav labels={copy} isDone={isDone} toggle={toggle} bottom={position === "bottom"} previousHref="#/lesson/m1-affy" nextHref="#/lesson/m2-manifest" />;
 }
 function SectionHeader({ eyebrow, title, children }) {
   return <div className="mb-5"><DRDSectionHeader eyebrow={eyebrow} title={title}>{children}</DRDSectionHeader></div>;

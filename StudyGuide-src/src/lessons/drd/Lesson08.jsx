@@ -16,7 +16,7 @@ import slide14 from "../../assets/drd/lesson08/slide-14.png";
 import slide15 from "../../assets/drd/lesson08/slide-15.png";
 import slide16 from "../../assets/drd/lesson08/slide-16.png";
 import slide17 from "../../assets/drd/lesson08/slide-17.png";
-import { cx, tr as t, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks } from "./shared.jsx";
+import { cx, tr as t, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks, DRDLessonNav } from "./shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1sN2mGi86239wfQ8w8K-PYtKeF4pWQXAR/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1StKS_UrrCBaIIvwsyz-vhmfrFQoxWy5HiAo8JFN3kHs/edit?usp=drivesdk";
@@ -307,16 +307,7 @@ function ResourceLinks({ lang }) {
 
 function LessonNav({ lang, isDone, toggle, bottom = false }) {
   const labels = ui[lang] || ui.es;
-  return <nav className={cx("rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm", bottom ? "mt-10" : "mb-6")} aria-label="Lesson navigation">
-    <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-      <a href="#/lesson/m2-r" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {labels.previous}: {labels.previousTitle}</a>
-      <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center">
-        <a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{labels.current} · {labels.dashboard}</a>
-        <button type="button" onClick={toggle} className={cx("rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5", isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white hover:bg-emerald-700")}>{isDone ? labels.done : labels.mark}</button>
-      </div>
-      <a href="#/lesson/m2-3" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">{labels.next}: {labels.nextTitle} →</a>
-    </div>
-  </nav>;
+  return <DRDLessonNav labels={labels} isDone={isDone} toggle={toggle} bottom={bottom} previousHref="#/lesson/m2-r" nextHref="#/lesson/m2-3" />;
 }
 
 function Hero({ lang }) {

@@ -83,3 +83,26 @@ export function DRDResourceLinks({ title, links, columns = 4 }) {
     </div>
   );
 }
+
+export function DRDLessonNav({ labels, isDone = false, toggle = () => {}, bottom = false, previousHref, nextHref, dashboardHref = "#/" }) {
+  return (
+    <nav className={cx("rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm", bottom ? "mt-10" : "mb-6")} aria-label="Lesson navigation">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <a href={previousHref} className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">
+          ← {labels.previous}: {labels.previousTitle}
+        </a>
+        <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center">
+          <a href={dashboardHref} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">
+            {labels.current} · {labels.dashboard}
+          </a>
+          <button type="button" onClick={toggle} className={cx("rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5", isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white hover:bg-emerald-700")}>
+            {isDone ? labels.done : labels.mark}
+          </button>
+        </div>
+        <a href={nextHref} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">
+          {labels.next}: {labels.nextTitle} →
+        </a>
+      </div>
+    </nav>
+  );
+}

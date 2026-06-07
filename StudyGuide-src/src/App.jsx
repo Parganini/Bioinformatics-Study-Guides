@@ -29,6 +29,7 @@ import DRDLesson08 from "./lessons/drd/Lesson08.jsx";
 import DRDLesson09 from "./lessons/drd/Lesson09.jsx";
 import DRDLesson10 from "./lessons/drd/Lesson10.jsx";
 import DRDLesson11 from "./lessons/drd/Lesson11.jsx";
+import DRDLesson12 from "./lessons/drd/Lesson12.jsx";
 
 
 const LANGS = [
@@ -770,8 +771,9 @@ const DRD_MODULE2_UNITS = [
     status: "covered",
     title: "Pipeline 2: Normalization 2",
     desc: "Quantile, Noob, SWAN and functional normalization, including background, dye bias, probe-type bias and control-probe-based correction.",
-    products: ["comparador de métodos", "Noob/SWAN/Funnorm quiz", "notas de decisión"],
-    tags: ["Quantile", "Noob", "SWAN", "Funnorm"],
+    products: ["comparador beta/M", "tests DMP", "Venn de métodos"],
+    tags: ["batch effects", "PCA", "beta/M", "DMP", "DMR"],
+    lessonHref: "#/lesson/m2-normalization-2",
   },
   {
     id: "m2-dmp-dmr",
@@ -897,7 +899,7 @@ const DRD_UNIT_I18N = {
     "m2-manifest": { title: "Metilación de DNA y química Illumina BeadChip", desc: "Manifest files, anotación de probes, cromosoma/posición, genes, contexto CpG island e interpretación a nivel de probe.", products: ["quiz de anotación de probes", "lectura de manifest", "resumen de química"], tags: ["manifest", "probe ID", "contexto CpG", "Infinium"] },
     "m2-import-qc": { title: "Pipeline 1: importación de datos + quality check", desc: "Datos crudos de methylation arrays, RGSet, MSet_raw, detection p-values, control probes, sample QC y probe QC.", products: ["diagrama RGSet→MSet", "práctica detection p-value", "checklist de filtrado"], tags: ["RGSet", "MSet", "detection p-value", "control probes"] },
     "m2-normalization-1": { title: "Pipeline 2: normalización 1", desc: "Por qué las señales crudas de metilación no son directamente comparables y cómo la normalización cambia distribuciones e interpretación downstream.", products: ["interpretación de density plots", "comparación raw vs normalized", "glosario de normalización"], tags: ["normalización", "beta values", "density plots", "raw data"] },
-    "m2-normalization-2": { title: "Pipeline 2: normalización 2", desc: "Quantile, Noob, SWAN y functional normalization, incluyendo background, dye bias, sesgo por tipo de probe y corrección basada en control probes.", products: ["comparador de métodos", "quiz Noob/SWAN/Funnorm", "notas de decisión"], tags: ["Quantile", "Noob", "SWAN", "Funnorm"] },
+    "m2-normalization-2": { title: "Pipeline 2: normalización 2 + DMP", desc: "Batch effects, PCA, elección beta/M, heteroscedasticity, tests por filas, dmpFinder y transición de DMP a DMR.", products: ["mini-lab PCA", "comparador beta/M", "Venn de métodos"], tags: ["batch effect", "PCA", "beta/M", "DMP", "DMR"] },
     "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "Cubierta el 4 de junio: beta vs M values, design matrix, contrasts, DMP/DMR, FDR y PCA.", products: ["walkthrough de pipeline", "práctica design matrix", "interpretación volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
     "m2-batch-clustering": { title: "Pipeline 4: batch effect, visualización y clustering", desc: "Detección/corrección de batch effect, ComBat, PCA antes/después de corrección, heatmaps, clustering e integración para verification test.", products: ["checklist de plots", "explicador ComBat", "simulador de reporte en equipo"], tags: ["batch effect", "ComBat", "visualización", "clustering"] }
   },
@@ -915,7 +917,7 @@ const DRD_UNIT_I18N = {
     "m2-manifest": { title: "متیلاسیون DNA و شیمی Illumina BeadChip", desc: "manifest file، annotation پروب، chromosome/position، gene، CpG island context و تفسیر در سطح probe.", products: ["آزمونک annotation probe", "خواندن manifest", "خلاصه شیمی"], tags: ["manifest", "probe ID", "CpG context", "Infinium"] },
     "m2-import-qc": { title: "Pipeline 1: ورود داده + quality check", desc: "دادهٔ خام methylation array، RGSet، MSet_raw، detection p-value، control probe، sample QC و probe QC.", products: ["نمودار RGSet→MSet", "تمرین detection p-value", "چک‌لیست فیلتر"], tags: ["RGSet", "MSet", "detection p-value", "control probes"] },
     "m2-normalization-1": { title: "Pipeline 2: نرمال‌سازی 1", desc: "چرا سیگنال‌های خام متیلاسیون مستقیماً قابل مقایسه نیستند و normalisation چگونه توزیع و تفسیر downstream را تغییر می‌دهد.", products: ["تفسیر density plot", "مقایسه raw/normalized", "واژه‌نامه normalisation"], tags: ["normalisation", "beta values", "density plots", "raw data"] },
-    "m2-normalization-2": { title: "Pipeline 2: نرمال‌سازی 2", desc: "Quantile، Noob، SWAN و functional normalisation، شامل background، dye bias، bias نوع probe و تصحیح با control probe.", products: ["مقایسه روش‌ها", "آزمونک Noob/SWAN/Funnorm", "یادداشت تصمیم"], tags: ["Quantile", "Noob", "SWAN", "Funnorm"] },
+    "m2-normalization-2": { title: "Pipeline 2: نرمال‌سازی 2 + DMP", desc: "batch effect، PCA، انتخاب beta/M، heteroscedasticity، testهای row-wise، dmpFinder و گذار از DMP به DMR.", products: ["مینی‌لب PCA", "مقایسه beta/M", "Venn روش‌ها"], tags: ["batch effect", "PCA", "beta/M", "DMP", "DMR"] },
     "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "پوشش داده‌شده در ۴ ژوئن: Beta در برابر M values، design matrix، contrasts، DMP/DMR، FDR و PCA.", products: ["walkthrough پایپ‌لاین", "تمرین design matrix", "تفسیر volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
     "m2-batch-clustering": { title: "Pipeline 4: batch effect، visualization و clustering", desc: "تشخیص/تصحیح batch effect، ComBat، PCA قبل/بعد از تصحیح، heatmap، clustering و یکپارچه‌سازی برای verification test.", products: ["چک‌لیست plot", "توضیح ComBat", "شبیه‌ساز reporte en equipo"], tags: ["batch effect", "ComBat", "visualization", "clustering"] }
   }
@@ -1176,6 +1178,9 @@ function DRDApp({ t, lang, hash }) {
   }
   if (lessonId === "m2-normalization-1" || lessonId === "m2-4") {
     return <DRDLesson10 lang={lang} isDone={!!progress["m2-normalization-1"]} toggle={() => toggle("m2-normalization-1")} />;
+  }
+  if (lessonId === "m2-normalization-2" || lessonId === "m2-5") {
+    return <DRDLesson12 lang={lang} isDone={!!progress["m2-normalization-2"]} toggle={() => toggle("m2-normalization-2")} />;
   }
   if (lessonId === "m1-illumina" || lessonId === "05") {
     return <DRDLesson05 lang={lang} isDone={!!progress["m1-illumina"]} toggle={() => toggle("m1-illumina")} />;

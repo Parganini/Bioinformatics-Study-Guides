@@ -16,6 +16,7 @@ import slide14 from "../../assets/drd/lesson13/slide-14.png";
 import slide15 from "../../assets/drd/lesson13/slide-15.png";
 import slide16 from "../../assets/drd/lesson13/slide-16.png";
 import slide17 from "../../assets/drd/lesson13/slide-17.png";
+import { cx, tr, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks } from "./shared.jsx";
 
 
 const SLIDES_URL = "#";
@@ -23,15 +24,6 @@ const CODE_URL = "#";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/19sBK8F7QXrdj3T2o_be2Fc9c7cA760qToVHukmiFuzw/edit";
 const RECORDING_URL = "#";
 const slideImages = [slide01, slide02, slide03, slide04, slide05, slide06, slide07, slide08, slide09, slide10, slide11, slide12, slide13, slide14, slide15, slide16, slide17];
-
-const tr = (value, lang = "es") => {
-  if (Array.isArray(value)) return value.map(item => tr(item, lang));
-  if (value && typeof value === "object" && !value.$$typeof) return value[lang] || value.es || value.en || value.fa || "";
-  return value;
-};
-const cx = (...classes) => classes.filter(Boolean).join(" ");
-function Pill({ children, tone = "green", className = "" }) { return <span className={cx("inline-flex items-center rounded-full px-3 py-1 text-xs font-black uppercase tracking-[0.16em]", tone === "green" ? "bg-emerald-100 text-emerald-800" : "bg-stone-100 text-stone-600", className)}>{children}</span>; }
-function StatCard({ label, value, tone }) { return <div className={cx("rounded-2xl border p-4", tone === "green" ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50")}><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{label}</div><div className="mt-2 text-2xl font-black text-stone-950">{value}</div></div>; }
 
 const ui = {
   en: { mark: "Mark completed", done: "Completed", dashboard: "DRD dashboard", previous: "Previous", next: "Next", previousTitle: "M2.5 Normalization II", nextTitle: "M2.7 Batch + clustering", current: "M2.6", resources: "Class resources", slides: "Slides", code: "R script", transcript: "Transcript", recording: "Recording", slide: "Slide", zoom: "Click to zoom", close: "Close zoom", reportWatch: "Report watch", openAnswer: "Open expanded answer", hideAnswer: "Hide answer", include: "What to include", trap: "Common trap", model: "Report-ready wording", rcode: "R code", interpretation: "Interpretation", professor: "Professor emphasis", reportMove: "Report move", checkpoint: "Checkpoint", correct: "Correct", notQuite: "Not quite", trainer: "Report paragraph trainer", placeholder: "Write a report-style paragraph here...", words: "words", showAnswer: "Show answer", quickLab: "Mini-lab" },
@@ -254,15 +246,19 @@ const trainer = {
 
 function ResourceLinks({ lang }) {
   const labels = ui[lang] || ui.es;
-  const links = [{ label: labels.slides, href: SLIDES_URL }, { label: labels.code, href: CODE_URL }, { label: labels.transcript, href: TRANSCRIPT_URL }, { label: labels.recording, href: RECORDING_URL }];
-  return <div className="mt-5 rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div><div className="mt-3 flex flex-wrap gap-2">{links.map(link => <a key={link.label} href={link.href} className="rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-black text-stone-700 hover:border-emerald-300 hover:text-emerald-700">{link.label}</a>)}</div></div>;
+  const links = [
+    { label: labels.slides, href: SLIDES_URL, tone: "accent" },
+    { label: labels.code, href: CODE_URL },
+    { label: labels.transcript, href: TRANSCRIPT_URL },
+    { label: labels.recording, href: RECORDING_URL, tone: "dark" }
+  ];
+  return <DRDResourceLinks title={labels.resources} links={links} />;
 }
 function LessonNav({ lang, isDone, toggle, bottom = false }) {
   const labels = ui[lang] || ui.es;
   return <nav className={cx("rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm", bottom ? "mt-10" : "mb-6")} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m2-normalization-2" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {labels.previous}: {labels.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{labels.current} · {labels.dashboard}</a><button type="button" onClick={toggle} className={cx("rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5", isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white hover:bg-emerald-700")}>{isDone ? labels.done : labels.mark}</button></div><a href="#/lesson/m2-batch-clustering" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">{labels.next}: {labels.nextTitle} →</a></div></nav>;
 }
 function Hero({ lang }) { return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#f3fff7]/95 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><Pill>{tr(copy.hero.eyebrow, lang)}</Pill><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{tr(copy.hero.title, lang)}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{tr(copy.hero.subtitle, lang)}</p><div className="mt-6 flex flex-wrap gap-2">{tr(copy.hero.tags, lang).map(tag => <Pill key={tag} tone="stone">{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3">{copy.stats.map(item => <StatCard key={tr(item.label, lang)} label={tr(item.label, lang)} value={item.value} tone={item.tone}/>)}</div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">{lang === "es" ? "Pipeline mindset" : lang === "fa" ? "ذهنیت pipeline" : "Pipeline mindset"}</div><p className="mt-2 text-lg font-bold leading-7">{tr(copy.hero.bigIdea, lang)}</p></div><ResourceLinks lang={lang}/></div></div></div></section>; }
-function SectionHeader({ eyebrow, title, children }) { return <div><Pill>{eyebrow}</Pill><h2 className="mt-4 text-3xl font-black tracking-[-0.03em] text-stone-950 md:text-4xl">{title}</h2>{children && <p className="mt-4 max-w-4xl text-base font-semibold leading-8 text-stone-700">{children}</p>}</div>; }
 function ReportWatch({ lang, watch }) {
   const labels = ui[lang] || ui.es;
   const [open, setOpen] = useState(false);

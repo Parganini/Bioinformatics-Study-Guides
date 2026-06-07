@@ -26,6 +26,7 @@ import slide24 from "../../assets/drd/lesson12/slide-24.png";
 import slide25 from "../../assets/drd/lesson12/slide-25.png";
 import betaMHetero from "../../assets/drd/lesson12/beta-m-heteroscedasticity.png";
 import vennDmp from "../../assets/drd/lesson12/venn-dmp.png";
+import { cx, tr, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks } from "./shared.jsx";
 
 const SLIDES_URL = "#";
 const CODE_URL = "#";
@@ -280,27 +281,21 @@ const trainer = {
   model: { en: "After preprocessQuantile normalization, beta and M-value matrices were extracted. Mean–standard deviation plots were used to evaluate heteroscedasticity and to justify the value scale for statistical testing. Probe-level differential methylation was explored with row-wise t-tests, Mann–Whitney tests and dmpFinder, extracting and ranking p-values for each CpG. The overlap among methods was visualized with a Venn diagram, while the biological interpretation distinguished DMPs, which are individual CpG/probe signals, from DMRs, which represent coordinated changes across adjacent CpGs.", es: "Tras preprocessQuantile normalization, se extrajeron matrices beta y M-value. Los plots media–desviación estándar se usaron para evaluar heteroscedasticity y justificar la escala para testing estadístico. La metilación diferencial probe-level se exploró con t-tests por filas, Mann–Whitney y dmpFinder, extrayendo y ordenando p-values para cada CpG. El solapamiento entre métodos se visualizó con un diagrama de Venn, mientras que la interpretación biológica distinguió DMPs, señales individuales CpG/probe, de DMRs, cambios coordinados en CpGs adyacentes.", fa: "پس از preprocessQuantile normalization، ماتریس‌های beta و M-value استخراج شدند. plotهای mean–SD برای ارزیابی heteroscedasticity و توجیه scale مناسب برای testing آماری استفاده شدند. differential methylation در سطح probe با t-testهای row-wise، Mann–Whitney و dmpFinder بررسی شد و p-value هر CpG استخراج و مرتب گردید. overlap بین روش‌ها با نمودار Venn نمایش داده شد، در حالی که تفسیر زیستی DMPها را به‌عنوان signalهای individual CpG/probe از DMRها، یعنی تغییرات coordinated در CpGهای مجاور، جدا کرد." }
 };
 
-function tr(value, lang) {
-  if (Array.isArray(value)) return value;
-  return typeof value === "string" ? value : (value?.[lang] || value?.es || value?.en || "");
-}
-function cx(...classes) { return classes.filter(Boolean).join(" "); }
-function Pill({ children, tone = "green", className = "" }) {
-  const styles = tone === "stone" ? "border-stone-200 bg-white px-3 py-1 text-stone-700" : "border-emerald-200 bg-emerald-50 px-3 py-1 text-emerald-700";
-  return <span className={cx("inline-flex items-center rounded-full border text-xs font-black uppercase tracking-[0.16em]", styles, className)}>{children}</span>;
-}
-function StatCard({ label, value, tone = "stone" }) { return <div className={cx("rounded-3xl border p-4", tone === "green" ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50")}><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{label}</div><div className="mt-2 text-3xl font-black text-stone-950">{value}</div></div>; }
 function ResourceLinks({ lang }) {
   const labels = ui[lang] || ui.es;
-  const linkBase = "rounded-full border px-4 py-2 text-center text-sm font-black transition hover:-translate-y-0.5 hover:shadow-md";
-  return <div className="mt-4 rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.resources}</div><div className="grid gap-2 sm:grid-cols-4"><a href={SLIDES_URL} className={cx(linkBase, "border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-white")}>{labels.slides}</a><a href={CODE_URL} className={cx(linkBase, "border-stone-200 bg-white text-stone-800 hover:bg-stone-50")}>{labels.code}</a><a href={TRANSCRIPT_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-200 bg-white text-stone-800 hover:bg-stone-50")}>{labels.transcript}</a><a href={RECORDING_URL} target="_blank" rel="noreferrer" className={cx(linkBase, "border-stone-800 bg-stone-950 text-white hover:bg-emerald-700")}>{labels.recording}</a></div></div>;
+  const links = [
+    { label: labels.slides, href: SLIDES_URL, tone: "accent" },
+    { label: labels.code, href: CODE_URL },
+    { label: labels.transcript, href: TRANSCRIPT_URL },
+    { label: labels.recording, href: RECORDING_URL, tone: "dark" }
+  ];
+  return <DRDResourceLinks title={labels.resources} links={links} />;
 }
 function LessonNav({ lang, isDone, toggle, bottom = false }) {
   const labels = ui[lang] || ui.es;
   return <nav className={cx("rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm", bottom ? "mt-10" : "mb-6")} aria-label="Lesson navigation"><div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between"><a href="#/lesson/m2-normalization-1" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">← {labels.previous}: {labels.previousTitle}</a><div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center"><a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">{labels.current} · {labels.dashboard}</a><button type="button" onClick={toggle} className={cx("rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5", isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white hover:bg-emerald-700")}>{isDone ? labels.done : labels.mark}</button></div><a href="#/lesson/m2-dmp-dmr" className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">{labels.next}: {labels.nextTitle} →</a></div></nav>;
 }
 function Hero({ lang }) { return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#f3fff7]/95 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><Pill>{tr(copy.hero.eyebrow, lang)}</Pill><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{tr(copy.hero.title, lang)}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{tr(copy.hero.subtitle, lang)}</p><div className="mt-6 flex flex-wrap gap-2">{tr(copy.hero.tags, lang).map(tag => <Pill key={tag} tone="stone">{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3">{copy.stats.map(item => <StatCard key={tr(item.label, lang)} label={tr(item.label, lang)} value={item.value} tone={item.tone}/>)}</div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">{lang === "es" ? "Pipeline mindset" : lang === "fa" ? "ذهنیت pipeline" : "Pipeline mindset"}</div><p className="mt-2 text-lg font-bold leading-7">{tr(copy.hero.bigIdea, lang)}</p></div><ResourceLinks lang={lang}/></div></div></div></section>; }
-function SectionHeader({ eyebrow, title, children }) { return <div><Pill>{eyebrow}</Pill><h2 className="mt-4 text-3xl font-black tracking-[-0.03em] text-stone-950 md:text-4xl">{title}</h2>{children && <p className="mt-4 max-w-4xl text-base font-semibold leading-8 text-stone-700">{children}</p>}</div>; }
 function ReportWatch({ lang, watch }) {
   const labels = ui[lang] || ui.es;
   const [open, setOpen] = useState(false);

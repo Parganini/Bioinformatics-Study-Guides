@@ -32,7 +32,7 @@ const SLIDES_URL = "https://drive.google.com/file/d/1wrmgaByWIWoyTD9XCB_bRCbl3Q_
 const CODE_URL = "https://drive.google.com/file/d/1wiTpYVtVZdVUXTGEF-eMdZFThyOziuaj/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1TTRiPgi9LakpSVHeghxpKaZOyLACQ3bzcOZrIsFHMHk/edit";
 const RECORDING_URL = "https://www.youtube.com/watch?v=zpHD8CYhF48&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=9";
-const CODE_LABEL = { en: "Code walkthrough", es: "HTML del código R", fa: "راهنمای کد R" };
+const CODE_LABEL = "Code";
 
 const slideImages = [slide01, slide02, slide03, slide04, slide05, slide06, slide07, slide08, slide09, slide10, slide11, slide12, slide13, slide14, slide15, slide16, slide17, slide18, slide19, slide20, slide21, slide22, slide23, slide24, slide25];
 

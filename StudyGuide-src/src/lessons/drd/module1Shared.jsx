@@ -138,7 +138,7 @@ export function M1LessonNav({ labels, lessonId, isDone = false, toggle = () => {
   const resolvedNextHref = lesson ? (next ? drdLessonHref(next) : null) : nextHref;
   const previousLabel = lesson ? (previous ? formatLessonLabel(previous) : labels.dashboard) : (previousTitle || labels.previousTitle || labels.dashboard);
   const nextLabel = lesson ? (next ? formatLessonLabel(next) : labels.dashboard) : labels.nextTitle;
-  const currentLabel = lesson ? lesson.code : (showDashboardInCurrent ? `${labels.current} · ${labels.dashboard}` : labels.current);
+  const currentLabel = lesson ? `${lesson.code} - Dashboard` : (showDashboardInCurrent ? `${labels.current} · ${labels.dashboard}` : labels.current);
 
   return (
     <nav className={`${position === "bottom" ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm`} aria-label="Lesson navigation">

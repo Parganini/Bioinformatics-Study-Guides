@@ -286,7 +286,7 @@ function ResourceLinks({ lang }) {
   const labels = ui[lang] || ui.es;
   const links = [
     { label: labels.slides, href: SLIDES_URL, tone: "accent" },
-    { label: tr(CODE_LABEL, lang), href: CODE_URL },
+    { label: "Code", href: CODE_URL },
     { label: labels.transcript, href: TRANSCRIPT_URL },
     { label: labels.recording, href: RECORDING_URL, tone: "dark" }
   ];

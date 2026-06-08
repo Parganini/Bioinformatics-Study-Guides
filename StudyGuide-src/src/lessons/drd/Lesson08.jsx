@@ -19,6 +19,7 @@ import slide17 from "../../assets/drd/lesson08/slide-17.png";
 import { cx, tr as t, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks, DRDLessonHero, DRDLessonNav } from "./shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1sN2mGi86239wfQ8w8K-PYtKeF4pWQXAR/view?usp=drivesdk";
+const CODE_URL = "https://drive.google.com/file/d/1-jxa2q2refHvGJ55kj3_43tw12uCwgeH/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1StKS_UrrCBaIIvwsyz-vhmfrFQoxWy5HiAo8JFN3kHs/edit?usp=drivesdk";
 const RECORDING_URL = "https://www.youtube.com/watch?v=prqxPH0DZ_s&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=6";
 
@@ -26,13 +27,13 @@ const slideImages = [slide01, slide02, slide03, slide04, slide05, slide06, slide
 
 const ui = {
   en: {
-    mark: "Mark completed", done: "Completed", dashboard: "DRD dashboard", previous: "Previous", next: "Next", previousTitle: "M2.1 R/Bioconductor intro", nextTitle: "M2.3 Data import + QC", current: "M2.2", resources: "Class resources", slides: "Slides", transcript: "Transcript", recording: "Recording", open: "Open", zoom: "Click to zoom", close: "Close zoom", slide: "Slide", reportWatch: "Report watch", openAnswer: "Open expanded answer", include: "What to include", trap: "Common trap", model: "Report-ready wording", code: "R code", interpretation: "Interpretation", checkpoint: "Checkpoint", correct: "Correct", notQuite: "Not quite", showAnswer: "Show answer", hideAnswer: "Hide answer", words: "words", trainer: "Report paragraph trainer", placeholder: "Write a report-style paragraph here...", quiz: "Quick checkpoint quiz", reportMove: "Report move"
+    mark: "Mark completed", done: "Completed", dashboard: "DRD dashboard", previous: "Previous", next: "Next", previousTitle: "M2.1 R/Bioconductor intro", nextTitle: "M2.3 Data import + QC", current: "M2.2", resources: "Class resources", slides: "Slides", transcript: "Transcript", recording: "Recording", open: "Open", zoom: "Click to zoom", close: "Close zoom", slide: "Slide", reportWatch: "Report watch", openAnswer: "Open expanded answer", include: "What to include", trap: "Common trap", model: "Report-ready wording", code: "Code", interpretation: "Interpretation", checkpoint: "Checkpoint", correct: "Correct", notQuite: "Not quite", showAnswer: "Show answer", hideAnswer: "Hide answer", words: "words", trainer: "Report paragraph trainer", placeholder: "Write a report-style paragraph here...", quiz: "Quick checkpoint quiz", reportMove: "Report move"
   },
   es: {
-    mark: "Marcar completada", done: "Completada", dashboard: "Dashboard DRD", previous: "Anterior", next: "Siguiente", previousTitle: "M2.1 Intro R/Bioconductor", nextTitle: "M2.3 Importación + QC", current: "M2.2", resources: "Recursos de clase", slides: "Slides", transcript: "Transcripción", recording: "Recording", open: "Abrir", zoom: "Click para ampliar", close: "Cerrar zoom", slide: "Diapositiva", reportWatch: "Report watch", openAnswer: "Abrir respuesta desarrollada", include: "Qué incluir", trap: "Trampa común", model: "Redacción lista para report", code: "Código R", interpretation: "Interpretación", checkpoint: "Checkpoint", correct: "Correcto", notQuite: "Casi", showAnswer: "Mostrar respuesta", hideAnswer: "Ocultar respuesta", words: "palabras", trainer: "Entrenador de párrafo de report", placeholder: "Escribe aquí un párrafo estilo report...", quiz: "Quiz rápido de checkpoint", reportMove: "Movimiento para report"
+    mark: "Marcar completada", done: "Completada", dashboard: "Dashboard DRD", previous: "Anterior", next: "Siguiente", previousTitle: "M2.1 Intro R/Bioconductor", nextTitle: "M2.3 Importación + QC", current: "M2.2", resources: "Recursos de clase", slides: "Slides", transcript: "Transcripción", recording: "Recording", open: "Abrir", zoom: "Click para ampliar", close: "Cerrar zoom", slide: "Diapositiva", reportWatch: "Report watch", openAnswer: "Abrir respuesta desarrollada", include: "Qué incluir", trap: "Trampa común", model: "Redacción lista para report", code: "Code", interpretation: "Interpretación", checkpoint: "Checkpoint", correct: "Correcto", notQuite: "Casi", showAnswer: "Mostrar respuesta", hideAnswer: "Ocultar respuesta", words: "palabras", trainer: "Entrenador de párrafo de report", placeholder: "Escribe aquí un párrafo estilo report...", quiz: "Quiz rápido de checkpoint", reportMove: "Movimiento para report"
   },
   fa: {
-    mark: "علامت کامل‌شده", done: "کامل شد", dashboard: "داشبورد DRD", previous: "قبلی", next: "بعدی", previousTitle: "M2.1 معرفی R/Bioconductor", nextTitle: "M2.3 ورود داده + QC", current: "M2.2", resources: "منابع کلاس", slides: "اسلایدها", transcript: "رونوشت", recording: "Recording", open: "باز کردن", zoom: "برای بزرگ‌نمایی کلیک کن", close: "بستن بزرگ‌نمایی", slide: "اسلاید", reportWatch: "نکته برای گزارش", openAnswer: "باز کردن پاسخ کامل", include: "چه چیزهایی باید بیاید", trap: "دام رایج", model: "عبارت آماده برای گزارش", code: "کد R", interpretation: "تفسیر", checkpoint: "Checkpoint", correct: "درست", notQuite: "نه کاملاً", showAnswer: "نمایش پاسخ", hideAnswer: "پنهان کردن پاسخ", words: "کلمه", trainer: "تمرین پاراگراف گزارش", placeholder: "یک پاراگراف به سبک گزارش بنویسید...", quiz: "کوئیز سریع", reportMove: "حرکت مناسب گزارش"
+    mark: "علامت کامل‌شده", done: "کامل شد", dashboard: "داشبورد DRD", previous: "قبلی", next: "بعدی", previousTitle: "M2.1 معرفی R/Bioconductor", nextTitle: "M2.3 ورود داده + QC", current: "M2.2", resources: "منابع کلاس", slides: "اسلایدها", transcript: "رونوشت", recording: "Recording", open: "باز کردن", zoom: "برای بزرگ‌نمایی کلیک کن", close: "بستن بزرگ‌نمایی", slide: "اسلاید", reportWatch: "نکته برای گزارش", openAnswer: "باز کردن پاسخ کامل", include: "چه چیزهایی باید بیاید", trap: "دام رایج", model: "عبارت آماده برای گزارش", code: "Code", interpretation: "تفسیر", checkpoint: "Checkpoint", correct: "درست", notQuite: "نه کاملاً", showAnswer: "نمایش پاسخ", hideAnswer: "پنهان کردن پاسخ", words: "کلمه", trainer: "تمرین پاراگراف گزارش", placeholder: "یک پاراگراف به سبک گزارش بنویسید...", quiz: "کوئیز سریع", reportMove: "حرکت مناسب گزارش"
   }
 };
 
@@ -299,10 +300,11 @@ function ResourceLinks({ lang }) {
   const labels = ui[lang] || ui.es;
   const links = [
     { label: labels.slides, href: SLIDES_URL, tone: "accent" },
+    { label: "Code", href: CODE_URL },
     { label: labels.transcript, href: TRANSCRIPT_URL },
     { label: labels.recording, href: RECORDING_URL, tone: "dark" }
   ];
-  return <DRDResourceLinks title={labels.resources} links={links} columns={3} />;
+  return <DRDResourceLinks title={labels.resources} links={links} />;
 }
 
 function LessonNav({ lang, isDone, toggle, bottom = false }) {

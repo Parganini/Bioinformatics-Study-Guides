@@ -17,7 +17,7 @@ export function DRDCanonicalNavigation({ lesson, isDone = false, toggle = () => 
         )}
         <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
           <a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.18em] text-stone-500 transition hover:bg-stone-50">
-            {lesson?.code || "DRD"} dashboard
+            {lesson?.code ? `${lesson.code} - Dashboard` : "DRD dashboard"}
           </a>
           <button type="button" onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>
             {isDone ? "Completed" : "Mark completed"}

@@ -137,9 +137,10 @@ export function DRDLessonHero({
 export function DRDLessonNav({ labels, lessonId, isDone = false, toggle = () => {}, bottom = false, previousHref, nextHref, dashboardHref = "#/" }) {
   const lesson = getDRDLessonById(lessonId);
   const { previous, next } = lesson ? getDRDNeighbors(lesson.id) : { previous: null, next: null };
-  const resolvedPreviousHref = lesson ? (previous ? drdLessonHref(previous) : dashboardHref) : previousHref;
+  const previousInSameModule = previous && previous.module === lesson?.module ? previous : null;
+  const resolvedPreviousHref = lesson ? (previousInSameModule ? drdLessonHref(previousInSameModule) : dashboardHref) : previousHref;
   const resolvedNextHref = lesson ? (next ? drdLessonHref(next) : null) : nextHref;
-  const previousLabel = lesson ? (previous ? formatLessonLabel(previous) : labels.dashboard) : labels.previousTitle;
+  const previousLabel = lesson ? (previousInSameModule ? formatLessonLabel(previousInSameModule) : labels.dashboard) : labels.previousTitle;
   const nextLabel = lesson ? (next ? formatLessonLabel(next) : labels.nextTitle) : labels.nextTitle;
   const currentLabel = lesson ? lesson.code : labels.current;
 
@@ -151,7 +152,7 @@ export function DRDLessonNav({ labels, lessonId, isDone = false, toggle = () => 
         </a>
         <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center">
           <a href={dashboardHref} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">
-            {currentLabel} · {labels.dashboard}
+            {lesson ? `${currentLabel} - Dashboard` : `${currentLabel} · ${labels.dashboard}`}
           </a>
           <button type="button" onClick={toggle} className={cx("rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5", isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white hover:bg-emerald-700")}>
             {isDone ? labels.done : labels.mark}

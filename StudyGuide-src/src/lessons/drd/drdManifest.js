@@ -2,7 +2,7 @@ export const DRD_RESOURCE_LABELS = {
   slides: "Slides",
   transcript: "Transcript",
   recording: "Recording",
-  code: "Code / rendered HTML",
+  code: "Code",
   folder: "Drive folder",
   playlist: "Recording playlist",
   finalReport: "Final report folder",
@@ -315,6 +315,7 @@ export const DRD_LESSONS = [
       slides: "https://drive.google.com/file/d/1Qo2clrYIp2JO2cTf6VoSP-a3szJ_kgMa/view?usp=drivesdk",
       transcript: "https://docs.google.com/document/d/1I6CzjnJ7O4F6oJ_46aownNn4woG6ewL3p7xLDEQpgAI/edit?usp=drivesdk",
       recording: "https://www.youtube.com/watch?v=XmowKzBBqx8&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=4",
+      code: "https://drive.google.com/file/d/1CQ1a8y7fm4PWZ6ubygpIObZhzkcz_Efo/view?usp=drivesdk",
     },
   },
   {
@@ -335,6 +336,7 @@ export const DRD_LESSONS = [
       slides: "https://drive.google.com/file/d/1sN2mGi86239wfQ8w8K-PYtKeF4pWQXAR/view?usp=drivesdk",
       transcript: "https://docs.google.com/document/d/1StKS_UrrCBaIIvwsyz-vhmfrFQoxWy5HiAo8JFN3kHs/edit?usp=drivesdk",
       recording: "https://www.youtube.com/watch?v=prqxPH0DZ_s&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=6",
+      code: "https://drive.google.com/file/d/1-jxa2q2refHvGJ55kj3_43tw12uCwgeH/view?usp=drivesdk",
     },
   },
   {

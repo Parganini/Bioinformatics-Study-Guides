@@ -23,6 +23,7 @@ import orderingFunctionVisual from "../../assets/drd/lesson04/ordering-function.
 const SLIDES_URL = "https://drive.google.com/file/d/1Qo2clrYIp2JO2cTf6VoSP-a3szJ_kgMa/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1I6CzjnJ7O4F6oJ_46aownNn4woG6ewL3p7xLDEQpgAI/edit?usp=drivesdk";
 const CLASS_RECORDING_URL = "https://www.youtube.com/watch?v=XmowKzBBqx8&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=4";
+const CODE_URL = "https://drive.google.com/file/d/1CQ1a8y7fm4PWZ6ubygpIObZhzkcz_Efo/view?usp=drivesdk";
 
 const IMG = {
   module2Overview: { src: module2OverviewVisual, slide: 2 },
@@ -62,6 +63,7 @@ const COPY = {
     flow: ["report rules", "why R", "packages", "workspace", "objects", "SampleSheet"],
     resources: "Class resources",
     slides: "Slides",
+    code: "Code",
     transcript: "Transcript",
     recording: "Recording",
     open: "Open",
@@ -234,6 +236,7 @@ const COPY = {
     flow: ["reglas del report", "por qué R", "paquetes", "workspace", "objetos", "SampleSheet"],
     resources: "Recursos de clase",
     slides: "Slides",
+    code: "Code",
     transcript: "Transcripción",
     recording: "Grabación",
     open: "Abrir",
@@ -281,6 +284,7 @@ const COPY = {
     flow: ["قواعد report", "چرا R", "packageها", "workspace", "objectها", "SampleSheet"],
     resources: "منابع کلاس",
     slides: "اسلایدها",
+    code: "Code",
     transcript: "رونوشت",
     recording: "ضبط کلاس",
     open: "باز کردن",
@@ -479,10 +483,11 @@ function SectionHeader({ eyebrow, title, children }) {
 function ResourceLinks({ copy }) {
   const links = [
     { label: copy.slides, href: SLIDES_URL, tone: "accent" },
+    { label: "Code", href: CODE_URL },
     { label: copy.transcript, href: TRANSCRIPT_URL },
     { label: copy.recording, href: CLASS_RECORDING_URL, tone: "dark" }
   ];
-  return <DRDResourceLinks title={copy.resources} links={links} columns={3} />;
+  return <DRDResourceLinks title={copy.resources} links={links} />;
 }
 function Hero({ copy }) {
   return <DRDLessonHero lessonId="m2-r" eyebrow={copy.heroEyebrow} title={copy.heroTitle} subtitle={copy.heroSubtitle} tags={copy.flow} stats={[{ label: "Module", value: "2", tone: "green" }, { label: "Date", value: "May 8" }, { label: "Core", value: "R", tone: "green" }, { label: "Output", value: "Report" }]} bigIdea="metadata → object type → inspect → subset → model/report" resourcePanel={<ResourceLinks copy={copy}/>} />;

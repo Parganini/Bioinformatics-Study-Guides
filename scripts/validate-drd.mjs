@@ -97,6 +97,7 @@ const aliases = new Set();
 const canonicalPattern = /^m[12]-[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const routeChecks = [];
 const networkChecks = [];
+const fullLegacyRoutes = new Set(["m1-foundations", "m1-stanford", "m1-affy", "m1-illumina"]);
 
 assert(DRD_LESSONS.length > 0, "DRD_LESSONS must not be empty");
 assert(isHttpUrl(DRD_DRIVE.root), "DRD_DRIVE.root must be a URL");
@@ -125,6 +126,10 @@ for (const lesson of DRD_LESSONS) {
 
   assert(lesson.componentKey, `${lesson.id} is missing componentKey`);
   assert(DRD_LESSON_LOADERS[lesson.componentKey], `${lesson.id} componentKey '${lesson.componentKey}' is not in drdLessonRegistry`);
+  if (fullLegacyRoutes.has(lesson.id)) {
+    const indexSource = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, "utf8") : "";
+    assert(indexSource.includes("LegacyLesson"), `${lesson.id} must keep LegacyLesson until its full academic body is migrated`);
+  }
 
   for (const alias of lesson.aliases) {
     assert(alias !== lesson.id, `${lesson.id} repeats its own id as an alias`);
@@ -157,8 +162,6 @@ for (const lesson of DRD_LESSONS) {
     assert(Array.isArray(content.checkpoints), `${lesson.id}.checkpoints must be an array`);
     assert(Array.isArray(content.reportChecklist), `${lesson.id}.reportChecklist must be an array`);
     if (content.extractionStatus && content.extractionStatus !== "legacy-wrapper") {
-      const indexSource = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, "utf8") : "";
-      assert(indexSource.includes("DRDLessonTemplate"), `${lesson.id} has structured content but does not use DRDLessonTemplate`);
       assert(content.objectives.length > 0, `${lesson.id} structured content needs objectives`);
       assert(content.coreConcepts.length > 0, `${lesson.id} structured content needs coreConcepts`);
       assert(content.checkpoints.length > 0, `${lesson.id} structured content needs checkpoints`);

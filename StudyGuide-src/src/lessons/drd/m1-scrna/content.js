@@ -1,10 +1,78 @@
 export const lessonContent = {
   id: "m1-scrna",
-  extractionStatus: "planned",
-  objectives: [],
-  coreConcepts: [],
-  professorEmphasis: [],
-  examTraps: [],
-  checkpoints: [],
-  reportChecklist: [],
+  extractionStatus: "structured-draft",
+  objectives: [
+    "Contrast bulk RNA-seq with single-cell RNA-seq in terms of signal, heterogeneity and interpretation.",
+    "Explain why counts, UMIs, dropout and library size matter in single-cell data.",
+    "Describe the conceptual workflow from cells and genes to clusters, marker genes and biological annotation.",
+    "Interpret UMAP/t-SNE plots without overclaiming distance, continuity or causality.",
+  ],
+  coreConcepts: [
+    {
+      title: "Bulk averages hide cellular heterogeneity",
+      body: "Bulk RNA-seq gives an average signal across many cells. Single-cell RNA-seq keeps cell-level profiles, making cell types, states and rare populations visible.",
+      keywords: ["bulk", "single cell", "heterogeneity"],
+    },
+    {
+      title: "UMIs help count molecules, not just reads",
+      body: "Unique molecular identifiers reduce PCR-amplification bias by tagging original molecules before amplification.",
+      keywords: ["UMI", "counts", "PCR bias"],
+    },
+    {
+      title: "Dropout creates sparse matrices",
+      body: "A zero can mean true absence or failed detection. This makes normalization, filtering and interpretation more delicate than in many bulk settings.",
+      keywords: ["dropout", "zero inflation", "sparsity"],
+    },
+    {
+      title: "Clusters need marker-gene interpretation",
+      body: "Clusters become biological only after checking marker genes, known cell-type signatures and sample metadata.",
+      keywords: ["clusters", "markers", "annotation"],
+    },
+  ],
+  professorEmphasis: [
+    "Do not describe single-cell plots as maps of physical distance between cells.",
+    "A cluster label is an interpretation, not a raw measurement.",
+    "Bulk and single-cell answer different biological questions; neither is universally better.",
+  ],
+  examTraps: [
+    "Saying that every zero in scRNA-seq means a gene is not expressed.",
+    "Calling UMAP axes principal components or giving them direct biological units.",
+    "Forgetting that batch and sample composition can drive apparent cell-type differences.",
+  ],
+  practice: [
+    {
+      title: "Bulk versus single-cell prompt",
+      body: "Write one scenario where bulk RNA-seq is enough and one where single-cell resolution is essential.",
+    },
+    {
+      title: "Marker-gene annotation",
+      body: "Given a cluster and three marker genes, write a cautious cell-type label and one validation sentence.",
+    },
+    {
+      title: "UMAP interpretation",
+      body: "Practice explaining a UMAP in two sentences: what it shows, and what it does not prove.",
+    },
+  ],
+  checkpoints: [
+    {
+      question: "Why can bulk RNA-seq miss a rare cell population?",
+      answer: "Because bulk RNA-seq averages expression across all cells in the sample. A rare cell population can be diluted by more abundant cells, making its specific signal hard to detect.",
+    },
+    {
+      question: "What is dropout in scRNA-seq?",
+      answer: "Dropout is a failed detection event where a transcript present in a cell is observed as zero. It contributes to sparse count matrices and complicates interpretation.",
+    },
+    {
+      question: "How should a cell cluster be named?",
+      answer: "A cluster should be named by combining marker genes, reference knowledge, QC and metadata. The label should remain cautious unless validated.",
+    },
+  ],
+  checklistTitle: "Single-cell answer checklist",
+  reportChecklist: [
+    "State whether the question requires average expression or cell-level heterogeneity.",
+    "Mention counts/UMIs and the sparse nature of single-cell matrices.",
+    "Connect clustering to marker genes and annotation.",
+    "Avoid overinterpreting UMAP distances and axes.",
+    "Check sample, batch and cell-composition effects before biological claims.",
+  ],
 };

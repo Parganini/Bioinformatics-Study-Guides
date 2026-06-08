@@ -18,19 +18,24 @@ import InferringSelectionLesson, { lesson15Quiz } from "./lessons/phylogenetics/
 import TraitEvolutionLesson, { lesson16Quiz } from "./lessons/phylogenetics/Lesson16.jsx";
 import { PHYLO_MOCK_EXAMS } from "./exams/phylogenetics/mockExams.js";
 import { PHYLO_WRITTEN_PRACTICE } from "./exams/phylogenetics/writtenPractice.js";
-import DRDLesson01 from "./lessons/drd/Lesson01.jsx";
-import DRDLesson02 from "./lessons/drd/Lesson02.jsx";
-import DRDLesson03 from "./lessons/drd/Lesson03.jsx";
-import DRDLesson04 from "./lessons/drd/Lesson04.jsx";
-import DRDLesson05 from "./lessons/drd/Lesson05.jsx";
-import DRDLesson06 from "./lessons/drd/Lesson06.jsx";
-import DRDLesson07 from "./lessons/drd/Lesson07.jsx";
-import DRDLesson08 from "./lessons/drd/Lesson08.jsx";
-import DRDLesson09 from "./lessons/drd/Lesson09.jsx";
-import DRDLesson10 from "./lessons/drd/Lesson10.jsx";
-import DRDLesson11 from "./lessons/drd/Lesson11.jsx";
-import DRDLesson12 from "./lessons/drd/Lesson12.jsx";
-import DRDLesson13 from "./lessons/drd/Lesson13.jsx";
+import {
+  DRD_DRIVE,
+  DRD_FINAL_REPORT,
+  DRD_LESSONS,
+  DRD_MODULES,
+  DRD_STUDY_PRODUCTS,
+  filterDRDLessons,
+  getAvailableDRDLessons,
+  getDRDExamReportKit,
+  getDRDLessonById,
+  getDRDLessonsByModule,
+  getDRDProgressTotal,
+  drdLessonHref,
+} from "./lessons/drd/drdManifest.js";
+import { getDRDLessonComponent } from "./lessons/drd/drdLessonRegistry.js";
+import { DRDPlannedLesson } from "./lessons/drd/shared/template.jsx";
+import { getDRDStatusMeta } from "./lessons/drd/shared/status.js";
+import { DRDResourcePanel } from "./lessons/drd/shared/resourcePanel.jsx";
 
 
 const LANGS = [
@@ -608,438 +613,39 @@ function phyloResourceCopy(lang) {
 }
 
 
-const DRD_STATUS_COPY = {
-  covered: { es: "Cubierto", en: "Covered", fa: "پوشش داده‌شده" },
-  active: { es: "En curso", en: "In progress", fa: "در حال انجام" },
-  upcoming: { es: "Pendiente", en: "Upcoming", fa: "در پیش" },
-};
-
-const DRD_STATUS_CLASSES = {
-  covered: "border-emerald-200 bg-emerald-50 text-emerald-800",
-  active: "border-amber-200 bg-amber-50 text-amber-800",
-  upcoming: "border-stone-200 bg-stone-50 text-stone-600",
-};
-
-const DRD_MODULE1_UNITS = [
-  {
-    id: "m1-foundations",
-    code: "M1.1",
-    date: "Apr 28",
-    status: "covered",
-    title: "Biological question, experimental design and variability",
-    desc: "Convert a focused biological question into model, variables, sample size, technique, quantitative data and interpretation. Distinguish biological variability from experimental variability.",
-    products: ["React lesson", "concept quiz", "short written practice"],
-    tags: ["biological question", "variables", "variability", "omics"],
-    lessonHref: "#/lesson/m1-foundations",
-  },
-  {
-    id: "m1-stanford",
-    code: "M1.2",
-    date: "May 5",
-    status: "covered",
-    title: "Competitive two-colour arrays: Stanford",
-    desc: "Spotted arrays, Cy3/Cy5 targets, dye bias, dye swap, TIFF/raw images and image-level quality control.",
-    products: ["workflow ordering", "technical-error quiz", "exam-style answer"],
-    tags: ["two-colour", "Cy3/Cy5", "dye swap", "QC"],
-    lessonHref: "#/lesson/m1-stanford",
-  },
-  {
-    id: "m1-affy",
-    code: "M1.3",
-    date: "May 6",
-    status: "covered",
-    title: "Affymetrix / ThermoFisher GeneChip",
-    desc: "One-colour noncompetitive arrays, photolithography, PM/MM probes, probe sets, DAT/CEL/CDF/CHP files, RMA and quantile normalization.",
-    products: ["file-flow diagram", "PM/MM comparison", "RMA checklist"],
-    tags: ["one-colour", "PM/MM", "RMA", "CEL files"],
-    lessonHref: "#/lesson/m1-affy",
-  },
-  {
-    id: "m1-illumina",
-    code: "M1.4",
-    date: "May 12",
-    status: "covered",
-    title: "Illumina BeadChip and methylation platforms",
-    desc: "BeadArray design, optical decoding, transcriptomics, bisulfite logic, 27K/450K/EPIC coverage and CpG genomic context.",
-    products: ["lección visual en React", "27K/450K/EPIC comparison", "bisulfite quiz"],
-    tags: ["BeadChip", "bisulfite", "450K", "EPIC"],
-    lessonHref: "#/lesson/m1-illumina",
-  },
-  {
-    id: "m1-deg-i",
-    code: "M1.5",
-    date: "May 26",
-    status: "covered",
-    title: "Differentially expressed genes I",
-    desc: "Fold change versus statistical significance, log2 ratios, MA-plots, null and alternative hypotheses, p-values, alpha/beta errors, power and parametric versus non-parametric tests.",
-    products: ["árbol de selección de test", "ejercicios de valor p", "fold-change traps"],
-    tags: ["fold change", "p-value", "power", "MA-plot"],
-    lessonHref: "#/lesson/m1-deg-i",
-  },
-  {
-    id: "m1-deg-ii",
-    code: "M1.6",
-    date: "May 27",
-    status: "covered",
-    title: "Differentially expressed genes II",
-    desc: "Bootstrap validation, more-than-two-groups logic, one-way ANOVA, Kruskal–Wallis, multiple testing/FWER and the transition toward gene-set interpretation.",
-    products: ["guía paso a paso de bootstrap", "ANOVA/Kruskal decision lab", "trampas de pruebas múltiples"],
-    tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER"],
-    lessonHref: "#/lesson/m1-deg-ii",
-  },
-  {
-    id: "m1-samples-genes-i",
-    code: "M1.7",
-    date: "Jun 5",
-    status: "covered",
-    title: "Relationship between samples and genes I",
-    desc: "Covered June 5 lesson: matrices of genes/probes by samples, similarity, distance, sample structure, Pearson correlation, heatmaps and hierarchical clustering logic.",
-    products: ["lección de lectura de matrices", "quiz de distancia entre muestras", "interpretación de plots"],
-    tags: ["matrix", "samples", "genes", "distance"],
-    lessonHref: "#/lesson/m1-samples-genes-i",
-  },
-  {
-    id: "m1-samples-genes-ii",
-    code: "M1.8",
-    date: "Jun 9",
-    status: "active",
-    title: "Relationship between samples and genes II",
-    desc: "Heatmaps, gene/sample clustering, outliers, PCA-like reasoning and linking patterns to phenotype, treatment, tissue or batch.",
-    products: ["práctica de heatmaps", "interpretación de PCA", "errores comunes"],
-    tags: ["heatmap", "clustering", "PCA", "outliers"],
-  },
-  {
-    id: "m1-scrna",
-    code: "M1.9",
-    date: "Jun 10",
-    status: "upcoming",
-    title: "Guest lecture: scRNA-seq",
-    desc: "Bulk versus single-cell RNA-seq, cellular heterogeneity, counts/UMIs, marker genes, dimensionality reduction, clustering and dropout-aware interpretation.",
-    products: ["comparador bulk vs single-cell", "glossary", "pregunta simulada"],
-    tags: ["scRNA-seq", "UMI", "markers", "UMAP"],
-  },
-];
-
-const DRD_MODULE2_UNITS = [
-  {
-    id: "m2-r",
-    code: "M2.1",
-    date: "May 8",
-    status: "covered",
-    title: "R/Bioconductor introduction",
-    desc: "R basics, packages, scripts, SampleSheet logic, metadata and reproducible analysis habits.",
-    products: ["configuración guiada", "ejercicio de SampleSheet", "glosario de objetos R"],
-    tags: ["R", "Bioconductor", "SampleSheet", "metadata"],
-    lessonHref: "#/lesson/m2-r",
-  },
-  {
-    id: "m2-manifest",
-    code: "M2.2",
-    date: "May 14",
-    status: "covered",
-    title: "DNA methylation and Illumina BeadChip chemistry",
-    desc: "Manifest files, probe annotation, chromosome/position, genes, CpG island context and probe-level interpretation.",
-    products: ["quiz de anotación de probes", "lectura de manifest", "resumen de química"],
-    tags: ["manifest", "probe ID", "CpG context", "Infinium"],
-    lessonHref: "#/lesson/m2-manifest",
-  },
-  {
-    id: "m2-import-qc",
-    code: "M2.3",
-    date: "May 19",
-    status: "covered",
-    title: "Pipeline 1: Data import + quality check",
-    desc: "Raw methylation-array data, RGSet, MSet_raw, detection p-values, control probes, sample QC and probe QC.",
-    products: ["RGSet→MSet diagram", "práctica de detection p-value", "checklist de filtrado"],
-    tags: ["RGSet", "MSet", "detection p-value", "control probes"],
-    lessonHref: "#/lesson/m2-import-qc",
-  },
-  {
-    id: "m2-normalization-1",
-    code: "M2.4",
-    date: "May 20",
-    status: "covered",
-    title: "Pipeline 2: Normalization 1",
-    desc: "Why raw methylation signals are not directly comparable and how normalization changes distributions and downstream interpretation.",
-    products: ["density-interpretación de plots", "comparación raw vs normalizado", "glosario de normalización"],
-    tags: ["normalization", "beta values", "density plots", "raw data"],
-    lessonHref: "#/lesson/m2-normalization-1",
-  },
-  {
-    id: "m2-normalization-2",
-    code: "M2.5",
-    date: "May 22",
-    status: "covered",
-    title: "Pipeline 2: Normalization 2",
-    desc: "Quantile, Noob, SWAN and functional normalization, including background, dye bias, probe-type bias and control-probe-based correction.",
-    products: ["comparador beta/M", "tests DMP", "Venn de métodos"],
-    tags: ["batch effects", "PCA", "beta/M", "DMP", "DMR"],
-    lessonHref: "#/lesson/m2-normalization-2",
-  },
-  {
-    id: "m2-dmp-dmr",
-    code: "M2.6",
-    date: "Jun 4",
-    status: "covered",
-    title: "Pipeline 3: DMP/DMR + multiple testing + PCA",
-    desc: "Covered on June 4: beta versus M values, design matrix, contrasts, DMP/DMR, FDR and PCA.",
-    products: ["guía paso a paso del pipeline", "práctica de matriz de diseño", "volcano/interpretación de PCA"],
-    tags: ["DMP", "DMR", "FDR", "PCA"],
-    lessonHref: "#/lesson/m2-dmp-dmr",
-  },
-  {
-    id: "m2-batch-clustering",
-    code: "M2.7",
-    date: "Jun 11",
-    status: "upcoming",
-    title: "Pipeline 4: Batch effect, visualization and clustering",
-    desc: "Batch effect detection/correction, ComBat, PCA before/after correction, heatmaps, clustering and final verification-test integration.",
-    products: ["checklist de plots", "explicación de ComBat", "simulador de reporte en equipo"],
-    tags: ["batch effect", "ComBat", "visualization", "clustering"],
-  },
-];
-
-const DRD_STUDY_PRODUCTS = [
-  { title: "React lessons", desc: "Short visual lessons for Module 1 theory and Module 2 workflow logic, matching the Filogenética style.", tags: ["concepts", "diagrams", "common traps"] },
-  { title: "Interactive quizzes", desc: "Vocabulary, workflow ordering, error spotting, statistical-test selection and interpretación de plots.", tags: ["Cy3/Cy5", "RGSet", "FDR", "PCA"] },
-  { title: "Mock written exams", desc: "Four-question, 45-minute practice sets with 10–12-line model answers for the Module 1 written test.", tags: ["4 questions", "rubric", "model answers"] },
-  { title: "Team report simulator", desc: "A Module 2 report scaffold from biological question to QC, normalization, DMP/DMR, PCA, batch effect and interpretation.", tags: ["report", "pipeline", "methylation"] },
-];
-
-const DRD_EXAM_REPORT_KIT = {
-  en: {
-    eyebrow: "Practical study kit",
-    title: "Exam + report route",
-    body: "Use this as the operating plan for turning the guide into daily practice: short written answers for Module 1 and a reproducible methylation-analysis report for Module 2.",
-    writtenTitle: "Module 1 written test trainer",
-    reportTitle: "Module 2 team-report scaffold",
-    rubricTitle: "Answer/checklist logic",
-    written: [
-      { title: "45-minute mock exam", body: "Train with four prompts and force each answer into 10–12 lines.", bullets: ["1 definition sentence", "2–3 lines of workflow", "1 line on variability or statistics", "1 biological interpretation sentence"] },
-      { title: "Test-selection drills", body: "Start from the experimental design before naming a test.", bullets: ["paired vs unpaired", "two groups vs more than two", "parametric vs rank-based", "multiple-testing correction"] },
-      { title: "Technology comparison answers", body: "Practise contrasting Stanford, Affymetrix and Illumina without turning the answer into a list of facts.", bullets: ["sample/chip logic", "main technical bias", "normalization/QC step", "what the output means"] }
-    ],
-    report: [
-      { title: "1 · Question and metadata", body: "State the biological comparison, phenotype, covariates and SampleSheet fields that drive the analysis.", checks: ["groups", "sample IDs", "batch variables", "expected contrast"] },
-      { title: "2 · Import, QC and filtering", body: "Explain RGSet/MSet objects, detection p-values, failed samples/probes and why each filter is justified.", checks: ["RGSet/MSet", "detection p-value", "control probes", "removed probes"] },
-      { title: "3 · Normalization choice", body: "Compare raw versus normalized distributions and justify the chosen method rather than only naming it.", checks: ["Quantile/Noob/SWAN/Funnorm", "density plot", "probe-type bias", "dye/background correction"] },
-      { title: "4 · Differential methylation and interpretation", body: "Connect design matrix, contrasts, DMP/DMR, FDR, PCA/batch effect and final biological meaning.", checks: ["beta vs M values", "design matrix", "FDR", "PCA/ComBat"] }
-    ],
-    rubric: [
-      { label: "Define", value: "open with the concept" },
-      { label: "Justify", value: "tie it to design/QC" },
-      { label: "Interpret", value: "state the biological meaning" }
-    ]
-  },
-  es: {
-    eyebrow: "Kit práctico de estudio",
-    title: "Ruta de examen + reporte",
-    body: "Úsalo como plan operativo para convertir la guía en práctica diaria: respuestas escritas cortas para el Módulo 1 y un reporte reproducible de análisis de metilación para el Módulo 2.",
-    writtenTitle: "Entrenador del escrito del Módulo 1",
-    reportTitle: "Estructura del reporte en equipo del Módulo 2",
-    rubricTitle: "Lógica de respuesta/checklist",
-    written: [
-      { title: "Mock exam de 45 minutos", body: "Entrena con cuatro prompts y obliga cada respuesta a entrar en 10–12 líneas.", bullets: ["1 frase de definición", "2–3 líneas de workflow", "1 línea sobre variabilidad o estadística", "1 frase de interpretación biológica"] },
-      { title: "Drills de selección de test", body: "Parte del diseño experimental antes de nombrar la prueba estadística.", bullets: ["paired vs unpaired", "dos grupos vs más de dos", "paramétrico vs basado en rangos", "corrección por múltiples tests"] },
-      { title: "Respuestas comparativas de tecnologías", body: "Practica comparar Stanford, Affymetrix e Illumina sin convertir la respuesta en una lista de datos sueltos.", bullets: ["lógica muestra/chip", "sesgo técnico principal", "paso de normalización/QC", "qué significa el output"] }
-    ],
-    report: [
-      { title: "1 · Pregunta y metadata", body: "Declara la comparación biológica, phenotype, covariables y campos de SampleSheet que controlan el análisis.", checks: ["grupos", "sample IDs", "variables de batch", "contraste esperado"] },
-      { title: "2 · Importación, QC y filtrado", body: "Explica objetos RGSet/MSet, detection p-values, muestras/probes fallidos y por qué se justifica cada filtro.", checks: ["RGSet/MSet", "detection p-value", "control probes", "probes removidos"] },
-      { title: "3 · Elección de normalización", body: "Compara distribuciones raw vs normalizadas y justifica el método elegido, no solo lo nombres.", checks: ["Quantile/Noob/SWAN/Funnorm", "density plot", "sesgo de tipo de probe", "corrección de dye/background"] },
-      { title: "4 · Metilación diferencial e interpretación", body: "Conecta design matrix, contrasts, DMP/DMR, FDR, PCA/batch effect y significado biológico final.", checks: ["beta vs M values", "design matrix", "FDR", "PCA/ComBat"] }
-    ],
-    rubric: [
-      { label: "Define", value: "abre con el concepto" },
-      { label: "Justifica", value: "conéctalo con diseño/QC" },
-      { label: "Interpreta", value: "cierra con significado biológico" }
-    ]
-  },
-  fa: {
-    eyebrow: "کیت عملی مطالعه",
-    title: "مسیر امتحان + گزارش",
-    body: "از این بخش به‌عنوان برنامهٔ عملی برای تبدیل راهنما به تمرین روزانه استفاده کنید: پاسخ‌های نوشتاری کوتاه برای Module 1 و گزارش reproducible تحلیل متیلاسیون برای Module 2.",
-    writtenTitle: "تمرین‌دهندهٔ امتحان نوشتاری Module 1",
-    reportTitle: "اسکلت گزارش تیمی Module 2",
-    rubricTitle: "منطق پاسخ/checklist",
-    written: [
-      { title: "امتحان آزمایشی ۴۵ دقیقه‌ای", body: "با چهار prompt تمرین کنید و هر پاسخ را در ۱۰–۱۲ خط نگه دارید.", bullets: ["۱ جمله تعریف", "۲–۳ خط workflow", "۱ خط دربارهٔ variability یا آمار", "۱ جمله تفسیر زیستی"] },
-      { title: "تمرین انتخاب آزمون", body: "قبل از نام‌بردن آزمون آماری، از طراحی آزمایش شروع کنید.", bullets: ["paired در برابر unpaired", "دو گروه در برابر بیش از دو گروه", "parametric در برابر rank-based", "تصحیح multiple testing"] },
-      { title: "پاسخ‌های مقایسهٔ تکنولوژی", body: "مقایسهٔ Stanford، Affymetrix و Illumina را تمرین کنید بدون اینکه پاسخ فقط فهرست اطلاعات باشد.", bullets: ["منطق sample/chip", "سوگیری فنی اصلی", "مرحلهٔ normalization/QC", "معنای output"] }
-    ],
-    report: [
-      { title: "۱ · پرسش و metadata", body: "مقایسهٔ زیستی، phenotype، covariateها و فیلدهای SampleSheet را که تحلیل را هدایت می‌کنند مشخص کنید.", checks: ["گروه‌ها", "sample IDها", "متغیرهای batch", "contrast مورد انتظار"] },
-      { title: "۲ · import، QC و filtering", body: "objectهای RGSet/MSet، detection p-value، sample/probeهای ناموفق و دلیل هر filter را توضیح دهید.", checks: ["RGSet/MSet", "detection p-value", "control probe", "probeهای حذف‌شده"] },
-      { title: "۳ · انتخاب normalization", body: "توزیع raw و normalized را مقایسه و روش انتخابی را توجیه کنید، نه اینکه فقط نام آن را بگویید.", checks: ["Quantile/Noob/SWAN/Funnorm", "density plot", "probe-type bias", "dye/background correction"] },
-      { title: "۴ · differential methylation و تفسیر", body: "design matrix، contrastها، DMP/DMR، FDR، PCA/batch effect و معنای زیستی نهایی را به هم وصل کنید.", checks: ["beta در برابر M value", "design matrix", "FDR", "PCA/ComBat"] }
-    ],
-    rubric: [
-      { label: "تعریف", value: "با مفهوم شروع کنید" },
-      { label: "توجیه", value: "به design/QC وصل کنید" },
-      { label: "تفسیر", value: "معنای زیستی را بگویید" }
-    ]
-  }
-};
-
-function getDRDExamReportKit(lang) {
-  return DRD_EXAM_REPORT_KIT[lang] || DRD_EXAM_REPORT_KIT.es;
-}
-
-
-const DRD_UNIT_I18N = {
-  es: {
-    "m1-foundations": { title: "Pregunta biológica, diseño experimental y variabilidad", desc: "Convertir una pregunta biológica enfocada en modelo, variables, sample size, técnica, datos cuantitativos e interpretación. Distinguir variabilidad biológica de variabilidad experimental.", products: ["lección React", "quiz conceptual", "práctica escrita corta"], tags: ["pregunta biológica", "variables", "variabilidad", "ómicas"] },
-    "m1-stanford": { title: "Arrays competitivos two-colour: Stanford", desc: "Spotted arrays, targets Cy3/Cy5, dye bias, dye swap, imágenes TIFF/raw y control de calidad a nivel de imagen.", products: ["ordenar workflow", "quiz de errores técnicos", "respuesta tipo examen"], tags: ["two-colour", "Cy3/Cy5", "dye swap", "QC"] },
-    "m1-affy": { title: "Affymetrix / ThermoFisher GeneChip", desc: "Arrays no competitivos one-colour, fotolitografía, probes PM/MM, probe sets, archivos DAT/CEL/CDF/CHP, RMA y normalización quantile.", products: ["diagrama de archivos", "comparación PM/MM", "checklist RMA"], tags: ["one-colour", "PM/MM", "RMA", "archivos CEL"] },
-    "m1-illumina": { title: "Illumina BeadChip y plataformas de metilación", desc: "Diseño BeadArray, optical decoding, transcriptómica, lógica de bisulfito, cobertura 27K/450K/EPIC y contexto genómico CpG.", products: ["lección visual en React", "comparación 27K/450K/EPIC", "quiz de bisulfito"], tags: ["BeadChip", "bisulfito", "450K", "EPIC"] },
-    "m1-deg-i": { title: "Genes diferencialmente expresados I", desc: "Fold change frente a significancia estadística, log2 ratios, MA-plots, hipótesis nula/alternativa, p-values, errores alfa/beta, potencia y tests paramétricos/no paramétricos.", products: ["árbol de selección de test", "ejercicios de p-value", "trampas de fold change"], tags: ["fold change", "p-value", "potencia", "MA-plot"] },
-    "m1-deg-ii": { title: "Genes diferencialmente expresados II", desc: "Punto actual del curso: bootstrap, comparación de más de dos grupos, one-way ANOVA, Kruskal–Wallis, multiple testing/FWER y transición hacia interpretación por gene sets.", products: ["walkthrough de bootstrap", "lab ANOVA/Kruskal", "trampas de multiple testing"], tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER"] },
-    "m1-samples-genes-i": { title: "Relación entre muestras y genes I", desc: "Clase cubierta el 5 de junio: matrices genes/probes × muestras, similitud, distancia, correlación de Pearson, heatmaps y lógica de clustering jerárquico.", products: ["lectura de matriz", "quiz de distancia entre muestras", "interpretación de plots"], tags: ["matriz", "muestras", "genes", "distancia"] },
-    "m1-samples-genes-ii": { title: "Relación entre muestras y genes II", desc: "Heatmaps, clustering de genes/muestras, outliers, razonamiento tipo PCA y conexión de patrones con fenotipo, tratamiento, tejido o batch.", products: ["práctica de heatmap", "interpretación de PCA", "errores comunes"], tags: ["heatmap", "clustering", "PCA", "outliers"] },
-    "m1-scrna": { title: "Clase invitada: scRNA-seq", desc: "Bulk vs single-cell RNA-seq, heterogeneidad celular, counts/UMIs, marker genes, reducción de dimensionalidad, clustering e interpretación de dropouts.", products: ["comparador bulk vs single-cell", "glosario", "pregunta simulada"], tags: ["scRNA-seq", "UMI", "markers", "UMAP"] },
-    "m2-r": { title: "Introducción a R/Bioconductor", desc: "Bases de R, paquetes, scripts, lógica de SampleSheet, metadata y hábitos de análisis reproducible.", products: ["setup guiado", "ejercicio SampleSheet", "glosario de objetos R"], tags: ["R", "Bioconductor", "SampleSheet", "metadata"] },
-    "m2-manifest": { title: "Metilación de DNA y química Illumina BeadChip", desc: "Manifest files, anotación de probes, cromosoma/posición, genes, contexto CpG island e interpretación a nivel de probe.", products: ["quiz de anotación de probes", "lectura de manifest", "resumen de química"], tags: ["manifest", "probe ID", "contexto CpG", "Infinium"] },
-    "m2-import-qc": { title: "Pipeline 1: importación de datos + quality check", desc: "Datos crudos de methylation arrays, RGSet, MSet_raw, detection p-values, control probes, sample QC y probe QC.", products: ["diagrama RGSet→MSet", "práctica detection p-value", "checklist de filtrado"], tags: ["RGSet", "MSet", "detection p-value", "control probes"] },
-    "m2-normalization-1": { title: "Pipeline 2: normalización 1", desc: "Por qué las señales crudas de metilación no son directamente comparables y cómo la normalización cambia distribuciones e interpretación downstream.", products: ["interpretación de density plots", "comparación raw vs normalized", "glosario de normalización"], tags: ["normalización", "beta values", "density plots", "raw data"] },
-    "m2-normalization-2": { title: "Pipeline 2: normalización 2 + DMP", desc: "Batch effects, PCA, elección beta/M, heteroscedasticity, tests por filas, dmpFinder y transición de DMP a DMR.", products: ["mini-lab PCA", "comparador beta/M", "Venn de métodos"], tags: ["batch effect", "PCA", "beta/M", "DMP", "DMR"] },
-    "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "Cubierta el 4 de junio: beta vs M values, design matrix, contrasts, DMP/DMR, FDR y PCA.", products: ["walkthrough de pipeline", "práctica design matrix", "interpretación volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
-    "m2-batch-clustering": { title: "Pipeline 4: batch effect, visualización y clustering", desc: "Detección/corrección de batch effect, ComBat, PCA antes/después de corrección, heatmaps, clustering e integración para verification test.", products: ["checklist de plots", "explicador ComBat", "simulador de reporte en equipo"], tags: ["batch effect", "ComBat", "visualización", "clustering"] }
-  },
-  fa: {
-    "m1-foundations": { title: "پرسش زیستی، طراحی آزمایش و تغییرپذیری", desc: "تبدیل پرسش زیستی متمرکز به مدل، متغیرها، اندازهٔ نمونه، تکنیک، دادهٔ کمی و تفسیر؛ تمایز تغییرپذیری زیستی از آزمایشی.", products: ["درس React", "آزمونک مفهومی", "تمرین نوشتاری کوتاه"], tags: ["پرسش زیستی", "متغیرها", "تغییرپذیری", "اومیکس"] },
-    "m1-stanford": { title: "آرایه‌های رقابتی دو‌رنگ: Stanford", desc: "spotted arrays، هدف‌های Cy3/Cy5، سوگیری رنگ، dye swap، تصاویر TIFF/raw و کنترل کیفیت تصویر.", products: ["چینش workflow", "آزمونک خطاهای فنی", "پاسخ شبیه امتحان"], tags: ["دو‌رنگ", "Cy3/Cy5", "dye swap", "QC"] },
-    "m1-affy": { title: "Affymetrix / ThermoFisher GeneChip", desc: "آرایه‌های غیررقابتی one-colour، فوتولیتوگرافی، پروب‌های PM/MM، probe set، فایل‌های DAT/CEL/CDF/CHP، RMA و quantile normalization.", products: ["نمودار جریان فایل", "مقایسه PM/MM", "چک‌لیست RMA"], tags: ["one-colour", "PM/MM", "RMA", "CEL files"] },
-    "m1-illumina": { title: "Illumina BeadChip و پلتفرم‌های متیلاسیون", desc: "طراحی BeadArray، optical decoding، transcriptomics، منطق bisulfite، پوشش 27K/450K/EPIC و زمینهٔ ژنومی CpG.", products: ["درس تصویری React", "مقایسه 27K/450K/EPIC", "آزمونک bisulfite"], tags: ["BeadChip", "bisulfite", "450K", "EPIC"] },
-    "m1-deg-i": { title: "ژن‌های با بیان متفاوت I", desc: "fold change در برابر معنی‌داری آماری، log2 ratio، MA-plot، فرضیهٔ صفر/جایگزین، p-value، خطاهای آلفا/بتا، توان و آزمون‌های پارامتریک/ناپارامتریک.", products: ["درخت انتخاب آزمون", "تمرین p-value", "دام‌های fold change"], tags: ["fold change", "p-value", "power", "MA-plot"] },
-    "m1-deg-ii": { title: "ژن‌های با بیان متفاوت II", desc: "bootstrap، مقایسهٔ بیش از دو گروه، one-way ANOVA، Kruskal–Wallis، multiple testing/FWER و گذار به تفسیر gene set.", products: ["راهنمای bootstrap", "تمرین ANOVA/Kruskal", "دام‌های multiple testing"], tags: ["bootstrap", "ANOVA", "Kruskal–Wallis", "FWER"] },
-    "m1-samples-genes-i": { title: "رابطهٔ نمونه‌ها و ژن‌ها I", desc: "درس فعلی ۵ ژوئن: ماتریس genes/probes × samples، شباهت، فاصله، ساختار نمونه‌ها، منطق اولیهٔ clustering و تفسیر الگوهای کلی.", products: ["درس خواندن ماتریس", "آزمونک فاصله نمونه", "تفسیر plot"], tags: ["ماتریس", "نمونه‌ها", "ژن‌ها", "فاصله"] },
-    "m1-samples-genes-ii": { title: "رابطهٔ نمونه‌ها و ژن‌ها II", desc: "heatmap، clustering ژن/نمونه، outlier، منطق PCA و پیوند الگوها با phenotype، treatment، tissue یا batch.", products: ["تمرین heatmap", "تفسیر PCA", "خطاهای رایج"], tags: ["heatmap", "clustering", "PCA", "outlier"] },
-    "m1-scrna": { title: "درس مهمان: scRNA-seq", desc: "bulk در برابر single-cell RNA-seq، ناهمگنی سلولی، counts/UMI، marker gene، کاهش بعد، clustering و تفسیر dropout.", products: ["مقایسه bulk/single-cell", "واژه‌نامه", "pregunta simulada"], tags: ["scRNA-seq", "UMI", "marker", "UMAP"] },
-    "m2-r": { title: "معرفی R/Bioconductor", desc: "مبانی R، پکیج‌ها، اسکریپت‌ها، منطق SampleSheet، metadata و عادت‌های تحلیل reproducible.", products: ["setup راهنما", "تمرین SampleSheet", "واژه‌نامه اشیای R"], tags: ["R", "Bioconductor", "SampleSheet", "metadata"] },
-    "m2-manifest": { title: "متیلاسیون DNA و شیمی Illumina BeadChip", desc: "manifest file، annotation پروب، chromosome/position، gene، CpG island context و تفسیر در سطح probe.", products: ["آزمونک annotation probe", "خواندن manifest", "خلاصه شیمی"], tags: ["manifest", "probe ID", "CpG context", "Infinium"] },
-    "m2-import-qc": { title: "Pipeline 1: ورود داده + quality check", desc: "دادهٔ خام methylation array، RGSet، MSet_raw، detection p-value، control probe، sample QC و probe QC.", products: ["نمودار RGSet→MSet", "تمرین detection p-value", "چک‌لیست فیلتر"], tags: ["RGSet", "MSet", "detection p-value", "control probes"] },
-    "m2-normalization-1": { title: "Pipeline 2: نرمال‌سازی 1", desc: "چرا سیگنال‌های خام متیلاسیون مستقیماً قابل مقایسه نیستند و normalisation چگونه توزیع و تفسیر downstream را تغییر می‌دهد.", products: ["تفسیر density plot", "مقایسه raw/normalized", "واژه‌نامه normalisation"], tags: ["normalisation", "beta values", "density plots", "raw data"] },
-    "m2-normalization-2": { title: "Pipeline 2: نرمال‌سازی 2 + DMP", desc: "batch effect، PCA، انتخاب beta/M، heteroscedasticity، testهای row-wise، dmpFinder و گذار از DMP به DMR.", products: ["مینی‌لب PCA", "مقایسه beta/M", "Venn روش‌ها"], tags: ["batch effect", "PCA", "beta/M", "DMP", "DMR"] },
-    "m2-dmp-dmr": { title: "Pipeline 3: DMP/DMR + multiple testing + PCA", desc: "پوشش داده‌شده در ۴ ژوئن: Beta در برابر M values، design matrix، contrasts، DMP/DMR، FDR و PCA.", products: ["walkthrough پایپ‌لاین", "تمرین design matrix", "تفسیر volcano/PCA"], tags: ["DMP", "DMR", "FDR", "PCA"] },
-    "m2-batch-clustering": { title: "Pipeline 4: batch effect، visualization و clustering", desc: "تشخیص/تصحیح batch effect، ComBat، PCA قبل/بعد از تصحیح، heatmap، clustering و یکپارچه‌سازی برای verification test.", products: ["چک‌لیست plot", "توضیح ComBat", "شبیه‌ساز reporte en equipo"], tags: ["batch effect", "ComBat", "visualization", "clustering"] }
-  }
-};
-
-function localizeDRDUnit(unit, lang) {
-  return { ...unit, ...(DRD_UNIT_I18N[lang]?.[unit.id] || {}) };
-}
-
-const DRD_PRODUCT_I18N = {
-  es: {
-    "React lessons": { title: "Lecciones React", desc: "Lecciones visuales breves para teoría de Module 1 y lógica de workflow de Module 2, con el estilo de Filogenética.", tags: ["conceptos", "diagramas", "trampas comunes"] },
-    "Interactive quizzes": { title: "Quizzes interactivos", desc: "Vocabulario, ordenar workflows, detectar errores, elegir tests estadísticos e interpretar plots.", tags: ["Cy3/Cy5", "RGSet", "FDR", "PCA"] },
-    "Mock written exams": { title: "Exámenes simulados escritos", desc: "Prácticas de 45 minutos con 4 preguntas y respuestas modelo de 10–12 líneas para Module 1.", tags: ["4 preguntas", "rúbrica", "respuestas modelo"] },
-    "Team report simulator": { title: "Simulador de reporte en equipo", desc: "Estructura de reporte de Module 2 desde pregunta biológica hasta QC, normalización, DMP/DMR, PCA, batch effect e interpretación.", tags: ["reporte", "pipeline", "metilación"] }
-  },
-  fa: {
-    "React lessons": { title: "درس‌های React", desc: "درس‌های تصویری کوتاه برای نظریهٔ Module 1 و منطق workflow در Module 2، مشابه سبک Filogenética.", tags: ["مفهوم‌ها", "نمودارها", "دام‌های رایج"] },
-    "Interactive quizzes": { title: "آزمونک‌های تعاملی", desc: "واژه‌ها، ترتیب workflow، تشخیص خطا، انتخاب آزمون آماری و تفسیر plot.", tags: ["Cy3/Cy5", "RGSet", "FDR", "PCA"] },
-    "Mock written exams": { title: "امتحان‌های آزمایشی نوشتاری", desc: "تمرین‌های ۴۵ دقیقه‌ای با ۴ پرسش و پاسخ مدل ۱۰–۱۲ خطی برای Module 1.", tags: ["۴ پرسش", "rubric", "پاسخ مدل"] },
-    "Team report simulator": { title: "شبیه‌ساز reporte en equipo", desc: "اسکلت گزارش Module 2 از پرسش زیستی تا QC، نرمال‌سازی، DMP/DMR، PCA، batch effect و تفسیر.", tags: ["گزارش", "پایپ‌لاین", "متیلاسیون"] }
-  }
-};
-
-function localizeDRDProduct(product, lang) {
-  return { ...product, ...(DRD_PRODUCT_I18N[lang]?.[product.title] || {}) };
-}
-
-function drdCopy(lang) {
+function drdCopy() {
   return {
-    en: {
-      updated: "Updated status",
-      asOf: "last covered lesson: 5 June 2026",
-      module1: "Module 1 — Theory and written-exam reasoning",
-      module2: "Module 2 — R/Bioconductor methylation pipeline",
-      module1Short: "Módulo 1",
-      module2Short: "Módulo 2",
-      coveredNow: "Covered or in progress",
-      upcoming: "Still scheduled",
-      evaluation: "Evaluation map",
-      writtenExam: "Written test: 45 min, 4 questions, about 10–12 lines each.",
-      report: "Team report: methylation dataset analysis pipeline, delivered before the exam date.",
-      products: "Study-guide products",
-      productsBody: "This dashboard is the blueprint for the full guide: lessons, quizzes, mock exams and written/report practice.",
-      examKit: "Exam + report kit",
-      roadmap: "Cronograma",
-      search: "Search DNA/RNA topics...",
-      pending: "Upcoming topics included from the programme",
-      mark: "Mark",
-      complete: "Complete",
-      incomplete: "Incomplete",
-      status: "Status",
-      tags: "Key tags",
-      openLesson: "Open lesson",
-      noMatches: "No matches.",
-      deliverables: "Guide deliverables",
-      sources: "Source folders considered",
-      sourcesBody: "Module 1 PDFs plus the Module 2 Lesson1–Lesson5 folders, including scripts, SampleSheets, manifests, RData objects, normalization outputs and support papers.",
-    },
-    es: {
-      updated: "Estado actualizado",
-      asOf: "última clase cubierta: 5 de junio de 2026",
-      module1: "Módulo 1 — Teoría y razonamiento para el escrito",
-      module2: "Módulo 2 — Pipeline de metilación en R/Bioconductor",
-      module1Short: "Módulo 1",
-      module2Short: "Módulo 2",
-      coveredNow: "Cubierto o en curso",
-      upcoming: "Aún programado",
-      evaluation: "Mapa de evaluación",
-      writtenExam: "Test escrito: 45 min, 4 preguntas, unas 10–12 líneas por respuesta.",
-      report: "Reporte en equipo: análisis de un dataset de metilación, entregado antes del examen.",
-      products: "Productos de la guía",
-      productsBody: "Este dashboard es el plano de la guía completa: lecciones, quizzes, mock exams y práctica escrita/de reporte.",
-      examKit: "Kit examen + reporte",
-      roadmap: "Cronograma",
-      search: "Buscar temas de DNA/RNA...",
-      pending: "Temas pendientes incluidos desde el programa",
-      mark: "Marcar",
-      complete: "Completado",
-      incomplete: "Pendiente",
-      status: "Estado",
-      tags: "Etiquetas clave",
-      openLesson: "Abrir lección",
-      noMatches: "Sin resultados.",
-      deliverables: "Entregables de la guía",
-      sources: "Fuentes consideradas",
-      sourcesBody: "PDFs del Módulo 1 y carpetas Lección 1–Lección 5 del Módulo 2, incluyendo scripts, SampleSheets, manifests, objetos RData, salidas de normalización y papers de apoyo.",
-    },
-    fa: {
-      updated: "وضعیت به‌روز",
-      asOf: "آخرین کلاس پوشش‌داده‌شده: ۵ ژوئن ۲۰۲۶",
-      module1: "ماژول ۱ — نظریه و استدلال برای امتحان نوشتاری",
-      module2: "ماژول ۲ — پایپ‌لاین methylation در R/Bioconductor",
-      module1Short: "ماژول ۱",
-      module2Short: "ماژول ۲",
-      coveredNow: "پوشش داده‌شده یا در حال انجام",
-      upcoming: "هنوز برنامه‌ریزی‌شده",
-      evaluation: "نقشهٔ ارزیابی",
-      writtenExam: "آزمون نوشتاری: ۴۵ دقیقه، ۴ پرسش، حدود ۱۰–۱۲ خط برای هر پاسخ.",
-      report: "گزارش تیمی: تحلیل dataset متیلاسیون، تحویل پیش از تاریخ امتحان.",
-      products: "خروجی‌های راهنمای مطالعه",
-      productsBody: "این داشبورد نقشهٔ راهنمای کامل است: درس‌ها، آزمونک‌ها، آزمون‌های آزمایشی و تمرین نوشتاری/گزارشی.",
-      examKit: "کیت امتحان + گزارش",
-      roadmap: "نقشهٔ راه",
-      search: "جستجوی موضوعات DNA/RNA...",
-      pending: "موضوعات آینده از برنامهٔ درس",
-      mark: "علامت‌گذاری",
-      complete: "کامل‌شده",
-      incomplete: "ناقص",
-      status: "وضعیت",
-      tags: "برچسب‌های کلیدی",
-      openLesson: "باز کردن درس",
-      noMatches: "نتیجه‌ای پیدا نشد.",
-      deliverables: "خروجی‌ها",
-      sources: "منابع در نظر گرفته‌شده",
-      sourcesBody: "PDFهای ماژول ۱ و پوشه‌های Lesson1–Lesson5 ماژول ۲، شامل scriptها، SampleSheetها، manifestها، آبجکت‌های RData، خروجی‌های normalization و مقاله‌های پشتیبان.",
-    },
-  }[lang] || {};
+    updated: "Manifest-driven DRD guide",
+    asOf: "source map updated from Drive materials and recordings",
+    dashboardSubtitle: "A modular academic guide for Module 1 theory and Module 2 methylation-array practice.",
+    module1: DRD_MODULES.find(module => module.id === "module-1")?.title || "Module 1",
+    module2: DRD_MODULES.find(module => module.id === "module-2")?.title || "Module 2",
+    module1Short: "Module 1",
+    module2Short: "Module 2",
+    available: "Available lessons",
+    active: "In progress",
+    upcoming: "Upcoming",
+    evaluation: "Evaluation map",
+    writtenExam: "Written test: 45 min, 4 questions, about 10-12 lines each.",
+    report: "Team report: methylation dataset analysis pipeline, delivered before the exam date.",
+    products: "Study-guide products",
+    productsBody: "The dashboard now reads from a single DRD manifest: routes, resources, status, lesson type and Drive links stay in one place.",
+    examKit: "Exam and report kit",
+    finalReport: "Final report",
+    roadmap: "Course roadmap",
+    search: "Search DNA/RNA topics...",
+    mark: "Mark",
+    complete: "Complete",
+    completed: "completed",
+    status: "Status",
+    tags: "Key tags",
+    openLesson: "Open lesson",
+    noMatches: "No matches.",
+    deliverables: "Guide deliverables",
+    sources: "Source folders considered",
+    sourcesBody: "Module 1 PDFs, Module 2 lesson folders, transcriptions, recordings, article extras and the final-report folder are represented through the DRD manifest.",
+  };
 }
-
 function currentMode() {
   const path = window.location.pathname.toLowerCase();
   if (path.includes("/amlb/")) return "amlb";
@@ -1118,7 +724,7 @@ function Hero({ eyebrow, title, subtitle, actions, visual }) {
 
 function HubApp({ t }) {
   return <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.builtFor} title={<>{t.studyHub}</>} subtitle={t.hubSubtitle} actions={<><a href="AMLB/index.html" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-red-800">{t.appliedML}</a><a href="MP/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.phylo}</a><a href="DRD/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.drd}</a></>} visual={<div><div className="flex items-start justify-between gap-4"><div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.publishedFolders}</div><div className="mt-2 text-2xl font-black text-stone-950">AMLB · MP · DRD</div><div className="mt-1 text-sm font-semibold text-stone-500">{t.sourceText}</div></div><div className="rounded-2xl bg-stone-950 px-3 py-2 text-sm font-black text-white">3</div></div><div className="mt-6 rounded-[2rem] bg-[#fffaf0] p-4"><MiniTreeIcon active/><div className="mt-3"><ProgressBar value={50}/></div></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyTools}</div><p className="mt-2 text-lg font-bold leading-7">{t.tools.join(" · ")}</p></div></div>} />
-    <section id="subjects" className="mt-10"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div><div className="grid gap-5 md:grid-cols-3"><SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/><SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/><SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={DRD_MODULE1_UNITS.length + DRD_MODULE2_UNITS.length} icon="DRD"/></div></section>
+    <section id="subjects" className="mt-10"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div><div className="grid gap-5 md:grid-cols-3"><SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/><SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/><SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={getDRDProgressTotal()} icon="DRD"/></div></section>
     <section id="tools" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.studyTools}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.quickReview}</h2><p className="mt-2 max-w-2xl leading-7 text-stone-600">{t.sourceText}</p></div><div className="grid gap-3 md:grid-cols-5">{t.tools.map(tool => <div key={tool} className="rounded-2xl border border-stone-200 bg-white p-4 text-sm font-black text-stone-800 shadow-sm">{tool}</div>)}</div></section></main>;
 }
 function SubjectCard({ href, title, desc, progressKey, total, icon }) {
@@ -1130,118 +736,71 @@ function SubjectCard({ href, title, desc, progressKey, total, icon }) {
 
 
 
-function drdLessonHref(unit) {
-  return unit?.lessonHref || `#/lesson/${unit?.id}`;
-}
-
-const DRD_PLACEHOLDER_ALIASES = {
-  "08": "m1-samples-genes-i",
-  "09": "m1-samples-genes-ii",
-  "10": "m1-scrna",
-  "m2-2": "m2-manifest",
-  "m2-3": "m2-import-qc",
-  "m2-4": "m2-normalization-1",
-  "m2-5": "m2-normalization-2",
-  "m2-6": "m2-dmp-dmr",
-  "m2-7": "m2-batch-clustering",
-};
-
-function DRDApp({ t, lang, hash }) {
-  const copy = drdCopy(lang);
+function DRDApp({ t, hash }) {
+  const copy = drdCopy();
   const [progress, setProgress] = useState(() => getJSON("drd_progress_v1", {}));
   const [query, setQuery] = useState("");
-  const allUnits = [...DRD_MODULE1_UNITS, ...DRD_MODULE2_UNITS];
-  const completed = allUnits.filter(unit => progress[unit.id]).length;
-  const percent = allUnits.length ? (completed / allUnits.length) * 100 : 0;
-  const q = query.trim().toLowerCase();
-  const module1 = filterDRDUnits(DRD_MODULE1_UNITS, q, lang);
-  const module2 = filterDRDUnits(DRD_MODULE2_UNITS, q, lang);
   const save = (next) => { setProgress(next); setJSON("drd_progress_v1", next); };
   const toggle = (id) => save({ ...progress, [id]: !progress[id] });
   const lessonId = (hash.match(/^#\/lesson\/(.+)$/) || [])[1];
-  if (lessonId === "m1-foundations" || lessonId === "01") {
-    return <DRDLesson01 lang={lang} isDone={!!progress["m1-foundations"]} toggle={() => toggle("m1-foundations")} />;
-  }
-  if (lessonId === "m1-stanford" || lessonId === "02") {
-    return <DRDLesson02 lang={lang} isDone={!!progress["m1-stanford"]} toggle={() => toggle("m1-stanford")} />;
-  }
-  if (lessonId === "m1-affy" || lessonId === "03") {
-    return <DRDLesson03 lang={lang} isDone={!!progress["m1-affy"]} toggle={() => toggle("m1-affy")} />;
-  }
-  if (lessonId === "m2-r" || lessonId === "04") {
-    return <DRDLesson04 lang={lang} isDone={!!progress["m2-r"]} toggle={() => toggle("m2-r")} />;
-  }
-  if (lessonId === "m2-manifest" || lessonId === "m2-2") {
-    return <DRDLesson08 lang={lang} isDone={!!progress["m2-manifest"]} toggle={() => toggle("m2-manifest")} />;
+
+  if (lessonId) {
+    const lesson = getDRDLessonById(lessonId);
+    if (lesson) {
+      const LessonComponent = getDRDLessonComponent(lesson.componentKey);
+      const sharedProps = { lesson, lang: "en", isDone: !!progress[lesson.id], toggle: () => toggle(lesson.id) };
+      return LessonComponent ? (
+        <React.Suspense fallback={<DRDLessonLoading lesson={lesson} />}>
+          <LessonComponent {...sharedProps} />
+        </React.Suspense>
+      ) : <DRDPlannedLesson {...sharedProps} />;
+    }
   }
 
-  if (lessonId === "m2-import-qc" || lessonId === "m2-3") {
-    return <DRDLesson09 lang={lang} isDone={!!progress["m2-import-qc"]} toggle={() => toggle("m2-import-qc")} />;
-  }
-  if (lessonId === "m2-normalization-1" || lessonId === "m2-4") {
-    return <DRDLesson10 lang={lang} isDone={!!progress["m2-normalization-1"]} toggle={() => toggle("m2-normalization-1")} />;
-  }
-  if (lessonId === "m2-normalization-2" || lessonId === "m2-5") {
-    return <DRDLesson12 lang={lang} isDone={!!progress["m2-normalization-2"]} toggle={() => toggle("m2-normalization-2")} />;
-  }
-  if (lessonId === "m2-dmp-dmr" || lessonId === "m2-6") {
-    return <DRDLesson13 lang={lang} isDone={!!progress["m2-dmp-dmr"]} toggle={() => toggle("m2-dmp-dmr")} />;
-  }
-  if (lessonId === "m1-illumina" || lessonId === "05") {
-    return <DRDLesson05 lang={lang} isDone={!!progress["m1-illumina"]} toggle={() => toggle("m1-illumina")} />;
-  }
-  if (lessonId === "m1-deg-i" || lessonId === "06") {
-    return <DRDLesson06 lang={lang} isDone={!!progress["m1-deg-i"]} toggle={() => toggle("m1-deg-i")} />;
-  }
-  if (lessonId === "m1-deg-ii" || lessonId === "07") {
-    return <DRDLesson07 lang={lang} isDone={!!progress["m1-deg-ii"]} toggle={() => toggle("m1-deg-ii")} />;
-  }
-  if (lessonId === "m1-samples-genes-i" || lessonId === "08") {
-    return <DRDLesson11 lang={lang} isDone={!!progress["m1-samples-genes-i"]} toggle={() => toggle("m1-samples-genes-i")} />;
-  }
-  const placeholderId = DRD_PLACEHOLDER_ALIASES[lessonId] || lessonId;
-  const placeholderIndex = allUnits.findIndex(unit => unit.id === placeholderId && !unit.lessonHref);
-  if (placeholderIndex >= 0) {
-    const unit = allUnits[placeholderIndex];
-    return <DRDUnderConstructionLesson unit={unit} lang={lang} isDone={!!progress[unit.id]} toggle={() => toggle(unit.id)} prevUnit={allUnits[placeholderIndex - 1]} nextUnit={allUnits[placeholderIndex + 1]} />;
-  }
-  const covered = allUnits.filter(unit => unit.status !== "upcoming").length;
-  const upcoming = allUnits.filter(unit => unit.status === "upcoming").length;
+  const availableLessons = getAvailableDRDLessons();
+  const availableTotal = getDRDProgressTotal();
+  const completed = availableLessons.filter((lesson) => progress[lesson.id]).length;
+  const percent = availableTotal ? (completed / availableTotal) * 100 : 0;
+  const module1 = filterDRDLessons(getDRDLessonsByModule("module-1"), query);
+  const module2 = filterDRDLessons(getDRDLessonsByModule("module-2"), query);
+  const active = DRD_LESSONS.filter((lesson) => lesson.status === "active").length;
+  const upcoming = DRD_LESSONS.filter((lesson) => lesson.status === "upcoming").length;
 
   return (
     <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
       <Hero
-        eyebrow={`${copy.updated} · ${copy.asOf}`}
+        eyebrow={copy.updated}
         title={<>{t.drd} <span className="text-red-700">Study Guide</span></>}
-        subtitle={t.drdDesc}
+        subtitle={copy.dashboardSubtitle}
         actions={(
           <>
             <a href="#module-1" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{copy.module1Short}</a>
             <a href="#module-2" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.module2Short}</a>
-            <a href="#products" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.products}</a>
+            <a href="#final-report" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.finalReport}</a>
             <a href="#exam-kit" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.examKit}</a>
           </>
         )}
         visual={(
           <div>
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.progress}</div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Progress</div>
             <div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div>
-            <p className="mt-2 text-sm font-semibold text-stone-500">{completed} / {allUnits.length} {t.completed.toLowerCase()}</p>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{completed} / {availableTotal} {copy.completed}</p>
             <div className="mt-5"><ProgressBar value={percent}/></div>
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">{copy.coveredNow}</div><div className="mt-1 text-2xl font-black">{covered}</div></div>
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">{copy.available}</div><div className="mt-1 text-2xl font-black">{availableTotal}</div></div>
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">{copy.active}</div><div className="mt-1 text-2xl font-black">{active}</div></div>
               <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">{copy.upcoming}</div><div className="mt-1 text-2xl font-black">{upcoming}</div></div>
             </div>
             <div className="mt-6 rounded-3xl bg-stone-950 p-5 text-white">
-              <div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyPath}</div>
-              <p className="mt-2 text-lg font-bold leading-7">question → technology → QC → normalization → statistics → interpretation</p>
+              <div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">Study path</div>
+              <p className="mt-2 text-lg font-bold leading-7">question - technology - QC - normalization - statistics - interpretation</p>
             </div>
           </div>
         )}
       />
 
       <section className="mt-8 grid gap-5 lg:grid-cols-3">
-        <Stat label={copy.evaluation} value="20 + 10" note="Module 1 written score + Module 2 reporte en equipo" />
+        <Stat label={copy.evaluation} value="20 + 10" note="Module 1 written score + Module 2 team report" />
         <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm lg:col-span-2">
           <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.evaluation}</div>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -1260,235 +819,130 @@ function DRDApp({ t, lang, hash }) {
           <input value={query} onChange={e => setQuery(e.target.value)} placeholder={copy.search} className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-stone-700 outline-none transition placeholder:text-stone-400 focus:border-red-300 focus:ring-4 focus:ring-red-100 md:w-80"/>
         </div>
         <div id="module-1" className="scroll-mt-28">
-          <DRDModule title={copy.module1} units={module1} progress={progress} toggle={toggle} copy={copy} lang={lang} />
+          <DRDModule module={DRD_MODULES.find((module) => module.id === "module-1")} units={module1} progress={progress} toggle={toggle} copy={copy} />
         </div>
         <div id="module-2" className="mt-6 scroll-mt-28">
-          <DRDModule title={copy.module2} units={module2} progress={progress} toggle={toggle} copy={copy} lang={lang} />
+          <DRDModule module={DRD_MODULES.find((module) => module.id === "module-2")} units={module2} progress={progress} toggle={toggle} copy={copy} />
         </div>
       </section>
 
-      <section id="products" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
-        <div className="mb-6">
-          <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.deliverables}</div>
-          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{copy.products}</h2>
-          <p className="mt-2 max-w-3xl leading-7 text-stone-600">{copy.productsBody}</p>
-        </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {DRD_STUDY_PRODUCTS.map(product => <DRDProductCard key={product.title} product={product} lang={lang} />)}
-        </div>
-      </section>
-
-      <DRDExamReportKitSection lang={lang} />
-
-      <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
-        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.sources}</div>
-        <p className="mt-3 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{copy.sourcesBody}</p>
-      </section>
+      <DRDFinalReportSection />
+      <DRDProductsSection copy={copy} />
+      <DRDExamReportKitSection />
+      <DRDSourcesSection copy={copy} />
     </main>
   );
 }
 
-function filterDRDUnits(units, q, lang = "es") {
-  if (!q) return units;
-  return units.filter(unit => {
-    const localized = localizeDRDUnit(unit, lang);
-    return [localized.code, localized.date, localized.status, localized.title, localized.desc, ...(localized.tags || []), ...(localized.products || [])].join(" ").toLowerCase().includes(q.toLowerCase());
-  });
+function DRDLessonLoading({ lesson }) {
+  return (
+    <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
+      <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-6 shadow-sm">
+        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Loading lesson</div>
+        <p className="mt-3 text-lg font-black text-stone-950">{lesson?.code} - {lesson?.title}</p>
+      </div>
+    </main>
+  );
 }
 
-function DRDModule({ title, units, progress, toggle, copy, lang }) {
-  const done = units.filter(unit => progress[unit.id]).length;
-  const percent = units.length ? done / units.length * 100 : 0;
+function DRDModule({ module, units, progress, toggle, copy }) {
+  const available = units.filter((unit) => unit.status === "available");
+  const done = available.filter((unit) => progress[unit.id]).length;
+  const percent = available.length ? done / available.length * 100 : 0;
   return (
     <article className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm">
       <div className="border-b border-stone-200 bg-stone-50 p-5 md:p-6">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
           <div>
-            <h3 className="text-2xl font-black tracking-tight text-stone-950">{title}</h3>
-            <p className="mt-2 text-sm font-semibold text-stone-500">{done} / {units.length} {copy.complete.toLowerCase()}</p>
+            <h3 className="text-2xl font-black tracking-tight text-stone-950">{module?.title}</h3>
+            <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-stone-500">{module?.description}</p>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{done} / {available.length} {copy.completed}</p>
           </div>
           <div className="w-full md:w-64"><ProgressBar value={percent}/></div>
         </div>
       </div>
       <div className="grid gap-4 p-5 md:p-6">
-        {units.length === 0 && <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5 text-sm font-black text-stone-500">{copy.noMatches || "No matches."}</div>}
-        {units.map(unit => <DRDUnitCard key={unit.id} unit={unit} isDone={!!progress[unit.id]} toggle={() => toggle(unit.id)} copy={copy} lang={lang} />)}
+        {units.length === 0 && <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5 text-sm font-black text-stone-500">{copy.noMatches}</div>}
+        {units.map(unit => <DRDUnitCard key={unit.id} unit={unit} isDone={!!progress[unit.id]} toggle={() => toggle(unit.id)} copy={copy} />)}
       </div>
     </article>
   );
 }
 
-function DRDUnitCard({ unit, isDone, toggle, copy, lang }) {
-  const localized = localizeDRDUnit(unit, lang);
-  const statusLabel = DRD_STATUS_COPY[localized.status]?.[lang] || DRD_STATUS_COPY[localized.status]?.es || localized.status;
-  const statusClass = DRD_STATUS_CLASSES[localized.status] || DRD_STATUS_CLASSES.upcoming;
+function DRDUnitCard({ unit, isDone, toggle, copy }) {
+  const status = getDRDStatusMeta(unit.status);
+  const isAvailable = unit.status === "available";
   return (
     <div className={`rounded-3xl border p-5 transition ${isDone ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50 hover:bg-white"}`}>
       <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-stone-950 px-3 py-1 text-xs font-black text-white">{localized.code}</span>
-            <span className={`rounded-full border px-3 py-1 text-xs font-black ${statusClass}`}>{statusLabel}</span>
-            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{localized.date}</span>
+            <span className="rounded-full bg-stone-950 px-3 py-1 text-xs font-black text-white">{unit.code}</span>
+            <span className={`rounded-full border px-3 py-1 text-xs font-black ${status.className}`}>{status.label}</span>
+            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{unit.date}</span>
+            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{unit.lessonType}</span>
           </div>
-          <h4 className="mt-3 text-xl font-black leading-7 text-stone-950">{localized.title}</h4>
-          <p className="mt-2 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{localized.desc}</p>
+          <h4 className="mt-3 text-xl font-black leading-7 text-stone-950">{unit.title}</h4>
+          <p className="mt-2 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{unit.summary}</p>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2 md:justify-end">
-          <a href={drdLessonHref(localized)} className="rounded-full bg-red-700 px-4 py-2 text-xs font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-800">{copy.openLesson || "Open lesson"}</a>
-          <button onClick={toggle} className={`rounded-full px-4 py-2 text-xs font-black ${isDone ? "bg-emerald-600 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{isDone ? "✓ " + copy.complete : "○ " + copy.mark}</button>
+          <a href={drdLessonHref(unit)} className="rounded-full bg-red-700 px-4 py-2 text-xs font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-800">{copy.openLesson}</a>
+          {isAvailable && <button onClick={toggle} className={`rounded-full px-4 py-2 text-xs font-black ${isDone ? "bg-emerald-600 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{isDone ? "Completed" : copy.mark}</button>}
         </div>
       </div>
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <div>
           <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.tags}</div>
-          <div className="mt-2 flex flex-wrap gap-2">{localized.tags.map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-600">{tag}</span>)}</div>
+          <div className="mt-2 flex flex-wrap gap-2">{(unit.tags || []).map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-600">{tag}</span>)}</div>
         </div>
         <div>
           <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.deliverables}</div>
-          <div className="mt-2 flex flex-wrap gap-2">{localized.products.map(product => <span key={product} className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{product}</span>)}</div>
+          <div className="mt-2 flex flex-wrap gap-2">{(unit.products || []).map(product => <span key={product} className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{product}</span>)}</div>
         </div>
       </div>
     </div>
   );
 }
 
-
-function DRDUnderConstructionLesson({ unit, lang = "es", isDone, toggle, prevUnit, nextUnit }) {
-  const localized = localizeDRDUnit(unit, lang);
-  const prev = prevUnit ? localizeDRDUnit(prevUnit, lang) : null;
-  const next = nextUnit ? localizeDRDUnit(nextUnit, lang) : null;
-  const moduleName = localized.code?.startsWith("M2") ? "Module 2" : "Module 1";
-  const isModule2 = localized.code?.startsWith("M2");
-  const placeholderLabels = {
-    en: {
-      eyebrow: "Temporary page",
-      badge: "Under construction",
-      titlePrefix: "Coming soon",
-      body: "This temporary page keeps the route alive while the full React lesson is prepared from the official slides and transcript. It will later be replaced by the complete slide-guided version, with inline explanations, interactive labs, quizzes and exam/report practice where appropriate.",
-      planned: "Planned lesson",
-      plannedDate: "Scheduled date",
-      status: "Status",
-      statusText: "Placeholder active",
-      keep: "What will be added",
-      keepBody: "The final version will follow the same structure as the previous lessons: source slides in the lesson flow, professor emphasis, watch boxes, interactive checkpoints and practice tasks.",
-      deliverables: "Planned deliverables",
-      tags: "Key tags",
-      previous: "Previous",
-      next: "Next",
-      dashboard: "DRD dashboard",
-      markComplete: "Mark completed",
-      completed: "Completed",
-      noNext: "No next lesson yet",
-      moduleLabel: "Module",
-      routeLabel: "Route",
-    },
-    es: {
-      eyebrow: "Página temporal",
-      badge: "En construcción",
-      titlePrefix: "Próximamente",
-      body: "Esta página temporal mantiene activa la ruta mientras se prepara la lección completa en React a partir de las diapositivas oficiales y la transcripción. Luego se sustituirá por la versión completa guiada por slides, con explicación intercalada, mini-labs interactivos, quizzes y práctica de examen/reporte cuando corresponda.",
-      planned: "Lección planeada",
-      plannedDate: "Fecha programada",
-      status: "Estado",
-      statusText: "Placeholder activo",
-      keep: "Qué se añadirá",
-      keepBody: "La versión final seguirá la misma estructura de las lecciones anteriores: slides fuente dentro del flujo, énfasis de la profesora, watch boxes, checkpoints interactivos y tareas de práctica.",
-      deliverables: "Entregables planeados",
-      tags: "Etiquetas clave",
-      previous: "Anterior",
-      next: "Siguiente",
-      dashboard: "DRD dashboard",
-      markComplete: "Marcar completada",
-      completed: "Completada",
-      noNext: "No hay siguiente aún",
-      moduleLabel: "Módulo",
-      routeLabel: "Ruta",
-    },
-    fa: {
-      eyebrow: "صفحهٔ موقت",
-      badge: "در حال ساخت",
-      titlePrefix: "به‌زودی",
-      body: "این صفحهٔ موقت مسیر درس را فعال نگه می‌دارد تا نسخهٔ کامل React بر اساس اسلایدهای رسمی و transcript آماده شود. بعداً با نسخهٔ کامل شامل اسلایدهای منبع، توضیح مرحله‌ای، mini-labهای تعاملی، آزمونک و تمرین جایگزین می‌شود.",
-      planned: "درس برنامه‌ریزی‌شده",
-      plannedDate: "تاریخ برنامه",
-      status: "وضعیت",
-      statusText: "placeholder فعال",
-      keep: "چه چیزهایی اضافه می‌شود",
-      keepBody: "نسخهٔ نهایی مانند درس‌های قبلی خواهد بود: اسلایدهای منبع در جریان درس، تأکیدهای استاد، watch boxها، checkpointهای تعاملی و تمرین.",
-      deliverables: "خروجی‌های برنامه‌ریزی‌شده",
-      tags: "برچسب‌ها",
-      previous: "قبلی",
-      next: "بعدی",
-      dashboard: "داشبورد DRD",
-      markComplete: "علامت کامل‌شده",
-      completed: "کامل‌شده",
-      noNext: "درس بعدی هنوز نیست",
-      moduleLabel: "ماژول",
-      routeLabel: "مسیر",
-    },
-  };
-  const labels = placeholderLabels[lang] || placeholderLabels.es;
-  const pillTone = isModule2 ? "border-emerald-200 bg-emerald-50 text-emerald-800" : "border-red-200 bg-red-50 text-red-700";
-  const accentText = isModule2 ? "text-emerald-700" : "text-red-700";
-  const accentBg = isModule2 ? "bg-emerald-700 hover:bg-emerald-800 shadow-emerald-900/10" : "bg-red-700 hover:bg-red-800 shadow-red-900/10";
+function DRDFinalReportSection() {
+  const reportLesson = { driveFolder: DRD_FINAL_REPORT.folder, resources: {} };
   return (
-    <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-6 md:pt-8">
-      <nav className="mb-6 rounded-[2rem] border border-stone-200 bg-white/90 p-3 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <a href={prev ? drdLessonHref(prev) : "#/"} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:shadow-sm">← {labels.previous}{prev ? `: ${prev.code}` : ""}</a>
-          <a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-stone-500 transition hover:-translate-y-0.5 hover:shadow-sm">{labels.dashboard}</a>
-          <button onClick={toggle} className={`rounded-full px-4 py-2 text-sm font-black transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? `✓ ${labels.completed}` : labels.markComplete}</button>
-          {next ? <a href={drdLessonHref(next)} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5">{labels.next}: {next.code} →</a> : <span className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-400">{labels.noNext}</span>}
+    <section id="final-report" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-emerald-700">Final report</div>
+          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{DRD_FINAL_REPORT.title}</h2>
+          <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600">{DRD_FINAL_REPORT.summary}</p>
+          <DRDResourcePanel lesson={reportLesson} title="Report resources" />
         </div>
-      </nav>
-
-      <section className="grid overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white/85 shadow-sm lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="bg-[#fbf4e8] p-8 md:p-12">
-          <div className={`inline-flex rounded-full border px-4 py-2 text-xs font-black uppercase tracking-[0.22em] ${pillTone}`}>{moduleName} · {localized.date} · {labels.badge}</div>
-          <h1 className="mt-7 max-w-3xl text-5xl font-black tracking-tight text-stone-950 md:text-6xl">{localized.title}</h1>
-          <p className="mt-6 max-w-2xl text-lg font-semibold leading-8 text-stone-700">{localized.desc}</p>
-          <div className="mt-6 flex flex-wrap gap-2">{localized.tags.map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-700">{tag}</span>)}</div>
-        </div>
-        <aside className="border-t border-stone-200 bg-white p-8 lg:border-l lg:border-t-0 md:p-10">
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div className={`rounded-3xl border p-5 ${pillTone}`}><div className="text-xs font-black uppercase tracking-[0.18em] opacity-70">{labels.status}</div><div className="mt-2 text-2xl font-black">{labels.badge}</div></div>
-            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.plannedDate}</div><div className="mt-2 text-2xl font-black text-stone-950">{localized.date}</div></div>
-            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.moduleLabel}</div><div className="mt-2 text-2xl font-black text-stone-950">{localized.code}</div></div>
-            <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{labels.routeLabel}</div><div className="mt-2 text-sm font-black text-stone-950">#/lesson/{localized.id}</div></div>
+        <div className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-stone-500">Report checklist</div>
+          <div className="mt-4 grid gap-3">
+            {DRD_FINAL_REPORT.checklist.map((item, index) => <div key={item} className="rounded-2xl border border-stone-200 bg-white p-4 text-sm font-bold leading-6 text-stone-700">{index + 1}. {item}</div>)}
           </div>
-          <div className="mt-5 rounded-3xl bg-stone-950 p-6 text-white">
-            <div className={`text-xs font-black uppercase tracking-[0.18em] ${isModule2 ? "text-emerald-200" : "text-red-200"}`}>{labels.eyebrow}</div>
-            <p className="mt-3 text-base font-bold leading-7">{labels.body}</p>
-          </div>
-        </aside>
-      </section>
-
-      <section className="mt-8 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-        <article className="rounded-[2rem] border border-stone-200 bg-white/90 p-6 shadow-sm">
-          <div className={`text-xs font-black uppercase tracking-[0.22em] ${accentText}`}>{labels.deliverables}</div>
-          <div className="mt-4 flex flex-wrap gap-2">{localized.products.map(product => <span key={product} className={`rounded-full border px-3 py-1 text-xs font-black ${pillTone}`}>{product}</span>)}</div>
-        </article>
-        <article className="rounded-[2rem] border border-stone-200 bg-white/90 p-6 shadow-sm">
-          <div className={`text-xs font-black uppercase tracking-[0.22em] ${accentText}`}>{labels.keep}</div>
-          <p className="mt-3 text-sm font-semibold leading-7 text-stone-600">{labels.keepBody}</p>
-        </article>
-      </section>
-
-      <nav className="mt-8 rounded-[2rem] border border-stone-200 bg-white/90 p-3 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <a href={prev ? drdLessonHref(prev) : "#/"} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:shadow-sm">← {labels.previous}{prev ? `: ${prev.code}` : ""}</a>
-          <a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:shadow-sm">{labels.dashboard}</a>
-          {next ? <a href={drdLessonHref(next)} className={`rounded-full px-4 py-2 text-sm font-black text-white shadow-lg transition hover:-translate-y-0.5 ${accentBg}`}>{labels.next}: {next.code} →</a> : <span className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-400">{labels.noNext}</span>}
         </div>
-      </nav>
-    </main>
+      </div>
+    </section>
   );
 }
 
+function DRDProductsSection({ copy }) {
+  return (
+    <section id="products" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <div className="mb-6">
+        <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.deliverables}</div>
+        <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{copy.products}</h2>
+        <p className="mt-2 max-w-3xl leading-7 text-stone-600">{copy.productsBody}</p>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {DRD_STUDY_PRODUCTS.map(product => <DRDProductCard key={product.title} product={product} />)}
+      </div>
+    </section>
+  );
+}
 
-function DRDExamReportKitSection({ lang = "es" }) {
-  const kit = getDRDExamReportKit(lang);
+function DRDExamReportKitSection() {
+  const kit = getDRDExamReportKit();
   return (
     <section id="exam-kit" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
       <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
@@ -1497,18 +951,14 @@ function DRDExamReportKitSection({ lang = "es" }) {
           <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{kit.title}</h2>
           <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600">{kit.body}</p>
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
-            {kit.rubric.map(item => <div key={item.label} className="rounded-3xl border border-stone-200 bg-stone-50 p-4">
-              <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{item.label}</div>
-              <p className="mt-2 text-sm font-bold leading-6 text-stone-700">{item.value}</p>
-            </div>)}
+            {kit.rubric.map(item => <div key={item.label} className="rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{item.label}</div><p className="mt-2 text-sm font-bold leading-6 text-stone-700">{item.value}</p></div>)}
           </div>
         </div>
         <div className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5">
           <div className="text-xs font-black uppercase tracking-[0.22em] text-stone-500">{kit.rubricTitle}</div>
-          <p className="mt-3 text-sm font-semibold leading-7 text-stone-600">question → design → QC/normalization → statistics → interpretation → limitation</p>
+          <p className="mt-3 text-sm font-semibold leading-7 text-stone-600">question - design - QC/normalization - statistics - interpretation - limitation</p>
         </div>
       </div>
-
       <div className="mt-7 grid gap-5 lg:grid-cols-2">
         <DRDExamKitColumn title={kit.writtenTitle} items={kit.written} tone="red" />
         <DRDExamKitColumn title={kit.reportTitle} items={kit.report} tone="emerald" />
@@ -1524,31 +974,42 @@ function DRDExamKitColumn({ title, items, tone = "red" }) {
     <article className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm">
       <h3 className={`text-2xl font-black tracking-tight ${accent}`}>{title}</h3>
       <div className="mt-4 grid gap-4">
-        {items.map(item => <div key={item.title} className="rounded-3xl border border-stone-200 bg-stone-50 p-5">
-          <h4 className="text-lg font-black leading-7 text-stone-950">{item.title}</h4>
-          <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {(item.bullets || item.checks || []).map(point => <span key={point} className={`rounded-full border px-3 py-1 text-xs font-black ${badge}`}>{point}</span>)}
-          </div>
-        </div>)}
+        {items.map(item => <div key={item.title} className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><h4 className="text-lg font-black leading-7 text-stone-950">{item.title}</h4><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p><div className="mt-3 flex flex-wrap gap-2">{(item.bullets || item.checks || []).map(point => <span key={point} className={`rounded-full border px-3 py-1 text-xs font-black ${badge}`}>{point}</span>)}</div></div>)}
       </div>
     </article>
   );
 }
 
-function DRDProductCard({ product, lang = "es" }) {
-  const localized = localizeDRDProduct(product, lang);
+function DRDProductCard({ product }) {
   return (
     <article className="rounded-3xl border border-stone-200 bg-stone-50 p-5 shadow-sm">
-      <h3 className="text-lg font-black text-stone-950">{localized.title}</h3>
-      <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{localized.desc}</p>
+      <h3 className="text-lg font-black text-stone-950">{product.title}</h3>
+      <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{product.desc}</p>
       <div className="mt-4 flex flex-wrap gap-2">
-        {localized.tags.map(tag => <span key={tag} className="rounded-full bg-white px-3 py-1 text-xs font-black text-stone-600 shadow-sm">{tag}</span>)}
+        {product.tags.map(tag => <span key={tag} className="rounded-full bg-white px-3 py-1 text-xs font-black text-stone-600 shadow-sm">{tag}</span>)}
       </div>
     </article>
   );
 }
 
+function DRDSourcesSection({ copy }) {
+  const sources = [
+    { title: "DRD root", href: DRD_DRIVE.root },
+    { title: "Module 1", href: DRD_DRIVE.module1 },
+    { title: "Module 2", href: DRD_DRIVE.module2 },
+    { title: "Transcriptions", href: DRD_DRIVE.transcriptions },
+    { title: "Recordings", href: DRD_DRIVE.recordingsDoc },
+  ];
+  return (
+    <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.sources}</div>
+      <p className="mt-3 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{copy.sourcesBody}</p>
+      <div className="mt-5 grid gap-2 md:grid-cols-5">
+        {sources.map((source) => <a key={source.title} href={source.href} target="_blank" rel="noreferrer" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-center text-xs font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm">{source.title}</a>)}
+      </div>
+    </section>
+  );
+}
 function AMLBApp({ t, hash }) {
   const [progress, setProgress] = useState(() => getJSON("aml_progress", {}));
   const [query, setQuery] = useState("");

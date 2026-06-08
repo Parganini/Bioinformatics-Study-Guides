@@ -227,7 +227,8 @@ function words(text) {
 }
 
 function splitSentences(text) {
-  return text.match(/[^.!?]+[.!?]+/g)?.map((sentence) => sentence.trim()) || [text.trim()];
+  const normalized = text.replace(/\s+/g, " ").trim();
+  return normalized.split(/(?<=[.!?])\s+(?=[A-Z])/).filter(Boolean);
 }
 
 function modelIdeas(item) {

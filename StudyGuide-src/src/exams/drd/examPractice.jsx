@@ -226,6 +226,17 @@ function words(text) {
   return text.trim() ? text.trim().split(/\s+/).length : 0;
 }
 
+function modelLines(text) {
+  const terms = text.trim().split(/\s+/).filter(Boolean);
+  if (!terms.length) return [];
+  const lineCount = terms.length > 110 ? 12 : terms.length > 85 ? 11 : 10;
+  return Array.from({ length: lineCount }, (_, index) => {
+    const start = Math.round(index * terms.length / lineCount);
+    const end = Math.round((index + 1) * terms.length / lineCount);
+    return terms.slice(start, end).join(" ");
+  }).filter(Boolean);
+}
+
 function routeForLesson(id) {
   return drdLessonHref({ id });
 }
@@ -272,12 +283,14 @@ function PracticeCard({ item, index }) {
           />
         </div>
         <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5">
-          <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Checklist</div>
-          <div className="mt-3 grid gap-2">
-            {item.checklist.map((point) => (
-              <div key={point} className="rounded-2xl border border-stone-200 bg-white px-3 py-2 text-sm font-bold text-stone-700">{point}</div>
-            ))}
-          </div>
+          <details className="rounded-2xl border border-stone-200 bg-white p-4">
+            <summary className="cursor-pointer text-sm font-black text-stone-800">Need help? Open checklist</summary>
+            <div className="mt-3 grid gap-2">
+              {item.checklist.map((point) => (
+                <div key={point} className="rounded-2xl border border-stone-200 bg-stone-50 px-3 py-2 text-sm font-bold text-stone-700">{point}</div>
+              ))}
+            </div>
+          </details>
           <button type="button" onClick={() => setShow(!show)} className="mt-4 rounded-full bg-stone-950 px-5 py-3 text-sm font-black text-white transition hover:bg-red-800">
             {show ? "Hide model answer" : "Show model answer"}
           </button>
@@ -287,7 +300,14 @@ function PracticeCard({ item, index }) {
       {show ? (
         <div className="mt-5 rounded-3xl border border-red-200 bg-red-50 p-5">
           <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Model answer</div>
-          <p className="mt-3 text-sm font-bold leading-7 text-stone-800">{item.model}</p>
+          <ol className="mt-3 grid gap-1 text-sm font-bold leading-6 text-stone-800">
+            {modelLines(item.model).map((line, lineIndex) => (
+              <li key={`${item.id}-${lineIndex}`} className="grid grid-cols-[2rem_1fr] gap-2">
+                <span className="text-right text-red-700">{lineIndex + 1}.</span>
+                <span>{line}</span>
+              </li>
+            ))}
+          </ol>
         </div>
       ) : null}
     </article>

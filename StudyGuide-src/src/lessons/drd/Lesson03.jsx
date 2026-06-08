@@ -38,7 +38,7 @@ import annotationFilesSlide from "../../assets/drd/lesson03/annotation-files.jpg
 import miameStandardsSlide from "../../assets/drd/lesson03/miame-standards.jpg";
 import geoRepositorySlide from "../../assets/drd/lesson03/geo-repository.jpg";
 import geoCelFilesExampleSlide from "../../assets/drd/lesson03/geo-cel-files-example.jpg";
-import { M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks, M1LessonNav } from "./module1Shared.jsx";
+import { M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks, M1LessonHero, M1LessonNav } from "./module1Shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1bkgvJ-w8Sgrqt5FSOSi29iOEUc5vJCQL/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1MLeSACuOeUinq637GK8sci2isNKzBgZ-V7K2SVF7nZc/edit?usp=drivesdk";
@@ -512,12 +512,12 @@ function ResourceLinks({ copy }) {
 }
 
 function LessonNav({ copy, isDone, toggle, position = "top" }) {
-  return <M1LessonNav labels={copy} isDone={isDone} toggle={toggle} position={position} previousHref="#/lesson/m1-stanford" nextHref="#/lesson/m1-illumina" />;
+  return <M1LessonNav lessonId="m1-affy" labels={copy} isDone={isDone} toggle={toggle} position={position} previousHref="#/lesson/m1-stanford" nextHref="#/lesson/m1-illumina" />;
 }
 
 function Hero({ copy }) {
   const meta = getHeroMeta(copy);
-  return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.heroEyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.heroTitle}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.heroSubtitle}</p><div className="mt-6 flex flex-wrap gap-2">{meta.tags.map(tag => <Pill key={tag} tone={tag.includes("RMA") || tag.includes("PM") ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={meta.module} value="1" tone="red"/><StatCard label={meta.exam} value="4Q"/><StatCard label={meta.answer} value="10–12"/><StatCard label={meta.core} value="PM/RMA" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{meta.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{meta.bigIdeaText}</p></div><ResourceLinks copy={copy}/></div></div></div></section>;
+  return <M1LessonHero lessonId="m1-affy" title={copy.heroTitle} subtitle={copy.heroSubtitle} tags={meta.tags} tagTone={(tag) => tag.includes("RMA") || tag.includes("PM") ? "red" : "stone"} statLabels={{ module: meta.module, exam: meta.exam, answer: meta.answer, core: meta.core, eyebrow: copy.heroEyebrow }} coreValue="PM/RMA" bigIdeaLabel={meta.bigIdea} bigIdeaText={meta.bigIdeaText} resourcePanel={<ResourceLinks copy={copy}/>} />;
 }
 
 function ExamWatchCard({ data, copy }) {

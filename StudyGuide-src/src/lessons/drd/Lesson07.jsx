@@ -42,7 +42,7 @@ import gseaDefinitionSlide from "../../assets/drd/lesson07/gsea-definition.jpg";
 import gseaOutputsSlide from "../../assets/drd/lesson07/gsea-outputs.jpg";
 import nesDefinitionSlide from "../../assets/drd/lesson07/nes-definition.jpg";
 import nesFdrSlide from "../../assets/drd/lesson07/nes-fdr.jpg";
-import { M1HeroEyebrow as HeroEyebrow, M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks, M1LessonNav } from "./module1Shared.jsx";
+import { M1HeroEyebrow as HeroEyebrow, M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks, M1LessonHero, M1LessonNav } from "./module1Shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1mgvgsmiFN2nAh6nT3-RRiUslcDaMZWvX/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/145GkBXGfP4tngdTcFf5LjMxFMI8Hqi5QgeZy2aJtnkA/edit?usp=drivesdk";
@@ -232,7 +232,7 @@ function alphaRows(p, lab) {
   return [0.05, 0.01, 0.001].map((alpha) => ({ alpha, decision: p <= alpha ? lab.reject : lab.retain, confidence: `${fmt((1 - alpha) * 100, 1)}%` }));
 }
 
-function Navigation({ ui, isDone, toggle, position = "top" }) { return <M1LessonNav labels={ui} isDone={isDone} toggle={toggle} position={position} previousHref="#/lesson/m1-deg-i" nextHref="#/lesson/m1-samples-genes-i" />; }
+function Navigation({ ui, isDone, toggle, position = "top" }) { return <M1LessonNav lessonId="m1-deg-ii" labels={ui} isDone={isDone} toggle={toggle} position={position} previousHref="#/lesson/m1-deg-i" nextHref="#/lesson/m1-samples-genes-i" />; }
 function ResourceLinks({ ui }) {
   const links = [
     { label: ui.slides, href: SLIDES_URL, tone: "accent" },
@@ -420,7 +420,7 @@ export default function DRDLesson07({ lang = "es", isDone = false, toggle = () =
   const [zoom, setZoom] = useState(null);
   const sections = useMemo(() => copy.sections, [copy]);
   return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12 text-stone-900"><Navigation ui={ui} isDone={isDone} toggle={toggle}/>
-    <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><HeroEyebrow>{ui.heroEyebrow}</HeroEyebrow><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{ui.heroTitle}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{ui.heroSubtitle}</p><div className="mt-6 flex flex-wrap gap-2">{ui.tags.map((tag) => <Pill key={tag} tone={tag === "FDR" || tag === "FWER" || tag.toLowerCase().includes("bh") ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={ui.module} value="1" tone="red"/><StatCard label={ui.writtenExam} value="4Q"/><StatCard label={ui.answerLines} value="10–12"/><StatCard label={ui.core} value="FDR/BH" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{ui.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{ui.bigIdeaText}</p></div><ResourceLinks ui={ui}/></div></div></div></section>
+    <M1LessonHero lessonId="m1-deg-ii" title={ui.heroTitle} subtitle={ui.heroSubtitle} tags={ui.tags} tagTone={(tag) => tag === "FDR" || tag === "FWER" || tag.toLowerCase().includes("bh") ? "red" : "stone"} statLabels={{ module: ui.module, writtenExam: ui.writtenExam, answerLines: ui.answerLines, core: ui.core, eyebrow: ui.heroEyebrow }} coreValue="FDR/BH" bigIdeaLabel={ui.bigIdea} bigIdeaText={ui.bigIdeaText} resourcePanel={<ResourceLinks ui={ui}/>} />
     {sections.map((section, idx) => <section key={section.title} className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={`Part ${idx + 1}`} title={section.title}>{section.intro}</SectionHeader><SlideGrid ui={ui} slides={section.slides} openZoom={setZoom}/>{renderLab(section.lab, lab)}</section>)}
     <Quiz ui={ui}/><WrittenTrainer ui={ui} lang={lang}/><Navigation ui={ui} isDone={isDone} toggle={toggle} position="bottom"/><ZoomModal ui={ui} zoom={zoom} setZoom={setZoom}/>
   </main>;

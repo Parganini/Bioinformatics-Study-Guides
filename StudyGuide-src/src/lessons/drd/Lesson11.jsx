@@ -58,7 +58,7 @@ import slide56 from "../../assets/drd/lesson11/slide-56.jpg";
 import slide57 from "../../assets/drd/lesson11/slide-57.jpg";
 import slide58 from "../../assets/drd/lesson11/slide-58.jpg";
 import slide59 from "../../assets/drd/lesson11/slide-59.jpg";
-import { M1HeroEyebrow as HeroEyebrow, M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks, M1LessonNav } from "./module1Shared.jsx";
+import { M1HeroEyebrow as HeroEyebrow, M1Pill as Pill, M1StatCard as StatCard, M1SectionHeader as SectionHeader, M1ResourceLinks, M1LessonHero, M1LessonNav } from "./module1Shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1JSN_XP7mF2r39TUzdiSOMW2Rum5Ij7ya/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/13Wu08yLvUaTITj3PmAC8yupFHzC6g8_zXbmVaGxAsUA/edit?usp=drivesdk";
@@ -572,7 +572,7 @@ function mean(xs) { return xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length
 function sd(xs) { const m = mean(xs); if (xs.length < 2 || !Number.isFinite(m)) return NaN; return Math.sqrt(xs.reduce((a, x) => a + (x - m) ** 2, 0) / (xs.length - 1)); }
 function fmt(x, digits = 2) { return Number.isFinite(x) ? x.toFixed(digits).replace(/\.00$/, "") : "—"; }
 
-function Navigation({ ui, isDone, toggle, position = "top" }) { return <M1LessonNav labels={ui} isDone={isDone} toggle={toggle} position={position} previousHref="#/lesson/m1-deg-ii" nextHref="#/lesson/m1-samples-genes-ii" />; }
+function Navigation({ ui, isDone, toggle, position = "top" }) { return <M1LessonNav lessonId="m1-samples-genes-i" labels={ui} isDone={isDone} toggle={toggle} position={position} previousHref="#/lesson/m1-deg-ii" nextHref="#/lesson/m1-samples-genes-ii" />; }
 function ResourceLinks({ ui }) {
   const links = [
     { label: ui.slides, href: SLIDES_URL, tone: "accent" },
@@ -608,7 +608,7 @@ export default function DRDLesson11({ lang = "es", isDone = false, toggle = () =
   const [zoom, setZoom] = useState(null);
   const sections = useMemo(() => copy.sections, [copy]);
   return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12 text-stone-900"><Navigation ui={ui} isDone={isDone} toggle={toggle}/>
-    <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><HeroEyebrow>{ui.heroEyebrow}</HeroEyebrow><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{ui.heroTitle}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{ui.heroSubtitle}</p><div className="mt-6 flex flex-wrap gap-2">{ui.tags.map((tag) => <Pill key={tag} tone={tag === "MDS" || tag === "clustering" || tag === "heatmap" ? "red" : "stone"}>{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label={ui.module} value="1" tone="red"/><StatCard label={ui.writtenExam} value="4Q"/><StatCard label={ui.answerLines} value="10–12"/><StatCard label={ui.core} value="MDS/HC" tone="red"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{ui.bigIdea}</div><p className="mt-2 text-lg font-bold leading-7">{ui.bigIdeaText}</p></div><ResourceLinks ui={ui}/></div></div></div></section>
+    <M1LessonHero lessonId="m1-samples-genes-i" title={ui.heroTitle} subtitle={ui.heroSubtitle} tags={ui.tags} tagTone={(tag) => tag === "MDS" || tag === "clustering" || tag === "heatmap" ? "red" : "stone"} statLabels={{ module: ui.module, writtenExam: ui.writtenExam, answerLines: ui.answerLines, core: ui.core, eyebrow: ui.heroEyebrow }} coreValue="MDS/HC" bigIdeaLabel={ui.bigIdea} bigIdeaText={ui.bigIdeaText} resourcePanel={<ResourceLinks ui={ui}/>} />
     {sections.map((section, idx) => <section key={section.title} className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><SectionHeader eyebrow={`Part ${idx + 1}`} title={section.title}>{section.intro}</SectionHeader><SlideGrid ui={ui} slides={section.slides} openZoom={setZoom}/>{renderLab(section.lab, copy)}</section>)}
     <Quiz ui={ui} copy={copy}/><WrittenTrainer ui={ui} copy={copy}/><Navigation ui={ui} isDone={isDone} toggle={toggle} position="bottom"/><ZoomModal ui={ui} zoom={zoom} setZoom={setZoom}/>
   </main>;

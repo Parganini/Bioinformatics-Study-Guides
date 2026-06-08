@@ -85,8 +85,8 @@ export const DRD_STUDY_PRODUCTS = [
   },
   {
     title: "Written-answer trainer",
-    desc: "Module 1 practice built around concise academic answers with definitions, justification and interpretation.",
-    tags: ["4 questions", "10-12 lines", "rubric"],
+    desc: "A 24-question exam-practice page built from the DRD_2024 question list and the Domande_DRD developed answers.",
+    tags: ["24 questions", "10-12 lines", "model answers"],
   },
   {
     title: "Team-report scaffold",

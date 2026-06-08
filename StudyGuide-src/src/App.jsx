@@ -37,6 +37,7 @@ import { DRDPlannedLesson } from "./lessons/drd/shared/template.jsx";
 import { getDRDStatusMeta } from "./lessons/drd/shared/status.js";
 import { DRDResourcePanel } from "./lessons/drd/shared/resourcePanel.jsx";
 
+const DRDExamPracticePage = React.lazy(() => import("./exams/drd/examPractice.jsx"));
 
 const LANGS = [
   { code: "en", label: "English", short: "EN", dir: "ltr" },
@@ -631,6 +632,7 @@ function drdCopy() {
     products: "Study-guide products",
     productsBody: "The dashboard now reads from a single DRD manifest: routes, resources, status, lesson type and Drive links stay in one place.",
     examKit: "Exam and report kit",
+    examPractice: "Exam practice",
     finalReport: "Final report",
     roadmap: "Course roadmap",
     search: "Search DNA/RNA topics...",
@@ -744,6 +746,14 @@ function DRDApp({ t, hash }) {
   const toggle = (id) => save({ ...progress, [id]: !progress[id] });
   const lessonId = (hash.match(/^#\/lesson\/(.+)$/) || [])[1];
 
+  if (hash.match(/^#\/exam-practice/)) {
+    return (
+      <React.Suspense fallback={<DRDRouteLoading label="Exam practice" />}>
+        <DRDExamPracticePage />
+      </React.Suspense>
+    );
+  }
+
   if (lessonId) {
     const lesson = getDRDLessonById(lessonId);
     if (lesson) {
@@ -776,6 +786,7 @@ function DRDApp({ t, hash }) {
           <>
             <a href="#module-1" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{copy.module1Short}</a>
             <a href="#module-2" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.module2Short}</a>
+            <a href="#/exam-practice" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.examPractice}</a>
             <a href="#final-report" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.finalReport}</a>
             <a href="#exam-kit" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.examKit}</a>
           </>
@@ -835,11 +846,15 @@ function DRDApp({ t, hash }) {
 }
 
 function DRDLessonLoading({ lesson }) {
+  return <DRDRouteLoading label={`${lesson?.code} - ${lesson?.title}`} eyebrow="Loading lesson" />;
+}
+
+function DRDRouteLoading({ label, eyebrow = "Loading" }) {
   return (
     <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
       <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-6 shadow-sm">
-        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Loading lesson</div>
-        <p className="mt-3 text-lg font-black text-stone-950">{lesson?.code} - {lesson?.title}</p>
+        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{eyebrow}</div>
+        <p className="mt-3 text-lg font-black text-stone-950">{label}</p>
       </div>
     </main>
   );
@@ -950,6 +965,7 @@ function DRDExamReportKitSection() {
           <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{kit.eyebrow}</div>
           <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{kit.title}</h2>
           <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600">{kit.body}</p>
+          <a href="#/exam-practice" className="mt-5 inline-flex rounded-full bg-stone-950 px-5 py-3 text-sm font-black text-white transition hover:bg-red-800">Open exam practice</a>
           <div className="mt-5 grid gap-3 sm:grid-cols-3">
             {kit.rubric.map(item => <div key={item.label} className="rounded-3xl border border-stone-200 bg-stone-50 p-4"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{item.label}</div><p className="mt-2 text-sm font-bold leading-6 text-stone-700">{item.value}</p></div>)}
           </div>

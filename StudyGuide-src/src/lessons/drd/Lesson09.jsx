@@ -31,7 +31,7 @@ import slide29 from "../../assets/drd/lesson09/slide-29.png";
 import slide30 from "../../assets/drd/lesson09/slide-30.png";
 import slide31 from "../../assets/drd/lesson09/slide-31.png";
 import slide32 from "../../assets/drd/lesson09/slide-32.png";
-import { cx, tr, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks, DRDLessonNav } from "./shared.jsx";
+import { cx, tr, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks, DRDLessonHero, DRDLessonNav } from "./shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/18mE84-kSZ83x9t7B3Wrj_FfUN9-H5Ev_/view?usp=drivesdk";
 const CODE_URL = "https://drive.google.com/file/d/1VeUyh13Un4Gger5-NAdYoY2LTvR0S1Ad/view?usp=drivesdk";
@@ -327,10 +327,10 @@ function ResourceLinks({ lang }) {
 }
 function LessonNav({ lang, isDone, toggle, bottom = false }) {
   const labels = ui[lang] || ui.es;
-  return <DRDLessonNav labels={labels} isDone={isDone} toggle={toggle} bottom={bottom} previousHref="#/lesson/m2-manifest" nextHref="#/lesson/m2-normalization-1" />;
+  return <DRDLessonNav lessonId="m2-import-qc" labels={labels} isDone={isDone} toggle={toggle} bottom={bottom} previousHref="#/lesson/m2-manifest" nextHref="#/lesson/m2-normalization-1" />;
 }
 function Hero({ lang }) {
-  return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#f3fff7]/95 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><Pill>{tr(copy.hero.eyebrow, lang)}</Pill><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{tr(copy.hero.title, lang)}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{tr(copy.hero.subtitle, lang)}</p><div className="mt-6 flex flex-wrap gap-2">{tr(copy.hero.tags, lang).map(tag => <Pill key={tag} tone="stone">{tag}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3">{copy.stats.map(item => <StatCard key={tr(item.label, lang)} label={tr(item.label, lang)} value={item.value} tone={item.tone}/>)}</div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Pipeline mindset</div><p className="mt-2 text-lg font-bold leading-7">{tr(copy.hero.bigIdea, lang)}</p></div><ResourceLinks lang={lang}/></div></div></div></section>;
+  return <DRDLessonHero lessonId="m2-import-qc" eyebrow={tr(copy.hero.eyebrow, lang)} title={tr(copy.hero.title, lang)} subtitle={tr(copy.hero.subtitle, lang)} tags={tr(copy.hero.tags, lang)} stats={copy.stats.map(item => ({ label: tr(item.label, lang), value: item.value, tone: item.tone }))} bigIdea={tr(copy.hero.bigIdea, lang)} resourcePanel={<ResourceLinks lang={lang}/>} />;
 }
 function ReportWatch({ lang, watch }) {
   const labels = ui[lang] || ui.es;

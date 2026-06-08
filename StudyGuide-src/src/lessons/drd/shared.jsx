@@ -1,4 +1,5 @@
 import React from "react";
+import { drdLessonHref, getDRDLessonById, getDRDNeighbors } from "./drdManifest.js";
 
 export function cx(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -84,24 +85,87 @@ export function DRDResourceLinks({ title, links, columns = 4 }) {
   );
 }
 
-export function DRDLessonNav({ labels, isDone = false, toggle = () => {}, bottom = false, previousHref, nextHref, dashboardHref = "#/" }) {
+function formatLessonLabel(lesson) {
+  return lesson ? `${lesson.code} ${lesson.title}` : "";
+}
+
+function canonicalEyebrow(lesson, fallback) {
+  if (!lesson) return fallback;
+  return `${lesson.code} · ${lesson.date}`;
+}
+
+export function DRDLessonHero({
+  lessonId,
+  eyebrow,
+  title,
+  subtitle,
+  tags = [],
+  stats = [],
+  bigIdea,
+  pipelineLabel = "Pipeline mindset",
+  resourcePanel,
+}) {
+  const lesson = getDRDLessonById(lessonId);
+  const displayedTags = tags.length ? tags : lesson?.tags || [];
+
+  return (
+    <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#f3fff7]/95 shadow-xl shadow-stone-900/5">
+      <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
+        <div className="p-7 md:p-10 lg:p-12">
+          <DRDPill>{canonicalEyebrow(lesson, eyebrow)}</DRDPill>
+          <h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{title || lesson?.title}</h1>
+          <p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{subtitle || lesson?.summary}</p>
+          <div className="mt-6 flex flex-wrap gap-2">{displayedTags.map(tag => <DRDPill key={tag} tone="stone">{tag}</DRDPill>)}</div>
+        </div>
+        <div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0">
+          <div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner">
+            <div className="grid grid-cols-2 gap-3">
+              {stats.map(item => <DRDStatCard key={`${item.label}-${item.value}`} label={item.label} value={item.value} tone={item.tone}/>)}
+            </div>
+            <div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white">
+              <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">{pipelineLabel}</div>
+              <p className="mt-2 text-lg font-bold leading-7">{bigIdea}</p>
+            </div>
+            {resourcePanel}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function DRDLessonNav({ labels, lessonId, isDone = false, toggle = () => {}, bottom = false, previousHref, nextHref, dashboardHref = "#/" }) {
+  const lesson = getDRDLessonById(lessonId);
+  const { previous, next } = lesson ? getDRDNeighbors(lesson.id) : { previous: null, next: null };
+  const resolvedPreviousHref = lesson ? (previous ? drdLessonHref(previous) : dashboardHref) : previousHref;
+  const resolvedNextHref = lesson ? (next ? drdLessonHref(next) : null) : nextHref;
+  const previousLabel = lesson ? (previous ? formatLessonLabel(previous) : labels.dashboard) : labels.previousTitle;
+  const nextLabel = lesson ? (next ? formatLessonLabel(next) : labels.nextTitle) : labels.nextTitle;
+  const currentLabel = lesson ? lesson.code : labels.current;
+
   return (
     <nav className={cx("rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm", bottom ? "mt-10" : "mb-6")} aria-label="Lesson navigation">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        <a href={previousHref} className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">
-          ← {labels.previous}: {labels.previousTitle}
+        <a href={resolvedPreviousHref} className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">
+          ← {labels.previous}: {previousLabel}
         </a>
         <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center sm:justify-center">
           <a href={dashboardHref} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500 transition hover:bg-stone-50">
-            {labels.current} · {labels.dashboard}
+            {currentLabel} · {labels.dashboard}
           </a>
           <button type="button" onClick={toggle} className={cx("rounded-full px-4 py-2 text-sm font-black shadow-sm transition hover:-translate-y-0.5", isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white hover:bg-emerald-700")}>
             {isDone ? labels.done : labels.mark}
           </button>
         </div>
-        <a href={nextHref} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">
-          {labels.next}: {labels.nextTitle} →
-        </a>
+        {resolvedNextHref ? (
+          <a href={resolvedNextHref} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">
+            {labels.next}: {nextLabel} →
+          </a>
+        ) : (
+          <span className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-sm font-black text-stone-400">
+            {labels.next}: {nextLabel}
+          </span>
+        )}
       </div>
     </nav>
   );

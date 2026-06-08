@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { cx, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader, DRDResourceLinks, DRDLessonNav } from "./shared.jsx";
+import { cx, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader, DRDResourceLinks, DRDLessonHero, DRDLessonNav } from "./shared.jsx";
 import module2OverviewVisual from "../../assets/drd/lesson04/module2-overview.png";
 import reportRequirementsVisual from "../../assets/drd/lesson04/report-requirements.png";
 import reportDeadlineVisual from "../../assets/drd/lesson04/report-deadline.png";
@@ -471,7 +471,7 @@ COPY.fa.quiz = [
 ];
 
 function LessonNav({ copy, isDone, toggle, position = "top" }) {
-  return <DRDLessonNav labels={copy} isDone={isDone} toggle={toggle} bottom={position === "bottom"} previousHref="#/lesson/m1-affy" nextHref="#/lesson/m2-manifest" />;
+  return <DRDLessonNav lessonId="m2-r" labels={copy} isDone={isDone} toggle={toggle} bottom={position === "bottom"} previousHref="#/lesson/m1-affy" nextHref="#/lesson/m2-manifest" />;
 }
 function SectionHeader({ eyebrow, title, children }) {
   return <div className="mb-5"><DRDSectionHeader eyebrow={eyebrow} title={title}>{children}</DRDSectionHeader></div>;
@@ -485,7 +485,7 @@ function ResourceLinks({ copy }) {
   return <DRDResourceLinks title={copy.resources} links={links} columns={3} />;
 }
 function Hero({ copy }) {
-  return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#f3fff7]/95 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-emerald-700">{copy.heroEyebrow}</div><h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy.heroTitle}</h1><p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{copy.heroSubtitle}</p><div className="mt-6 flex flex-wrap gap-2">{copy.flow.map(step => <Pill key={step} tone="stone">{step}</Pill>)}</div></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><div className="grid grid-cols-2 gap-3"><StatCard label="Module" value="2" tone="green"/><StatCard label="Date" value="May 8"/><StatCard label="Core" value="R" tone="green"/><StatCard label="Output" value="Report"/></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Pipeline mindset</div><p className="mt-2 text-lg font-bold leading-7">metadata → object type → inspect → subset → model/report</p></div><ResourceLinks copy={copy}/></div></div></div></section>;
+  return <DRDLessonHero lessonId="m2-r" eyebrow={copy.heroEyebrow} title={copy.heroTitle} subtitle={copy.heroSubtitle} tags={copy.flow} stats={[{ label: "Module", value: "2", tone: "green" }, { label: "Date", value: "May 8" }, { label: "Core", value: "R", tone: "green" }, { label: "Output", value: "Report" }]} bigIdea="metadata → object type → inspect → subset → model/report" resourcePanel={<ResourceLinks copy={copy}/>} />;
 }
 function ExamWatchCard({ exam, copy }) {
   return <div className="mt-4 rounded-[2rem] border border-emerald-200 bg-emerald-50/60 p-4">

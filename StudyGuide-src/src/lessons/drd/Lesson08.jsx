@@ -16,7 +16,7 @@ import slide14 from "../../assets/drd/lesson08/slide-14.png";
 import slide15 from "../../assets/drd/lesson08/slide-15.png";
 import slide16 from "../../assets/drd/lesson08/slide-16.png";
 import slide17 from "../../assets/drd/lesson08/slide-17.png";
-import { cx, tr as t, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks, DRDLessonNav } from "./shared.jsx";
+import { cx, tr as t, DRDPill as Pill, DRDStatCard as StatCard, DRDSectionHeader as SectionHeader, DRDResourceLinks, DRDLessonHero, DRDLessonNav } from "./shared.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1sN2mGi86239wfQ8w8K-PYtKeF4pWQXAR/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1StKS_UrrCBaIIvwsyz-vhmfrFQoxWy5HiAo8JFN3kHs/edit?usp=drivesdk";
@@ -307,32 +307,11 @@ function ResourceLinks({ lang }) {
 
 function LessonNav({ lang, isDone, toggle, bottom = false }) {
   const labels = ui[lang] || ui.es;
-  return <DRDLessonNav labels={labels} isDone={isDone} toggle={toggle} bottom={bottom} previousHref="#/lesson/m2-r" nextHref="#/lesson/m2-3" />;
+  return <DRDLessonNav lessonId="m2-manifest" labels={labels} isDone={isDone} toggle={toggle} bottom={bottom} previousHref="#/lesson/m2-r" nextHref="#/lesson/m2-3" />;
 }
 
 function Hero({ lang }) {
-  return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#f3fff7]/95 shadow-xl shadow-stone-900/5">
-    <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
-      <div className="p-7 md:p-10 lg:p-12">
-        <Pill>{t(copy.hero.eyebrow, lang)}</Pill>
-        <h1 className="mt-5 max-w-4xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{t(copy.hero.title, lang)}</h1>
-        <p className="mt-6 max-w-3xl text-lg leading-8 text-stone-700">{t(copy.hero.subtitle, lang)}</p>
-        <div className="mt-6 flex flex-wrap gap-2">{t(copy.hero.tags, lang).map(tag => <Pill key={tag} tone="stone">{tag}</Pill>)}</div>
-      </div>
-      <div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0">
-        <div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner">
-          <div className="grid grid-cols-2 gap-3">
-            {copy.stats.map(item => <StatCard key={t(item.label, lang)} label={t(item.label, lang)} value={item.value} tone={item.tone}/>) }
-          </div>
-          <div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white">
-            <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-200">Pipeline mindset</div>
-            <p className="mt-2 text-lg font-bold leading-7">{t(copy.hero.bigIdea, lang)}</p>
-          </div>
-          <ResourceLinks lang={lang}/>
-        </div>
-      </div>
-    </div>
-  </section>;
+  return <DRDLessonHero lessonId="m2-manifest" eyebrow={t(copy.hero.eyebrow, lang)} title={t(copy.hero.title, lang)} subtitle={t(copy.hero.subtitle, lang)} tags={t(copy.hero.tags, lang)} stats={copy.stats.map(item => ({ label: t(item.label, lang), value: item.value, tone: item.tone }))} bigIdea={t(copy.hero.bigIdea, lang)} resourcePanel={<ResourceLinks lang={lang}/>} />;
 }
 
 function ReportWatch({ lang, watch }) {

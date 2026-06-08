@@ -806,78 +806,6 @@ const DRD_STUDY_PRODUCTS = [
   { title: "Team report simulator", desc: "A Module 2 report scaffold from biological question to QC, normalization, DMP/DMR, PCA, batch effect and interpretation.", tags: ["report", "pipeline", "methylation"] },
 ];
 
-const DRD_EXAM_SPRINT = {
-  en: {
-    eyebrow: "Before the exam",
-    title: "Immediate study sprint",
-    body: "Prioritize the highest-yield blocks first: the June classes, the written-answer structure and the report pipeline.",
-    items: [
-      { label: "1", title: "Lock the June 5 unsupervised-analysis lesson", body: "Similarity/distance, Pearson vs Spearman vs Euclidean, MDS, hierarchical clustering, linkage choice, bootstrap support and heatmap legends." },
-      { label: "2", title: "Consolidate the June 4 methylation pipeline", body: "Beta vs M values, sample order, row-wise tests, multiple-testing correction, volcano/Manhattan plots and heatmap interpretation." },
-      { label: "3", title: "Train the exam answer shape", body: "Four prompts, 45 minutes, 10-12 lines each: define the concept, justify the workflow choice and close with biological interpretation." }
-    ],
-  },
-  es: {
-    eyebrow: "Antes del examen",
-    title: "Sprint inmediato de estudio",
-    body: "Prioriza primero los bloques con más rendimiento: las clases de junio, la estructura de respuesta escrita y el pipeline del reporte.",
-    items: [
-      { label: "1", title: "Cerrar la clase del 5 de junio sobre análisis no supervisado", body: "Similitud/distancia, Pearson vs Spearman vs Euclidean, MDS, clustering jerárquico, elección de linkage, bootstrap support y leyendas de heatmap." },
-      { label: "2", title: "Consolidar el pipeline de metilación del 4 de junio", body: "Beta vs M values, orden de muestras, tests por filas, corrección por multiple testing, volcano/Manhattan plots e interpretación de heatmaps." },
-      { label: "3", title: "Entrenar la forma de respuesta de examen", body: "Cuatro prompts, 45 minutos, 10-12 líneas cada uno: define el concepto, justifica la decisión de workflow y cierra con interpretación biológica." }
-    ],
-  },
-  fa: {
-    eyebrow: "پیش از امتحان",
-    title: "اسپرینت فوری مطالعه",
-    body: "اول بخش‌های پربازده را ببندید: کلاس‌های ژوئن، ساختار پاسخ نوشتاری و pipeline گزارش.",
-    items: [
-      { label: "1", title: "درس ۵ ژوئن درباره تحلیل unsupervised را تثبیت کن", body: "similarity/distance، Pearson در برابر Spearman در برابر Euclidean، MDS، hierarchical clustering، انتخاب linkage، bootstrap support و legendهای heatmap." },
-      { label: "2", title: "pipeline متیلاسیون ۴ ژوئن را جمع‌بندی کن", body: "Beta در برابر M value، ترتیب sampleها، آزمون row-wise، correction multiple testing، volcano/Manhattan plot و تفسیر heatmap." },
-      { label: "3", title: "فرم پاسخ امتحانی را تمرین کن", body: "چهار prompt، ۴۵ دقیقه، ۱۰-۱۲ خط برای هر پاسخ: مفهوم را تعریف کن، انتخاب workflow را توجیه کن و با تفسیر زیستی ببند." }
-    ],
-  },
-};
-
-const DRD_SOURCE_COVERAGE = [
-  {
-    range: "M1.1-M1.4",
-    source: { en: "Official Module 1 PDFs, Apr 28-May 12", es: "PDFs oficiales del Módulo 1, 28 abr-12 may", fa: "PDFهای رسمی Module 1، ۲۸ آوریل تا ۱۲ مه" },
-    support: { en: "Transcripts + recordings", es: "Transcripciones + grabaciones", fa: "transcriptها + recordingها" },
-    status: { en: "Visual lessons complete", es: "Lecciones visuales completas", fa: "درس‌های تصویری کامل" },
-  },
-  {
-    range: "M1.5-M1.6",
-    source: { en: "Differential-expression slides, May 26-27", es: "Slides de expresión diferencial, 26-27 may", fa: "اسلایدهای differential expression، ۲۶-۲۷ مه" },
-    support: { en: "Statistics examples + transcripts", es: "Ejemplos estadísticos + transcripciones", fa: "مثال‌های آماری + transcriptها" },
-    status: { en: "Written-answer practice ready", es: "Práctica escrita lista", fa: "تمرین پاسخ نوشتاری آماده" },
-  },
-  {
-    range: "M1.7-M1.8",
-    source: { en: "June 5 genes/samples slides; next class scheduled", es: "Slides genes/muestras del 5 de junio; siguiente clase programada", fa: "اسلایدهای genes/samples در ۵ ژوئن؛ کلاس بعدی برنامه‌ریزی‌شده" },
-    support: { en: "Transcript + unsupervised-analysis takeaways", es: "Transcripción + takeaways de análisis no supervisado", fa: "transcript + نکات analysis unsupervised" },
-    status: { en: "M1.7 complete; M1.8 placeholder", es: "M1.7 completa; M1.8 temporal", fa: "M1.7 کامل؛ M1.8 موقت" },
-  },
-  {
-    range: "M2.1-M2.3",
-    source: { en: "Module 2 Lessons 1-3", es: "Lecciones 1-3 del Módulo 2", fa: "درس‌های ۱-۳ Module 2" },
-    support: { en: "Scripts, SampleSheets, manifests and RData", es: "Scripts, SampleSheets, manifests y RData", fa: "scriptها، SampleSheetها، manifestها و RData" },
-    status: { en: "Workflow lessons complete", es: "Lecciones de workflow completas", fa: "درس‌های workflow کامل" },
-  },
-  {
-    range: "M2.4-M2.6",
-    source: { en: "Module 2 Lessons 4-6", es: "Lecciones 4-6 del Módulo 2", fa: "درس‌های ۴-۶ Module 2" },
-    support: { en: "Code exports, transcripts and generated plots", es: "Código exportado, transcripciones y plots generados", fa: "خروجی code، transcriptها و plotهای تولیدشده" },
-    status: { en: "Report-ready practice active", es: "Práctica lista para reporte activa", fa: "تمرین آماده گزارش فعال" },
-  },
-  {
-    range: "M2.7",
-    source: { en: "Batch-effect class scheduled for Jun 11", es: "Clase de batch effect programada para el 11 de junio", fa: "کلاس batch effect برای ۱۱ ژوئن برنامه‌ریزی شده" },
-    support: { en: "Will be filled from slides + transcript", es: "Se completará con slides + transcripción", fa: "با slide + transcript تکمیل خواهد شد" },
-    status: { en: "Placeholder active", es: "Página temporal activa", fa: "صفحه موقت فعال" },
-  },
-];
-
 const DRD_EXAM_REPORT_KIT = {
   en: {
     eyebrow: "Practical study kit",
@@ -1049,10 +977,7 @@ function drdCopy(lang) {
       noMatches: "No matches.",
       deliverables: "Guide deliverables",
       sources: "Source folders considered",
-      sourcesBody: "Module 1 PDFs plus the Module 2 Lesson1-Lesson5 folders, including scripts, SampleSheets, manifests, RData objects, normalization outputs and support papers.",
-      primarySource: "Primary source",
-      supportSource: "Support",
-      guideStatus: "Guide status",
+      sourcesBody: "Module 1 PDFs plus the Module 2 Lesson1–Lesson5 folders, including scripts, SampleSheets, manifests, RData objects, normalization outputs and support papers.",
     },
     es: {
       updated: "Estado actualizado",
@@ -1081,10 +1006,7 @@ function drdCopy(lang) {
       noMatches: "Sin resultados.",
       deliverables: "Entregables de la guía",
       sources: "Fuentes consideradas",
-      sourcesBody: "PDFs del Módulo 1 y carpetas Lección 1-Lección 5 del Módulo 2, incluyendo scripts, SampleSheets, manifests, objetos RData, salidas de normalización y papers de apoyo.",
-      primarySource: "Fuente principal",
-      supportSource: "Apoyo",
-      guideStatus: "Estado en la guía",
+      sourcesBody: "PDFs del Módulo 1 y carpetas Lección 1–Lección 5 del Módulo 2, incluyendo scripts, SampleSheets, manifests, objetos RData, salidas de normalización y papers de apoyo.",
     },
     fa: {
       updated: "وضعیت به‌روز",
@@ -1113,10 +1035,7 @@ function drdCopy(lang) {
       noMatches: "نتیجه‌ای پیدا نشد.",
       deliverables: "خروجی‌ها",
       sources: "منابع در نظر گرفته‌شده",
-      sourcesBody: "PDFهای ماژول ۱ و پوشه‌های Lesson1-Lesson5 ماژول ۲، شامل scriptها، SampleSheetها، manifestها، آبجکت‌های RData، خروجی‌های normalization و مقاله‌های پشتیبان.",
-      primarySource: "منبع اصلی",
-      supportSource: "پشتیبانی",
-      guideStatus: "وضعیت در راهنما",
+      sourcesBody: "PDFهای ماژول ۱ و پوشه‌های Lesson1–Lesson5 ماژول ۲، شامل scriptها، SampleSheetها، manifestها، آبجکت‌های RData، خروجی‌های normalization و مقاله‌های پشتیبان.",
     },
   }[lang] || {};
 }
@@ -1332,8 +1251,6 @@ function DRDApp({ t, lang, hash }) {
         </div>
       </section>
 
-      <DRDExamSprintSection lang={lang} />
-
       <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/75 p-5 shadow-sm md:p-6">
         <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
@@ -1366,7 +1283,6 @@ function DRDApp({ t, lang, hash }) {
       <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
         <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.sources}</div>
         <p className="mt-3 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{copy.sourcesBody}</p>
-        <DRDSourceCoverageTable copy={copy} lang={lang} />
       </section>
     </main>
   );
@@ -1432,56 +1348,6 @@ function DRDUnitCard({ unit, isDone, toggle, copy, lang }) {
           <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{copy.deliverables}</div>
           <div className="mt-2 flex flex-wrap gap-2">{localized.products.map(product => <span key={product} className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{product}</span>)}</div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function DRDExamSprintSection({ lang }) {
-  const copy = DRD_EXAM_SPRINT[lang] || DRD_EXAM_SPRINT.es;
-  return (
-    <section className="mt-10 rounded-[2.5rem] border border-red-100 bg-red-50/70 p-6 shadow-sm md:p-8">
-      <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.eyebrow}</div>
-      <div className="mt-3 flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
-        <div>
-          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{copy.title}</h2>
-          <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-700">{copy.body}</p>
-        </div>
-        <a href="#module-1" className="inline-flex rounded-full bg-stone-950 px-5 py-3 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-800">
-          DRD roadmap
-        </a>
-      </div>
-      <div className="mt-6 grid gap-4 lg:grid-cols-3">
-        {copy.items.map(item => (
-          <article key={item.label} className="rounded-3xl border border-red-100 bg-white p-5 shadow-sm">
-            <div className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-red-700 text-sm font-black text-white">{item.label}</div>
-            <h3 className="mt-4 text-lg font-black leading-6 text-stone-950">{item.title}</h3>
-            <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{item.body}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function DRDSourceCoverageTable({ copy, lang }) {
-  return (
-    <div className="mt-6 overflow-hidden rounded-3xl border border-stone-200 bg-white">
-      <div className="grid grid-cols-[0.75fr_1.35fr_1.15fr_1fr] gap-0 border-b border-stone-200 bg-stone-50 text-xs font-black uppercase tracking-[0.18em] text-stone-500 max-lg:hidden">
-        <div className="p-4">Block</div>
-        <div className="border-l border-stone-200 p-4">{copy.primarySource}</div>
-        <div className="border-l border-stone-200 p-4">{copy.supportSource}</div>
-        <div className="border-l border-stone-200 p-4">{copy.guideStatus}</div>
-      </div>
-      <div className="divide-y divide-stone-200">
-        {DRD_SOURCE_COVERAGE.map(row => (
-          <div key={row.range} className="grid gap-0 lg:grid-cols-[0.75fr_1.35fr_1.15fr_1fr]">
-            <div className="bg-stone-50 p-4 text-sm font-black text-stone-950">{row.range}</div>
-            <div className="border-stone-200 p-4 text-sm font-semibold leading-6 text-stone-700 lg:border-l">{tr(row.source, lang)}</div>
-            <div className="border-stone-200 p-4 text-sm font-semibold leading-6 text-stone-600 lg:border-l">{tr(row.support, lang)}</div>
-            <div className="border-stone-200 p-4 text-sm font-black leading-6 text-red-800 lg:border-l">{tr(row.status, lang)}</div>
-          </div>
-        ))}
       </div>
     </div>
   );

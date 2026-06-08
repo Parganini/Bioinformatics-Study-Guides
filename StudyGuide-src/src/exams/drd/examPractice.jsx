@@ -226,15 +226,16 @@ function words(text) {
   return text.trim() ? text.trim().split(/\s+/).length : 0;
 }
 
-function modelLines(text) {
-  const terms = text.trim().split(/\s+/).filter(Boolean);
-  if (!terms.length) return [];
-  const lineCount = terms.length > 110 ? 12 : terms.length > 85 ? 11 : 10;
-  return Array.from({ length: lineCount }, (_, index) => {
-    const start = Math.round(index * terms.length / lineCount);
-    const end = Math.round((index + 1) * terms.length / lineCount);
-    return terms.slice(start, end).join(" ");
-  }).filter(Boolean);
+function splitSentences(text) {
+  return text.match(/[^.!?]+[.!?]+/g)?.map((sentence) => sentence.trim()) || [text.trim()];
+}
+
+function modelIdeas(item) {
+  const sentences = splitSentences(item.model);
+  return item.checklist.map((label, index) => ({
+    label,
+    body: sentences[index] || sentences[sentences.length - 1] || item.model,
+  }));
 }
 
 function routeForLesson(id) {
@@ -300,14 +301,16 @@ function PracticeCard({ item, index }) {
       {show ? (
         <div className="mt-5 rounded-3xl border border-red-200 bg-red-50 p-5">
           <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Model answer</div>
-          <ol className="mt-3 grid gap-1 text-sm font-bold leading-6 text-stone-800">
-            {modelLines(item.model).map((line, lineIndex) => (
-              <li key={`${item.id}-${lineIndex}`} className="grid grid-cols-[2rem_1fr] gap-2">
-                <span className="text-right text-red-700">{lineIndex + 1}.</span>
-                <span>{line}</span>
-              </li>
+          <p className="mt-3 max-w-4xl text-sm font-bold leading-7 text-stone-800">{item.model}</p>
+          <div className="mt-5 text-xs font-black uppercase tracking-[0.18em] text-red-700">Answer by ideas</div>
+          <div className="mt-3 grid gap-3 md:grid-cols-2">
+            {modelIdeas(item).map((idea) => (
+              <div key={idea.label} className="rounded-2xl border border-red-100 bg-white/75 p-4">
+                <div className="text-xs font-black uppercase tracking-[0.16em] text-red-700">{idea.label}</div>
+                <p className="mt-2 text-sm font-semibold leading-6 text-stone-700">{idea.body}</p>
+              </div>
             ))}
-          </ol>
+          </div>
         </div>
       ) : null}
     </article>

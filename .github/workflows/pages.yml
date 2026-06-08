@@ -33,7 +33,7 @@ jobs:
         run: npm run validate:drd
 
       - name: Build
-        run: npm run build -- --outDir ../dist --emptyOutDir true
+        run: npm run build
 
       - name: Configure Pages
         uses: actions/configure-pages@v5

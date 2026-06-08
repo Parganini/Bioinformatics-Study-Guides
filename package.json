@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --config StudyGuide-src/vite.config.js",
     "build": "vite build --config StudyGuide-src/vite.config.js",
+    "postbuild": "node scripts/copy-static-assets.mjs",
     "preview": "vite preview --config StudyGuide-src/vite.config.js",
     "validate:drd": "node scripts/validate-drd.mjs",
     "validate:drd:links": "node scripts/validate-drd.mjs --check-links"

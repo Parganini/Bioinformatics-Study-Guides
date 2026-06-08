@@ -13,8 +13,8 @@ export default defineConfig({
     open: true,
   },
   build: {
-    outDir: path.resolve(__dirname, ".."),
-    emptyOutDir: false,
+    outDir: path.resolve(__dirname, "../dist"),
+    emptyOutDir: true,
     assetsDir: "assets",
     rollupOptions: {
       input: {

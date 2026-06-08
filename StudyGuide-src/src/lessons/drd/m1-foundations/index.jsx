@@ -1,9 +1,11 @@
 import React from "react";
-import LegacyLesson from "../Lesson01.jsx";
+import { DRDLessonTemplate } from "../shared/template.jsx";
+import { lessonContent } from "./content.js";
+import { LessonInteractions } from "./interactions.jsx";
 
 export { lessonContent } from "./content.js";
 export { LessonInteractions } from "./interactions.jsx";
 
 export default function M1FoundationsLesson(props) {
-  return <LegacyLesson {...props} lang="en" />;
+  return <DRDLessonTemplate {...props} content={lessonContent} interactions={LessonInteractions} />;
 }

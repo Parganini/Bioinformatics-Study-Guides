@@ -1,18 +1,24 @@
 import React from "react";
 import { drdLessonHref, getDRDNeighbors } from "../drdManifest.js";
 
+function lessonLabel(lesson) {
+  return lesson ? `${lesson.code} ${lesson.title}` : "";
+}
+
 export function DRDCanonicalNavigation({ lesson, isDone = false, toggle = () => {}, bottom = false }) {
   const { previous, next } = getDRDNeighbors(lesson?.id);
+  const previousInSameModule = previous && previous.module === lesson?.module ? previous : null;
+
   return (
     <nav className={`${bottom ? "mt-10" : "mb-6"} rounded-[2rem] border border-stone-200 bg-white/90 p-3 shadow-sm`} aria-label="DRD lesson navigation">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-        {previous ? (
-          <a href={drdLessonHref(previous)} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:shadow-sm">
-            Previous: {previous.code}
+        {previousInSameModule ? (
+          <a href={drdLessonHref(previousInSameModule)} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:shadow-sm">
+            Previous: {lessonLabel(previousInSameModule)}
           </a>
         ) : (
           <a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-700 transition hover:-translate-y-0.5 hover:shadow-sm">
-            Back to DRD dashboard
+            Previous: DRD dashboard
           </a>
         )}
         <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
@@ -25,7 +31,7 @@ export function DRDCanonicalNavigation({ lesson, isDone = false, toggle = () => 
         </div>
         {next ? (
           <a href={drdLessonHref(next)} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-700 hover:shadow-md">
-            Next: {next.code}
+            Next: {lessonLabel(next)}
           </a>
         ) : (
           <span className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-black text-stone-400">No next lesson</span>

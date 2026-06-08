@@ -117,8 +117,10 @@ for (const lesson of DRD_LESSONS) {
   assert(Array.isArray(lesson.tags), `${lesson.id}.tags must be an array`);
   assert(Array.isArray(lesson.aliases), `${lesson.id}.aliases must be an array`);
   assert(isHttpUrl(lesson.driveFolder), `${lesson.id}.driveFolder must be a URL`);
-  assert(fs.existsSync(path.join(drdRoot, lesson.id)), `${lesson.id} folder is missing`);
-  assert(fs.existsSync(path.join(drdRoot, lesson.id, "index.jsx")), `${lesson.id} is missing index.jsx`);
+  const lessonDir = path.join(drdRoot, lesson.id);
+  const indexPath = path.join(lessonDir, "index.jsx");
+  assert(fs.existsSync(lessonDir), `${lesson.id} folder is missing`);
+  assert(fs.existsSync(indexPath), `${lesson.id} is missing index.jsx`);
   assert(fs.existsSync(path.join(drdRoot, lesson.id, "interactions.jsx")), `${lesson.id} is missing interactions.jsx`);
 
   assert(lesson.componentKey, `${lesson.id} is missing componentKey`);
@@ -155,6 +157,8 @@ for (const lesson of DRD_LESSONS) {
     assert(Array.isArray(content.checkpoints), `${lesson.id}.checkpoints must be an array`);
     assert(Array.isArray(content.reportChecklist), `${lesson.id}.reportChecklist must be an array`);
     if (content.extractionStatus && content.extractionStatus !== "legacy-wrapper") {
+      const indexSource = fs.existsSync(indexPath) ? fs.readFileSync(indexPath, "utf8") : "";
+      assert(indexSource.includes("DRDLessonTemplate"), `${lesson.id} has structured content but does not use DRDLessonTemplate`);
       assert(content.objectives.length > 0, `${lesson.id} structured content needs objectives`);
       assert(content.coreConcepts.length > 0, `${lesson.id} structured content needs coreConcepts`);
       assert(content.checkpoints.length > 0, `${lesson.id} structured content needs checkpoints`);

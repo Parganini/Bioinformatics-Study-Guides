@@ -81,7 +81,7 @@ function SlideGuidedNotes({ blocks = [] }) {
   );
 }
 
-function KMeansLab() {
+export function KMeansLab() {
   const [step, setStep] = useState(0);
   const states = useMemo(() => {
     const first = assign(kMeansPoints, kMeansPoints[0], kMeansPoints[3]);
@@ -154,7 +154,7 @@ function KMeansLab() {
   );
 }
 
-function PCALab() {
+export function PCALab() {
   const [pc1, setPc1] = useState(72);
   const [pc2, setPc2] = useState(16);
   const total = Math.min(100, pc1 + pc2);
@@ -189,7 +189,7 @@ function PCALab() {
   );
 }
 
-function InterpretationCards() {
+export function InterpretationCards() {
   const [choice, setChoice] = useState("heatmap");
   const cards = {
     heatmap: {
@@ -232,7 +232,7 @@ function InterpretationCards() {
   );
 }
 
-function ExamRadar() {
+export function ExamRadar() {
   return (
     <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
       {sectionTitle("Exam radar", "Prompts extracted for discussion", "I kept these out of the main exam trainer for now. The review document has model-answer direction and proposed integration status.")}

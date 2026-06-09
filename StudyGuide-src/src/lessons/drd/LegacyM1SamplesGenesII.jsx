@@ -54,7 +54,7 @@ import {
   M1SectionHeader as SectionHeader,
 } from "./module1Shared.jsx";
 import { lessonContent } from "./m1-samples-genes-ii/content.js";
-import { LessonInteractions } from "./m1-samples-genes-ii/interactions.jsx";
+import { ExamRadar, InterpretationCards, KMeansLab, PCALab } from "./m1-samples-genes-ii/interactions.jsx";
 
 const SLIDES_URL = "https://drive.google.com/file/d/1acKbsGsILi05p_Emy_9GEDmvG3j2-RS0/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1D1cfFVcvPSpbPb25sOn3LXhGVgnLsQs3P1hgUaHogKg/edit?usp=drivesdk";
@@ -327,13 +327,27 @@ function SlideGrid({ slides, onZoom }) {
 }
 
 function SlideSections({ onZoom }) {
+  const labAfterSection = {
+    "Part 2": <KMeansLab />,
+    "Part 4": <PCALab />,
+    "Part 7": (
+      <>
+        <InterpretationCards />
+        <ExamRadar />
+      </>
+    ),
+  };
+
   return (
     <>
       {slideSections.map((section) => (
-        <section key={section.title} className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
-          <SectionHeader eyebrow={section.eyebrow} title={section.title}>{section.intro}</SectionHeader>
-          <SlideGrid slides={section.slides} onZoom={onZoom} />
-        </section>
+        <React.Fragment key={section.title}>
+          <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+            <SectionHeader eyebrow={section.eyebrow} title={section.title}>{section.intro}</SectionHeader>
+            <SlideGrid slides={section.slides} onZoom={onZoom} />
+          </section>
+          {labAfterSection[section.eyebrow] || null}
+        </React.Fragment>
       ))}
     </>
   );
@@ -396,7 +410,6 @@ function ZoomModal({ item, onClose }) {
 
 export default function LegacyM1SamplesGenesII({ isDone = false, toggle = () => {} }) {
   const [zoom, setZoom] = useState(null);
-  const labContent = { ...lessonContent, slideBlocks: [] };
   return (
     <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 text-stone-900 md:pt-12">
       <Navigation isDone={isDone} toggle={toggle} />
@@ -417,7 +430,6 @@ export default function LegacyM1SamplesGenesII({ isDone = false, toggle = () => 
       <EmphasisAndTraps />
       <PracticeMoves />
       <SlideSections onZoom={setZoom} />
-      <LessonInteractions content={labContent} />
       <QuickQuiz />
       <ChecklistHelp />
       <Navigation isDone={isDone} toggle={toggle} position="bottom" />

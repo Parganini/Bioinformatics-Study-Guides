@@ -364,6 +364,39 @@ const GRAPH_PARTS = {
   ],
 };
 
+const COVERAGE_GAPS = [
+  {
+    title: "Coefficient of variation",
+    why: "Domande asks it directly. It is a classic variability/QC answer.",
+    say: "CV = SD / mean, often percent. Use it to compare technical variability across probes, arrays or conditions.",
+  },
+  {
+    title: "Bootstrap",
+    why: "Appears in the question bank and is easy to confuse with permutation/randomization.",
+    say: "Resample with replacement many times to estimate stability, confidence intervals or robustness of a statistic.",
+  },
+  {
+    title: "DAT vs CEL",
+    why: "Short Affymetrix platform question that can score quickly.",
+    say: "DAT is the raw scanned image; CEL stores extracted probe-level intensities used for RMA/downstream analysis.",
+  },
+  {
+    title: "Distance metrics",
+    why: "The June 9 transcript emphasized Pearson, Spearman and Euclidean in clustering.",
+    say: "Pearson = linear profile shape, Spearman = rank/monotonic robust trend, Euclidean = geometric magnitude/scale.",
+  },
+  {
+    title: "GO / KEGG / DAVID",
+    why: "This was in the interpretation block from the transcript audit.",
+    say: "A gene list is not a conclusion; enrichment tools connect genes to biological process, function, components and pathways.",
+  },
+  {
+    title: "Infinium I vs II",
+    why: "Already in flashcards, but worth a final platform comparison pass.",
+    say: "Infinium I uses two probes/bead types; Infinium II uses one probe with single-base extension. Normalize probe-type bias.",
+  },
+];
+
 function accentClasses(accent) {
   if (accent === "black") return "border-stone-900 bg-stone-950 text-white";
   if (accent === "amber") return "border-amber-200 bg-amber-50 text-amber-900";
@@ -489,6 +522,8 @@ export default function DRDRapidReviewPage() {
         </div>
       </section>
 
+      <CoverageGaps />
+
       <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/85 p-6 shadow-sm md:p-8">
         <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Do not lose points here</div>
         <h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Exam traps</h2>
@@ -548,7 +583,31 @@ function WrittenPrompt({ number, item }) {
   );
 }
 
+function CoverageGaps() {
+  return (
+    <section className="mt-10 rounded-[2.5rem] border border-amber-200 bg-amber-50/80 p-6 shadow-sm md:p-8">
+      <div className="text-xs font-black uppercase tracking-[0.22em] text-amber-800">Last-minute coverage check</div>
+      <h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Question types still worth one pass.</h2>
+      <p className="mt-2 max-w-3xl text-sm font-bold leading-7 text-stone-700">
+        The main page covers the big core. These are smaller Domande/transcript-style prompts that can still appear as direct written questions.
+      </p>
+      <div className="mt-6 grid gap-4 md:grid-cols-2">
+        {COVERAGE_GAPS.map((item) => (
+          <article key={item.title} className="rounded-[2rem] border border-amber-200 bg-white p-5">
+            <h3 className="text-xl font-black text-stone-950">{item.title}</h3>
+            <p className="mt-2 text-sm font-bold leading-6 text-stone-600">{item.why}</p>
+            <div className="mt-4 rounded-2xl bg-stone-950 p-4 text-sm font-bold leading-6 text-white">
+              {item.say}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function DecisionTree({ treeMode, setTreeMode }) {
+  const [treeLayout, setTreeLayout] = useState("horizontal");
   const recommendation = {
     "paired-normal": ["paired t-test", "Two matched measurements, normal paired differences."],
     "paired-nonnormal": ["Wilcoxon signed-rank", "Paired design with non-normality, small sample or outliers."],
@@ -563,11 +622,25 @@ function DecisionTree({ treeMode, setTreeMode }) {
 
   return (
     <section className="rounded-[2.5rem] border border-stone-200 bg-white/85 p-6 shadow-sm md:p-8">
-      <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Decision tree</div>
-      <h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Choose the test by design.</h2>
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <div>
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Decision tree</div>
+          <h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Choose the test by design.</h2>
+        </div>
+        <div className="flex rounded-full border border-stone-200 bg-stone-50 p-1">
+          {[
+            ["horizontal", "Horizontal"],
+            ["vertical", "Vertical"],
+          ].map(([id, label]) => (
+            <button key={id} onClick={() => setTreeLayout(id)} className={`rounded-full px-4 py-2 text-xs font-black transition ${treeLayout === id ? "bg-red-700 text-white" : "text-stone-600 hover:bg-white"}`}>
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
       <div className="mt-5 rounded-[2rem] border border-stone-200 bg-stone-50 p-4">
         <div className="overflow-x-auto pb-3">
-          <StatTreeSvg activeIds={activeIds} />
+          {treeLayout === "horizontal" ? <HorizontalStatTreeSvg activeIds={activeIds} /> : <StatTreeSvg activeIds={activeIds} />}
         </div>
         <div className="mt-4 grid gap-2 sm:grid-cols-2">
           {[
@@ -677,6 +750,71 @@ function StatTreeSvg({ activeIds }) {
       })}
       {nodes.map(([id, x, y, w, h, label]) => <SvgTreeNode key={id} id={id} x={x} y={y} w={w} h={h} label={label} activeIds={activeIds} />)}
       <text x="34" y="625" fontSize="17" fontWeight="900" fill="#991b1b">{"Read it top to bottom: number of groups -> pairedness -> assumptions -> test -> post-hoc if global test."}</text>
+    </svg>
+  );
+}
+
+function HorizontalStatTreeSvg({ activeIds }) {
+  const nodes = [
+    ["root", 40, 255, 220, 54, "Experimental design"],
+    ["two", 340, 150, 150, 48, "2 groups"],
+    ["multi", 340, 370, 150, 48, ">2 groups"],
+    ["paired", 570, 80, 175, 48, "Paired / matched"],
+    ["independent", 570, 220, 175, 48, "Independent"],
+    ["multi-normal", 570, 335, 185, 48, "Normal + equal variance"],
+    ["multi-nonnormal", 570, 455, 185, 48, "Non-normal / outliers"],
+    ["paired-normal", 830, 40, 185, 48, "Normal differences"],
+    ["paired-nonnormal", 830, 120, 210, 48, "Non-normal / small n"],
+    ["independent-normal", 830, 190, 200, 48, "Normal + equal variance"],
+    ["independent-unequal", 830, 270, 180, 48, "Unequal variance"],
+    ["independent-nonnormal", 830, 350, 200, 48, "Non-normal / outliers"],
+    ["paired-ttest", 1120, 40, 180, 54, "paired t-test"],
+    ["wilcoxon", 1120, 120, 220, 54, "Wilcoxon signed-rank"],
+    ["unpaired-ttest", 1120, 190, 190, 54, "unpaired t-test"],
+    ["welch", 1120, 270, 180, 54, "Welch correction"],
+    ["mann-whitney", 1120, 350, 210, 54, "Mann-Whitney U"],
+    ["anova", 1120, 455, 185, 54, "one-way ANOVA"],
+    ["kruskal", 1120, 535, 185, 54, "Kruskal-Wallis"],
+    ["posthoc", 1390, 495, 220, 54, "If significant: post-hoc"],
+  ];
+  const edges = [
+    ["root", "two"], ["root", "multi"],
+    ["two", "paired"], ["two", "independent"],
+    ["multi", "multi-normal"], ["multi", "multi-nonnormal"],
+    ["paired", "paired-normal"], ["paired", "paired-nonnormal"],
+    ["independent", "independent-normal"], ["independent", "independent-unequal"], ["independent", "independent-nonnormal"],
+    ["paired-normal", "paired-ttest"], ["paired-nonnormal", "wilcoxon"],
+    ["independent-normal", "unpaired-ttest"], ["independent-unequal", "welch"], ["independent-nonnormal", "mann-whitney"],
+    ["multi-normal", "anova"], ["multi-nonnormal", "kruskal"],
+    ["anova", "posthoc"], ["kruskal", "posthoc"],
+  ];
+  const byId = Object.fromEntries(nodes.map((node) => [node[0], node]));
+  const activeEdge = (from, to) => activeIds.includes(from) && activeIds.includes(to);
+
+  return (
+    <svg viewBox="0 0 1660 660" className="min-w-[1660px] rounded-[2rem] border border-stone-200 bg-white">
+      {edges.map(([from, to]) => {
+        const a = byId[from];
+        const b = byId[to];
+        const x1 = a[1] + a[3];
+        const y1 = a[2] + a[4] / 2;
+        const x2 = b[1];
+        const y2 = b[2] + b[4] / 2;
+        const mid = (x1 + x2) / 2;
+        return (
+          <path
+            key={`${from}-${to}`}
+            d={`M ${x1} ${y1} H ${mid} V ${y2} H ${x2}`}
+            fill="none"
+            stroke={activeEdge(from, to) ? "#dc2626" : "#d6d3d1"}
+            strokeWidth={activeEdge(from, to) ? "5" : "3"}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        );
+      })}
+      {nodes.map(([id, x, y, w, h, label]) => <SvgTreeNode key={id} id={id} x={x} y={y} w={w} h={h} label={label} activeIds={activeIds} />)}
+      <text x="40" y="625" fontSize="19" fontWeight="900" fill="#991b1b">{"Read left to right: design -> number of groups -> pairedness/assumptions -> test -> post-hoc when global."}</text>
     </svg>
   );
 }

@@ -173,7 +173,6 @@ const TREE_PATHS = {
   "independent-nonnormal": ["2 groups", "independent", "non-normal or outliers", "Mann-Whitney U"],
   "multi-normal": [">2 groups", "one factor", "normal + similar variance", "one-way ANOVA"],
   "multi-nonnormal": [">2 groups", "one factor", "non-normal or outliers", "Kruskal-Wallis"],
-  "many-tests": ["many genes/probes", "many p-values", "false-positive risk", "BH/FDR or Bonferroni"],
 };
 
 const TREE_ACTIVE_IDS = {
@@ -184,7 +183,6 @@ const TREE_ACTIVE_IDS = {
   "independent-nonnormal": ["root", "two", "independent", "independent-nonnormal", "mann-whitney"],
   "multi-normal": ["root", "multi", "multi-normal", "anova"],
   "multi-nonnormal": ["root", "multi", "multi-nonnormal", "kruskal"],
-  "many-tests": ["root", "many", "adjust"],
 };
 
 const BIO_QUESTIONS = [
@@ -326,6 +324,45 @@ const MOCK_BANK = [
     answer: "Linkage defines how distance between clusters is calculated during hierarchical clustering. Single linkage uses the closest pair of points and can create chained clusters. Complete linkage uses the farthest pair and tends to produce compact clusters. Average linkage uses the average pairwise distance and is often balanced for expression heatmaps. The linkage method affects dendrogram shape and biological interpretation, so it should be reported with the distance metric.",
   },
 ];
+
+const GRAPH_PARTS = {
+  pca: [
+    ["1", "PC1 axis", "The horizontal axis is the component explaining the largest amount of variance. Start by saying how much variance PC1 explains when the plot gives a percentage."],
+    ["2", "PC2 axis", "The vertical axis is orthogonal to PC1 and captures the next largest independent variance source."],
+    ["3", "Group separation", "Separated clouds can suggest biological condition, treatment, tissue, disease subtype or batch effect. You must connect separation to metadata."],
+    ["4", "Outlier", "An isolated point should not be deleted automatically. Ask whether it is technical, biological or metadata-related."],
+  ],
+  kmeans: [
+    ["1", "K chosen first", "K-means does not discover the number of clusters. K must be selected using biology, previous analyses or exploratory structure."],
+    ["2", "Centroids", "Each cluster is represented by a centroid, the current mean position/profile of points assigned to that cluster."],
+    ["3", "Assignment", "Each point is assigned to the closest centroid, often using Euclidean distance."],
+    ["4", "Limitation", "Mention sensitivity to scaling, outliers and initialization, and that K-means does not show hierarchy."],
+  ],
+  hclust: [
+    ["1", "Distance metric", "Pearson, Spearman and Euclidean measure different notions of similarity; the choice changes the dendrogram."],
+    ["2", "Linkage", "Single, complete and average linkage define how distances between clusters are computed."],
+    ["3", "Height", "The height of a merge represents dissimilarity. Lower merges indicate more similar samples/genes."],
+    ["4", "Dendrogram", "The dendrogram shows nested relationships, unlike K-means, which partitions into a fixed K."],
+  ],
+  heatmap: [
+    ["1", "Rows and columns", "Always define whether rows are genes/probes and columns are samples, or the reverse."],
+    ["2", "Color scale", "Read the legend before interpreting. Red/blue can mean expression, z-score, fold change or another scaling."],
+    ["3", "Dendrograms", "One dendrogram can cluster genes, another can cluster samples. Interpret both with metadata."],
+    ["4", "Metadata/outliers", "Ask whether clusters correspond to phenotype, treatment, tissue, time point, batch or outlier samples."],
+  ],
+  volcano: [
+    ["1", "x-axis", "The x-axis is log fold change: left means down-regulated, right means up-regulated."],
+    ["2", "y-axis", "The y-axis is usually -log10 adjusted p-value. Higher points are more statistically significant."],
+    ["3", "Thresholds", "Horizontal/vertical cutoffs define candidate significant features. In omics this should use adjusted p-values."],
+    ["4", "Biology", "A volcano plot identifies candidates; it is not a biological conclusion until interpreted with gene function/pathways."],
+  ],
+  ma: [
+    ["1", "M axis", "M is the log ratio, often treated/control or red/green in two-color arrays."],
+    ["2", "A axis", "A is average intensity. It helps diagnose whether bias depends on intensity."],
+    ["3", "Centered cloud", "After normalization, the cloud should be roughly centered around M = 0 across intensities."],
+    ["4", "Curvature", "A curved trend suggests intensity-dependent bias and need for normalization."],
+  ],
+};
 
 function accentClasses(accent) {
   if (accent === "black") return "border-stone-900 bg-stone-950 text-white";
@@ -520,7 +557,6 @@ function DecisionTree({ treeMode, setTreeMode }) {
     "independent-nonnormal": ["Mann-Whitney U", "Independent groups needing a rank-based test."],
     "multi-normal": ["one-way ANOVA", "Three or more independent groups, one factor, parametric assumptions."],
     "multi-nonnormal": ["Kruskal-Wallis", "Three or more independent groups, rank-based global test."],
-    "many-tests": ["multiple-testing correction", "Thousands of simultaneous genes/probes/CpGs."],
   }[treeMode];
   const path = TREE_PATHS[treeMode];
   const activeIds = TREE_ACTIVE_IDS[treeMode] || [];
@@ -530,65 +566,8 @@ function DecisionTree({ treeMode, setTreeMode }) {
       <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Decision tree</div>
       <h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Choose the test by design.</h2>
       <div className="mt-5 rounded-[2rem] border border-stone-200 bg-stone-50 p-4">
-        <div className="overflow-x-auto pb-2">
-          <div className="min-w-[920px] rounded-[2rem] border border-stone-200 bg-white p-5">
-            <div className="grid place-items-center">
-              <TreeNode id="root" label="Start from experimental design" activeIds={activeIds} />
-            </div>
-            <Connector />
-            <div className="grid grid-cols-3 gap-4">
-              <TreeNode id="two" label="2 groups" activeIds={activeIds} />
-              <TreeNode id="multi" label=">2 groups" activeIds={activeIds} />
-              <TreeNode id="many" label="Many genes / probes / CpGs" activeIds={activeIds} />
-            </div>
-            <Connector />
-            <div className="grid grid-cols-3 gap-4">
-              <TreeBranch title="Two-group branch">
-                <TreeNode id="paired" label="Paired / matched?" activeIds={activeIds} />
-                <div className="mt-3 grid grid-cols-2 gap-3">
-                  <TreeNode id="paired-normal" label="Normal differences" activeIds={activeIds} />
-                  <TreeNode id="paired-nonnormal" label="Non-normal / outliers / small n" activeIds={activeIds} />
-                </div>
-                <div className="mt-3 grid grid-cols-2 gap-3">
-                  <TreeNode id="paired-ttest" label="paired t-test" activeIds={activeIds} result />
-                  <TreeNode id="wilcoxon" label="Wilcoxon signed-rank" activeIds={activeIds} result />
-                </div>
-                <div className="mt-4">
-                  <TreeNode id="independent" label="Independent / unpaired?" activeIds={activeIds} />
-                  <div className="mt-3 grid grid-cols-3 gap-3">
-                    <TreeNode id="independent-normal" label="Normal + similar variance" activeIds={activeIds} />
-                    <TreeNode id="independent-unequal" label="Unequal variance" activeIds={activeIds} />
-                    <TreeNode id="independent-nonnormal" label="Non-normal / outliers" activeIds={activeIds} />
-                  </div>
-                  <div className="mt-3 grid grid-cols-3 gap-3">
-                    <TreeNode id="unpaired-ttest" label="unpaired t-test" activeIds={activeIds} result />
-                    <TreeNode id="welch" label="Welch correction" activeIds={activeIds} result />
-                    <TreeNode id="mann-whitney" label="Mann-Whitney U" activeIds={activeIds} result />
-                  </div>
-                </div>
-              </TreeBranch>
-              <TreeBranch title="Multi-group branch">
-                <div className="grid grid-cols-2 gap-3">
-                  <TreeNode id="multi-normal" label="Normal + similar variance" activeIds={activeIds} />
-                  <TreeNode id="multi-nonnormal" label="Non-normal / outliers" activeIds={activeIds} />
-                </div>
-                <div className="mt-3 grid grid-cols-2 gap-3">
-                  <TreeNode id="anova" label="one-way ANOVA" activeIds={activeIds} result />
-                  <TreeNode id="kruskal" label="Kruskal-Wallis" activeIds={activeIds} result />
-                </div>
-                <div className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-3 text-sm font-black text-amber-900">
-                  If global test is significant: add post-hoc tests.
-                </div>
-              </TreeBranch>
-              <TreeBranch title="High-dimensional branch">
-                <TreeNode id="adjust" label="Adjust p-values" activeIds={activeIds} result />
-                <div className="mt-3 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl border border-stone-200 bg-stone-50 p-3 text-sm font-black text-stone-700">Bonferroni: strict FWER</div>
-                  <div className="rounded-2xl border border-stone-200 bg-stone-50 p-3 text-sm font-black text-stone-700">BH/FDR: discovery-friendly</div>
-                </div>
-              </TreeBranch>
-            </div>
-          </div>
+        <div className="overflow-x-auto pb-3">
+          <StatTreeSvg activeIds={activeIds} />
         </div>
         <div className="mt-4 grid gap-2 sm:grid-cols-2">
           {[
@@ -599,7 +578,6 @@ function DecisionTree({ treeMode, setTreeMode }) {
             ["independent-nonnormal", "2 independent + non-normal"],
             ["multi-normal", ">2 groups + normal"],
             ["multi-nonnormal", ">2 groups + non-normal"],
-            ["many-tests", "many genes/probes"],
           ].map(([id, label]) => (
             <button key={id} onClick={() => setTreeMode(id)} className={`rounded-2xl border px-4 py-3 text-left text-sm font-black transition ${treeMode === id ? "border-red-300 bg-red-50 text-red-700" : "border-stone-200 bg-white text-stone-700 hover:border-red-200"}`}>
               {label}
@@ -612,6 +590,15 @@ function DecisionTree({ treeMode, setTreeMode }) {
         <div className="mt-2 text-3xl font-black">{recommendation[0]}</div>
         <p className="mt-2 text-sm font-bold leading-6 text-stone-200">{recommendation[1]}</p>
         <p className="mt-3 text-xs font-black uppercase tracking-[0.18em] text-red-200">{path.join(" -> ")}</p>
+      </div>
+      <div className="mt-5 rounded-[2rem] border border-amber-200 bg-amber-50 p-5">
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-amber-800">After choosing the test</div>
+        <h3 className="mt-2 text-2xl font-black text-stone-950">Many genes/probes/CpGs means multiple-testing correction.</h3>
+        <div className="mt-4 grid gap-3 md:grid-cols-3">
+          <div className="rounded-2xl bg-white p-4 text-sm font-bold leading-6 text-stone-700"><span className="font-black text-red-700">Problem:</span> thousands of p-values inflate false positives.</div>
+          <div className="rounded-2xl bg-white p-4 text-sm font-bold leading-6 text-stone-700"><span className="font-black text-red-700">Strict:</span> Bonferroni controls FWER but can be too conservative.</div>
+          <div className="rounded-2xl bg-white p-4 text-sm font-bold leading-6 text-stone-700"><span className="font-black text-red-700">Common:</span> Benjamini-Hochberg controls FDR for discovery.</div>
+        </div>
       </div>
       <div className="mt-5 rounded-[2rem] border border-stone-200 bg-white p-4">
         <div className="text-sm font-black text-stone-900">Compact map</div>
@@ -629,25 +616,83 @@ function DecisionTree({ treeMode, setTreeMode }) {
   );
 }
 
-function Connector() {
-  return <div className="mx-auto my-3 h-6 w-1 rounded-full bg-red-700" />;
-}
+function StatTreeSvg({ activeIds }) {
+  const nodes = [
+    ["root", 520, 30, 260, 46, "Experimental design"],
+    ["two", 280, 115, 170, 44, "2 groups"],
+    ["multi", 760, 115, 170, 44, ">2 groups"],
+    ["paired", 120, 205, 190, 44, "Paired / matched"],
+    ["independent", 420, 205, 210, 44, "Independent"],
+    ["multi-normal", 680, 205, 190, 44, "Normal + equal variance"],
+    ["multi-nonnormal", 900, 205, 190, 44, "Non-normal / outliers"],
+    ["paired-normal", 40, 295, 170, 44, "Normal differences"],
+    ["paired-nonnormal", 230, 295, 210, 44, "Non-normal / small n"],
+    ["independent-normal", 460, 295, 190, 44, "Normal + equal variance"],
+    ["independent-unequal", 680, 295, 180, 44, "Unequal variance"],
+    ["independent-nonnormal", 890, 295, 190, 44, "Non-normal / outliers"],
+    ["paired-ttest", 40, 385, 170, 52, "paired t-test"],
+    ["wilcoxon", 230, 385, 210, 52, "Wilcoxon signed-rank"],
+    ["unpaired-ttest", 460, 385, 190, 52, "unpaired t-test"],
+    ["welch", 680, 385, 180, 52, "Welch correction"],
+    ["mann-whitney", 890, 385, 190, 52, "Mann-Whitney U"],
+    ["anova", 680, 475, 190, 52, "one-way ANOVA"],
+    ["kruskal", 900, 475, 190, 52, "Kruskal-Wallis"],
+    ["posthoc", 790, 565, 220, 52, "If significant: post-hoc"],
+  ];
+  const edges = [
+    ["root", "two"], ["root", "multi"],
+    ["two", "paired"], ["two", "independent"],
+    ["multi", "multi-normal"], ["multi", "multi-nonnormal"],
+    ["paired", "paired-normal"], ["paired", "paired-nonnormal"],
+    ["independent", "independent-normal"], ["independent", "independent-unequal"], ["independent", "independent-nonnormal"],
+    ["paired-normal", "paired-ttest"], ["paired-nonnormal", "wilcoxon"],
+    ["independent-normal", "unpaired-ttest"], ["independent-unequal", "welch"], ["independent-nonnormal", "mann-whitney"],
+    ["multi-normal", "anova"], ["multi-nonnormal", "kruskal"],
+    ["anova", "posthoc"], ["kruskal", "posthoc"],
+  ];
+  const byId = Object.fromEntries(nodes.map((node) => [node[0], node]));
+  const activeEdge = (from, to) => activeIds.includes(from) && activeIds.includes(to);
 
-function TreeBranch({ title, children }) {
   return (
-    <div className="rounded-[2rem] border border-stone-200 bg-stone-50 p-4">
-      <div className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-stone-500">{title}</div>
-      {children}
-    </div>
+    <svg viewBox="0 0 1120 650" className="min-w-[1120px] rounded-[2rem] border border-stone-200 bg-white">
+      {edges.map(([from, to]) => {
+        const a = byId[from];
+        const b = byId[to];
+        const x1 = a[1] + a[3] / 2;
+        const y1 = a[2] + a[4];
+        const x2 = b[1] + b[3] / 2;
+        const y2 = b[2];
+        const mid = (y1 + y2) / 2;
+        return (
+          <path
+            key={`${from}-${to}`}
+            d={`M ${x1} ${y1} V ${mid} H ${x2} V ${y2}`}
+            fill="none"
+            stroke={activeEdge(from, to) ? "#dc2626" : "#d6d3d1"}
+            strokeWidth={activeEdge(from, to) ? "5" : "3"}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        );
+      })}
+      {nodes.map(([id, x, y, w, h, label]) => <SvgTreeNode key={id} id={id} x={x} y={y} w={w} h={h} label={label} activeIds={activeIds} />)}
+      <text x="34" y="625" fontSize="17" fontWeight="900" fill="#991b1b">{"Read it top to bottom: number of groups -> pairedness -> assumptions -> test -> post-hoc if global test."}</text>
+    </svg>
   );
 }
 
-function TreeNode({ id, label, activeIds, result = false }) {
+function SvgTreeNode({ id, x, y, w, h, label, activeIds }) {
   const active = activeIds.includes(id);
+  const isResult = ["paired-ttest", "wilcoxon", "unpaired-ttest", "welch", "mann-whitney", "anova", "kruskal", "posthoc"].includes(id);
+  const words = label.split(" ");
+  const line1 = words.slice(0, Math.ceil(words.length / 2)).join(" ");
+  const line2 = words.slice(Math.ceil(words.length / 2)).join(" ");
   return (
-    <div className={`rounded-2xl border p-3 text-center text-sm font-black leading-5 transition ${active ? "border-red-300 bg-red-50 text-red-700 shadow-sm ring-4 ring-red-100" : result ? "border-stone-300 bg-white text-stone-950" : "border-stone-200 bg-white text-stone-700"}`}>
-      {label}
-    </div>
+    <g>
+      <rect x={x} y={y} width={w} height={h} rx="18" fill={active ? "#fef2f2" : isResult ? "#111827" : "#fafaf9"} stroke={active ? "#dc2626" : "#d6d3d1"} strokeWidth={active ? "4" : "2"} />
+      <text x={x + w / 2} y={y + h / 2 - (line2 ? 3 : -5)} textAnchor="middle" fontSize="15" fontWeight="900" fill={active ? "#b91c1c" : isResult ? "#ffffff" : "#292524"}>{line1}</text>
+      {line2 && <text x={x + w / 2} y={y + h / 2 + 16} textAnchor="middle" fontSize="15" fontWeight="900" fill={active ? "#b91c1c" : isResult ? "#ffffff" : "#292524"}>{line2}</text>}
+    </g>
   );
 }
 
@@ -735,87 +780,133 @@ function VisualMap() {
       <h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Do not mix these up.</h2>
       <div className="mt-6 grid gap-4">
         {plots.map(([title, shape, body, type]) => (
-          <article key={title} className="grid gap-4 rounded-[2rem] border border-stone-200 bg-stone-50 p-4 lg:grid-cols-[360px_1fr]">
-            <div className="rounded-2xl border border-stone-200 bg-white p-3">
-              <PlotDiagram type={type} />
-            </div>
-            <div>
-              <h3 className="text-xl font-black text-stone-950">{title}</h3>
-              <div className="mt-1 text-xs font-black uppercase tracking-[0.16em] text-red-700">{shape}</div>
-              <p className="mt-3 text-sm font-bold leading-6 text-stone-600">{body}</p>
-              <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-3 text-sm font-black text-red-800">
-                Exam move: define the axes/parts before interpreting biology.
-              </div>
-            </div>
-          </article>
+          <GraphStudyCard key={title} title={title} shape={shape} body={body} type={type} />
         ))}
       </div>
     </section>
   );
 }
 
-function PlotDiagram({ type }) {
+function GraphStudyCard({ title, shape, body, type }) {
+  const parts = GRAPH_PARTS[type];
+  const [activePart, setActivePart] = useState(parts[0][0]);
+  const current = parts.find(([id]) => id === activePart) || parts[0];
+
+  return (
+    <article className="rounded-[2.5rem] border border-stone-200 bg-stone-50 p-5">
+      <div className="mb-4">
+        <h3 className="text-3xl font-black text-stone-950">{title}</h3>
+        <div className="mt-1 text-xs font-black uppercase tracking-[0.16em] text-red-700">{shape}</div>
+        <p className="mt-3 text-sm font-bold leading-6 text-stone-600">{body}</p>
+      </div>
+      <div className="rounded-[2rem] border border-stone-200 bg-white p-4">
+        <PlotDiagram type={type} activePart={activePart} />
+      </div>
+      <div className="mt-4 grid gap-3 md:grid-cols-4">
+        {parts.map(([id, label]) => (
+          <button key={id} onClick={() => setActivePart(id)} className={`rounded-2xl border px-4 py-3 text-left text-sm font-black transition ${activePart === id ? "border-red-300 bg-red-50 text-red-700" : "border-stone-200 bg-white text-stone-700 hover:border-red-200"}`}>
+            <span className="mr-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-stone-950 text-xs text-white">{id}</span>
+            {label}
+          </button>
+        ))}
+      </div>
+      <div className="mt-4 rounded-2xl border border-red-200 bg-red-50 p-4">
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{current[0]} · {current[1]}</div>
+        <p className="mt-2 text-sm font-bold leading-7 text-stone-800">{current[2]}</p>
+      </div>
+    </article>
+  );
+}
+
+function PlotDiagram({ type, activePart }) {
+  const mark = (id, x, y) => (
+    <g>
+      <circle cx={x} cy={y} r={activePart === id ? "17" : "13"} fill={activePart === id ? "#dc2626" : "#111827"} />
+      <text x={x} y={y + 5} textAnchor="middle" fontSize="14" fontWeight="900" fill="#ffffff">{id}</text>
+    </g>
+  );
+
   if (type === "pca") {
     return (
-      <svg viewBox="0 0 280 190" className="h-56 w-full">
-        <line x1="34" y1="122" x2="214" y2="122" stroke="#111827" strokeWidth="3" />
-        <line x1="34" y1="122" x2="34" y2="20" stroke="#111827" strokeWidth="3" />
-        <text x="160" y="145" fontSize="12" fontWeight="800" fill="#991b1b">PC1: largest variance</text>
-        <text x="2" y="28" fontSize="12" fontWeight="800" fill="#991b1b">PC2</text>
-        {[[72, 88], [84, 75], [96, 94], [108, 82]].map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="6" fill="#dc2626" />)}
-        {[[152, 58], [166, 50], [178, 66], [190, 54]].map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="6" fill="#0f766e" />)}
-        <circle cx="126" cy="35" r="6" fill="#f59e0b" />
-        <text x="132" y="38" fontSize="11" fontWeight="800" fill="#111827">outlier?</text>
-        <rect x="18" y="158" width="10" height="10" rx="5" fill="#dc2626" />
-        <text x="34" y="167" fontSize="11" fontWeight="800" fill="#111827">group A</text>
-        <rect x="88" y="158" width="10" height="10" rx="5" fill="#0f766e" />
-        <text x="104" y="167" fontSize="11" fontWeight="800" fill="#111827">group B</text>
-        <text x="18" y="182" fontSize="11" fontWeight="800" fill="#991b1b">Mention: separation, batch, outlier, variance explained</text>
+      <svg viewBox="0 0 900 420" className="h-[420px] w-full">
+        <rect x="20" y="20" width="840" height="330" rx="24" fill="#fafaf9" stroke="#e7e5e4" strokeWidth="3" />
+        <line x1="110" y1="305" x2="790" y2="305" stroke="#111827" strokeWidth="4" />
+        <line x1="110" y1="305" x2="110" y2="65" stroke="#111827" strokeWidth="4" />
+        <text x="610" y="338" fontSize="22" fontWeight="900" fill="#991b1b">PC1: largest variance</text>
+        <text x="42" y="88" fontSize="22" fontWeight="900" fill="#991b1b">PC2</text>
+        <ellipse cx="300" cy="220" rx="105" ry="65" fill="#fecaca" opacity="0.45" />
+        <ellipse cx="595" cy="145" rx="110" ry="62" fill="#ccfbf1" opacity="0.58" />
+        {[[245, 222], [280, 196], [305, 238], [336, 210], [360, 250]].map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="13" fill="#dc2626" />)}
+        {[[540, 142], [582, 120], [620, 158], [665, 133], [690, 178]].map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="13" fill="#0f766e" />)}
+        <circle cx="465" cy="82" r="14" fill="#f59e0b" />
+        <text x="486" y="89" fontSize="18" fontWeight="900" fill="#111827">possible outlier</text>
+        {mark("1", 705, 305)}
+        {mark("2", 110, 80)}
+        {mark("3", 455, 230)}
+        {mark("4", 465, 82)}
+        <text x="50" y="388" fontSize="19" fontWeight="900" fill="#991b1b">{"Exam order: explain axes -> variance -> separation/outlier -> connect to metadata."}</text>
       </svg>
     );
   }
   if (type === "kmeans") {
     return (
-      <svg viewBox="0 0 280 190" className="h-56 w-full">
-        {[[62, 50], [78, 64], [54, 76], [86, 88], [156, 48], [174, 62], [162, 82], [190, 74]].map(([x, y], i) => <circle key={`${x}-${y}`} cx={x} cy={y} r="6" fill={i < 4 ? "#dc2626" : "#0f766e"} />)}
-        <path d="M70 70 L84 70 M77 63 L77 77" stroke="#111827" strokeWidth="4" strokeLinecap="round" />
-        <path d="M168 66 L182 66 M175 59 L175 73" stroke="#111827" strokeWidth="4" strokeLinecap="round" />
-        <line x1="54" y1="76" x2="77" y2="70" stroke="#dc2626" strokeWidth="2" strokeDasharray="4 4" />
-        <line x1="190" y1="74" x2="175" y2="66" stroke="#0f766e" strokeWidth="2" strokeDasharray="4 4" />
-        <path d="M38 116 C84 98 94 102 120 116 C150 132 180 126 210 108" fill="none" stroke="#f59e0b" strokeWidth="4" strokeDasharray="6 6" />
-        <text x="38" y="136" fontSize="12" fontWeight="800" fill="#991b1b">K=2 chosen before running</text>
-        <text x="38" y="154" fontSize="11" fontWeight="800" fill="#111827">+ = centroid; dashed line = nearest assignment</text>
-        <text x="38" y="172" fontSize="11" fontWeight="800" fill="#991b1b">Mention: initialization, scaling, outliers, no hierarchy</text>
+      <svg viewBox="0 0 900 420" className="h-[420px] w-full">
+        <rect x="20" y="20" width="840" height="330" rx="24" fill="#fafaf9" stroke="#e7e5e4" strokeWidth="3" />
+        <path d="M95 300 C250 220 330 255 430 298 C535 350 690 325 790 240" fill="none" stroke="#f59e0b" strokeWidth="7" strokeDasharray="14 12" />
+        <ellipse cx="260" cy="180" rx="145" ry="105" fill="#fecaca" opacity="0.4" />
+        <ellipse cx="625" cy="160" rx="150" ry="105" fill="#ccfbf1" opacity="0.58" />
+        {[[175, 130], [220, 190], [250, 235], [300, 160], [335, 220], [380, 185]].map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="14" fill="#dc2626" />)}
+        {[[540, 125], [585, 185], [630, 110], [680, 168], [715, 225], [760, 145]].map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="14" fill="#0f766e" />)}
+        <path d="M252 172 L292 172 M272 152 L272 192" stroke="#111827" strokeWidth="8" strokeLinecap="round" />
+        <path d="M632 158 L672 158 M652 138 L652 178" stroke="#111827" strokeWidth="8" strokeLinecap="round" />
+        <line x1="175" y1="130" x2="272" y2="172" stroke="#dc2626" strokeWidth="4" strokeDasharray="8 8" />
+        <line x1="715" y1="225" x2="652" y2="158" stroke="#0f766e" strokeWidth="4" strokeDasharray="8 8" />
+        {mark("1", 94, 78)}
+        {mark("2", 272, 172)}
+        {mark("3", 498, 205)}
+        {mark("4", 760, 72)}
+        <text x="64" y="385" fontSize="19" fontWeight="900" fill="#991b1b">{"Exam order: K chosen first -> centroid -> nearest assignment -> iterate -> limitations."}</text>
       </svg>
     );
   }
   if (type === "hclust") {
     return (
-      <svg viewBox="0 0 280 190" className="h-56 w-full">
-        {["S1", "S2", "S3", "S4", "S5"].map((label, i) => <text key={label} x={38 + i * 38} y="138" fontSize="11" fontWeight="800" fill="#111827">{label}</text>)}
-        <path d="M45 122 V92 H83 V122" fill="none" stroke="#dc2626" strokeWidth="4" />
-        <path d="M121 122 V82 H159 V122" fill="none" stroke="#0f766e" strokeWidth="4" />
-        <path d="M64 92 V55 H140 V82" fill="none" stroke="#111827" strokeWidth="4" />
-        <path d="M140 55 H197 V122" fill="none" stroke="#111827" strokeWidth="4" />
-        <text x="52" y="28" fontSize="12" fontWeight="800" fill="#991b1b">height = distance / dissimilarity</text>
-        <text x="40" y="160" fontSize="11" fontWeight="800" fill="#111827">Choose distance: Pearson / Spearman / Euclidean</text>
-        <text x="40" y="176" fontSize="11" fontWeight="800" fill="#991b1b">Choose linkage: single / complete / average</text>
+      <svg viewBox="0 0 900 420" className="h-[420px] w-full">
+        <rect x="20" y="20" width="840" height="330" rx="24" fill="#fafaf9" stroke="#e7e5e4" strokeWidth="3" />
+        {["S1", "S2", "S3", "S4", "S5", "S6"].map((label, i) => <text key={label} x={150 + i * 100} y="330" fontSize="20" fontWeight="900" fill="#111827">{label}</text>)}
+        <path d="M160 300 V240 H260 V300" fill="none" stroke="#dc2626" strokeWidth="8" />
+        <path d="M360 300 V220 H460 V300" fill="none" stroke="#0f766e" strokeWidth="8" />
+        <path d="M560 300 V250 H660 V300" fill="none" stroke="#2563eb" strokeWidth="8" />
+        <path d="M210 240 V160 H410 V220" fill="none" stroke="#111827" strokeWidth="8" />
+        <path d="M410 160 V90 H610 V250" fill="none" stroke="#111827" strokeWidth="8" />
+        <line x1="88" y1="300" x2="88" y2="75" stroke="#991b1b" strokeWidth="4" />
+        <text x="46" y="88" fontSize="18" fontWeight="900" fill="#991b1b">height</text>
+        {mark("1", 210, 365)}
+        {mark("2", 610, 245)}
+        {mark("3", 410, 92)}
+        {mark("4", 736, 124)}
+        <text x="64" y="385" fontSize="19" fontWeight="900" fill="#991b1b">{"Exam order: distance metric -> linkage -> dendrogram height -> biological grouping."}</text>
       </svg>
     );
   }
   if (type === "heatmap") {
     const colors = ["#dc2626", "#fecaca", "#f8fafc", "#bfdbfe", "#2563eb"];
     return (
-      <svg viewBox="0 0 280 190" className="h-56 w-full">
-        {[0, 1, 2, 3, 4].map((row) => [0, 1, 2, 3, 4, 5].map((col) => <rect key={`${row}-${col}`} x={52 + col * 20} y={30 + row * 18} width="18" height="16" rx="2" fill={colors[(row + col) % colors.length]} />))}
-        <path d="M52 22 V10 H92 V22 M92 10 H132 V22 M132 10 H172 V22" fill="none" stroke="#111827" strokeWidth="3" />
-        <path d="M38 30 H24 V66 H38 M24 66 V102 H38" fill="none" stroke="#111827" strokeWidth="3" />
-        <text x="48" y="140" fontSize="11" fontWeight="800" fill="#991b1b">genes x samples + color scale</text>
-        <rect x="186" y="34" width="12" height="70" fill="url(#heat)" />
-        <text x="204" y="42" fontSize="10" fontWeight="800" fill="#111827">high</text>
-        <text x="204" y="104" fontSize="10" fontWeight="800" fill="#111827">low</text>
-        <text x="45" y="160" fontSize="11" fontWeight="800" fill="#111827">Read rows, columns, dendrograms, metadata</text>
-        <text x="45" y="176" fontSize="11" fontWeight="800" fill="#991b1b">Ask: z-score? fold change? raw intensity?</text>
+      <svg viewBox="0 0 900 420" className="h-[420px] w-full">
+        <rect x="20" y="20" width="840" height="330" rx="24" fill="#fafaf9" stroke="#e7e5e4" strokeWidth="3" />
+        {[0, 1, 2, 3, 4, 5, 6, 7].map((row) => [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((col) => <rect key={`${row}-${col}`} x={210 + col * 42} y={100 + row * 26} width="38" height="22" rx="4" fill={colors[(row + col) % colors.length]} />))}
+        <path d="M210 82 V52 H294 V82 M294 52 H378 V82 M378 52 H462 V82 M462 52 H588 V82" fill="none" stroke="#111827" strokeWidth="6" />
+        <path d="M184 100 H150 V178 H184 M150 178 V256 H184 M150 256 V304 H184" fill="none" stroke="#111827" strokeWidth="6" />
+        <rect x="680" y="110" width="26" height="185" fill="url(#heat)" />
+        <text x="720" y="128" fontSize="17" fontWeight="900" fill="#111827">high</text>
+        <text x="720" y="296" fontSize="17" fontWeight="900" fill="#111827">low</text>
+        <text x="212" y="330" fontSize="18" fontWeight="900" fill="#991b1b">samples / conditions</text>
+        <text x="62" y="214" fontSize="18" fontWeight="900" fill="#991b1b">genes</text>
+        {mark("1", 254, 360)}
+        {mark("2", 706, 102)}
+        {mark("3", 402, 52)}
+        {mark("4", 110, 258)}
+        <text x="64" y="388" fontSize="19" fontWeight="900" fill="#991b1b">{"Exam order: rows/columns -> color scale -> dendrograms -> metadata/outliers."}</text>
         <defs>
           <linearGradient id="heat" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#dc2626" />
@@ -828,30 +919,43 @@ function PlotDiagram({ type }) {
   }
   if (type === "volcano") {
     return (
-      <svg viewBox="0 0 280 190" className="h-56 w-full">
-        <line x1="38" y1="122" x2="210" y2="122" stroke="#111827" strokeWidth="3" />
-        <line x1="124" y1="122" x2="124" y2="22" stroke="#111827" strokeWidth="2" strokeDasharray="5 5" />
-        <line x1="38" y1="88" x2="210" y2="88" stroke="#991b1b" strokeWidth="2" strokeDasharray="5 5" />
-        {[[62, 62], [76, 48], [92, 78], [156, 70], [172, 46], [190, 58], [112, 104], [128, 110], [140, 100]].map(([x, y], i) => <circle key={`${x}-${y}`} cx={x} cy={y} r="5" fill={i < 3 ? "#2563eb" : i < 6 ? "#dc2626" : "#a8a29e"} />)}
-        <text x="46" y="143" fontSize="11" fontWeight="800" fill="#991b1b">logFC</text>
-        <text x="10" y="28" fontSize="11" fontWeight="800" fill="#991b1b">-log10 adj p</text>
-        <text x="46" y="162" fontSize="11" fontWeight="800" fill="#2563eb">left = downregulated</text>
-        <text x="146" y="162" fontSize="11" fontWeight="800" fill="#dc2626">right = upregulated</text>
-        <text x="46" y="178" fontSize="11" fontWeight="800" fill="#991b1b">horizontal line = adjusted p threshold</text>
+      <svg viewBox="0 0 900 420" className="h-[420px] w-full">
+        <rect x="20" y="20" width="840" height="330" rx="24" fill="#fafaf9" stroke="#e7e5e4" strokeWidth="3" />
+        <line x1="110" y1="305" x2="790" y2="305" stroke="#111827" strokeWidth="4" />
+        <line x1="450" y1="305" x2="450" y2="65" stroke="#111827" strokeWidth="3" strokeDasharray="10 10" />
+        <line x1="110" y1="175" x2="790" y2="175" stroke="#991b1b" strokeWidth="4" strokeDasharray="10 10" />
+        <line x1="330" y1="305" x2="330" y2="65" stroke="#991b1b" strokeWidth="3" strokeDasharray="8 10" />
+        <line x1="570" y1="305" x2="570" y2="65" stroke="#991b1b" strokeWidth="3" strokeDasharray="8 10" />
+        {[[205, 158], [250, 120], [300, 190], [600, 185], [650, 118], [710, 150]].map(([x, y], i) => <circle key={`${x}-${y}`} cx={x} cy={y} r="14" fill={i < 3 ? "#2563eb" : "#dc2626"} />)}
+        {[[390, 260], [420, 245], [455, 275], [500, 260], [530, 235], [470, 215], [435, 225]].map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="11" fill="#a8a29e" />)}
+        <text x="610" y="338" fontSize="21" fontWeight="900" fill="#991b1b">log fold change</text>
+        <text x="44" y="92" fontSize="21" fontWeight="900" fill="#991b1b">-log10 adjusted p</text>
+        <text x="155" y="94" fontSize="18" fontWeight="900" fill="#2563eb">downregulated</text>
+        <text x="622" y="94" fontSize="18" fontWeight="900" fill="#dc2626">upregulated</text>
+        {mark("1", 690, 305)}
+        {mark("2", 110, 92)}
+        {mark("3", 570, 175)}
+        {mark("4", 662, 118)}
+        <text x="64" y="388" fontSize="19" fontWeight="900" fill="#991b1b">{"Exam order: effect size -> adjusted p-value -> thresholds -> candidate genes -> biology."}</text>
       </svg>
     );
   }
   return (
-    <svg viewBox="0 0 280 190" className="h-56 w-full">
-      <line x1="38" y1="122" x2="210" y2="122" stroke="#111827" strokeWidth="3" />
-      <line x1="38" y1="122" x2="38" y2="22" stroke="#111827" strokeWidth="3" />
-      <path d="M46 84 C72 52 100 50 128 72 C158 98 184 92 204 70" fill="none" stroke="#dc2626" strokeWidth="4" />
-      <line x1="42" y1="76" x2="208" y2="76" stroke="#111827" strokeWidth="2" strokeDasharray="5 5" />
-      {[[62, 80], [86, 62], [112, 68], [138, 86], [166, 96], [190, 74]].map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="5" fill="#0f766e" />)}
-      <text x="170" y="142" fontSize="11" fontWeight="800" fill="#991b1b">A intensity</text>
-      <text x="10" y="28" fontSize="11" fontWeight="800" fill="#991b1b">M ratio</text>
-      <text x="40" y="160" fontSize="11" fontWeight="800" fill="#111827">Expected after normalization: centered near M=0</text>
-      <text x="40" y="176" fontSize="11" fontWeight="800" fill="#991b1b">Curvature = intensity-dependent bias</text>
+    <svg viewBox="0 0 900 420" className="h-[420px] w-full">
+      <rect x="20" y="20" width="840" height="330" rx="24" fill="#fafaf9" stroke="#e7e5e4" strokeWidth="3" />
+      <line x1="110" y1="305" x2="790" y2="305" stroke="#111827" strokeWidth="4" />
+      <line x1="110" y1="305" x2="110" y2="70" stroke="#111827" strokeWidth="4" />
+      <line x1="120" y1="190" x2="790" y2="190" stroke="#111827" strokeWidth="3" strokeDasharray="10 10" />
+      <path d="M130 245 C240 115 360 105 455 182 C560 270 690 250 780 155" fill="none" stroke="#dc2626" strokeWidth="8" opacity="0.85" />
+      {[[160, 238], [220, 160], [292, 135], [360, 150], [430, 188], [520, 235], [620, 245], [720, 185]].map(([x, y]) => <circle key={`${x}-${y}`} cx={x} cy={y} r="13" fill="#0f766e" />)}
+      <text x="620" y="338" fontSize="21" fontWeight="900" fill="#991b1b">A: average intensity</text>
+      <text x="44" y="92" fontSize="21" fontWeight="900" fill="#991b1b">M: log ratio</text>
+      <text x="570" y="178" fontSize="18" fontWeight="900" fill="#111827">expected center M=0</text>
+      {mark("1", 110, 92)}
+      {mark("2", 690, 305)}
+      {mark("3", 580, 190)}
+      {mark("4", 430, 120)}
+      <text x="64" y="388" fontSize="19" fontWeight="900" fill="#991b1b">{"Exam order: define M and A -> inspect centering -> diagnose intensity bias -> normalize."}</text>
     </svg>
   );
 }

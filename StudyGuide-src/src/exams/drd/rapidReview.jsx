@@ -756,26 +756,26 @@ function StatTreeSvg({ activeIds }) {
 
 function HorizontalStatTreeSvg({ activeIds }) {
   const nodes = [
-    ["root", 40, 255, 220, 54, "Experimental design"],
-    ["two", 340, 150, 150, 48, "2 groups"],
-    ["multi", 340, 370, 150, 48, ">2 groups"],
-    ["paired", 570, 80, 175, 48, "Paired / matched"],
-    ["independent", 570, 220, 175, 48, "Independent"],
-    ["multi-normal", 570, 335, 185, 48, "Normal + equal variance"],
-    ["multi-nonnormal", 570, 455, 185, 48, "Non-normal / outliers"],
+    ["root", 40, 285, 220, 54, "Experimental design"],
+    ["two", 340, 135, 150, 48, "2 groups"],
+    ["multi", 340, 485, 150, 48, ">2 groups"],
+    ["paired", 570, 70, 175, 48, "Paired / matched"],
+    ["independent", 570, 250, 175, 48, "Independent"],
+    ["multi-normal", 570, 430, 185, 48, "Normal + equal variance"],
+    ["multi-nonnormal", 570, 545, 185, 48, "Non-normal / outliers"],
     ["paired-normal", 830, 40, 185, 48, "Normal differences"],
     ["paired-nonnormal", 830, 120, 210, 48, "Non-normal / small n"],
-    ["independent-normal", 830, 190, 200, 48, "Normal + equal variance"],
-    ["independent-unequal", 830, 270, 180, 48, "Unequal variance"],
-    ["independent-nonnormal", 830, 350, 200, 48, "Non-normal / outliers"],
+    ["independent-normal", 830, 220, 200, 48, "Normal + equal variance"],
+    ["independent-unequal", 830, 300, 180, 48, "Unequal variance"],
+    ["independent-nonnormal", 830, 380, 200, 48, "Non-normal / outliers"],
     ["paired-ttest", 1120, 40, 180, 54, "paired t-test"],
     ["wilcoxon", 1120, 120, 220, 54, "Wilcoxon signed-rank"],
-    ["unpaired-ttest", 1120, 190, 190, 54, "unpaired t-test"],
-    ["welch", 1120, 270, 180, 54, "Welch correction"],
-    ["mann-whitney", 1120, 350, 210, 54, "Mann-Whitney U"],
-    ["anova", 1120, 455, 185, 54, "one-way ANOVA"],
-    ["kruskal", 1120, 535, 185, 54, "Kruskal-Wallis"],
-    ["posthoc", 1390, 495, 220, 54, "If significant: post-hoc"],
+    ["unpaired-ttest", 1120, 220, 190, 54, "unpaired t-test"],
+    ["welch", 1120, 300, 180, 54, "Welch correction"],
+    ["mann-whitney", 1120, 380, 210, 54, "Mann-Whitney U"],
+    ["anova", 1120, 430, 185, 54, "one-way ANOVA"],
+    ["kruskal", 1120, 545, 185, 54, "Kruskal-Wallis"],
+    ["posthoc", 1390, 493, 220, 54, "If significant: post-hoc"],
   ];
   const edges = [
     ["root", "two"], ["root", "multi"],
@@ -792,7 +792,7 @@ function HorizontalStatTreeSvg({ activeIds }) {
   const activeEdge = (from, to) => activeIds.includes(from) && activeIds.includes(to);
 
   return (
-    <svg viewBox="0 0 1660 660" className="min-w-[1660px] rounded-[2rem] border border-stone-200 bg-white">
+    <svg viewBox="0 0 1660 700" className="min-w-[1660px] rounded-[2rem] border border-stone-200 bg-white">
       {edges.map(([from, to]) => {
         const a = byId[from];
         const b = byId[to];
@@ -814,7 +814,7 @@ function HorizontalStatTreeSvg({ activeIds }) {
         );
       })}
       {nodes.map(([id, x, y, w, h, label]) => <SvgTreeNode key={id} id={id} x={x} y={y} w={w} h={h} label={label} activeIds={activeIds} />)}
-      <text x="40" y="625" fontSize="19" fontWeight="900" fill="#991b1b">{"Read left to right: design -> number of groups -> pairedness/assumptions -> test -> post-hoc when global."}</text>
+      <text x="40" y="655" fontSize="19" fontWeight="900" fill="#991b1b">{"Read left to right: design -> number of groups -> pairedness/assumptions -> test -> post-hoc when global."}</text>
     </svg>
   );
 }

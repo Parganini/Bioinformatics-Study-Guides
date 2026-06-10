@@ -39,6 +39,7 @@ import { DRDResourcePanel } from "./lessons/drd/shared/resourcePanel.jsx";
 
 const DRDExamPracticePage = React.lazy(() => import("./exams/drd/examPractice.jsx"));
 const DRDExamRadarPage = React.lazy(() => import("./exams/drd/examRadar.jsx"));
+const DRDRapidReviewPage = React.lazy(() => import("./exams/drd/rapidReview.jsx"));
 
 const LANGS = [
   { code: "en", label: "English", short: "EN", dir: "ltr" },
@@ -633,6 +634,7 @@ function drdCopy() {
     products: "Study-guide products",
     productsBody: "The dashboard now reads from a single DRD manifest: routes, resources, status, lesson type and Drive links stay in one place.",
     examKit: "Exam and report kit",
+    rapidReview: "Rapid review",
     examRadar: "Exam radar",
     examPractice: "Exam practice",
     finalReport: "Final report",
@@ -748,6 +750,14 @@ function DRDApp({ t, hash }) {
   const toggle = (id) => save({ ...progress, [id]: !progress[id] });
   const lessonId = (hash.match(/^#\/lesson\/(.+)$/) || [])[1];
 
+  if (hash.match(/^#\/rapid-review/)) {
+    return (
+      <React.Suspense fallback={<DRDRouteLoading label="Rapid review" />}>
+        <DRDRapidReviewPage />
+      </React.Suspense>
+    );
+  }
+
   if (hash.match(/^#\/exam-radar/)) {
     return (
       <React.Suspense fallback={<DRDRouteLoading label="Exam radar" />}>
@@ -796,6 +806,7 @@ function DRDApp({ t, hash }) {
           <>
             <a href="#module-1" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{copy.module1Short}</a>
             <a href="#module-2" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.module2Short}</a>
+            <a href="#/rapid-review" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-100">{copy.rapidReview}</a>
             <a href="#/exam-radar" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.examRadar}</a>
             <a href="#/exam-practice" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.examPractice}</a>
             <a href="#final-report" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{copy.finalReport}</a>
@@ -977,6 +988,7 @@ function DRDExamReportKitSection() {
           <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{kit.title}</h2>
           <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600">{kit.body}</p>
           <div className="mt-5 flex flex-wrap gap-3">
+            <a href="#/rapid-review" className="inline-flex rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white transition hover:bg-red-800">Open rapid review</a>
             <a href="#/exam-radar" className="inline-flex rounded-full bg-stone-950 px-5 py-3 text-sm font-black text-white transition hover:bg-red-800">Open exam radar</a>
             <a href="#/exam-practice" className="inline-flex rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:border-red-200 hover:text-red-700">Open exam practice</a>
           </div>

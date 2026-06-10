@@ -200,6 +200,163 @@ const priorityClass = {
   Review: "border-stone-200 bg-stone-50 text-stone-700",
 };
 
+const ANSWER_DIRECTIONS = {
+  "When and why would you apply K-means clustering?": [
+    "Use it for unsupervised grouping of genes or samples with similar expression profiles.",
+    "State that K, the number of clusters, must be chosen before running the method.",
+    "Explain that centroids represent the current mean profile of each cluster.",
+    "Describe assignment to the nearest centroid, commonly using Euclidean distance.",
+    "Mention iterative reassignment and centroid recalculation until convergence.",
+    "Add limitations: initialization, no hierarchy, sensitivity to scaling/outliers and possible over-clustering.",
+  ],
+  "How do you decide K in K-means?": [
+    "Make clear that K is not discovered automatically by the algorithm.",
+    "Use prior biological knowledge, previous analyses or expected experimental groups when available.",
+    "Use hierarchical clustering or visible exploratory structure to suggest plausible group numbers.",
+    "Explain that too few clusters can hide patterns while too many can create artificial small clusters.",
+    "Mention rerunning K-means and checking whether stable groups reappear.",
+  ],
+  "Compare K-means and hierarchical clustering.": [
+    "Hierarchical clustering uses similarity or distance to produce a dendrogram.",
+    "It usually follows an agglomerative bottom-up strategy.",
+    "K-means requires a predefined K and partitions objects around centroids.",
+    "K-means does not show nested relationships among clusters.",
+    "K-means can be used after hierarchical clustering to confirm or refine suggested groups.",
+  ],
+  "When and why would you apply PCA?": [
+    "Use PCA for high-dimensional omics data with many genes, samples or variables.",
+    "Explain that it reduces dimensionality while preserving major variance structure.",
+    "State that PC1 captures the largest variance and PC2 captures the next orthogonal variance.",
+    "Use it to detect trends, group separation, outliers or dominant sources of variability.",
+    "Clarify that PCA is exploratory and is not a clustering method.",
+  ],
+  "How do you interpret a PCA plot and scree plot?": [
+    "Identify what each point represents: sample, condition, time point or gene profile.",
+    "Read the percentage of variance explained by PC1, PC2 and later components.",
+    "Use the scree plot or variance table to judge how much structure the plotted PCs capture.",
+    "Interpret separation, similarity and outliers cautiously.",
+    "Tie the interpretation back to the biological design and metadata.",
+  ],
+  "How do you interpret a heatmap in gene-expression analysis?": [
+    "Define what rows and columns represent before interpreting colors.",
+    "Explain that one dendrogram can cluster samples and the other genes or probes.",
+    "Read the color legend first: red, blue, grey or white depend on the chosen scale.",
+    "Check whether clusters match disease, treatment, tissue, time point or batch.",
+    "Discuss outliers cautiously rather than deleting them immediately.",
+    "Mention that z-score or fold-change scaling changes the meaning of the colors.",
+  ],
+  "Explain a volcano plot.": [
+    "Define it as a plot combining effect size and statistical significance.",
+    "State that the x-axis is usually log fold change.",
+    "State that the y-axis is usually negative log10 adjusted p-value.",
+    "Interpret significant down- and up-regulated genes in the upper left and upper right.",
+    "Mention thresholds such as adjusted p-value below 0.05 and fold-change cutoffs.",
+    "Explain that labels or GO categories can help connect statistics to biology.",
+  ],
+  "What does multiple-testing correction mean and why is it necessary?": [
+    "In omics, hundreds or thousands of genes or CpGs are tested at once.",
+    "Many raw p-values inflate the number of false positives.",
+    "Bonferroni controls family-wise error rate but is very strict.",
+    "Benjamini-Hochberg controls false discovery rate and is often more practical for discovery.",
+    "Volcano plots and DEG/DMP lists should usually rely on adjusted p-values.",
+  ],
+  "One single-cell RNA-seq question will always be present.": [
+    "Keep this as a reminder until the M1.9 single-cell lecture is fully integrated.",
+    "The professor explicitly said single-cell RNA-seq always appears in exams.",
+    "Do not convert it into a final practice card until the class content and transcript are reviewed.",
+  ],
+  "When and why is Welch correction used?": [
+    "Use Welch correction when comparing groups with unequal variances.",
+    "Explain that it adjusts the degrees of freedom of the t-test.",
+    "Connect it to checking assumptions before choosing a parametric test.",
+    "Mention that it protects interpretation when homoscedasticity is not reasonable.",
+  ],
+  "When and why would you apply the Wilcoxon signed-rank test?": [
+    "Use it for paired or matched measurements when a non-parametric test is needed.",
+    "Mention before/after designs or split samples exposed to control and treatment.",
+    "Explain that it is useful for small samples, unknown distributions or outliers.",
+    "Include a biological question, not only the test name.",
+    "State the null hypothesis in terms of no systematic paired difference.",
+  ],
+  "When and why would you apply the Mann-Whitney U test?": [
+    "Use it for two independent or unpaired groups.",
+    "Apply it when the data are non-normal, ordinal, small or affected by outliers.",
+    "Explain that the test works on ranks rather than assuming normal means.",
+    "Include a biological question and experimental design.",
+    "Mention the null hypothesis and significance logic.",
+  ],
+  "When and why would you apply one-way ANOVA?": [
+    "Use one-way ANOVA to compare more than two independent groups for one factor.",
+    "State that it is parametric and compares group means.",
+    "Mention assumptions such as independence, approximate normality and similar variances.",
+    "Give a design example, such as control plus two treatment doses.",
+    "If significant, add that post-hoc tests are needed to find which groups differ.",
+  ],
+  "When and why would you apply Kruskal-Wallis?": [
+    "Use Kruskal-Wallis for three or more independent groups when a non-parametric test is needed.",
+    "Frame it as the rank-based alternative to one-way ANOVA.",
+    "Mention small samples, non-normal data or outliers as reasons to prefer it.",
+    "Include a biological question and experimental design.",
+    "If significant, follow with post-hoc tests because the result is global.",
+  ],
+  "Why are post-hoc tests needed after significant ANOVA or Kruskal-Wallis?": [
+    "ANOVA and Kruskal-Wallis are global tests.",
+    "A significant result says at least one group differs.",
+    "It does not identify which specific pair or contrast differs.",
+    "Post-hoc tests provide the pairwise comparisons needed for interpretation.",
+  ],
+  "For each unsupervised method, when would you apply it and why?": [
+    "MDS visualizes distance relationships in reduced dimensions.",
+    "Hierarchical clustering builds dendrograms from similarity or distance.",
+    "K-means partitions objects into a predefined number of centroid-based clusters.",
+    "PCA reduces dimensionality and identifies major variance components.",
+    "Explain the purpose of each method instead of listing names only.",
+  ],
+  "Explain Pearson, Spearman and Euclidean distance in hierarchical clustering.": [
+    "Pearson captures linear correlation in expression profile shape.",
+    "Spearman uses ranks and is more robust to outliers or monotonic non-linear trends.",
+    "Euclidean distance measures geometric distance and is sensitive to magnitude and scaling.",
+    "The metric choice can change dendrogram structure and biological interpretation.",
+  ],
+  "Explain linkage methods, especially average linkage.": [
+    "Linkage defines how distance between clusters is calculated.",
+    "Single linkage uses the nearest points between clusters.",
+    "Complete linkage uses the farthest points.",
+    "Average linkage uses the average pairwise distance and is often a balanced option.",
+    "Changing linkage can change the dendrogram shape.",
+  ],
+  "How should an apparent PCA or heatmap outlier be handled?": [
+    "Do not automatically remove the sample.",
+    "Ask whether the pattern reflects a technical problem, biological difference, disease phase or metadata issue.",
+    "Check whether the same sample appears unusual across multiple analyses.",
+    "Exclude only with a clear justification, or investigate it as a biological signal.",
+  ],
+  "What is the biological question in the canine/human DLBCL comparison?": [
+    "State that the study compares diffuse large B-cell lymphoma profiles in dogs and humans.",
+    "Ask whether the pathology shows similar expression structure across species.",
+    "Use PCA and hierarchical clustering to inspect healthy and tumor separation.",
+    "Mention NF-kB target genes as a biologically focused subset.",
+  ],
+  "Why focus PCA or clustering on NF-kB target genes?": [
+    "NF-kB is relevant to inflammation and immune response.",
+    "A meaningful gene subset can make the analysis more interpretable.",
+    "Focusing on a coherent pathway can increase the variance explained by the main PCs.",
+    "Group separation can become clearer than with all genes at once.",
+  ],
+  "What does DAVID/GO/KEGG add after a gene list?": [
+    "A list of up- and down-regulated genes is not yet a biological conclusion.",
+    "DAVID can identify GO terms, functional categories and enriched biological themes.",
+    "GO includes biological process, molecular function and cellular component.",
+    "BioCarta or KEGG maps show where significant genes sit in known pathways.",
+    "Enrichment p-values help prioritize affected pathways.",
+  ],
+  "How do pathway/GO results support biological interpretation?": [
+    "Compare which GO terms or pathways are enriched in different datasets or species.",
+    "Use class examples such as canine cell-cycle signals versus human immune-response signals.",
+    "Interpret differences cautiously and connect them to disease phase, biology or study design.",
+  ],
+};
+
 function allItems() {
   return RADAR_BLOCKS.flatMap((block) => block.items);
 }
@@ -317,6 +474,8 @@ function RadarBlock({ block }) {
 }
 
 function RadarCard({ item }) {
+  const directions = ANSWER_DIRECTIONS[item.prompt] || item.expected;
+
   return (
     <article className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
@@ -332,6 +491,17 @@ function RadarCard({ item }) {
             {point}
           </span>
         ))}
+      </div>
+      <div className="mt-5 rounded-2xl border border-stone-200 bg-white p-4">
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Expected answer direction</div>
+        <ul className="mt-3 grid gap-2">
+          {directions.map((point) => (
+            <li key={point} className="flex gap-2 text-sm font-semibold leading-6 text-stone-700">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red-700" />
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
       </div>
       <div className="mt-5 flex flex-wrap gap-2">
         <a href={drdLessonHref(item.lesson)} className="rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white transition hover:bg-red-800">

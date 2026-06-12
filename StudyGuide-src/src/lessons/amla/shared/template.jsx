@@ -103,11 +103,20 @@ function StudyCallout({ label, tone = "stone", children }) {
   );
 }
 
+function staticAssetUrl(src) {
+  if (!src) return null;
+  if (/^(https?:|data:|blob:|\/)/.test(src)) return src;
+  const base = import.meta.env.BASE_URL || "./";
+  if (base === "./") return `../${src}`;
+  return `${base.replace(/\/?$/, "/")}${src}`;
+}
+
 function SlidePreview({ slide, resources, onZoom }) {
   const deckKey = slide.deck || "slides";
   const href = slide.href || resources?.[deckKey] || resources?.slides;
   const slideMeta = `${slide.deckLabel || deckKey}${slide.page ? ` - slide ${slide.page}` : ""}`;
-  if (!slide.image) {
+  const imageSrc = staticAssetUrl(slide.image);
+  if (!imageSrc) {
     return (
       <div className="mb-4 rounded-[1.35rem] border border-dashed border-stone-300 bg-white p-4">
         <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{slideMeta}</div>
@@ -126,7 +135,7 @@ function SlidePreview({ slide, resources, onZoom }) {
         </div>
       </div>
       <button type="button" onClick={() => onZoom?.(slide)} className="group block w-full bg-white p-2 text-left">
-        <img src={slide.image} alt={`${slideMeta}: ${slide.title}`} className="h-auto w-full rounded-xl border border-stone-100 object-contain transition duration-200 group-hover:scale-[1.01]" loading="lazy" />
+        <img src={imageSrc} alt={`${slideMeta}: ${slide.title}`} className="h-auto w-full rounded-xl border border-stone-100 object-contain transition duration-200 group-hover:scale-[1.01]" loading="lazy" />
       </button>
       <figcaption className="border-t border-stone-100 px-4 py-3 text-xs font-bold leading-5 text-stone-500">Click the slide or Zoom to inspect it larger.</figcaption>
     </figure>
@@ -138,6 +147,7 @@ function SlideZoomModal({ slide, resources, onClose }) {
   const deckKey = slide.deck || "slides";
   const href = slide.href || resources?.[deckKey] || resources?.slides;
   const slideMeta = `${slide.deckLabel || deckKey}${slide.page ? ` - slide ${slide.page}` : ""}`;
+  const imageSrc = staticAssetUrl(slide.image);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/85 p-3 md:p-6" role="dialog" aria-modal="true" onClick={onClose}>
       <div className="max-h-[96vh] w-full max-w-7xl overflow-hidden rounded-[1.5rem] border border-white/20 bg-white shadow-2xl" onClick={(event) => event.stopPropagation()}>
@@ -152,7 +162,7 @@ function SlideZoomModal({ slide, resources, onClose }) {
           </div>
         </div>
         <div className="max-h-[calc(96vh-92px)] overflow-auto bg-stone-100 p-3">
-          <img src={slide.image} alt={`${slideMeta}: ${slide.title}`} className="mx-auto h-auto max-w-none rounded-lg bg-white shadow-xl md:max-w-full" />
+          <img src={imageSrc} alt={`${slideMeta}: ${slide.title}`} className="mx-auto h-auto max-w-none rounded-lg bg-white shadow-xl md:max-w-full" />
         </div>
       </div>
     </div>

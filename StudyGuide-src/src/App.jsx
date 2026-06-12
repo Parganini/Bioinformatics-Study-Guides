@@ -36,10 +36,28 @@ import { getDRDLessonComponent } from "./lessons/drd/drdLessonRegistry.js";
 import { DRDPlannedLesson } from "./lessons/drd/shared/template.jsx";
 import { getDRDStatusMeta } from "./lessons/drd/shared/status.js";
 import { DRDResourcePanel } from "./lessons/drd/shared/resourcePanel.jsx";
+import {
+  AMLA_DRIVE,
+  AMLA_LESSONS,
+  AMLA_MODULES,
+  AMLA_PROJECT_GUIDANCE,
+  AMLA_STUDY_PRODUCTS,
+  amlaLessonHref,
+  filterAMLALessons,
+  getAvailableAMLALessons,
+  getAMLALessonById,
+  getAMLALessonsByModule,
+  getAMLAProgressTotal,
+} from "./lessons/amla/amlaManifest.js";
+import { getAMLALessonComponent } from "./lessons/amla/amlaLessonRegistry.js";
+import { AMLAPlannedLesson } from "./lessons/amla/shared/template.jsx";
+import { getAMLAStatusMeta } from "./lessons/amla/shared/status.js";
+import { AMLAResourcePanel } from "./lessons/amla/shared/resourcePanel.jsx";
 
 const DRDExamPracticePage = React.lazy(() => import("./exams/drd/examPractice.jsx"));
 const DRDExamRadarPage = React.lazy(() => import("./exams/drd/examRadar.jsx"));
 const DRDRapidReviewPage = React.lazy(() => import("./exams/drd/rapidReview.jsx"));
+const AMLAPracticeExamPage = React.lazy(() => import("./exams/amla/practiceExam.jsx"));
 
 const LANGS = [
   { code: "en", label: "English", short: "EN", dir: "ltr" },
@@ -73,6 +91,9 @@ const UI = {
     search: "Search lessons or concepts...",
     appliedML: "Applied Machine Learning",
     appliedMLDesc: "Lecture notes, practical material, recordings, exam preparation and progress tracking.",
+    appliedMLAdvanced: "Applied Machine Learning Advanced",
+    appliedMLAdvancedShort: "AMLA",
+    appliedMLAdvancedDesc: "Advanced study guide with slides, transcripts, recordings, Colab/notebooks, mini-labs and practice exams.",
     phylo: "Molecular Phylogenetics",
     phyloDesc: "Trilingual study guide with modules, flashcards, quizzes, glossary tools and progress tracking.",
     drd: "DNA/RNA Dynamics",
@@ -110,6 +131,9 @@ const UI = {
     search: "Buscar lecciones o conceptos...",
     appliedML: "Applied Machine Learning",
     appliedMLDesc: "Apuntes de clase, material práctico, grabaciones, preparación de examen y seguimiento de progreso.",
+    appliedMLAdvanced: "Applied Machine Learning Advanced",
+    appliedMLAdvancedShort: "AMLA",
+    appliedMLAdvancedDesc: "Guía avanzada con slides, transcripciones, grabaciones, Colab/notebooks, mini-labs y exámenes de práctica.",
     phylo: "Filogenética Molecular",
     phyloDesc: "Guía trilingüe con módulos, flashcards, quizzes, glosario y seguimiento de progreso.",
     drd: "DNA/RNA Dynamics",
@@ -147,6 +171,9 @@ const UI = {
     search: "جستجوی درس‌ها یا مفاهیم...",
     appliedML: "یادگیری ماشین کاربردی",
     appliedMLDesc: "یادداشت‌های درس، مواد عملی، ضبط‌ها، آمادگی امتحان و پیگیری پیشرفت.",
+    appliedMLAdvanced: "Applied Machine Learning Advanced",
+    appliedMLAdvancedShort: "AMLA",
+    appliedMLAdvancedDesc: "راهنمای پیشرفته با اسلایدها، رونوشت‌ها، ضبط‌ها، notebook/Colab، مینی‌لب‌ها و تمرین آزمون.",
     phylo: "تبارزایی مولکولی",
     phyloDesc: "راهنمای سه‌زبانه با ماژول‌ها، فلش‌کارت‌ها، آزمونک‌ها، واژه‌نامه و پیگیری پیشرفت.",
     drd: "DNA/RNA Dynamics",
@@ -654,6 +681,7 @@ function drdCopy() {
 }
 function currentMode() {
   const path = window.location.pathname.toLowerCase();
+  if (path.includes("/amla/")) return "amla";
   if (path.includes("/amlb/")) return "amlb";
   if (path.includes("/mp/")) return "mp";
   if (path.includes("/drd/")) return "drd";
@@ -705,6 +733,12 @@ function Header({ lang, setLang, mode, t }) {
       icon: "ML",
       iconClass: "bg-violet-700",
     },
+    amla: {
+      title: t.appliedMLAdvanced,
+      subtitle: `${t.appliedMLAdvancedShort} · ${t.studyTools}`,
+      icon: "AMLA",
+      iconClass: "bg-red-700",
+    },
     mp: {
       title: t.phylo,
       subtitle: `${t.modules} · ${t.studyTools}`,
@@ -729,8 +763,8 @@ function Hero({ eyebrow, title, subtitle, actions, visual }) {
 }
 
 function HubApp({ t }) {
-  return <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.builtFor} title={<>{t.studyHub}</>} subtitle={t.hubSubtitle} actions={<><a href="AMLB/index.html" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-red-800">{t.appliedML}</a><a href="MP/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.phylo}</a><a href="DRD/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.drd}</a></>} visual={<div><div className="flex items-start justify-between gap-4"><div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.publishedFolders}</div><div className="mt-2 text-2xl font-black text-stone-950">AMLB · MP · DRD</div><div className="mt-1 text-sm font-semibold text-stone-500">{t.sourceText}</div></div><div className="rounded-2xl bg-stone-950 px-3 py-2 text-sm font-black text-white">3</div></div><div className="mt-6 rounded-[2rem] bg-[#fffaf0] p-4"><MiniTreeIcon active/><div className="mt-3"><ProgressBar value={50}/></div></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyTools}</div><p className="mt-2 text-lg font-bold leading-7">{t.tools.join(" · ")}</p></div></div>} />
-    <section id="subjects" className="mt-10"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div><div className="grid gap-5 md:grid-cols-3"><SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/><SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/><SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={getDRDProgressTotal()} icon="DRD"/></div></section>
+  return <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.builtFor} title={<>{t.studyHub}</>} subtitle={t.hubSubtitle} actions={<><a href="AMLB/index.html" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-red-800">{t.appliedML}</a><a href="AMLA/index.html" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100">{t.appliedMLAdvancedShort}</a><a href="MP/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.phylo}</a><a href="DRD/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.drd}</a></>} visual={<div><div className="flex items-start justify-between gap-4"><div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.publishedFolders}</div><div className="mt-2 text-2xl font-black text-stone-950">AMLB · AMLA · MP · DRD</div><div className="mt-1 text-sm font-semibold text-stone-500">{t.sourceText}</div></div><div className="rounded-2xl bg-stone-950 px-3 py-2 text-sm font-black text-white">4</div></div><div className="mt-6 rounded-[2rem] bg-[#fffaf0] p-4"><MiniTreeIcon active/><div className="mt-3"><ProgressBar value={50}/></div></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyTools}</div><p className="mt-2 text-lg font-bold leading-7">{t.tools.join(" · ")}</p></div></div>} />
+    <section id="subjects" className="mt-10"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4"><SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/><SubjectCard href="AMLA/index.html" title={t.appliedMLAdvanced} desc={t.appliedMLAdvancedDesc} progressKey="amla_progress_v1" total={getAMLAProgressTotal()} icon="AMLA"/><SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/><SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={getDRDProgressTotal()} icon="DRD"/></div></section>
     <section id="tools" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.studyTools}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.quickReview}</h2><p className="mt-2 max-w-2xl leading-7 text-stone-600">{t.sourceText}</p></div><div className="grid gap-3 md:grid-cols-5">{t.tools.map(tool => <div key={tool} className="rounded-2xl border border-stone-200 bg-white p-4 text-sm font-black text-stone-800 shadow-sm">{tool}</div>)}</div></section></main>;
 }
 function SubjectCard({ href, title, desc, progressKey, total, icon }) {
@@ -740,6 +774,244 @@ function SubjectCard({ href, title, desc, progressKey, total, icon }) {
   return <a href={href} className="group rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><div className="flex items-start justify-between gap-4"><div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-stone-950 text-lg font-black text-white">{icon}</div><span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{clamp(percent)}%</span></div><h3 className="mt-5 text-2xl font-black text-stone-950">{title}</h3><p className="mt-2 leading-7 text-stone-600">{desc}</p><div className="mt-5"><ProgressBar value={percent}/></div></a>;
 }
 
+
+
+function AMLAApp({ t, hash }) {
+  const [progress, setProgress] = useState(() => getJSON("amla_progress_v1", {}));
+  const [query, setQuery] = useState("");
+  const save = (next) => { setProgress(next); setJSON("amla_progress_v1", next); };
+  const toggle = (id) => save({ ...progress, [id]: !progress[id] });
+  const lessonId = (hash.match(/^#\/lesson\/(.+)$/) || [])[1];
+
+  if (hash.match(/^#\/practice-exam/)) {
+    return (
+      <React.Suspense fallback={<DRDRouteLoading label="AMLA practice exam" />}>
+        <AMLAPracticeExamPage />
+      </React.Suspense>
+    );
+  }
+
+  if (lessonId) {
+    const lesson = getAMLALessonById(lessonId);
+    if (lesson) {
+      const LessonComponent = getAMLALessonComponent(lesson.componentKey);
+      const sharedProps = { lesson, lang: "en", isDone: !!progress[lesson.id], toggle: () => toggle(lesson.id) };
+      return LessonComponent ? (
+        <React.Suspense fallback={<DRDRouteLoading label={`${lesson.code} - ${lesson.title}`} eyebrow="Loading AMLA lesson" />}>
+          <LessonComponent {...sharedProps} />
+        </React.Suspense>
+      ) : <AMLAPlannedLesson {...sharedProps} />;
+    }
+  }
+
+  const availableLessons = getAvailableAMLALessons();
+  const completed = availableLessons.filter((lesson) => progress[lesson.id]).length;
+  const availableTotal = getAMLAProgressTotal();
+  const percent = availableTotal ? completed / availableTotal * 100 : 0;
+  const module1 = filterAMLALessons(getAMLALessonsByModule("module-1"), query);
+  const module2 = filterAMLALessons(getAMLALessonsByModule("module-2"), query);
+  const pending = AMLA_LESSONS.filter((lesson) => lesson.status !== "available").length;
+  const miniLabs = AMLA_LESSONS.filter((lesson) => /mini-lab|hands-on|practice|project/i.test(`${lesson.lessonType} ${lesson.products?.join(" ")}`));
+
+  return (
+    <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
+      <Hero
+        eyebrow="AMLA study guide"
+        title={<>{t.appliedMLAdvanced} <span className="text-red-700">Guide</span></>}
+        subtitle={t.appliedMLAdvancedDesc}
+        actions={(
+          <>
+            <a href="#lessons" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">Lessons</a>
+            <a href="#mini-labs" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">Mini-labs</a>
+            <a href="#/practice-exam" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-100">Practice exam</a>
+            <a href="#project" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">Project relevance</a>
+          </>
+        )}
+        visual={(
+          <div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Progress</div>
+            <div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{completed} / {availableTotal} complete-source lessons completed</p>
+            <div className="mt-5"><ProgressBar value={percent}/></div>
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Classes</div><div className="mt-1 text-2xl font-black">{AMLA_LESSONS.length}</div></div>
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Complete</div><div className="mt-1 text-2xl font-black">{availableTotal}</div></div>
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Pending</div><div className="mt-1 text-2xl font-black">{pending}</div></div>
+            </div>
+            <div className="mt-6 rounded-3xl bg-stone-950 p-5 text-white">
+              <div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">Study workflow</div>
+              <p className="mt-2 text-lg font-bold leading-7">slides / transcript emphasis / mini-lab / output interpretation / MCQ practice</p>
+            </div>
+          </div>
+        )}
+      />
+
+      <section className="mt-8 grid gap-5 lg:grid-cols-3">
+        <Stat label="Available resources" value="Drive" note="Slides, transcripts, recordings, notebooks and project docs are manifest-linked." />
+        <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm lg:col-span-2">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Study workflow</div>
+          <div className="mt-4 grid gap-3 md:grid-cols-3">
+            {["Read slide path before opening the PDF", "Use transcript notes for professor emphasis", "Run or inspect notebook outputs, then explain them"].map((item) => <div key={item} className="rounded-3xl border border-stone-200 bg-stone-50 p-4 text-sm font-bold leading-6 text-stone-700">{item}</div>)}
+          </div>
+        </div>
+      </section>
+
+      <section id="lessons" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/75 p-5 shadow-sm md:p-6">
+        <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">Chronological dashboard</div>
+            <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">AMLA lessons</h2>
+          </div>
+          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search topic, concept, notebook..." className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-stone-700 outline-none transition placeholder:text-stone-400 focus:border-red-300 focus:ring-4 focus:ring-red-100 md:w-80"/>
+        </div>
+        <AMLAModule module={AMLA_MODULES.find((module) => module.id === "module-1")} units={module1} progress={progress} toggle={toggle} />
+        <div className="mt-6">
+          <AMLAModule module={AMLA_MODULES.find((module) => module.id === "module-2")} units={module2} progress={progress} toggle={toggle} />
+        </div>
+      </section>
+
+      <AMLAResourcesSection />
+      <AMLAMiniLabsSection lessons={miniLabs} />
+      <AMLAProductsSection />
+      <AMLAProjectSection />
+    </main>
+  );
+}
+
+function AMLAModule({ module, units, progress, toggle }) {
+  const available = units.filter((unit) => unit.status === "available");
+  const done = available.filter((unit) => progress[unit.id]).length;
+  const percent = available.length ? done / available.length * 100 : 0;
+  return (
+    <article className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm">
+      <div className="border-b border-stone-200 bg-stone-50 p-5 md:p-6">
+        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+          <div>
+            <h3 className="text-2xl font-black tracking-tight text-stone-950">{module?.title}</h3>
+            <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-stone-500">{module?.description}</p>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{done} / {available.length} complete-source lessons completed</p>
+          </div>
+          <div className="w-full md:w-64"><ProgressBar value={percent}/></div>
+        </div>
+      </div>
+      <div className="grid gap-4 p-5 md:p-6">
+        {units.length === 0 && <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5 text-sm font-black text-stone-500">No matching lessons.</div>}
+        {units.map(unit => <AMLAUnitCard key={unit.id} unit={unit} isDone={!!progress[unit.id]} toggle={() => toggle(unit.id)} />)}
+      </div>
+    </article>
+  );
+}
+
+function AMLAUnitCard({ unit, isDone, toggle }) {
+  const status = getAMLAStatusMeta(unit.status);
+  const available = unit.status === "available";
+  const resourceCount = Object.values(unit.resources || {}).filter((value) => typeof value === "string" && value).length;
+  return (
+    <div className={`rounded-3xl border p-5 transition ${isDone ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50 hover:bg-white"}`}>
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-stone-950 px-3 py-1 text-xs font-black text-white">{unit.code}</span>
+            <span className={`rounded-full border px-3 py-1 text-xs font-black ${status.className}`}>{status.label}</span>
+            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{unit.date}</span>
+            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{unit.lessonType}</span>
+            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{resourceCount} resources</span>
+          </div>
+          <h4 className="mt-3 text-xl font-black leading-7 text-stone-950">{unit.title}</h4>
+          <p className="mt-2 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{unit.summary}</p>
+        </div>
+        <div className="flex shrink-0 flex-wrap gap-2 md:justify-end">
+          <a href={amlaLessonHref(unit)} className="rounded-full bg-red-700 px-4 py-2 text-xs font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-red-800">Open lesson</a>
+          {available && <button onClick={toggle} className={`rounded-full px-4 py-2 text-xs font-black ${isDone ? "bg-emerald-600 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{isDone ? "Completed" : "Mark completed"}</button>}
+        </div>
+      </div>
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+        <div>
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Tags</div>
+          <div className="mt-2 flex flex-wrap gap-2">{(unit.tags || []).map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-600">{tag}</span>)}</div>
+        </div>
+        <AMLAResourcePanel lesson={unit} title="Resources" />
+      </div>
+    </div>
+  );
+}
+
+function AMLAResourcesSection() {
+  const sources = [
+    { title: "AMLA root", href: AMLA_DRIVE.root },
+    { title: "Module 1", href: AMLA_DRIVE.module1 },
+    { title: "Module 2", href: AMLA_DRIVE.module2 },
+    { title: "Transcriptions", href: AMLA_DRIVE.transcriptions },
+    { title: "Video Recordings", href: AMLA_DRIVE.recordingsDoc },
+    { title: "Notebooks", href: AMLA_DRIVE.notebooks },
+    { title: "Project", href: AMLA_DRIVE.projectDoc },
+  ];
+  return (
+    <section id="resources" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <div className="mb-5">
+        <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">Resources</div>
+        <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Source folders and documents</h2>
+      </div>
+      <div className="grid gap-2 md:grid-cols-4">
+        {sources.map((source) => <a key={source.title} href={source.href} target="_blank" rel="noreferrer" className="rounded-full border border-stone-200 bg-stone-50 px-4 py-2 text-center text-xs font-black text-stone-700 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm">{source.title}</a>)}
+      </div>
+    </section>
+  );
+}
+
+function AMLAMiniLabsSection({ lessons }) {
+  return (
+    <section id="mini-labs" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <div className="mb-5">
+        <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">Mini-labs</div>
+        <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Notebook-aware practice</h2>
+        <p className="mt-2 max-w-3xl text-sm font-semibold leading-7 text-stone-600">The first two lessons include conceptual mini-labs. Later hands-on classes are linked now and will be expanded after the architecture/content quality check.</p>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {lessons.map((lesson) => <a key={lesson.id} href={amlaLessonHref(lesson)} className="rounded-3xl border border-stone-200 bg-stone-50 p-5 shadow-sm transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{lesson.code} · {lesson.date}</div><h3 className="mt-2 text-lg font-black leading-7 text-stone-950">{lesson.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{lesson.summary}</p></a>)}
+      </div>
+    </section>
+  );
+}
+
+function AMLAProductsSection() {
+  return (
+    <section id="practice" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <div>
+          <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">Practice exams</div>
+          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Initial practice bank</h2>
+          <p className="mt-2 max-w-3xl leading-7 text-stone-600">This phase starts with 15 multiple-choice questions based mainly on L01-L02. It is ready to grow to a full-course bank after the remaining lessons are expanded.</p>
+        </div>
+        <a href="#/practice-exam" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-red-800">Open practice exam</a>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {AMLA_STUDY_PRODUCTS.map(product => <DRDProductCard key={product.title} product={product} />)}
+      </div>
+    </section>
+  );
+}
+
+function AMLAProjectSection() {
+  return (
+    <section id="project" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div>
+          <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">Project relevance</div>
+          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{AMLA_PROJECT_GUIDANCE.title}</h2>
+          <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600">{AMLA_PROJECT_GUIDANCE.body}</p>
+          <AMLAResourcePanel lesson={{ driveFolder: AMLA_DRIVE.root, resources: { project: AMLA_DRIVE.projectDoc, recording: AMLA_DRIVE.projectVideo, audio: AMLA_DRIVE.projectAudio } }} title="Project resources" />
+        </div>
+        <div className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-stone-500">Advanced project checklist</div>
+          <div className="mt-4 grid gap-3">
+            {AMLA_PROJECT_GUIDANCE.checklist.map((item, index) => <div key={item} className="rounded-2xl border border-stone-200 bg-white p-4 text-sm font-bold leading-6 text-stone-700">{index + 1}. {item}</div>)}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 
 function DRDApp({ t, hash }) {
@@ -1789,7 +2061,7 @@ function App() {
   const dir = LANGS.find(x => x.code === lang)?.dir || "ltr";
   const setLang = (next) => { localStorage.setItem("studyhub_lang", next); localStorage.setItem("phylo_lang", next); setLangState(next); };
   useEffect(() => { document.documentElement.lang = lang; document.documentElement.dir = dir; }, [lang, dir]);
-  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={lang} setLang={setLang} mode={mode} t={t}/>{mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={lang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={lang} hash={hash}/> : <HubApp t={t}/>}</div>;
+  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={lang} setLang={setLang} mode={mode} t={t}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={lang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={lang} hash={hash}/> : <HubApp t={t}/>}</div>;
 }
 
 createRoot(document.getElementById("root")).render(<App />);

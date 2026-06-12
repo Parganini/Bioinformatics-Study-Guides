@@ -20,6 +20,7 @@ export default defineConfig({
       input: {
         hub: path.resolve(__dirname, "index.html"),
         amlb: path.resolve(__dirname, "AMLB/index.html"),
+        amla: path.resolve(__dirname, "AMLA/index.html"),
         mp: path.resolve(__dirname, "MP/index.html"),
         drd: path.resolve(__dirname, "DRD/index.html"),
       },

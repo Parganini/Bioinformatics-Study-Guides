@@ -50,7 +50,7 @@ export const lessonContent = {
         {
           label: "Opening slides",
           page: 1,
-          image: "amla-slides/lecture2/slide-01.jpg",
+          image: "amla-slides/lecture2/slide-01.png",
           deckLabel: "Lecture 2 tmp",
           title: "Implementation-first does not mean explanation-free",
           comment: "You are allowed to run a tutorial before understanding every internal detail, but the final goal is still to explain the model and the output.",
@@ -60,7 +60,7 @@ export const lessonContent = {
         {
           label: "Course bridge",
           page: 3,
-          image: "amla-slides/lecture2/slide-03.jpg",
+          image: "amla-slides/lecture2/slide-03.png",
           deckLabel: "Lecture 2 tmp",
           title: "Basic skills become advanced baselines",
           comment: "Scikit-learn remains useful for benchmarking and sanity checks. Deep learning is added on top, not used as an automatic replacement.",
@@ -77,7 +77,7 @@ export const lessonContent = {
         {
           label: "Framework overview",
           page: 4,
-          image: "amla-slides/lecture2/slide-04.jpg",
+          image: "amla-slides/lecture2/slide-04.png",
           deckLabel: "Lecture 2 tmp",
           title: "TensorFlow, PyTorch, Keras, JAX, Hugging Face, XGBoost",
           comment: "Each framework sits in a different part of the workflow: classical ML, deep learning, high-level model building, research flexibility, pretrained models or gradient-boosted tabular baselines.",
@@ -87,7 +87,7 @@ export const lessonContent = {
         {
           label: "TensorFlow vs PyTorch",
           page: 6,
-          image: "amla-slides/lecture2/slide-06.jpg",
+          image: "amla-slides/lecture2/slide-06.png",
           deckLabel: "Lecture 2 tmp",
           title: "Mature ecosystems with different histories",
           comment: "TensorFlow has strong production history and Keras accessibility; PyTorch is widely used in research and many pretrained-model examples.",
@@ -105,7 +105,7 @@ export const lessonContent = {
         {
           label: "MNIST slides",
           page: 22,
-          image: "amla-slides/lecture2/slide-22.jpg",
+          image: "amla-slides/lecture2/slide-22.png",
           deckLabel: "Lecture 2 tmp",
           title: "Inputs, labels and supervised classification",
           comment: "The input is an image of a handwritten digit; the target is the digit class. This is supervised multiclass classification.",
@@ -115,7 +115,7 @@ export const lessonContent = {
         {
           label: "Baseline idea",
           page: 33,
-          image: "amla-slides/lecture2/slide-33.jpg",
+          image: "amla-slides/lecture2/slide-33.png",
           deckLabel: "Lecture 2 tmp",
           title: "Benchmark before complexity",
           comment: "A basic scikit-learn model can establish a reference point. Keras is then introduced to show the neural-network workflow.",
@@ -132,7 +132,7 @@ export const lessonContent = {
         {
           label: "Sequential API",
           page: 54,
-          image: "amla-slides/lecture2/slide-54.jpg",
+          image: "amla-slides/lecture2/slide-54.png",
           deckLabel: "Lecture 2 tmp",
           title: "A linear stack of layers",
           comment: "Sequential is enough for a simple feed-forward chain: input, hidden layers, output. It is readable and good for first tutorials.",
@@ -142,7 +142,7 @@ export const lessonContent = {
         {
           label: "Functional API",
           page: 56,
-          image: "amla-slides/lecture2/slide-56.jpg",
+          image: "amla-slides/lecture2/slide-56.png",
           deckLabel: "Lecture 2 tmp",
           title: "A graph for branching or multiple paths",
           comment: "Functional API supports multiple inputs, branches, merges and skip-like structures. It is more flexible but less minimal.",
@@ -152,7 +152,7 @@ export const lessonContent = {
         {
           label: "model.summary()",
           page: 56,
-          image: "amla-slides/lecture2/slide-56.jpg",
+          image: "amla-slides/lecture2/slide-56.png",
           deckLabel: "Lecture 2 tmp",
           title: "Read the architecture before training",
           comment: "The summary exposes layer order, output shapes and parameter count. It is your first sanity check that the code built what you intended.",
@@ -169,7 +169,7 @@ export const lessonContent = {
         {
           label: "compile",
           page: 55,
-          image: "amla-slides/lecture2/slide-55.jpg",
+          image: "amla-slides/lecture2/slide-55.png",
           deckLabel: "Lecture 2 tmp",
           title: "Attach optimizer, loss and metrics",
           comment: "The architecture says what can be learned. Compile says how learning will be optimized and how progress will be monitored.",
@@ -179,7 +179,7 @@ export const lessonContent = {
         {
           label: "fit",
           page: 24,
-          image: "amla-slides/lecture2/slide-24.jpg",
+          image: "amla-slides/lecture2/slide-24.png",
           deckLabel: "Lecture 2 tmp",
           title: "Run the training loop",
           comment: "fit uses epochs, batch size and training data. If you add validation_split, Keras reports validation metrics after each epoch.",
@@ -189,7 +189,7 @@ export const lessonContent = {
         {
           label: "evaluate + history",
           page: 43,
-          image: "amla-slides/lecture2/slide-43.jpg",
+          image: "amla-slides/lecture2/slide-43.png",
           deckLabel: "Lecture 2 tmp",
           title: "Separate final evaluation from training diagnostics",
           comment: "evaluate reports model performance on held-out data. history stores epoch-by-epoch curves for training and validation metrics.",

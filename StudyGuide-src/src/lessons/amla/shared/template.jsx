@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { AMLAResourcePanel } from "./resourcePanel.jsx";
 import { AMLACanonicalNavigation } from "./navigation.jsx";
 import { getAMLAStatusMeta } from "./status.js";
@@ -103,26 +103,57 @@ function StudyCallout({ label, tone = "stone", children }) {
   );
 }
 
-function drivePreviewUrl(url, page) {
-  const match = String(url || "").match(/\/d\/([^/]+)/);
-  if (!match) return null;
-  const suffix = page ? `#page=${page}` : "";
-  return `https://drive.google.com/file/d/${match[1]}/preview${suffix}`;
-}
-
-function SlidePreview({ slide, resources }) {
+function SlidePreview({ slide, resources, onZoom }) {
   const deckKey = slide.deck || "slides";
   const href = slide.href || resources?.[deckKey] || resources?.slides;
-  const preview = drivePreviewUrl(href, slide.page);
-  if (!preview) return null;
-  return (
-    <div className="mb-4 overflow-hidden rounded-[1.35rem] border border-stone-200 bg-white">
-      <div className="flex items-center justify-between gap-3 border-b border-stone-200 bg-stone-50 px-4 py-2">
-        <span className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{slide.deckLabel || deckKey} {slide.page ? `- slide ${slide.page}` : ""}</span>
-        <a href={href} target="_blank" rel="noreferrer" className="text-xs font-black text-red-700">Open PDF</a>
+  const slideMeta = `${slide.deckLabel || deckKey}${slide.page ? ` - slide ${slide.page}` : ""}`;
+  if (!slide.image) {
+    return (
+      <div className="mb-4 rounded-[1.35rem] border border-dashed border-stone-300 bg-white p-4">
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{slideMeta}</div>
+        <p className="mt-2 text-sm font-bold leading-6 text-stone-700">Static slide image pending for this block.</p>
+        {href ? <a href={href} target="_blank" rel="noreferrer" className="mt-3 inline-flex text-xs font-black text-red-700">Open source PDF</a> : null}
       </div>
-      <div className="aspect-video bg-white">
-        <iframe title={`${slide.label || "AMLA slide"} preview`} src={preview} className="h-full w-full" loading="lazy" allow="autoplay" />
+    );
+  }
+  return (
+    <figure className="mb-4 overflow-hidden rounded-[1.35rem] border border-stone-200 bg-white shadow-sm">
+      <div className="flex items-center justify-between gap-3 border-b border-stone-200 bg-stone-50 px-4 py-2">
+        <span className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{slideMeta}</span>
+        <div className="flex items-center gap-3">
+          <button type="button" onClick={() => onZoom?.(slide)} className="text-xs font-black text-red-700">Zoom</button>
+          {href ? <a href={href} target="_blank" rel="noreferrer" className="text-xs font-black text-stone-600">PDF</a> : null}
+        </div>
+      </div>
+      <button type="button" onClick={() => onZoom?.(slide)} className="group block w-full bg-white p-2 text-left">
+        <img src={slide.image} alt={`${slideMeta}: ${slide.title}`} className="h-auto w-full rounded-xl border border-stone-100 object-contain transition duration-200 group-hover:scale-[1.01]" loading="lazy" />
+      </button>
+      <figcaption className="border-t border-stone-100 px-4 py-3 text-xs font-bold leading-5 text-stone-500">Click the slide or Zoom to inspect it larger.</figcaption>
+    </figure>
+  );
+}
+
+function SlideZoomModal({ slide, resources, onClose }) {
+  if (!slide?.image) return null;
+  const deckKey = slide.deck || "slides";
+  const href = slide.href || resources?.[deckKey] || resources?.slides;
+  const slideMeta = `${slide.deckLabel || deckKey}${slide.page ? ` - slide ${slide.page}` : ""}`;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/85 p-3 md:p-6" role="dialog" aria-modal="true" onClick={onClose}>
+      <div className="max-h-[96vh] w-full max-w-7xl overflow-hidden rounded-[1.5rem] border border-white/20 bg-white shadow-2xl" onClick={(event) => event.stopPropagation()}>
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-200 bg-stone-50 px-4 py-3">
+          <div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{slideMeta}</div>
+            <h3 className="text-base font-black text-stone-950">{slide.title}</h3>
+          </div>
+          <div className="flex items-center gap-3">
+            {href ? <a href={href} target="_blank" rel="noreferrer" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black text-stone-700">Open PDF</a> : null}
+            <button type="button" onClick={onClose} className="rounded-full bg-stone-950 px-4 py-2 text-xs font-black text-white">Close</button>
+          </div>
+        </div>
+        <div className="max-h-[calc(96vh-92px)] overflow-auto bg-stone-100 p-3">
+          <img src={slide.image} alt={`${slideMeta}: ${slide.title}`} className="mx-auto h-auto max-w-none rounded-lg bg-white shadow-xl md:max-w-full" />
+        </div>
       </div>
     </div>
   );
@@ -162,6 +193,7 @@ function SectionMiniLab({ lab }) {
 }
 
 function SlideWalkthrough({ sections = [], resources }) {
+  const [zoomSlide, setZoomSlide] = useState(null);
   if (!sections.length) return null;
   return (
     <section className="mt-10 space-y-8">
@@ -184,7 +216,7 @@ function SlideWalkthrough({ sections = [], resources }) {
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             {(section.slides || []).map((slide, slideIndex) => (
               <div key={`${section.title}-${slide.label || slideIndex}`} className={`rounded-[2rem] border border-stone-200 bg-stone-50 p-5 ${section.slides.length % 2 === 1 && slideIndex === section.slides.length - 1 ? "lg:col-span-2" : ""}`}>
-                <SlidePreview slide={slide} resources={resources} />
+                <SlidePreview slide={slide} resources={resources} onZoom={setZoomSlide} />
                 <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-600">{slide.label}</span>
                 <h3 className="mt-3 text-xl font-black leading-7 text-stone-950">{slide.title}</h3>
                 <p className="mt-2 text-sm font-semibold leading-7 text-stone-700">{slide.comment}</p>
@@ -197,6 +229,7 @@ function SlideWalkthrough({ sections = [], resources }) {
           <SectionMiniLab lab={section.lab} />
         </article>
       ))}
+      <SlideZoomModal slide={zoomSlide} resources={resources} onClose={() => setZoomSlide(null)} />
     </section>
   );
 }

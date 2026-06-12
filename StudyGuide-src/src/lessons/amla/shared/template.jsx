@@ -103,6 +103,31 @@ function StudyCallout({ label, tone = "stone", children }) {
   );
 }
 
+function drivePreviewUrl(url, page) {
+  const match = String(url || "").match(/\/d\/([^/]+)/);
+  if (!match) return null;
+  const suffix = page ? `#page=${page}` : "";
+  return `https://drive.google.com/file/d/${match[1]}/preview${suffix}`;
+}
+
+function SlidePreview({ slide, resources }) {
+  const deckKey = slide.deck || "slides";
+  const href = slide.href || resources?.[deckKey] || resources?.slides;
+  const preview = drivePreviewUrl(href, slide.page);
+  if (!preview) return null;
+  return (
+    <div className="mb-4 overflow-hidden rounded-[1.35rem] border border-stone-200 bg-white">
+      <div className="flex items-center justify-between gap-3 border-b border-stone-200 bg-stone-50 px-4 py-2">
+        <span className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">{slide.deckLabel || deckKey} {slide.page ? `- slide ${slide.page}` : ""}</span>
+        <a href={href} target="_blank" rel="noreferrer" className="text-xs font-black text-red-700">Open PDF</a>
+      </div>
+      <div className="aspect-video bg-white">
+        <iframe title={`${slide.label || "AMLA slide"} preview`} src={preview} className="h-full w-full" loading="lazy" allow="autoplay" />
+      </div>
+    </div>
+  );
+}
+
 function SectionMiniLab({ lab }) {
   if (!lab) return null;
   return (
@@ -159,6 +184,7 @@ function SlideWalkthrough({ sections = [], resources }) {
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             {(section.slides || []).map((slide, slideIndex) => (
               <div key={`${section.title}-${slide.label || slideIndex}`} className={`rounded-[2rem] border border-stone-200 bg-stone-50 p-5 ${section.slides.length % 2 === 1 && slideIndex === section.slides.length - 1 ? "lg:col-span-2" : ""}`}>
+                <SlidePreview slide={slide} resources={resources} />
                 <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-600">{slide.label}</span>
                 <h3 className="mt-3 text-xl font-black leading-7 text-stone-950">{slide.title}</h3>
                 <p className="mt-2 text-sm font-semibold leading-7 text-stone-700">{slide.comment}</p>

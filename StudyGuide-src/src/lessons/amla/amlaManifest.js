@@ -154,7 +154,7 @@ export const AMLA_LESSONS = [
     lessonType: "hands-on setup",
     products: ["source-based lesson", "framework comparison", "Keras workflow quiz"],
     resources: {
-      slides: "https://drive.google.com/file/d/1lr5UIh_hYDwRNs33PO7_Sm40Rc_X7SF-/view?usp=drivesdk",
+      slides: "https://drive.google.com/file/d/10FvZXY58dUeHgllfvJmAG4bFqsyao5OG/view?usp=drivesdk",
       transcript: transcripts["2026-04-17"],
       recording: recordings["2026-04-17"],
       notebook: { todo: "The transcript says the MNIST tutorial link is on the slide/QR code, but the extracted PDF text did not expose a standalone URL." },
@@ -293,7 +293,7 @@ export const AMLA_LESSONS = [
     lessonType: "hands-on",
     products: ["placeholder", "notebooks linked"],
     resources: {
-      slides: "https://drive.google.com/file/d/10FvZXY58dUeHgllfvJmAG4bFqsyao5OG/view?usp=drivesdk",
+      slides: { todo: "Verify the correct Module 2 segmentation deck before expansion; the previously mapped Lecture2_tmp PDF contains the AMLA tools/MNIST class." },
       transcript: transcripts["2026-05-22"],
       recording: recordings["2026-05-22"],
       notebook: "https://drive.google.com/file/d/1kLScbhmBiE9QIwZbwFNoicogMzEQ7v1R/view?usp=drivesdk",

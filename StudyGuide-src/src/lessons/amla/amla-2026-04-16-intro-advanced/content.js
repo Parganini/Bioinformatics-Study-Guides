@@ -49,6 +49,9 @@ export const lessonContent = {
       slides: [
         {
           label: "Slides 4-8",
+          deck: "extraSlides",
+          deckLabel: "Lecture 0",
+          page: 5,
           title: "Virtuale / Drive are the source of truth",
           comment: "Read these slides as the map of the course material: slides, notebooks, project information and later updates. The study guide should sit on top of those sources, not replace them.",
           professor: "He warned that slides can be updated after class, especially when preliminary TMP files are used.",
@@ -56,6 +59,9 @@ export const lessonContent = {
         },
         {
           label: "Slides 9-16",
+          deck: "extraSlides",
+          deckLabel: "Lecture 0",
+          page: 16,
           title: "Advanced means less guided repetition",
           comment: "The course continues from AML Basic but changes the rhythm. You are expected to recognize familiar ML vocabulary and spend more time exploring notebooks independently.",
           professor: "He framed Advanced as a place where hands-on work becomes less step-by-step and more home exploration.",
@@ -70,6 +76,9 @@ export const lessonContent = {
       slides: [
         {
           label: "Slides 21-23",
+          deck: "extraSlides",
+          deckLabel: "Lecture 0",
+          page: 21,
           title: "Different student categories, different assessment paths",
           comment: "Bioinformatics LM students have written test plus project/report work; PhD paths can differ. The practical point is that studying only for code execution is not enough.",
           professor: "He repeatedly separated administrative exam rules from the technical project expectations.",
@@ -77,6 +86,9 @@ export const lessonContent = {
         },
         {
           label: "Slides 24-27",
+          deck: "extraSlides",
+          deckLabel: "Lecture 0",
+          page: 25,
           title: "Multiple-choice does not mean memorization only",
           comment: "Because material consultation can be allowed in controlled ways, the stronger questions are likely to test reasoning and confusion between close concepts.",
           professor: "He suggested that simple definition lookup is not the useful target; interpretation matters more.",
@@ -91,6 +103,9 @@ export const lessonContent = {
       slides: [
         {
           label: "Slides 2-4",
+          deck: "slides",
+          deckLabel: "Lecture 1",
+          page: 3,
           title: "Basic remains the baseline",
           comment: "Scikit-learn, train/validation/test logic, metrics and overfitting vocabulary are assumed. Advanced adds deep-learning architecture and implementation decisions.",
           professor: "He made clear that Basic is not discarded; it becomes the benchmark for more advanced models.",
@@ -98,6 +113,9 @@ export const lessonContent = {
         },
         {
           label: "Slides 5-8",
+          deck: "slides",
+          deckLabel: "Lecture 1",
+          page: 7,
           title: "Implementation and theory will alternate",
           comment: "Do not wait for a perfect theoretical derivation before opening a tutorial. The course expects you to learn by running, observing and then explaining.",
           professor: "He presented this as a practical learning strategy, not as permission to skip interpretation.",
@@ -112,6 +130,9 @@ export const lessonContent = {
       slides: [
         {
           label: "Slides 10-13",
+          deck: "slides",
+          deckLabel: "Lecture 1",
+          page: 12,
           title: "Biological neural networks are the metaphor",
           comment: "The slides use dendrites, soma, axon and synapse to motivate connected units, but the model is not trying to reproduce brain biology faithfully.",
           professor: "The material explicitly calls the biological analogy oversimplified.",
@@ -119,6 +140,9 @@ export const lessonContent = {
         },
         {
           label: "Slides 14-18",
+          deck: "slides",
+          deckLabel: "Lecture 1",
+          page: 17,
           title: "Artificial neurons are weighted computations",
           comment: "Inputs are multiplied by weights, shifted by bias and passed through an activation. This is the mental model you need for every later architecture.",
           professor: "He connected the bias term to the intercept intuition: the model needs a way to shift the threshold.",
@@ -133,6 +157,9 @@ export const lessonContent = {
       slides: [
         {
           label: "Slides 19-21",
+          deck: "slides",
+          deckLabel: "Lecture 1",
+          page: 21,
           title: "Threshold logic unit / perceptron",
           comment: "A perceptron adjusts weights after wrong predictions and can separate classes when a linear boundary is enough.",
           professor: "He emphasized that perceptrons are useful but do not naturally output calibrated class probabilities.",
@@ -140,6 +167,9 @@ export const lessonContent = {
         },
         {
           label: "Slides 22-24",
+          deck: "slides",
+          deckLabel: "Lecture 1",
+          page: 23,
           title: "Bias and linear boundaries",
           comment: "The bias term moves the separating line; without nonlinear transformations, the boundary remains linear.",
           professor: "He used the intercept idea to make the bias less abstract.",
@@ -155,6 +185,9 @@ export const lessonContent = {
       slides: [
         {
           label: "Slides 25-26",
+          deck: "slides",
+          deckLabel: "Lecture 1",
+          page: 26,
           title: "Stack layers to create representational power",
           comment: "A multilayer perceptron combines dense layers. With nonlinear activations, the network can build more complex decision boundaries than a single perceptron.",
           professor: "He contrasted multilayer perceptron, feed-forward neural network and deep neural network terminology.",
@@ -162,6 +195,9 @@ export const lessonContent = {
         },
         {
           label: "Live demo",
+          deck: "slides",
+          deckLabel: "Lecture 1",
+          page: 26,
           title: "TensorFlow Playground: activation, capacity and feature choice",
           comment: "The demo asks you to compare tanh, ReLU and linear activation; then inspect loss, convergence, decision boundary and stability after restart.",
           professor: "He pointed out that a smarter representation, such as squared inputs for circular separation, can outperform blindly adding neurons.",

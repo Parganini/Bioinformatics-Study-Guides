@@ -300,10 +300,10 @@ export const DRD_LESSONS = [
     aliases: ["10"],
     driveFolder: DRD_DRIVE.module1,
     resources: {
-      slides: "https://drive.google.com/file/d/1PUbs6aNl9HN1Tq3agbY78UNFl7WpUdhL/view?usp=drivesdk",
+      slides: "https://drive.google.com/file/d/1KWtWuoG0H8i6ZUZlc0-ObT3PEvJCdKK3/view?usp=drivesdk",
       transcript: "https://docs.google.com/document/d/1aP1Gb6SHCIzc8LD2L68Sxji0k-SHngclG3AJ5aMaId0/edit?usp=drivesdk",
       recording: "https://www.youtube.com/watch?v=Zs1zcdYZIOY&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=15",
-      code: "https://drive.google.com/file/d/1LFe6sdwZwT0_-oGpKUtJ_di-6qxybyOS/view?usp=drivesdk",
+      code: "https://drive.google.com/file/d/1ZkNT-eTKp28bBqaRwx5wklCl860NauHB/view?usp=drivesdk",
     },
   },
   {

@@ -8,12 +8,12 @@ import {
 } from "./module1Shared.jsx";
 import { lessonContent } from "./m1-scrna/content.js";
 
-const SLIDES_URL = "https://drive.google.com/file/d/1PUbs6aNl9HN1Tq3agbY78UNFl7WpUdhL/view?usp=drivesdk";
-const WORKSHOP_URL = "https://drive.google.com/file/d/1LFe6sdwZwT0_-oGpKUtJ_di-6qxybyOS/view?usp=drivesdk";
+const SLIDES_URL = "https://drive.google.com/file/d/1KWtWuoG0H8i6ZUZlc0-ObT3PEvJCdKK3/view?usp=drivesdk";
+const WORKSHOP_URL = "https://drive.google.com/file/d/1ZkNT-eTKp28bBqaRwx5wklCl860NauHB/view?usp=drivesdk";
 const TRANSCRIPT_URL = "https://docs.google.com/document/d/1aP1Gb6SHCIzc8LD2L68Sxji0k-SHngclG3AJ5aMaId0/edit?usp=drivesdk";
 const RECORDING_URL = "https://www.youtube.com/watch?v=Zs1zcdYZIOY&list=PLZSGWjLWZL3KQFkSCUbUXWEVHeF0MTYZV&index=15";
 
-const slideModules = import.meta.glob("../../assets/drd/lesson14/slide-*.jpg", { eager: true, import: "default" });
+const slideModules = import.meta.glob("../../assets/drd/lesson15/slide-*.jpg", { eager: true, import: "default" });
 const slideImages = Object.entries(slideModules)
   .sort(([a], [b]) => a.localeCompare(b))
   .map(([, src]) => src);
@@ -46,10 +46,10 @@ const slideSections = [
     intro: "The lesson starts from the same RNA idea as bulk assays, then changes the unit of analysis: instead of one averaged sample, each barcode becomes a cell-level profile.",
     slides: [
       { n: 1, title: "Lesson scope", body: "The June 10 class introduces single-cell RNA-seq and then moves into a TrailMaker workshop." },
-      { n: 2, title: "Transcriptome as a cell state", body: "Cells share the genome, but their transcriptome changes by cell type, timepoint, environment and activation state." },
-      { n: 3, title: "Expression abundance and heterogeneity", body: "The professor uses abundance and heterogeneity to show why a cell population cannot always be summarized by one average." },
-      { n: 4, title: "Bulk averages the tissue", body: "Bulk RNA-seq mixes tumor, immune, endothelial, stromal and other signals into one sample-level profile." },
-      { n: 5, title: "Single-cell and spatial alternatives", body: "Sorted mini-bulk, single-cell RNA-seq and spatial transcriptomics answer related but different biological questions." },
+      { n: 2, title: "Transcriptome as a cell state", body: "The transcriptome asks which genes are expressed and how much each transcript is represented at a specific timepoint." },
+      { n: 3, title: "Which genes are expressed?", body: "Housekeeping, cell-type-specific, inducible and cell-cycle genes explain why cell identity and state both matter." },
+      { n: 4, title: "RNA makes cells different", body: "The genome is shared by normal cells, but RNA abundance separates cell types and functional states." },
+      { n: 5, title: "Bulk, single-cell and spatial choices", body: "Bulk genomics averages the tissue, single-cell resolves populations and spatial transcriptomics keeps positional context." },
     ],
   },
   {
@@ -57,12 +57,13 @@ const slideSections = [
     title: "10X droplets, barcodes and UMIs",
     intro: "This is the mechanism block: dissociate tissue, isolate cells in GEMs, capture mRNA with poly(dT), attach barcodes and use UMIs to count molecules rather than PCR-amplified reads.",
     slides: [
-      { n: 6, title: "Droplet sequencing idea", body: "A suspension of cells is partitioned into many small reactions so transcripts can be assigned to cell barcodes." },
-      { n: 7, title: "10X Chromium", body: "The Chromium system aims to place one bead, one cell and reagents into each gel bead-in-emulsion reaction." },
-      { n: 8, title: "One GEM, one barcode", body: "The useful droplet contains a bead with oligos, a cell and reagents; the barcode tags the cell of origin." },
-      { n: 9, title: "Oligo architecture", body: "Bead oligos contain a cell barcode, UMI and poly(dT), so polyA mRNA can be captured after lysis." },
-      { n: 10, title: "Pooling after labeling", body: "Once transcripts are labeled, all molecules can be pooled because the barcode preserves cell identity." },
-      { n: 11, title: "UMI counting", body: "UMIs mark original molecules before amplification, so duplicate reads can be collapsed into molecular counts." },
+      { n: 6, title: "Single-cell genomics", body: "Single-cell methods deconvolute tissue complexity by measuring many individual cell transcriptomes." },
+      { n: 7, title: "Droplet sequencing", body: "Droplet methods partition cells into many isolated reactions before pooling the library." },
+      { n: 8, title: "10X Chromium GEMs", body: "10X profiles hundreds to thousands of cells per sample using gel bead-in-emulsion reactions." },
+      { n: 9, title: "One bead, one cell, reagents", body: "The ideal GEM contains one barcoded bead, one cell and reverse-transcription reagents." },
+      { n: 10, title: "Barcode, UMI and poly(dT)", body: "Each bead carries a cell barcode, different UMIs and poly(dT) sequences to capture polyA transcripts." },
+      { n: 11, title: "Amplification and sequencing", body: "Cells lyse inside GEMs, transcripts are tagged, GEMs are broken and the pooled library is sequenced." },
+      { n: 12, title: "Collapse reads to UMI counts", body: "Reads with the same 10X barcode, UMI and gene are collapsed to one count in the feature-barcode matrix." },
     ],
   },
   {
@@ -70,13 +71,13 @@ const slideSections = [
     title: "Feature-barcode matrix and quality control",
     intro: "The matrix is only useful after QC. A barcode is not automatically a good cell: it may be an empty droplet, ambient RNA, a damaged cell, a stressed cell or a doublet.",
     slides: [
-      { n: 12, title: "Analysis pipeline", body: "Reads are aligned and summarized into a feature-barcode matrix, then filtered before downstream analysis." },
-      { n: 13, title: "Feature-barcode matrix", body: "Rows are genes or features; columns are barcodes; entries are UMI counts." },
-      { n: 14, title: "Empty droplets", body: "Many droplets do not contain an intact cell but may still capture ambient RNA from broken cells." },
-      { n: 15, title: "Cell quality metrics", body: "Total UMI counts, detected genes and mitochondrial fraction help separate good cells from damaged or dead cells." },
-      { n: 16, title: "Doublets", body: "A doublet places transcripts from two cells under one barcode, creating artificial mixed profiles." },
-      { n: 17, title: "Dropout", body: "Zeros can be technical non-detection, not true absence of expression, because only part of the transcriptome is captured." },
-      { n: 18, title: "QC before biology", body: "The professor emphasizes that filtering decisions shape every later UMAP, cluster and biological claim." },
+      { n: 13, title: "Feature-barcode matrix", body: "Rows are genes, columns are barcodes and values are UMI counts; cell identity is unknown at this point." },
+      { n: 14, title: "Analysis pipeline", body: "Cell Ranger handles alignment, quantification, QC/filtering and normalization before reduction, clustering and annotation." },
+      { n: 15, title: "Ideal versus real droplets", body: "Ideally one barcode equals one cell and all transcripts are captured, but real data are sparse and noisy." },
+      { n: 16, title: "QC artifacts", body: "Empty droplets, doublets, dead cells, damaged cells and stressed cells must be recognized before interpretation." },
+      { n: 17, title: "Droplet rank filtering", body: "UMIs per droplet versus droplet rank helps separate cell-containing droplets from ambient RNA." },
+      { n: 18, title: "Mitochondrial fraction", body: "A high mitochondrial read percentage is a warning signal for dead or damaged cells, with cutoffs depending on cell type." },
+      { n: 19, title: "Doublet filtering", body: "Droplets with more than one cell can look like intermediate states and should be excluded when likely." },
     ],
   },
   {
@@ -84,13 +85,11 @@ const slideSections = [
     title: "Reduction, clustering and annotation",
     intro: "After QC, single-cell analysis compresses variation, builds neighborhoods, clusters cells and gives labels only when marker genes support a biological identity.",
     slides: [
-      { n: 19, title: "Dimensional reduction", body: "PCA and related steps reduce a sparse high-dimensional count matrix to major axes of variation." },
-      { n: 20, title: "UMAP visualization", body: "UMAP places transcriptionally similar cells near each other for exploratory visualization." },
-      { n: 21, title: "Graph clustering", body: "Cells are grouped by neighborhood structure, but cluster numbers are not yet cell-type names." },
-      { n: 22, title: "Marker-based annotation", body: "Known markers connect clusters to cell types; the lecture warns against naming from one gene only." },
-      { n: 23, title: "Automatic annotation", body: "Reference-based annotation can help, but it depends on the quality and match of the reference atlas." },
-      { n: 24, title: "Integration", body: "Integration aligns comparable populations across samples or batches so composition and expression can be compared." },
-      { n: 25, title: "Interpretation checkpoint", body: "UMAP is visualization, clustering is structure and annotation is biological inference supported by markers." },
+      { n: 20, title: "PCA and UMAP", body: "PCA compresses high-dimensional expression; UMAP learns a low-dimensional manifold to place similar cells together." },
+      { n: 21, title: "QC on embeddings", body: "Mitochondrial fraction and doublet score can be inspected on the embedding to spot low-quality structure." },
+      { n: 22, title: "Graph-based clustering", body: "Clusters group cells with similar expression profiles into discrete labels that still need biological annotation." },
+      { n: 23, title: "Manual or automatic annotation", body: "Cell populations are identified using known markers, inferred markers or automatic comparison to reference datasets." },
+      { n: 24, title: "Integration and advanced analyses", body: "Integration corrects batch effects across samples before scaling, PCA and UMAP on the integrated object." },
     ],
   },
   {
@@ -98,42 +97,76 @@ const slideSections = [
     title: "TrailMaker processing workflow",
     intro: "The practical half turns the theory into a guided workflow: load the MIS-C PBMC data, process it, inspect QC, integrate samples and generate UMAP/clustering outputs.",
     slides: [
-      { n: 26, title: "TrailMaker platform", body: "The workshop moves from conceptual scRNA-seq into TrailMaker as a reproducible analysis environment." },
-      { n: 27, title: "Data management", body: "The data repository organizes datasets and processing outputs before analysis." },
-      { n: 28, title: "Workshop dataset", body: "The MIS-C PBMC dataset gives a disease-relevant example with acute and convalescent samples." },
-      { n: 29, title: "Start data processing", body: "The class opens the processing workflow, where filtering and integration parameters are configured." },
-      { n: 30, title: "Processing steps", body: "The interface walks through preprocessing, normalization, feature selection, reduction and clustering." },
-      { n: 31, title: "QC exercise", body: "The practical exercise asks you to inspect quality thresholds rather than blindly accepting defaults." },
-      { n: 32, title: "Integrated view", body: "The processed dataset becomes ready for UMAP, clustering, annotation and comparison." },
-      { n: 33, title: "Check outputs", body: "The workflow output must be checked before biological interpretation." },
-      { n: 34, title: "From pipeline to question", body: "The key transition is from software output to a claim about PBMC composition and expression." },
+      { n: 25, title: "TrailMaker workshop starts", body: "The second deck moves from scRNA-seq theory into Parse Biosciences TrailMaker." },
+      { n: 26, title: "Data Management module", body: "TrailMaker begins with project navigation and dataset management." },
+      { n: 27, title: "Project list", body: "Projects organize the datasets before processing and exploration." },
+      { n: 28, title: "Dataset repository", body: "The workshop uses the repository to select a prepared example dataset." },
+      { n: 29, title: "Copy workshop dataset", body: "The dataset is copied for exploration so the class can work on the same input." },
+      { n: 30, title: "Samples inside the project", body: "The project contains the samples that will later be compared across condition and patient state." },
+      { n: 31, title: "Go to Data Processing", body: "The class moves from data management into the processing workflow." },
+      { n: 32, title: "Processing steps", body: "Filtering removes low-quality events, integration/PCA controls batch and embedding configures UMAP or t-SNE." },
+      { n: 33, title: "Pipeline running", body: "The processing pipeline is applied to the dataset before exploration." },
+      { n: 34, title: "MIS-C tutorial dataset", body: "The dataset contains acute and convalescent PBMC samples from COVID-19-associated MIS-C." },
+      { n: 35, title: "MIS-C biological context", body: "MIS-C is a severe inflammatory syndrome after SARS-CoV-2 infection, often with cardiac symptoms." },
     ],
   },
   {
     eyebrow: "Part 6",
-    title: "PBMC cluster annotation with markers",
-    intro: "This is where the page should feel like a real study guide: each visible cluster needs marker evidence, contamination checks and a cautious label.",
+    title: "PBMC sample quality and integration",
+    intro: "Before annotation, the workshop asks whether the PBMC samples have comparable quality: dead-cell signal, doublets and integration all affect downstream claims.",
     slides: [
-      { n: 35, title: "Expected PBMC populations", body: "PBMC data should contain T cells, B cells, NK cells, monocytes and possible contaminants." },
-      { n: 36, title: "Cluster marker view", body: "Marker expression patterns help turn unlabeled clusters into candidate cell populations." },
-      { n: 37, title: "CD14 monocytes", body: "Classical monocytes are supported by markers such as CD14, S100A8, S100A9 and LYZ." },
-      { n: 38, title: "CD16 monocytes", body: "Non-classical monocytes are linked to markers such as FCGR3A and CDKN1C." },
-      { n: 39, title: "B cells and plasma-like signals", body: "CD79A and immunoglobulin genes help identify B-cell related populations." },
-      { n: 40, title: "T, NK and cytotoxic programs", body: "Markers such as CD3D, NKG7, KLRD1 or GZMB separate lymphocyte programs." },
-      { n: 41, title: "Contaminant clusters", body: "HBB, HBA1, HBA2 or platelet markers can indicate erythrocyte or platelet contamination." },
-      { n: 42, title: "Annotation caution", body: "A cluster label is an interpretation built from several markers, not a direct output of the algorithm." },
+      { n: 36, title: "PBMCs", body: "PBMCs include lymphocytes, monocytes and dendritic cells, and are central to immunology and infection studies." },
+      { n: 37, title: "Expected cells and contaminants", body: "The workshop asks what cell types and contaminants to expect before looking at clusters." },
+      { n: 38, title: "Processing navigation", body: "The Data Processing module lets the user navigate through the seven processing steps." },
+      { n: 39, title: "Tooltips", body: "Explanatory tooltips support parameter interpretation inside the processing module." },
+      { n: 40, title: "Pipeline status", body: "The status indicator should be green before downstream interpretation." },
+      { n: 41, title: "Manual settings", body: "The workshop warns not to rerun the processing module during the live exercise." },
+      { n: 42, title: "Filter logic", body: "Filter step 2 is disabled because step 1 already discarded background barcodes." },
+      { n: 43, title: "Exercise 1", body: "Assess whether samples differ in dead-cell proportion, doublets and integration quality." },
+      { n: 44, title: "Dead-cell answer", body: "The samples show similar spread and similar percentages of filtered cells for mitochondrial content." },
+      { n: 45, title: "Doublet answer", body: "The samples show similar filtered doublet proportions, although P13 acute contains fewer cells." },
+      { n: 46, title: "PC selection", body: "TrailMaker defines default PCs using 85 percent explained variation, capped at 30 PCs." },
+      { n: 47, title: "Integration answer", body: "Samples are well integrated if they show similar UMAP distribution and all clusters contain cells from all samples." },
+      { n: 48, title: "Quality assessment summary", body: "The workflow turns QC plots into a sample-comparability statement." },
+      { n: 49, title: "Clustering resolution", body: "The default clustering resolution is 0.8, which affects the number and granularity of clusters." },
     ],
   },
   {
     eyebrow: "Part 7",
-    title: "Composition, differential expression and report logic",
-    intro: "The ending ties TrailMaker plots to exam/report language: compare cell composition, then ask whether a specific cell type changes gene expression across conditions.",
+    title: "Data exploration and PBMC annotation",
+    intro: "This is where the guide should feel practical: TrailMaker clusters are turned into cell-type labels by marker genes, heatmaps and differential expression.",
     slides: [
-      { n: 43, title: "Sample composition", body: "Frequency plots compare how cell-type proportions differ between acute and convalescent samples." },
-      { n: 44, title: "CD14 monocyte change", body: "The class highlights CD14 monocytes as an interpretable population in the MIS-C comparison." },
-      { n: 45, title: "Cell-type-specific DE", body: "Differential expression inside one annotated cell type separates composition changes from transcriptional changes." },
-      { n: 46, title: "FCGR1A / CD64 signal", body: "The professor discusses FCGR1A, also called CD64, as part of the recovered MIS-C monocyte story." },
-      { n: 47, title: "Export and report", body: "Final figures and tables should support a cautious biological paragraph, not just show software outputs." },
+      { n: 50, title: "Data Exploration module", body: "The module supports fast visualization, cluster annotation, gene expression views and differential expression." },
+      { n: 51, title: "Exercise 2 markers", body: "Expected PBMC labels include B cells, T cells, NK cells, monocytes, platelets and erythrocyte contaminants." },
+      { n: 52, title: "Unknown clusters", body: "The workshop asks the student to annotate clusters 4, 7 and 12." },
+      { n: 53, title: "Annotation instructions", body: "Use marker genes, gene lists and differential expression to assign cautious cell-type labels." },
+      { n: 54, title: "Annotation answer", body: "CD14 monocytes, platelets, killer cells, T cells, B cells, CD16 monocytes and red blood cells are identified by marker panels." },
+      { n: 55, title: "Memory versus naive B cells", body: "IGH gene patterns distinguish IgG-enriched memory B cells from IgM-enriched naive B cells." },
+      { n: 56, title: "Cluster 11 pathway exercise", body: "Pathway analysis is used to characterize an unknown cluster beyond single markers." },
+      { n: 57, title: "Pathway instructions", body: "The exercise guides the student through selecting and characterizing cluster 11." },
+      { n: 58, title: "Pathway answer", body: "The answer slide connects cluster characterization to functional interpretation." },
+      { n: 59, title: "Automatic annotation", body: "Automatic annotation compares profiles to reference datasets, but should still be checked against markers." },
+    ],
+  },
+  {
+    eyebrow: "Part 8",
+    title: "Composition, differential expression and report figures",
+    intro: "The final workshop block turns annotation into biological claims: cell composition changes, CD14 monocyte frequency, differential expression and publication-ready figures.",
+    slides: [
+      { n: 60, title: "Plots and Tables module", body: "The module exports customized plots, differential expression lists and publication-quality figures." },
+      { n: 61, title: "Explore sample composition", body: "Clusters 4, 7 and 12 increase with recovery, while RBCs are recognized as contaminating cells." },
+      { n: 62, title: "Composition detail", body: "The same patient is compared from acute to recovered state." },
+      { n: 63, title: "Antibody biology", body: "The B-cell composition story links IgG memory and IgM naive B-cell signals to COVID-19 infection." },
+      { n: 64, title: "CD14 monocytes", body: "CD14 monocytes become a focused cell population for follow-up analysis." },
+      { n: 65, title: "Exercise 3", body: "Create CD14 monocyte and complement cell sets, then build a frequency plot grouped by sample." },
+      { n: 66, title: "CD14 answer", body: "The two acute samples have fewer cells in the CD14 monocyte cluster than the convalescent sample." },
+      { n: 67, title: "Exercise 4", body: "Run differential expression for cluster 4 in convalescent versus the rest and filter significant genes." },
+      { n: 68, title: "Heatmap instructions", body: "Select top genes, overwrite the heatmap and show sample metadata tracks for interpretation." },
+      { n: 69, title: "DE answer", body: "RNASE1 is highly significant and FCGR1A/CD64 appears in the DE list, reproducing the paper's finding." },
+      { n: 70, title: "Homework figure", body: "Choose a volcano plot, violin/embedding plot or dot plot to communicate the key finding." },
+      { n: 71, title: "Publication-ready answer", body: "Volcano, violin and dot plots can each support a different piece of the CD14 monocyte story." },
+      { n: 72, title: "Data upload", body: "TrailMaker can also upload a new project and assign metadata to each sample." },
+      { n: 73, title: "Supported files", body: "For 10X Chromium datasets, upload raw Cell Ranger count matrices with barcodes, features and matrix files." },
     ],
   },
 ];
@@ -452,8 +485,8 @@ function SlideSections({ onZoom }) {
   const labAfterSection = {
     "Part 2": <DropletWorkflowLab />,
     "Part 3": <QCGateLab />,
-    "Part 6": <AnnotationLab />,
-    "Part 7": <TrailMakerReportPrompt />,
+    "Part 7": <AnnotationLab />,
+    "Part 8": <TrailMakerReportPrompt />,
   };
 
   return (

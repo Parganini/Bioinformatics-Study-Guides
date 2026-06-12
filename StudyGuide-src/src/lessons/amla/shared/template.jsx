@@ -88,6 +88,93 @@ function SlideGuidedPath({ blocks = [] }) {
   );
 }
 
+function StudyCallout({ label, tone = "stone", children }) {
+  const classes = {
+    stone: "border-stone-200 bg-white text-stone-700",
+    amber: "border-amber-200 bg-amber-50 text-amber-950",
+    emerald: "border-emerald-100 bg-emerald-50 text-emerald-950",
+    red: "border-red-100 bg-red-50 text-red-950",
+  };
+  return (
+    <div className={`rounded-2xl border p-4 ${classes[tone] || classes.stone}`}>
+      <div className="text-xs font-black uppercase tracking-[0.18em] opacity-70">{label}</div>
+      <div className="mt-2 text-sm font-bold leading-6">{children}</div>
+    </div>
+  );
+}
+
+function SectionMiniLab({ lab }) {
+  if (!lab) return null;
+  return (
+    <div className="mt-6 rounded-[2rem] border border-red-100 bg-red-50 p-5">
+      <div className="text-xs font-black uppercase tracking-[0.2em] text-red-700">Mini-lab intercalated here</div>
+      <h3 className="mt-2 text-2xl font-black text-red-950">{lab.title}</h3>
+      <p className="mt-2 text-sm font-bold leading-7 text-red-950">{lab.objective}</p>
+      {lab.href ? (
+        <a href={lab.href} target="_blank" rel="noreferrer" className="mt-4 inline-flex rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white">Open notebook / Colab</a>
+      ) : (
+        <p className="mt-4 rounded-2xl border border-red-200 bg-white p-4 text-sm font-bold leading-7 text-stone-700">{lab.todo || "Notebook link pending in the source material."}</p>
+      )}
+      <div className="mt-5 grid gap-3 md:grid-cols-3">
+        {[
+          ["Steps", lab.steps],
+          ["Change", lab.parameters],
+          ["Inspect", lab.outputs],
+        ].map(([title, items]) => (
+          <article key={title} className="rounded-2xl border border-red-100 bg-white p-4">
+            <h4 className="text-sm font-black text-red-800">{title}</h4>
+            <div className="mt-3"><BulletList items={items} /></div>
+          </article>
+        ))}
+      </div>
+      {lab.explain?.length ? (
+        <StudyCallout label="Afterwards explain" tone="emerald">
+          <BulletList items={lab.explain} />
+        </StudyCallout>
+      ) : null}
+    </div>
+  );
+}
+
+function SlideWalkthrough({ sections = [], resources }) {
+  if (!sections.length) return null;
+  return (
+    <section className="mt-10 space-y-8">
+      <div className="rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+        <SectionHeading eyebrow="Slide walkthrough" title="Study the class in slide order">
+          Follow the source deck first. Each section adds the transcript comments, the intuition to keep, and the exam/project angle before moving on.
+        </SectionHeading>
+        {resources?.slides ? (
+          <a href={resources.slides} target="_blank" rel="noreferrer" className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-sm font-black text-red-800">Open slides while reading</a>
+        ) : null}
+      </div>
+      {sections.map((section, sectionIndex) => (
+        <article key={section.title} className="rounded-[2.5rem] border border-stone-200 bg-white/85 p-6 shadow-sm md:p-8">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">Section {sectionIndex + 1}</span>
+            <span className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs font-black text-stone-600">{section.range}</span>
+          </div>
+          <h2 className="mt-4 text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{section.title}</h2>
+          <p className="mt-3 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{section.intro}</p>
+          <div className="mt-6 grid gap-4 lg:grid-cols-2">
+            {(section.slides || []).map((slide, slideIndex) => (
+              <div key={`${section.title}-${slide.label || slideIndex}`} className={`rounded-[2rem] border border-stone-200 bg-stone-50 p-5 ${section.slides.length % 2 === 1 && slideIndex === section.slides.length - 1 ? "lg:col-span-2" : ""}`}>
+                <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-600">{slide.label}</span>
+                <h3 className="mt-3 text-xl font-black leading-7 text-stone-950">{slide.title}</h3>
+                <p className="mt-2 text-sm font-semibold leading-7 text-stone-700">{slide.comment}</p>
+                {slide.professor ? <StudyCallout label="Professor comment" tone="amber">{slide.professor}</StudyCallout> : null}
+                {slide.remember ? <StudyCallout label="Remember for exam/project" tone="emerald">{slide.remember}</StudyCallout> : null}
+                {slide.trap ? <StudyCallout label="Common trap" tone="red">{slide.trap}</StudyCallout> : null}
+              </div>
+            ))}
+          </div>
+          <SectionMiniLab lab={section.lab} />
+        </article>
+      ))}
+    </section>
+  );
+}
+
 function EmphasisAndTraps({ emphasis = [], traps = [] }) {
   if (!emphasis.length && !traps.length) return null;
   return (
@@ -215,12 +302,13 @@ export function AMLALessonTemplate({ lesson, content, interactions: Interactions
         </aside>
       </section>
 
+      <SlideWalkthrough sections={content?.walkthroughSections} resources={lesson?.resources} />
+      {!content?.walkthroughSections?.length ? <SlideGuidedPath blocks={content?.slidePath} /> : null}
+      {Interactions ? <Interactions lesson={lesson} content={content} /> : null}
       <Objectives items={content?.objectives} />
       <ConceptGrid items={content?.coreConcepts} />
-      <SlideGuidedPath blocks={content?.slidePath} />
       <EmphasisAndTraps emphasis={content?.professorEmphasis} traps={content?.commonTraps} />
-      <MiniLab lab={content?.miniLab} />
-      {Interactions ? <Interactions lesson={lesson} content={content} /> : null}
+      {!content?.walkthroughSections?.length ? <MiniLab lab={content?.miniLab} /> : null}
       <QuickQuiz items={content?.quickQuiz} />
       <ExamQuestions items={content?.examQuestions} />
       <ChecklistBlock items={content?.studyChecklist} title={content?.checklistTitle} />

@@ -41,6 +41,156 @@ export const lessonContent = {
       keywords: ["capacity", "feature engineering", "x1 squared"],
     },
   ],
+  walkthroughSections: [
+    {
+      range: "Lecture 0 slides 4-16",
+      title: "Start with the course logistics before touching models",
+      intro: "The first part of the material is not model theory. It tells you how to study Advanced: where the source material lives, how slides/notebooks are updated, and what kind of autonomy the course expects.",
+      slides: [
+        {
+          label: "Slides 4-8",
+          title: "Virtuale / Drive are the source of truth",
+          comment: "Read these slides as the map of the course material: slides, notebooks, project information and later updates. The study guide should sit on top of those sources, not replace them.",
+          professor: "He warned that slides can be updated after class, especially when preliminary TMP files are used.",
+          remember: "When reviewing, open the current PDF first and use this page to decide what deserves attention.",
+        },
+        {
+          label: "Slides 9-16",
+          title: "Advanced means less guided repetition",
+          comment: "The course continues from AML Basic but changes the rhythm. You are expected to recognize familiar ML vocabulary and spend more time exploring notebooks independently.",
+          professor: "He framed Advanced as a place where hands-on work becomes less step-by-step and more home exploration.",
+          remember: "If a Basic concept blocks you, pause and review it; AMLA will use it rather than re-teach it slowly.",
+        },
+      ],
+    },
+    {
+      range: "Lecture 0 slides 21-27",
+      title: "Exam and project expectations shape how you study",
+      intro: "These slides matter because they define the products you are studying for: multiple-choice reasoning and a project/report where model interpretation counts.",
+      slides: [
+        {
+          label: "Slides 21-23",
+          title: "Different student categories, different assessment paths",
+          comment: "Bioinformatics LM students have written test plus project/report work; PhD paths can differ. The practical point is that studying only for code execution is not enough.",
+          professor: "He repeatedly separated administrative exam rules from the technical project expectations.",
+          remember: "Prepare explanations for choices, outputs and limitations. That is the advanced-level part.",
+        },
+        {
+          label: "Slides 24-27",
+          title: "Multiple-choice does not mean memorization only",
+          comment: "Because material consultation can be allowed in controlled ways, the stronger questions are likely to test reasoning and confusion between close concepts.",
+          professor: "He suggested that simple definition lookup is not the useful target; interpretation matters more.",
+          remember: "Study by asking: what would change if I modify the model, data split, activation, metric or project objective?",
+        },
+      ],
+    },
+    {
+      range: "Lecture 1 slides 2-8",
+      title: "The Advanced jump: from classical ML to neural-network workflows",
+      intro: "The lecture begins by reconnecting with Basic, then immediately positions neural networks as the new tool family.",
+      slides: [
+        {
+          label: "Slides 2-4",
+          title: "Basic remains the baseline",
+          comment: "Scikit-learn, train/validation/test logic, metrics and overfitting vocabulary are assumed. Advanced adds deep-learning architecture and implementation decisions.",
+          professor: "He made clear that Basic is not discarded; it becomes the benchmark for more advanced models.",
+          remember: "In projects, a neural network should be compared against simpler baselines when possible.",
+        },
+        {
+          label: "Slides 5-8",
+          title: "Implementation and theory will alternate",
+          comment: "Do not wait for a perfect theoretical derivation before opening a tutorial. The course expects you to learn by running, observing and then explaining.",
+          professor: "He presented this as a practical learning strategy, not as permission to skip interpretation.",
+          remember: "A notebook result is not a conclusion until you can explain what produced it.",
+        },
+      ],
+    },
+    {
+      range: "Lecture 1 slides 10-18",
+      title: "From biological inspiration to artificial neurons",
+      intro: "This block introduces the analogy, then immediately limits it. The exam-safe language is: inspired by neurons, but implemented as mathematical units.",
+      slides: [
+        {
+          label: "Slides 10-13",
+          title: "Biological neural networks are the metaphor",
+          comment: "The slides use dendrites, soma, axon and synapse to motivate connected units, but the model is not trying to reproduce brain biology faithfully.",
+          professor: "The material explicitly calls the biological analogy oversimplified.",
+          remember: "Avoid writing that ANNs are realistic brain models; say they are simplified computational models inspired by neural connectivity.",
+        },
+        {
+          label: "Slides 14-18",
+          title: "Artificial neurons are weighted computations",
+          comment: "Inputs are multiplied by weights, shifted by bias and passed through an activation. This is the mental model you need for every later architecture.",
+          professor: "He connected the bias term to the intercept intuition: the model needs a way to shift the threshold.",
+          remember: "Weights decide direction/importance; bias shifts the activation; activation controls the output shape.",
+        },
+      ],
+    },
+    {
+      range: "Lecture 1 slides 19-24",
+      title: "Perceptron logic and the first limitation",
+      intro: "The perceptron block is important because it shows both the power and the weakness of a single linear decision unit.",
+      slides: [
+        {
+          label: "Slides 19-21",
+          title: "Threshold logic unit / perceptron",
+          comment: "A perceptron adjusts weights after wrong predictions and can separate classes when a linear boundary is enough.",
+          professor: "He emphasized that perceptrons are useful but do not naturally output calibrated class probabilities.",
+          remember: "A perceptron is closer to a linear classifier than to a flexible deep model.",
+        },
+        {
+          label: "Slides 22-24",
+          title: "Bias and linear boundaries",
+          comment: "The bias term moves the separating line; without nonlinear transformations, the boundary remains linear.",
+          professor: "He used the intercept idea to make the bias less abstract.",
+          remember: "If the data shape requires a curved or XOR-like boundary, one perceptron is structurally limited.",
+          trap: "Do not say the perceptron fails because it is badly trained; sometimes the architecture cannot represent the target boundary.",
+        },
+      ],
+    },
+    {
+      range: "Lecture 1 slides 25-26 + live playground",
+      title: "MLP, activation functions and the live decision-boundary demo",
+      intro: "This is where the lecture becomes most study-useful: change the architecture and watch how the learned boundary changes.",
+      slides: [
+        {
+          label: "Slides 25-26",
+          title: "Stack layers to create representational power",
+          comment: "A multilayer perceptron combines dense layers. With nonlinear activations, the network can build more complex decision boundaries than a single perceptron.",
+          professor: "He contrasted multilayer perceptron, feed-forward neural network and deep neural network terminology.",
+          remember: "Depth alone is not enough if activations are linear; nonlinear activation is what makes stacking useful.",
+        },
+        {
+          label: "Live demo",
+          title: "TensorFlow Playground: activation, capacity and feature choice",
+          comment: "The demo asks you to compare tanh, ReLU and linear activation; then inspect loss, convergence, decision boundary and stability after restart.",
+          professor: "He pointed out that a smarter representation, such as squared inputs for circular separation, can outperform blindly adding neurons.",
+          remember: "For project work, always connect metric behavior with visual/diagnostic behavior.",
+          trap: "Low loss can hide an odd boundary or over-specialized behavior. Inspect the output, not just the number.",
+        },
+      ],
+      lab: {
+        title: "TensorFlow Playground: decision boundaries and capacity",
+        href: null,
+        todo: "The class used a web playground and discussed Colab/GitHub material later, but no standalone notebook URL for L01 was visible in the extracted sources.",
+        objective: "Pause after the MLP/playground slides and reproduce the class reasoning by changing architecture, activation and input features.",
+        steps: [
+          "Open the playground or an equivalent local reproduction.",
+          "Start with a circular or XOR-like dataset using x1 and x2 only.",
+          "Train with tanh, ReLU and linear activation.",
+          "Repeat with fewer neurons and then with many layers/neurons.",
+          "Add transformed features such as x1 squared and x2 squared when available.",
+        ],
+        parameters: ["Activation", "Hidden layers", "Neurons per layer", "Learning rate", "Batch size", "Input features"],
+        outputs: ["Training loss", "Test loss", "Boundary shape", "Restart stability", "Inactive neurons"],
+        explain: [
+          "Why linear activation fails on nonlinear data without feature transformation.",
+          "Why ReLU can create polygon-like boundaries in the demo.",
+          "Why domain-informed features can reduce architecture complexity.",
+        ],
+      },
+    },
+  ],
   slidePath: [
     {
       range: "Lecture 0 slides 4-16",

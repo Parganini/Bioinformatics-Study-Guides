@@ -144,7 +144,7 @@ const UI = {
     drdDesc: "Mapa de la materia con Module 1 teórico y Module 2 de pipelines de metilación, actualizado al 5 de junio e incluyendo los temas pendientes.",
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
-    appliedGenomicsDesc: "Mini examen de práctica centrado en tecnologías NGS, GWAS, ensamblaje, anotación, genómica poblacional y trampas típicas del examen.",
+    appliedGenomicsDesc: "Mini practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
     builtFor: "Guías de curso",
     uniform: "Guía de estudio",
     studyPath: "Ruta de estudio",
@@ -187,7 +187,7 @@ const UI = {
     drdDesc: "نقشهٔ درس برای ماژول ۱ نظری و ماژول ۲ پایپ‌لاین‌های methylation array، با وضعیت ۵ ژوئن و موضوعات آینده.",
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
-    appliedGenomicsDesc: "آزمون کوتاه تمرینی برای فناوری‌های NGS، GWAS، مونتاژ، حاشیه‌نویسی، ژنومیک جمعیت و نکته‌های امتحانی.",
+    appliedGenomicsDesc: "Mini practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
     builtFor: "راهنماهای درسی",
     uniform: "راهنمای مطالعه",
     studyPath: "مسیر مطالعه",
@@ -770,7 +770,7 @@ function Header({ lang, setLang, mode, t }) {
     },
   }[mode] || { title: t.studyHub, subtitle: t.subjects, icon: "⌂", iconClass: "bg-stone-950" };
 
-  return <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#fffaf0]/88 backdrop-blur-xl"><div className="mx-auto flex w-[min(1180px,calc(100%-24px))] items-center justify-between gap-4 py-3"><a href={mode === "hub" ? "#top" : "../index.html"} className="flex items-center gap-3"><div className={`flex h-10 min-w-10 items-center justify-center rounded-2xl px-2 text-sm font-black text-white ${header.iconClass}`}>{header.icon}</div><div><div className="text-sm font-black leading-4 text-stone-950">{header.title}</div><div className="text-xs font-semibold text-stone-500">{header.subtitle}</div></div></a><nav className="hidden items-center gap-2 lg:flex"><a href={mode === "hub" ? "#subjects" : "#/"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{mode === "hub" ? t.subjects : t.modules}</a><a href={mode === "hub" ? "#tools" : "#/tools"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.studyTools}</a><a href={mode === "hub" ? "#tools" : "#/resources"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.resources}</a></nav><LangSwitcher lang={lang} setLang={setLang} /></div></header>;
+  return <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#fffaf0]/88 backdrop-blur-xl"><div className="mx-auto flex w-[min(1180px,calc(100%-24px))] items-center justify-between gap-4 py-3"><a href={mode === "hub" ? "#top" : "../index.html"} className="flex items-center gap-3"><div className={`flex h-10 min-w-10 items-center justify-center rounded-2xl px-2 text-sm font-black text-white ${header.iconClass}`}>{header.icon}</div><div><div className="text-sm font-black leading-4 text-stone-950">{header.title}</div><div className="text-xs font-semibold text-stone-500">{header.subtitle}</div></div></a><nav className="hidden items-center gap-2 lg:flex"><a href={mode === "hub" ? "#subjects" : "#/"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{mode === "hub" ? t.subjects : t.modules}</a><a href={mode === "hub" ? "#tools" : "#/tools"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.studyTools}</a><a href={mode === "hub" ? "#tools" : "#/resources"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.resources}</a></nav>{mode !== "ag" && <LangSwitcher lang={lang} setLang={setLang} />}</div></header>;
 }
 function Stat({ label, value, note }) {
   return <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm"><div className="text-sm font-bold text-stone-500">{label}</div><div className="mt-2 text-4xl font-black tracking-tight text-stone-950">{value}</div>{note && <div className="mt-2 text-xs font-semibold text-stone-500">{note}</div>}</div>;
@@ -781,7 +781,7 @@ function Hero({ eyebrow, title, subtitle, actions, visual }) {
 
 function HubApp({ t }) {
   return <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.builtFor} title={<>{t.studyHub}</>} subtitle={t.hubSubtitle} actions={<><a href="AMLB/index.html" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-red-800">{t.appliedML}</a><a href="AMLA/index.html" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100">{t.appliedMLAdvancedShort}</a><a href="MP/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.phylo}</a><a href="DRD/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.drd}</a><a href="AG/index.html" className="rounded-full border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm font-black text-emerald-700 transition hover:-translate-y-0.5 hover:bg-emerald-100">{t.appliedGenomicsShort}</a></>} visual={<div><div className="flex items-start justify-between gap-4"><div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.publishedFolders}</div><div className="mt-2 text-2xl font-black text-stone-950">AMLB · AMLA · MP · DRD · AG</div><div className="mt-1 text-sm font-semibold text-stone-500">{t.sourceText}</div></div><div className="rounded-2xl bg-stone-950 px-3 py-2 text-sm font-black text-white">5</div></div><div className="mt-6 rounded-[2rem] bg-[#fffaf0] p-4"><MiniTreeIcon active/><div className="mt-3"><ProgressBar value={50}/></div></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyTools}</div><p className="mt-2 text-lg font-bold leading-7">{t.tools.join(" · ")}</p></div></div>} />
-    <section id="subjects" className="mt-10"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-5"><SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/><SubjectCard href="AMLA/index.html" title={t.appliedMLAdvanced} desc={t.appliedMLAdvancedDesc} progressKey="amla_progress_v1" total={getAMLAProgressTotal()} icon="AMLA"/><SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/><SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={getDRDProgressTotal()} icon="DRD"/><SubjectCard href="AG/index.html" title={t.appliedGenomics} desc={t.appliedGenomicsDesc} progressKey="ag_progress_v1" total={1} icon="AG"/></div></section>
+    <section id="subjects" className="mt-10"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div><div className="grid gap-5 sm:grid-cols-2"><SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/><SubjectCard href="AMLA/index.html" title={t.appliedMLAdvanced} desc={t.appliedMLAdvancedDesc} progressKey="amla_progress_v1" total={getAMLAProgressTotal()} icon="AMLA"/><SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/><SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={getDRDProgressTotal()} icon="DRD"/><SubjectCard href="AG/index.html" title={t.appliedGenomics} desc={t.appliedGenomicsDesc} progressKey="ag_progress_v1" total={1} icon="AG"/></div></section>
     <section id="tools" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.studyTools}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.quickReview}</h2><p className="mt-2 max-w-2xl leading-7 text-stone-600">{t.sourceText}</p></div><div className="grid gap-3 md:grid-cols-5">{t.tools.map(tool => <div key={tool} className="rounded-2xl border border-stone-200 bg-white p-4 text-sm font-black text-stone-800 shadow-sm">{tool}</div>)}</div></section></main>;
 }
 function SubjectCard({ href, title, desc, progressKey, total, icon }) {
@@ -808,11 +808,11 @@ function GenomicsApp({ t, hash }) {
       <Hero
         eyebrow="Applied Genomics"
         title={<>Mini practice exam</>}
-        subtitle="Una página corta para practicar preguntas tipo examen sobre NGS, archivos FASTQ/SAM/VCF, ensamblaje, BUSCO, población, CNV y GWAS. Cada opción incluye explicación al responder."
+        subtitle="A short exam-style practice page on NGS, FASTQ/SAM/VCF files, genome assembly, BUSCO, annotation, population genomics, CNV and GWAS. After each answer, every option includes an explanation."
         actions={
           <>
-            <a href="#/practice-exam" className="rounded-full bg-emerald-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-emerald-900/10 transition hover:-translate-y-0.5 hover:bg-emerald-800">Abrir examen de prueba</a>
-            <a href="../index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">Volver al hub</a>
+            <a href="#/practice-exam" className="rounded-full bg-emerald-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-emerald-900/10 transition hover:-translate-y-0.5 hover:bg-emerald-800">Open practice exam</a>
+            <a href="../index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">Back to hub</a>
           </>
         }
         visual={
@@ -836,10 +836,10 @@ function GenomicsApp({ t, hash }) {
       <section id="tools" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
         <div className="mb-6">
           <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-emerald-700">Study tool</div>
-          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Cómo usarlo</h2>
-          <p className="mt-2 max-w-3xl leading-7 text-stone-600">Primero contesta sin mirar apuntes. Después lee todas las explicaciones, incluso si acertaste, porque varias opciones son trampas típicas: confundir FASTQ con SAM, eje de Manhattan plot, aCGH con secuenciación, o LD con similitud poblacional.</p>
+          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">How to use it</h2>
+          <p className="mt-2 max-w-3xl leading-7 text-stone-600">First answer without checking your notes. Then read all explanations, even when your answer is correct, because many options are classic exam traps: confusing FASTQ with SAM, the Manhattan plot axis, aCGH with sequencing, or LD with population similarity.</p>
         </div>
-        <a href="#/practice-exam" className="inline-flex rounded-full bg-emerald-700 px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-emerald-800">Empezar ahora</a>
+        <a href="#/practice-exam" className="inline-flex rounded-full bg-emerald-700 px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-emerald-800">Start now</a>
       </section>
     </main>
   );
@@ -2138,11 +2138,12 @@ function App() {
   const [lang, setLangState] = useState(getInitialLang);
   const mode = currentMode();
   const hash = useHash();
-  const t = UI[lang] || UI.es;
-  const dir = LANGS.find(x => x.code === lang)?.dir || "ltr";
+  const displayLang = mode === "ag" ? "en" : lang;
+  const t = UI[displayLang] || UI.es;
+  const dir = LANGS.find(x => x.code === displayLang)?.dir || "ltr";
   const setLang = (next) => { localStorage.setItem("studyhub_lang", next); localStorage.setItem("phylo_lang", next); setLangState(next); };
-  useEffect(() => { document.documentElement.lang = lang; document.documentElement.dir = dir; }, [lang, dir]);
-  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={lang} setLang={setLang} mode={mode} t={t}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={lang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={lang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
+  useEffect(() => { document.documentElement.lang = displayLang; document.documentElement.dir = dir; }, [displayLang, dir]);
+  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={displayLang} setLang={setLang} mode={mode} t={t}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={displayLang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={displayLang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
 }
 
 createRoot(document.getElementById("root")).render(<App />);

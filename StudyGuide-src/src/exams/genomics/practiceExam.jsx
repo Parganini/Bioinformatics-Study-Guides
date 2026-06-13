@@ -312,39 +312,39 @@ export default function GenomicsPracticeExamPage() {
       <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/95 shadow-xl shadow-stone-900/5">
         <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="p-7 md:p-10 lg:p-12">
-            <a href="#/" className="text-sm font-black text-red-700">← Volver a Applied Genomics</a>
+            <a href="#/" className="text-sm font-black text-red-700">← Back to Applied Genomics</a>
             <div className="mt-6 inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">
-              Mini examen de prueba
+              Mini practice exam
             </div>
             <h1 className="mt-5 text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">
               Applied Genomics · Practice exam
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
-              Selecciona una respuesta para ver si es correcta y, además, la explicación de cada opción: qué significa y por qué funciona o no funciona.
+              Select an answer to see whether it is correct and to reveal an explanation for every option: what it means and why it is or is not correct.
             </p>
           </div>
           <div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0">
             <div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner">
-              <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Progreso</div>
+              <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Progress</div>
               <div className="mt-4 grid grid-cols-3 gap-3">
                 <div className="rounded-2xl bg-stone-50 p-4 text-center">
                   <div className="text-3xl font-black text-stone-950">{answered}</div>
-                  <div className="mt-1 text-xs font-bold text-stone-500">Respondidas</div>
+                  <div className="mt-1 text-xs font-bold text-stone-500">Answered</div>
                 </div>
                 <div className="rounded-2xl bg-stone-50 p-4 text-center">
                   <div className="text-3xl font-black text-stone-950">{score}</div>
-                  <div className="mt-1 text-xs font-bold text-stone-500">Correctas</div>
+                  <div className="mt-1 text-xs font-bold text-stone-500">Correct</div>
                 </div>
                 <div className="rounded-2xl bg-stone-50 p-4 text-center">
                   <div className="text-3xl font-black text-stone-950">{percent}%</div>
-                  <div className="mt-1 text-xs font-bold text-stone-500">Score actual</div>
+                  <div className="mt-1 text-xs font-bold text-stone-500">Current score</div>
                 </div>
               </div>
               <div className="mt-5 h-3 overflow-hidden rounded-full border border-stone-200 bg-stone-100">
                 <div className="h-full rounded-full bg-red-700 transition-all" style={{ width: `${Math.round((answered / total) * 100)}%` }} />
               </div>
               <button onClick={reset} className="mt-5 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-800 transition hover:bg-stone-50">
-                Reiniciar respuestas
+                Reset answers
               </button>
             </div>
           </div>
@@ -369,7 +369,7 @@ export default function GenomicsPracticeExamPage() {
                     "rounded-full px-3 py-1 text-xs font-black uppercase tracking-[0.14em]",
                     isCorrect ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-700",
                   )}>
-                    {isCorrect ? "Correcta" : `Incorrecta · correcta: ${correct?.id.toUpperCase()}`}
+                    {isCorrect ? "Correct" : `Incorrect · correct: ${correct?.id.toUpperCase()}`}
                   </div>
                 )}
               </div>

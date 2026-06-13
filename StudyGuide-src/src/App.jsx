@@ -101,7 +101,7 @@ const UI = {
     drdDesc: "Course map for Module 1 theory and Module 2 methylation-array pipelines, updated with the June 5 status and upcoming topics.",
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
-    appliedGenomicsDesc: "Mini practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
+    appliedGenomicsDesc: "Practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
     builtFor: "Course study guides",
     uniform: "Study guide",
     studyPath: "Study path",
@@ -144,7 +144,7 @@ const UI = {
     drdDesc: "Mapa de la materia con Module 1 teórico y Module 2 de pipelines de metilación, actualizado al 5 de junio e incluyendo los temas pendientes.",
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
-    appliedGenomicsDesc: "Mini practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
+    appliedGenomicsDesc: "Practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
     builtFor: "Guías de curso",
     uniform: "Guía de estudio",
     studyPath: "Ruta de estudio",
@@ -187,7 +187,7 @@ const UI = {
     drdDesc: "نقشهٔ درس برای ماژول ۱ نظری و ماژول ۲ پایپ‌لاین‌های methylation array، با وضعیت ۵ ژوئن و موضوعات آینده.",
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
-    appliedGenomicsDesc: "Mini practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
+    appliedGenomicsDesc: "Practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
     builtFor: "راهنماهای درسی",
     uniform: "راهنمای مطالعه",
     studyPath: "مسیر مطالعه",
@@ -770,7 +770,7 @@ function Header({ lang, setLang, mode, t }) {
     },
   }[mode] || { title: t.studyHub, subtitle: t.subjects, icon: "⌂", iconClass: "bg-stone-950" };
 
-  return <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#fffaf0]/88 backdrop-blur-xl"><div className="mx-auto flex w-[min(1180px,calc(100%-24px))] items-center justify-between gap-4 py-3"><a href={mode === "hub" ? "#top" : "../index.html"} className="flex items-center gap-3"><div className={`flex h-10 min-w-10 items-center justify-center rounded-2xl px-2 text-sm font-black text-white ${header.iconClass}`}>{header.icon}</div><div><div className="text-sm font-black leading-4 text-stone-950">{header.title}</div><div className="text-xs font-semibold text-stone-500">{header.subtitle}</div></div></a><nav className="hidden items-center gap-2 lg:flex"><a href={mode === "hub" ? "#subjects" : "#/"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{mode === "hub" ? t.subjects : t.modules}</a><a href={mode === "hub" ? "#tools" : "#/tools"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.studyTools}</a><a href={mode === "hub" ? "#tools" : "#/resources"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.resources}</a></nav>{mode !== "ag" && <LangSwitcher lang={lang} setLang={setLang} />}</div></header>;
+  return <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#fffaf0]/88 backdrop-blur-xl"><div className="mx-auto flex w-[min(1180px,calc(100%-24px))] items-center justify-between gap-4 py-3"><a href={mode === "hub" ? "#top" : "../index.html"} className="flex items-center gap-3"><div className={`flex h-10 min-w-10 items-center justify-center rounded-2xl px-2 text-sm font-black text-white ${header.iconClass}`}>{header.icon}</div><div><div className="text-sm font-black leading-4 text-stone-950">{header.title}</div><div className="text-xs font-semibold text-stone-500">{header.subtitle}</div></div></a><nav className="hidden items-center gap-2 lg:flex"><a href={mode === "hub" ? "#subjects" : "#/"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{mode === "hub" ? t.subjects : t.modules}</a><a href={mode === "hub" ? "#tools" : "#/tools"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.studyTools}</a><a href={mode === "hub" ? "#tools" : "#/resources"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.resources}</a></nav><LangSwitcher lang={lang} setLang={setLang} /></div></header>;
 }
 function Stat({ label, value, note }) {
   return <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm"><div className="text-sm font-bold text-stone-500">{label}</div><div className="mt-2 text-4xl font-black tracking-tight text-stone-950">{value}</div>{note && <div className="mt-2 text-xs font-semibold text-stone-500">{note}</div>}</div>;
@@ -807,8 +807,8 @@ function GenomicsApp({ t, hash }) {
     <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
       <Hero
         eyebrow="Applied Genomics"
-        title={<>Mini practice exam</>}
-        subtitle="A short exam-style practice page on NGS, FASTQ/SAM/VCF files, genome assembly, BUSCO, annotation, population genomics, CNV and GWAS. After each answer, every option includes an explanation."
+        title={<>Practice exam</>}
+        subtitle="Exam-style practice on NGS, FASTQ/SAM/VCF files, genome assembly, BUSCO, annotation, population genomics, CNV and GWAS. It includes 30 multiple-choice questions with explanations for every option, plus open questions with a practice field and collapsible model answers."
         actions={
           <>
             <a href="#/practice-exam" className="rounded-full bg-emerald-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-emerald-900/10 transition hover:-translate-y-0.5 hover:bg-emerald-800">Open practice exam</a>
@@ -820,8 +820,8 @@ function GenomicsApp({ t, hash }) {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">Exam focus</div>
-                <div className="mt-2 text-2xl font-black text-stone-950">10 multiple-choice questions</div>
-                <div className="mt-1 text-sm font-semibold text-stone-500">Immediate grading + explanation for every option.</div>
+                <div className="mt-2 text-2xl font-black text-stone-950">30 multiple-choice questions</div>
+                <div className="mt-1 text-sm font-semibold text-stone-500">Immediate grading + open-answer practice.</div>
               </div>
               <div className="rounded-2xl bg-emerald-700 px-3 py-2 text-sm font-black text-white">AG</div>
             </div>
@@ -837,7 +837,7 @@ function GenomicsApp({ t, hash }) {
         <div className="mb-6">
           <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-emerald-700">Study tool</div>
           <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">How to use it</h2>
-          <p className="mt-2 max-w-3xl leading-7 text-stone-600">First answer without checking your notes. Then read all explanations, even when your answer is correct, because many options are classic exam traps: confusing FASTQ with SAM, the Manhattan plot axis, aCGH with sequencing, or LD with population similarity.</p>
+          <p className="mt-2 max-w-3xl leading-7 text-stone-600">First answer the multiple-choice section without checking your notes. Then read every option explanation, even when your answer is correct, because many distractors are classic exam traps: confusing FASTQ with SAM, the Manhattan plot axis, aCGH with sequencing, or LD with population similarity. After that, practice the open questions in the text fields and reveal the model answers only at the end.</p>
         </div>
         <a href="#/practice-exam" className="inline-flex rounded-full bg-emerald-700 px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-emerald-800">Start now</a>
       </section>
@@ -2140,10 +2140,11 @@ function App() {
   const hash = useHash();
   const displayLang = mode === "ag" ? "en" : lang;
   const t = UI[displayLang] || UI.es;
+  const headerLang = mode === "ag" ? lang : displayLang;
   const dir = LANGS.find(x => x.code === displayLang)?.dir || "ltr";
   const setLang = (next) => { localStorage.setItem("studyhub_lang", next); localStorage.setItem("phylo_lang", next); setLangState(next); };
   useEffect(() => { document.documentElement.lang = displayLang; document.documentElement.dir = dir; }, [displayLang, dir]);
-  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={displayLang} setLang={setLang} mode={mode} t={t}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={displayLang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={displayLang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
+  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={headerLang} setLang={setLang} mode={mode} t={t}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={displayLang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={displayLang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
 }
 
 createRoot(document.getElementById("root")).render(<App />);

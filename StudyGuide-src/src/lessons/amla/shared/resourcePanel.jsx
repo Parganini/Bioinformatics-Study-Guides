@@ -1,7 +1,7 @@
 import React from "react";
 import { AMLA_RESOURCE_LABELS } from "../amlaManifest.js";
 
-const RESOURCE_ORDER = ["slides", "extraSlides", "transcript", "recording", "notebook", "code", "project", "audio", "folder"];
+const RESOURCE_ORDER = ["slides", "extraSlides", "playgroundSlides", "transcript", "recording", "notebook", "code", "project", "audio", "folder"];
 
 function getResourceHref(lesson, key) {
   if (key === "folder") return lesson?.driveFolder;

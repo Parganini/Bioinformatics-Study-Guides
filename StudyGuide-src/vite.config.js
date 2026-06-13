@@ -23,6 +23,7 @@ export default defineConfig({
         amla: path.resolve(__dirname, "AMLA/index.html"),
         mp: path.resolve(__dirname, "MP/index.html"),
         drd: path.resolve(__dirname, "DRD/index.html"),
+        ag: path.resolve(__dirname, "AG/index.html"),
       },
     },
   },

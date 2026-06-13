@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Applied Genomics">
+  <rect width="64" height="64" rx="18" fill="#047857"/>
+  <path d="M21 12c14 8 22 14 22 28 0 5-2 9-6 12" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M43 12C29 20 21 26 21 40c0 5 2 9 6 12" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+  <path d="M22 22h20M20 32h24M22 42h20" stroke="#bbf7d0" stroke-width="3" stroke-linecap="round"/>
+</svg>

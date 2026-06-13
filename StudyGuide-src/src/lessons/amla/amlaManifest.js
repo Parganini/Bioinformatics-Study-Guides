@@ -138,7 +138,7 @@ export const AMLA_LESSONS = [
       transcript: transcripts["2026-04-16"],
       recording: recordings["2026-04-16"],
       notebook: null,
-      code: { todo: "Slides/transcript mention Google Colab/GitHub material later in the course, but no specific L01 notebook URL was visible in the extracted sources." },
+      code: "https://playground.tensorflow.org/",
     },
     aliases: ["01", "l01", "intro"],
     componentKey: "amla-2026-04-16-intro-advanced",

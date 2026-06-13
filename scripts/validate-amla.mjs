@@ -131,8 +131,8 @@ for (const alias of routeChecks) {
   assert(getAMLALessonById(alias)?.id === resolvedId, `Alias ${alias} does not resolve to ${resolvedId}`);
 }
 
-if (AMLA_LESSONS.filter((lesson) => lesson.status === "available").length !== 2) {
-  warn("Phase 1 expects exactly two complete available AMLA lessons.");
+if (AMLA_LESSONS.filter((lesson) => lesson.status === "available").length < 3) {
+  warn("AMLA now expects at least three complete available lessons.");
 }
 
 const summary = {

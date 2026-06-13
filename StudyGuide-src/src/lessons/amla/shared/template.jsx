@@ -346,7 +346,7 @@ function ChecklistBlock({ items = [], title = "Study checklist" }) {
 
 export function AMLALessonTemplate({ lesson, content, interactions: Interactions, isDone = false, toggle = () => {} }) {
   const status = getAMLAStatusMeta(lesson?.status);
-  const extractionStatus = content?.extractionStatus || "content pending";
+  const extractionStatus = content?.extractionStatus || "source-based content unavailable";
 
   return (
     <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-6 md:pt-8">
@@ -388,7 +388,7 @@ export function AMLALessonTemplate({ lesson, content, interactions: Interactions
 
 export function AMLAPlannedLesson(props) {
   const fallbackContent = {
-    extractionStatus: "content pending",
+    extractionStatus: "fallback route - source content unavailable",
     objectives: ["Use the linked slides, transcript and recording as the canonical source while the full lesson is expanded."],
     coreConcepts: [],
     slidePath: [],
@@ -396,7 +396,7 @@ export function AMLAPlannedLesson(props) {
     commonTraps: ["Do not treat this placeholder as complete study content yet."],
     quickQuiz: [],
     examQuestions: [],
-    studyChecklist: ["Expand this page after validating AMLA architecture and the quality of the first two complete lessons."],
+    studyChecklist: ["Use this fallback only if a lesson component is temporarily unavailable; the AMLA manifest should otherwise route to the source-based lesson."],
   };
   return <AMLALessonTemplate {...props} content={fallbackContent} />;
 }

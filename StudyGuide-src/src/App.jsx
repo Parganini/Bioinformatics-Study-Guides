@@ -831,16 +831,16 @@ function AMLAApp({ t, hash }) {
           <div>
             <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Progress</div>
             <div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div>
-            <p className="mt-2 text-sm font-semibold text-stone-500">{completed} / {availableTotal} complete-source lessons completed</p>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{completed} / {availableTotal} source-based lessons completed</p>
             <div className="mt-5"><ProgressBar value={percent}/></div>
             <div className="mt-6 grid grid-cols-3 gap-3">
               <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Classes</div><div className="mt-1 text-2xl font-black">{AMLA_LESSONS.length}</div></div>
-              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Complete</div><div className="mt-1 text-2xl font-black">{availableTotal}</div></div>
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Available</div><div className="mt-1 text-2xl font-black">{availableTotal}</div></div>
               <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Pending</div><div className="mt-1 text-2xl font-black">{pending}</div></div>
             </div>
             <div className="mt-6 rounded-3xl bg-stone-950 p-5 text-white">
               <div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">Study workflow</div>
-              <p className="mt-2 text-lg font-bold leading-7">slides / transcript emphasis / mini-lab / output interpretation / MCQ practice</p>
+              <p className="mt-2 text-lg font-bold leading-7">slides / transcript emphasis / mini-lab / output interpretation / full-course MCQ practice</p>
             </div>
           </div>
         )}
@@ -851,7 +851,7 @@ function AMLAApp({ t, hash }) {
         <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm lg:col-span-2">
           <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Study workflow</div>
           <div className="mt-4 grid gap-3 md:grid-cols-3">
-            {["Read slide path before opening the PDF", "Use transcript notes for professor emphasis", "Run or inspect notebook outputs, then explain them"].map((item) => <div key={item} className="rounded-3xl border border-stone-200 bg-stone-50 p-4 text-sm font-bold leading-6 text-stone-700">{item}</div>)}
+            {["Read the static slide path, then open the PDF for detail", "Use transcript notes for professor emphasis and exam traps", "Run or inspect mini-labs, then explain outputs and project relevance"].map((item) => <div key={item} className="rounded-3xl border border-stone-200 bg-stone-50 p-4 text-sm font-bold leading-6 text-stone-700">{item}</div>)}
           </div>
         </div>
       </section>
@@ -889,7 +889,7 @@ function AMLAModule({ module, units, progress, toggle }) {
           <div>
             <h3 className="text-2xl font-black tracking-tight text-stone-950">{module?.title}</h3>
             <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-stone-500">{module?.description}</p>
-            <p className="mt-2 text-sm font-semibold text-stone-500">{done} / {available.length} complete-source lessons completed</p>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{done} / {available.length} source-based lessons completed</p>
           </div>
           <div className="w-full md:w-64"><ProgressBar value={percent}/></div>
         </div>
@@ -965,7 +965,7 @@ function AMLAMiniLabsSection({ lessons }) {
       <div className="mb-5">
         <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">Mini-labs</div>
         <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Notebook-aware practice</h2>
-        <p className="mt-2 max-w-3xl text-sm font-semibold leading-7 text-stone-600">The first two lessons include conceptual mini-labs. Later hands-on classes are linked now and will be expanded after the architecture/content quality check.</p>
+        <p className="mt-2 max-w-3xl text-sm font-semibold leading-7 text-stone-600">Mini-labs now span the full course: Keras/MNIST, tensors, CNN shape reasoning, autoencoders/SVM/PCA, ensembles, Fluocells, segmentation, XAI and the final RNN/project wrap-up.</p>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {lessons.map((lesson) => <a key={lesson.id} href={amlaLessonHref(lesson)} className="rounded-3xl border border-stone-200 bg-stone-50 p-5 shadow-sm transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{lesson.code} · {lesson.date}</div><h3 className="mt-2 text-lg font-black leading-7 text-stone-950">{lesson.title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{lesson.summary}</p></a>)}
@@ -980,13 +980,25 @@ function AMLAProductsSection() {
       <div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
           <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">Practice exams</div>
-          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Initial practice bank</h2>
-          <p className="mt-2 max-w-3xl leading-7 text-stone-600">This phase starts with 15 multiple-choice questions based mainly on L01-L02. It is ready to grow to a full-course bank after the remaining lessons are expanded.</p>
+          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Full-course practice bank</h2>
+          <p className="mt-2 max-w-3xl leading-7 text-stone-600">Seventy-two multiple-choice questions cover all 12 lessons, with immediate practice feedback and a basic mock-exam mode for end-to-end review.</p>
         </div>
         <a href="#/practice-exam" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-red-800">Open practice exam</a>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {AMLA_STUDY_PRODUCTS.map(product => <DRDProductCard key={product.title} product={product} />)}
+      </div>
+      <div className="mt-5 grid gap-4 md:grid-cols-3">
+        {[
+          ["Fluocells workflow", "EDA, thresholding baseline, segmentation masks, c-ResUNet/FastAI, losses and object-level interpretation."],
+          ["XAI and reporting", "SHAP/LIME, local versus global explanations, feature importance, bias checks and project defensibility."],
+          ["Final wrap-up", "RNNs, BPTT, LSTM/GRU, transformers, VAEs/GANs and the advanced-project checklist."],
+        ].map(([title, body]) => (
+          <div key={title} className="rounded-3xl border border-stone-200 bg-stone-50 p-5">
+            <h3 className="text-lg font-black text-stone-950">{title}</h3>
+            <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{body}</p>
+          </div>
+        ))}
       </div>
     </section>
   );

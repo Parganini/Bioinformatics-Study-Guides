@@ -1,14 +1,14 @@
 export const AMLA_RESOURCE_LABELS = {
   slides: "Slides",
   transcript: "Transcript",
-  recording: "Recording",
+  recording: "Recording / video",
   notebook: "Notebook / Colab",
-  code: "Code",
-  extraSlides: "Extra slides",
+  code: "Code / repo",
+  extraSlides: "Supplementary slides",
   playgroundSlides: "Playground slides",
   folder: "Drive folder",
   project: "Project brief",
-  audio: "Audio",
+  audio: "Audio recording",
 };
 
 export const AMLA_STATUS = {
@@ -30,16 +30,16 @@ export const AMLA_MODULES = [
   {
     id: "module-1",
     code: "M1",
-    title: "Module 1 - neural-network foundations",
+    title: "Module 1 - neural networks and model families",
     shortTitle: "Neural-network foundations",
-    description: "Advanced-course setup, transition from classical ML to neural networks, deep-learning frameworks and first Keras/TensorFlow workflows.",
+    description: "Advanced-course setup, Keras/TensorFlow workflows, neural-network mechanics, tensors, CNNs, autoencoders, SVMs and dimensionality reduction.",
   },
   {
     id: "module-2",
     code: "M2",
-    title: "Module 2 - applied deep-learning labs and project work",
-    shortTitle: "Applied deep-learning labs",
-    description: "Computer-vision notebooks, segmentation workflows, explainable AI and project/report interpretation.",
+    title: "Module 2 - applied labs, interpretation and final wrap-up",
+    shortTitle: "Applied labs and interpretation",
+    description: "Ensembles, Fluocells object counting, segmentation workflows, explainable AI, project/report expectations, RNNs and generative-model overview.",
   },
 ];
 
@@ -86,34 +86,36 @@ const transcripts = {
 
 export const AMLA_STUDY_PRODUCTS = [
   {
-    title: "Manifest-driven lessons",
-    desc: "AMLA mirrors the DRD architecture: resources, status, routing and placeholders are controlled in one manifest.",
+    title: "Manifest-driven course",
+    desc: "All 12 AMLA classes are available in chronological order with resources, routing and completion state controlled from the manifest.",
     tags: ["manifest", "routes", "resources"],
   },
   {
-    title: "Source-based lessons in progress",
-    desc: "Completed pages use the static-slide + commentary format from DRD, while pending classes stay explicit until they are expanded from their slides and transcript.",
+    title: "Static-slide lessons",
+    desc: "Lessons use the DRD-style static slide walkthrough: slide image, professor emphasis, exam/project notes and interleaved mini-labs.",
     tags: ["slides", "transcript", "source-based"],
   },
   {
-    title: "Notebook-first mini-labs",
-    desc: "Notebook links are surfaced when present; missing Colab URLs remain explicit TODOs instead of invented links.",
-    tags: ["Colab", "Keras", "TensorFlow"],
+    title: "Notebook-aware mini-labs",
+    desc: "Every hands-on lesson surfaces real notebooks/code when available; missing links stay explicit as TODOs instead of invented URLs.",
+    tags: ["Colab", "Keras", "Fluocells"],
   },
   {
-    title: "Initial practice exam",
-    desc: "A first multiple-choice bank focuses on the first two lessons and can later grow to the full-course 60-question set.",
-    tags: ["15 questions", "mock mode", "feedback"],
+    title: "Full-course practice exam",
+    desc: "The practice bank now covers the whole course with 72 questions, practice feedback and a basic mock-exam mode.",
+    tags: ["72 questions", "mock mode", "feedback"],
   },
 ];
 
 export const AMLA_PROJECT_GUIDANCE = {
   title: "Advanced project relevance",
-  body: "AMLA project work should show more maturity than simply applying a model. The report must justify model choice, inspect outputs, interpret failures, explain results and include advanced models from the course where appropriate.",
+  body: "AMLA project work should show more maturity than simply applying a model. The report must justify model choice, inspect outputs, interpret failures, explain results and connect advanced methods such as CNNs, ensembles, segmentation, XAI, sequence models or generative models when appropriate.",
   checklist: [
     "Use at least one advanced model or method from the AMLA part when doing an advanced submission.",
     "Keep code and report self-contained enough that the evaluators can understand what was done.",
-    "Interpret results and failure modes instead of reporting only metric values.",
+    "Interpret results, failure modes and baseline comparisons instead of reporting only metric values.",
+    "For Fluocells or image projects, explain EDA, masks, metrics, augmentation and object-level errors.",
+    "For XAI, state whether explanations are local/global and treat them as inspection evidence, not proof.",
     "Be transparent about LLM/tool use and never delegate interpretation to a generated answer.",
     "Use visualizations as evidence for decisions, not as decoration.",
   ],

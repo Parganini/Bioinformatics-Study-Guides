@@ -213,7 +213,7 @@ export const AMLA_LESSONS = [
     tags: ["MLP", "backpropagation", "gradient descent", "tensors", "Dense layers", "optimizers"],
     lessonType: "theory + tensor mini-lab",
     products: ["source-based lesson", "tensor mini-lab", "exam-style MCQs"],
-    resources: { slides: "https://drive.google.com/file/d/1KH42rcyEu6FZDd91nD1mAuWiSaTzE9dl/view?usp=drivesdk", transcript: transcripts["2026-05-07"], recording: recordings["2026-05-07"], notebook: { todo: "Transcript/slide 36 mention MNIST 2 Part A and `..._HandsOn_Tensors.ipynb`, but the extracted sources did not expose a standalone Colab/Drive URL." } },
+    resources: { slides: "https://drive.google.com/file/d/1KH42rcyEu6FZDd91nD1mAuWiSaTzE9dl/view?usp=drivesdk", transcript: transcripts["2026-05-07"], recording: recordings["2026-05-07"], notebook: { todo: "Slide 36 names `..._HandsOn_Tensors.ipynb`, but the extracted sources did not expose a standalone Colab/Drive URL." } },
     aliases: ["05", "l05", "mlp-training", "backpropagation", "tensors"],
     componentKey: "amla-2026-05-07-training-diagnostics",
     driveFolder: AMLA_DRIVE.module1,

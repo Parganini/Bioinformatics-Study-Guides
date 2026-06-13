@@ -54,13 +54,13 @@ export const lessonContent = {
   ],
   walkthroughSections: [
     {
-      range: "Slides 1-8",
+      range: "Module 1 / Lecture3 slides 1-8",
       title: "MLPs can solve regression and classification, but the output layer changes",
       intro: "Start by reading these slides as architecture choices. The point is not just that MLPs are flexible; the point is that the final layer must match the task.",
       slides: [
         {
           label: "Slide 1",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 1,
           image: "amla-slides/lecture3/slide-01.png",
           title: "Lecture frame",
@@ -70,7 +70,7 @@ export const lessonContent = {
         },
         {
           label: "Slides 2-3",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 3,
           image: "amla-slides/lecture3/slide-03.png",
           title: "What can MLPs do?",
@@ -80,7 +80,7 @@ export const lessonContent = {
         },
         {
           label: "Slides 4-6",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 5,
           image: "amla-slides/lecture3/slide-05.png",
           title: "Regression MLP",
@@ -91,7 +91,7 @@ export const lessonContent = {
         },
         {
           label: "Slides 7-8",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 7,
           image: "amla-slides/lecture3/slide-07.png",
           title: "Classification MLP",
@@ -103,7 +103,7 @@ export const lessonContent = {
       ],
       lab: {
         title: "Mini-lab: classify the model head before coding",
-        todo: "The L05 transcript mentions the shared notebook 'MNIST 2 Part A', but no standalone Colab/Drive URL was visible in the extracted sources.",
+        todo: "This checkpoint can be done without a notebook; slide 36 later names `..._HandsOn_Tensors.ipynb` for tensor operations, but no standalone URL was visible in the extracted sources.",
         objective: "Given a target description, choose the output layer and loss before writing Keras code.",
         steps: [
           "Write three toy targets: house price, digit 0-9, and multiple disease labels.",
@@ -119,13 +119,13 @@ export const lessonContent = {
       },
     },
     {
-      range: "Slides 10, 15-21",
+      range: "Module 1 / Lecture3 slides 10, 15-21",
       title: "Training an MLP means combining backpropagation with gradient descent",
       intro: "This is the central theory block. Read it slowly: backpropagation computes gradients; gradient descent uses those gradients to update parameters.",
       slides: [
         {
           label: "Slide 10",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 10,
           image: "amla-slides/lecture3/slide-10.png",
           title: "Training question",
@@ -135,7 +135,7 @@ export const lessonContent = {
         },
         {
           label: "Slide 15",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 15,
           image: "amla-slides/lecture3/slide-15.png",
           title: "Backpropagation",
@@ -146,7 +146,7 @@ export const lessonContent = {
         },
         {
           label: "Slides 16-17",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 16,
           image: "amla-slides/lecture3/slide-16.png",
           title: "GD versus BP",
@@ -156,7 +156,7 @@ export const lessonContent = {
         },
         {
           label: "Slide 18",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 18,
           image: "amla-slides/lecture3/slide-18.png",
           title: "Forward pass, error, backward pass",
@@ -166,17 +166,17 @@ export const lessonContent = {
         },
         {
           label: "Slide 19",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 19,
           image: "amla-slides/lecture3/slide-19.png",
           title: "Mini-batches and epochs",
           comment: "Training handles mini-batches one at a time and repeats full passes over the training set. Batch size and number of epochs are training hyperparameters.",
-          professor: "The transcript's Keras hands-on also emphasized fit-time details and validation behavior: check what the implementation is actually doing.",
+          professor: "The professor explicitly said batch and epoch differences are fair written-test material.",
           remember: "Batch is not epoch. One epoch means the model has seen the training set once.",
         },
         {
           label: "Slides 20-21",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 20,
           image: "amla-slides/lecture3/slide-20.png",
           title: "Activation and initialization matter",
@@ -188,13 +188,13 @@ export const lessonContent = {
       ],
     },
     {
-      range: "Slides 24-33",
+      range: "Module 1 / Lecture3 slides 24-33",
       title: "Tensors are the shape language of neural networks",
       intro: "This block is about reading data shapes. The same neural-network code becomes much less mysterious when you can say what each axis means.",
       slides: [
         {
           label: "Slide 24",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 24,
           image: "amla-slides/lecture3/slide-24.png",
           title: "Data tensors",
@@ -204,7 +204,7 @@ export const lessonContent = {
         },
         {
           label: "Slides 25-27",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 26,
           image: "amla-slides/lecture3/slide-26.png",
           title: "Vector data",
@@ -214,7 +214,7 @@ export const lessonContent = {
         },
         {
           label: "Slides 28-29",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 28,
           image: "amla-slides/lecture3/slide-28.png",
           title: "Sequence data",
@@ -224,7 +224,7 @@ export const lessonContent = {
         },
         {
           label: "Slides 30-31",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 30,
           image: "amla-slides/lecture3/slide-30.png",
           title: "Image data",
@@ -235,7 +235,7 @@ export const lessonContent = {
         },
         {
           label: "Slides 32-33",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 32,
           image: "amla-slides/lecture3/slide-32.png",
           title: "Video data",
@@ -246,13 +246,13 @@ export const lessonContent = {
       ],
     },
     {
-      range: "Slides 36-46",
+      range: "Module 1 / Lecture3 slides 36-46",
       title: "Inside layers: tensor operations, broadcasting and geometry",
       intro: "This is the mechanics block. Dense layers are not mysterious boxes: they are dot products, bias additions, activations and reshaping arranged in a chain.",
       slides: [
         {
           label: "Slide 36",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 36,
           image: "amla-slides/lecture3/slide-36.png",
           title: "Coding material: HandsOn_Tensors",
@@ -262,17 +262,17 @@ export const lessonContent = {
         },
         {
           label: "Slide 38",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 38,
           image: "amla-slides/lecture3/slide-38.png",
           title: "Dense layer as tensor function",
           comment: "A dense layer can be read as a function that takes a 2D tensor and returns another 2D tensor after a kernel dot product, bias addition and activation.",
-          professor: "In the hands-on transcript, the instructor explained that Dense without activation performs linear combinations; the activation can be added separately or specified inside the layer.",
+          professor: "The professor unpacked a Dense layer as dot product, bias addition and activation, so the layer is not a mysterious black box.",
           remember: "Dense = linear transformation plus optional nonlinearity.",
         },
         {
           label: "Slides 39-41",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 39,
           image: "amla-slides/lecture3/slide-39.png",
           title: "Element-wise operations and broadcasting",
@@ -283,7 +283,7 @@ export const lessonContent = {
         },
         {
           label: "Slide 42",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 42,
           image: "amla-slides/lecture3/slide-42.png",
           title: "Dot products",
@@ -294,7 +294,7 @@ export const lessonContent = {
         },
         {
           label: "Slides 44-46",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 45,
           image: "amla-slides/lecture3/slide-45.png",
           title: "Geometric interpretation",
@@ -324,13 +324,13 @@ export const lessonContent = {
       },
     },
     {
-      range: "Slides 48-58",
+      range: "Module 1 / Lecture3 slides 48-58",
       title: "The training loop: loss, SGD, optimizers and automatic differentiation",
       intro: "Finish by tying the mechanics back to model fitting. Training is repeated forward passes, losses, gradients and parameter updates.",
       slides: [
         {
           label: "Slides 48-50",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 49,
           image: "amla-slides/lecture3/slide-49.png",
           title: "One training loop",
@@ -341,7 +341,7 @@ export const lessonContent = {
         },
         {
           label: "Slide 52",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 52,
           image: "amla-slides/lecture3/slide-52.png",
           title: "Normal equation versus GD",
@@ -351,17 +351,17 @@ export const lessonContent = {
         },
         {
           label: "Slide 53",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 53,
           image: "amla-slides/lecture3/slide-53.png",
           title: "SGD training loop",
           comment: "Stochastic gradient descent repeats the training loop on mini-batches. The gradient is computed on the batch loss and used to nudge parameters.",
-          professor: "The hands-on transcript compared the previous scikit-learn SGD classifier with a neural network on the same MNIST idea.",
+          professor: "The transcript distinguishes true SGD, batch gradient descent and mini-batch SGD; the course mostly reasons with mini-batches.",
           remember: "SGD is not a model; it is an optimization procedure.",
         },
         {
           label: "Slide 56",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 56,
           image: "amla-slides/lecture3/slide-56.png",
           title: "Optimizers",
@@ -371,7 +371,7 @@ export const lessonContent = {
         },
         {
           label: "Slides 57-58",
-          deckLabel: "Lecture 3",
+          deckLabel: "Module 1 / Lecture3",
           page: 57,
           image: "amla-slides/lecture3/slide-57.png",
           title: "Chaining derivatives and symbolic differentiation",

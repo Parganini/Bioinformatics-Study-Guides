@@ -1,6 +1,6 @@
 export const lessonContent = {
   id: "lb1-01-structure-alignment",
-  extractionStatus: "slide-attached walkthrough from 1-Structure-Alignment.pdf; raster screenshots still pending",
+  extractionStatus: "real slide screenshots extracted from 1-Structure-Alignment.pdf",
   whyThisMatters: "Structure alignment is one of the cleanest examples of why bioinformatics is not only sequence comparison. Two proteins can keep a similar fold and related function even after their sequences diverge, so structure can reveal relationships that are weak or invisible at the sequence level.",
   objectives: [
     "Define structure superimposition as fitting two structures when the correspondence between atoms or residues is already known.",
@@ -54,6 +54,8 @@ export const lessonContent = {
         {
           label: "Core definition",
           page: 3,
+          image: "/lb1-slides/01-structure-alignment/slide-03.jpg",
+          alt: "Slide 3 from 1-Structure-Alignment.pdf defining structure superimposition",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structure superimposition",
           slideBullets: ["Two coordinate sets", "Known correspondence", "Optimal rigid-body transformation", "RMSD after fitting"],
@@ -67,6 +69,8 @@ export const lessonContent = {
         {
           label: "Core definition",
           page: 6,
+          image: "/lb1-slides/01-structure-alignment/slide-06.jpg",
+          alt: "Slide 6 from 1-Structure-Alignment.pdf defining structural alignment and correspondence sets",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structural alignment",
           slideBullets: ["Find an optimal correspondence set", "Then compute the alignment transform", "Correspondence search is the hard part"],
@@ -80,6 +84,8 @@ export const lessonContent = {
         {
           label: "Exam contrast",
           page: 8,
+          image: "/lb1-slides/01-structure-alignment/slide-08.jpg",
+          alt: "Slide 8 from 1-Structure-Alignment.pdf contrasting superimposition and alignment",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Superimposition vs alignment",
           slideBullets: ["Superimposition: atoms are already selected", "Alignment: atoms/residues must be determined", "Position optimization is simpler than correspondence search"],
@@ -100,6 +106,8 @@ export const lessonContent = {
         {
           label: "Transformation",
           page: 4,
+          image: "/lb1-slides/01-structure-alignment/slide-04.jpg",
+          alt: "Slide 4 from 1-Structure-Alignment.pdf showing the rigid-body transformation formula",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Y = G(X) = A*X + B",
           slideBullets: ["A is the rotation matrix", "B is the translation vector", "The structure is moved as a rigid object"],
@@ -112,6 +120,8 @@ export const lessonContent = {
         {
           label: "RMSD",
           page: 5,
+          image: "/lb1-slides/01-structure-alignment/slide-05.jpg",
+          alt: "Slide 5 from 1-Structure-Alignment.pdf explaining RMSD after superimposition",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Root mean square deviation",
           slideBullets: ["Distance over matched points", "Computed after optimal transformation", "Depends on atom selection and alignment length"],
@@ -131,6 +141,8 @@ export const lessonContent = {
         {
           label: "Comparison pipeline",
           page: 9,
+          image: "/lb1-slides/01-structure-alignment/slide-09.jpg",
+          alt: "Slide 9 from 1-Structure-Alignment.pdf showing a structure-comparison pipeline",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structures comparison",
           slideBullets: ["Feature extraction", "Algorithm", "Statistical significance", "Score"],
@@ -144,6 +156,8 @@ export const lessonContent = {
         {
           label: "Domains and flexibility",
           page: 11,
+          image: "/lb1-slides/01-structure-alignment/slide-11.jpg",
+          alt: "Slide 11 from 1-Structure-Alignment.pdf about levels of comparison and domains",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Level of comparison / multi-domain alignment",
           slideBullets: ["Domains can be independently stable units", "Multi-domain proteins can move by hinges", "Flexible movement complicates global RMSD"],
@@ -156,6 +170,8 @@ export const lessonContent = {
         {
           label: "Method families",
           page: 15,
+          image: "/lb1-slides/01-structure-alignment/slide-15.jpg",
+          alt: "Slide 15 from 1-Structure-Alignment.pdf listing structural alignment method classes",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structural alignment tools",
           slideBullets: ["Flexible or rigid", "Pairwise or multiple", "C-alpha, all atoms, SSE, contact maps, torsion angles, surfaces"],
@@ -175,6 +191,8 @@ export const lessonContent = {
         {
           label: "Torsion angles",
           page: 18,
+          image: "/lb1-slides/01-structure-alignment/slide-18.jpg",
+          alt: "Slide 18 from 1-Structure-Alignment.pdf about comparing torsion angles",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Comparing torsion angles",
           slideBullets: ["Local structural descriptor", "Invariant to rotation and translation", "Compact O(n)", "Can miss whole-structure relationships"],
@@ -187,6 +205,8 @@ export const lessonContent = {
         {
           label: "Distance matrix",
           page: 19,
+          image: "/lb1-slides/01-structure-alignment/slide-19.jpg",
+          alt: "Slide 19 from 1-Structure-Alignment.pdf about distance matrices",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Distance matrix",
           slideBullets: ["Rotation/translation invariant", "Pairwise residue distances", "O(n^2)", "Insensitive to chirality"],
@@ -199,6 +219,8 @@ export const lessonContent = {
         {
           label: "Algorithm input-output",
           page: 21,
+          image: "/lb1-slides/01-structure-alignment/slide-21.jpg",
+          alt: "Slide 21 from 1-Structure-Alignment.pdf describing inputs and outputs of an alignment algorithm",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Input/output of an alignment algorithm",
           slideBullets: ["Input: proteins and constraints", "Output: alignment and scores", "Constraints can include gap limits, RMSD and aligned length"],
@@ -211,6 +233,8 @@ export const lessonContent = {
         {
           label: "CE and MAMMOTH",
           page: 25,
+          image: "/lb1-slides/01-structure-alignment/slide-25.jpg",
+          alt: "Slide 25 from 1-Structure-Alignment.pdf introducing CE and MAMMOTH-style algorithm ideas",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "CE algorithm / MAMMOTH algorithm",
           slideBullets: ["CE stitches aligned fragment pairs", "Dynamic programming searches an optimal path", "MAMMOTH uses unit-vector representations", "Scores need background distributions"],
@@ -230,6 +254,8 @@ export const lessonContent = {
         {
           label: "Python exercise",
           page: 33,
+          image: "/lb1-slides/01-structure-alignment/slide-33.jpg",
+          alt: "Slide 33 from 1-Structure-Alignment.pdf with the structure superimposition exercise",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structure superimposition exercise",
           slideBullets: ["Use Biopython SVDSuperimposer", "Select corresponding atoms", "Compute rotation/translation", "Read RMSD"],
@@ -242,6 +268,8 @@ export const lessonContent = {
         {
           label: "RNA structures",
           page: 38,
+          image: "/lb1-slides/01-structure-alignment/slide-38.jpg",
+          alt: "Slide 38 from 1-Structure-Alignment.pdf introducing RNA structural alignment",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "RNA structural alignment",
           slideBullets: ["Primary, secondary and tertiary RNA structure", "Atom selection matters", "RNA has its own twilight-zone behavior", "SARA is one example tool"],
@@ -261,6 +289,8 @@ export const lessonContent = {
         {
           label: "Low sequence identity",
           page: 10,
+          image: "/lb1-slides/01-structure-alignment/slide-10.jpg",
+          alt: "Slide 10 from 1-Structure-Alignment.pdf about structural similarity under low sequence identity",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structural similarity under low sequence identity",
           slideBullets: ["Fold can remain conserved", "Functional sites may be preserved", "Evidence depends on aligned region and significance"],
@@ -348,6 +378,6 @@ export const lessonContent = {
   sourceNotes: [
     "Primary source: 1-Structure-Alignment.pdf in the Capriotti LB1 Drive folder.",
     "Teaching-emphasis boxes are study interpretations from the slide topic and requested course focus, not direct professor quotations.",
-    "Slide cards are attached to the source PDF with slide/page labels. Local raster screenshots are still a follow-up because no PDF rasterizer is available in this workspace.",
+    "Curated slide screenshots were extracted from the source PDF and are shown with slide/page labels; use the PDF link for the complete deck.",
   ],
 };

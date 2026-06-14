@@ -1,6 +1,6 @@
 export const lessonContent = {
   id: "lb1-00-module-overview",
-  extractionStatus: "slide-attached walkthrough from 0-Module-LSB1-2.pdf; raster screenshots still pending",
+  extractionStatus: "real slide screenshots extracted from 0-Module-LSB1-2.pdf",
   whyThisMatters: "LB1 is not a list of tools to memorize. The course asks you to connect a biological question to a computational method, then defend what can and cannot be inferred from sequence, structure, alignments, probabilistic models and database evidence.",
   objectives: [
     "Explain the main aims of the Capriotti module: sequence/structure analysis tools, functional annotation, probabilistic models, HMMs, HMMER and applied protein reasoning.",
@@ -68,6 +68,8 @@ export const lessonContent = {
         {
           label: "Course overview",
           page: 1,
+          image: "/lb1-slides/00-module-overview/slide-01.jpg",
+          alt: "Slide 1 from 0-Module-LSB1-2.pdf introducing Laboratory of Bioinformatics I Module 2",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Laboratory of Bioinformatics I - Module 2",
           slideBullets: ["Introduction and basic concepts", "Sequence and structure analysis", "Protein functional annotation"],
@@ -80,6 +82,8 @@ export const lessonContent = {
         {
           label: "Main aims",
           page: 2,
+          image: "/lb1-slides/00-module-overview/slide-02.jpg",
+          alt: "Slide 2 from 0-Module-LSB1-2.pdf listing the main aims of the module",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Main aims",
           slideBullets: ["Tools for sequence/structure analysis and development", "Protein functional annotation", "Machine-learning background", "Problem-solving and basic tools"],
@@ -92,6 +96,8 @@ export const lessonContent = {
         {
           label: "Topic map",
           page: 3,
+          image: "/lb1-slides/00-module-overview/slide-03.jpg",
+          alt: "Slide 3 from 0-Module-LSB1-2.pdf listing the module topics",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Topics",
           slideBullets: ["Structural alignment and MSA", "HMMs, profile HMMs and HMMER", "Mapping and structure analysis", "Machine learning, prediction and project work"],
@@ -111,6 +117,8 @@ export const lessonContent = {
         {
           label: "Structural bioinformatics",
           page: 4,
+          image: "/lb1-slides/00-module-overview/slide-04.jpg",
+          alt: "Slide 4 from 0-Module-LSB1-2.pdf introducing structural alignment concepts",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Structural alignment",
           slideBullets: ["Protein structure can be more conserved than sequence", "Compare structures through a correspondence and a transformation", "Use RMSD and aligned length carefully"],
@@ -123,6 +131,8 @@ export const lessonContent = {
         {
           label: "Sequence alignment recap",
           page: 6,
+          image: "/lb1-slides/00-module-overview/slide-06.jpg",
+          alt: "Slide 6 from 0-Module-LSB1-2.pdf reviewing sequence alignment scoring ideas",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Sequence alignment",
           slideBullets: ["Substitution scores", "Gap penalties", "Global/local dynamic programming", "Statistical significance"],
@@ -135,6 +145,8 @@ export const lessonContent = {
         {
           label: "Twilight zone",
           page: 10,
+          image: "/lb1-slides/00-module-overview/slide-10.jpg",
+          alt: "Slide 10 from 0-Module-LSB1-2.pdf about sequence identity and structural similarity",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Sequence identity and structure similarity",
           slideBullets: ["High identity usually supports structural similarity", "Low identity can still preserve fold", "Remote homologs require stronger evidence"],
@@ -155,6 +167,8 @@ export const lessonContent = {
         {
           label: "Annotation transfer",
           page: 13,
+          image: "/lb1-slides/00-module-overview/slide-13.jpg",
+          alt: "Slide 13 from 0-Module-LSB1-2.pdf about transferring information from known proteins",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Transfer of information",
           slideBullets: ["Known sequence or structure", "Unknown target", "Transfer only when evidence supports it"],
@@ -168,6 +182,8 @@ export const lessonContent = {
         {
           label: "Counterexamples",
           page: 17,
+          image: "/lb1-slides/00-module-overview/slide-17.jpg",
+          alt: "Slide 17 from 0-Module-LSB1-2.pdf showing annotation-transfer caveats",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Same family, different function",
           slideBullets: ["Similar proteins can diverge in function", "Domain context matters", "Annotations can be too specific"],
@@ -187,6 +203,8 @@ export const lessonContent = {
         {
           label: "Cytochrome C cases",
           page: 25,
+          image: "/lb1-slides/00-module-overview/slide-25.jpg",
+          alt: "Slide 25 from 0-Module-LSB1-2.pdf with a cytochrome C comparison example",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Similar structures, shifted details",
           slideBullets: ["Compare sequence and structure", "Look at binding or active regions", "Do not overread global similarity"],
@@ -199,6 +217,8 @@ export const lessonContent = {
         {
           label: "Better alignment",
           page: 30,
+          image: "/lb1-slides/00-module-overview/slide-30.jpg",
+          alt: "Slide 30 from 0-Module-LSB1-2.pdf motivating better alignments and profile information",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Search for better alignment",
           slideBullets: ["Use multiple sequences and structures", "Detect position-specific constraints", "Represent family patterns"],
@@ -273,6 +293,6 @@ export const lessonContent = {
   sourceNotes: [
     "Primary source: 0-Module-LSB1-2.pdf in the Capriotti LB1 Drive folder.",
     "Supporting source folders for transcriptions and recordings are linked, but this first pass avoids transcript-specific quotes unless a class match is verified.",
-    "Slide cards are attached to the source PDF with slide/page labels. Local raster screenshots are still a follow-up because no PDF rasterizer is available in this workspace.",
+    "Curated slide screenshots were extracted from the source PDF and are shown with slide/page labels; use the PDF link for the complete deck.",
   ],
 };

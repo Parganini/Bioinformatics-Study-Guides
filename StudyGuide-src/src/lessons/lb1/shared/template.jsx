@@ -259,6 +259,7 @@ function SourcesUsed({ lesson, notes = [] }) {
 }
 
 function PlannedStudyBlock({ lesson }) {
+  if (lesson?.status === "available") return null;
   const planned = LB1_PLANNED_CONTENT[lesson?.id];
   if (!planned) return null;
   return (

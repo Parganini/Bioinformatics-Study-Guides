@@ -39,6 +39,58 @@ function StudyCallout({ label, tone = "stone", children }) {
   );
 }
 
+function ZoomableSlideImage({ src, alt }) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <button type="button" onClick={() => setOpen(true)} className="group relative block w-full cursor-zoom-in text-left">
+        <img src={src} alt={alt} loading="lazy" className="aspect-video w-full rounded-[1.35rem] border border-stone-200 bg-white object-contain shadow-sm" />
+        <span className="pointer-events-none absolute bottom-3 right-3 rounded-full border border-stone-200 bg-white/95 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-stone-700 shadow-sm transition group-hover:-translate-y-0.5">Click to zoom</span>
+      </button>
+      {open ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/80 p-4" onClick={() => setOpen(false)}>
+          <div className="relative w-full max-w-6xl rounded-[2rem] border border-stone-200 bg-white p-3 shadow-2xl" onClick={(event) => event.stopPropagation()}>
+            <button type="button" onClick={() => setOpen(false)} className="absolute right-5 top-5 z-10 rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-stone-700 shadow-sm transition hover:bg-stone-50">Close zoom</button>
+            <img src={src} alt={alt} className="max-h-[82vh] w-full rounded-[1.5rem] object-contain" />
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+function SlideAttachment({ slide, resources }) {
+  const pdfLink = slide.sourceUrl || resources?.slides;
+  const slideNumber = slide.page || slide.slideNumber;
+  return (
+    <div className="rounded-[1.75rem] border border-stone-200 bg-white p-3 shadow-sm">
+      {slide.image ? (
+        <ZoomableSlideImage src={slide.image} alt={slide.alt || `${slide.title} slide`} />
+      ) : (
+        <div className="aspect-video rounded-[1.35rem] border border-stone-200 bg-gradient-to-br from-white via-teal-50 to-stone-100 p-5">
+          <div className="flex h-full flex-col justify-between">
+            <div>
+              <div className="flex flex-wrap gap-2">
+                <span className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-teal-800">Source slide</span>
+                {slideNumber ? <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-stone-600">Slide {slideNumber}</span> : null}
+              </div>
+              <h4 className="mt-4 text-lg font-black leading-6 text-stone-950">{slide.slideTitle || slide.title}</h4>
+              <div className="mt-3 space-y-1 text-xs font-bold leading-5 text-stone-600">
+                {(slide.slideBullets || []).slice(0, 4).map((bullet) => <p key={bullet}>- {bullet}</p>)}
+              </div>
+            </div>
+            <p className="text-[11px] font-black uppercase tracking-[0.16em] text-stone-500">Open the PDF for the original visual layout</p>
+          </div>
+        </div>
+      )}
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 px-1">
+        <span className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{slide.deckLabel || "Capriotti LB1 deck"}</span>
+        {pdfLink ? <a href={pdfLink} target="_blank" rel="noreferrer" className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-black text-teal-800">Open PDF</a> : null}
+      </div>
+    </div>
+  );
+}
+
 function Objectives({ items = [] }) {
   if (!items.length) return null;
   return (
@@ -122,6 +174,7 @@ function SlideWalkthrough({ sections = [], resources }) {
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             {(section.slides || []).map((slide, slideIndex) => (
               <div key={`${section.title}-${slide.label || slideIndex}`} className={`rounded-[2rem] border border-stone-200 bg-stone-50 p-5 ${section.slides.length % 2 === 1 && slideIndex === section.slides.length - 1 ? "lg:col-span-2" : ""}`}>
+                <SlideAttachment slide={slide} resources={resources} />
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-600">{slide.label}</span>
                   {slide.page ? <span className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-black text-teal-800">Slide {slide.page}</span> : null}
@@ -137,6 +190,33 @@ function SlideWalkthrough({ sections = [], resources }) {
           </div>
         </article>
       ))}
+    </section>
+  );
+}
+
+function MiniLabs({ items = [] }) {
+  if (!items.length) return null;
+  return (
+    <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <SectionHeading eyebrow="Mini-labs" title="Practice like a bioinformatician">
+        Short applied drills in the style of the DNA lessons: make a decision, explain it, then check the trap.
+      </SectionHeading>
+      <div className="grid gap-4 lg:grid-cols-2">
+        {items.map((lab, index) => (
+          <article key={lab.title} className="rounded-[2rem] border border-stone-200 bg-stone-50 p-5">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-teal-700">Mini-lab {index + 1}</div>
+            <h3 className="mt-2 text-xl font-black text-stone-950">{lab.title}</h3>
+            <p className="mt-2 text-sm font-semibold leading-7 text-stone-700">{lab.goal}</p>
+            <div className="mt-4 rounded-2xl border border-stone-200 bg-white p-4">
+              <div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">Do this</div>
+              <div className="mt-2"><BulletList items={lab.steps} /></div>
+            </div>
+            {lab.output ? <StudyCallout label="Your output" tone="teal">{lab.output}</StudyCallout> : null}
+            {lab.check ? <StudyCallout label="Self-check" tone="emerald">{lab.check}</StudyCallout> : null}
+            {lab.trap ? <StudyCallout label="Trap to avoid" tone="red">{lab.trap}</StudyCallout> : null}
+          </article>
+        ))}
+      </div>
     </section>
   );
 }
@@ -252,6 +332,7 @@ export function LB1LessonTemplate({ lesson, content, interactions: Interactions,
       <SlideWalkthrough sections={content?.walkthroughSections} resources={lesson?.resources} />
       <PlannedStudyBlock lesson={lesson} />
       {Interactions ? <Interactions lesson={lesson} content={content} /> : null}
+      <MiniLabs items={content?.miniLabs} />
       <Checkpoints items={content?.checkpoints} />
       <ModelAnswer item={content?.modelAnswer} />
       <SourcesUsed lesson={lesson} notes={content?.sourceNotes} />

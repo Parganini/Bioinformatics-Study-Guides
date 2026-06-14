@@ -53,6 +53,24 @@ import { getAMLALessonComponent } from "./lessons/amla/amlaLessonRegistry.js";
 import { AMLAPlannedLesson } from "./lessons/amla/shared/template.jsx";
 import { getAMLAStatusMeta } from "./lessons/amla/shared/status.js";
 import { AMLAResourcePanel } from "./lessons/amla/shared/resourcePanel.jsx";
+import {
+  LB1_DRIVE,
+  LB1_HIGH_YIELD_QUESTIONS,
+  LB1_LESSONS,
+  LB1_MODULES,
+  LB1_STUDY_ROUTES,
+  filterLB1Lessons,
+  getAvailableLB1Lessons,
+  getLB1LessonById,
+  getLB1LessonsByModule,
+  getLB1ProgressTotal,
+  lb1LessonHref,
+} from "./lessons/lb1/lb1Manifest.js";
+import { getLB1LessonComponent } from "./lessons/lb1/lb1LessonRegistry.js";
+import { LB1PlannedLesson } from "./lessons/lb1/shared/template.jsx";
+import { getLB1StatusMeta } from "./lessons/lb1/shared/status.js";
+import { LB1ResourcePanel } from "./lessons/lb1/shared/resourcePanel.jsx";
+import { LB1ProteinIcon } from "./lessons/lb1/shared/components.jsx";
 
 const DRDExamPracticePage = React.lazy(() => import("./exams/drd/examPractice.jsx"));
 const DRDExamRadarPage = React.lazy(() => import("./exams/drd/examRadar.jsx"));
@@ -95,6 +113,9 @@ const UI = {
     appliedMLAdvanced: "Applied Machine Learning Advanced",
     appliedMLAdvancedShort: "AMLA",
     appliedMLAdvancedDesc: "Advanced study guide with slides, transcripts, recordings, Colab/notebooks, mini-labs and practice exams.",
+    laboratoryBioinformatics: "Laboratory of Bioinformatics I",
+    laboratoryBioinformaticsShort: "LB1",
+    laboratoryBioinformaticsDesc: "Slide-guided study guide for Capriotti's module: structural bioinformatics, alignments, probabilistic models, HMMs, HMMER, protein complexes and variants.",
     phylo: "Molecular Phylogenetics",
     phyloDesc: "Trilingual study guide with modules, flashcards, quizzes, glossary tools and progress tracking.",
     drd: "DNA/RNA Dynamics",
@@ -138,6 +159,9 @@ const UI = {
     appliedMLAdvanced: "Applied Machine Learning Advanced",
     appliedMLAdvancedShort: "AMLA",
     appliedMLAdvancedDesc: "Guía avanzada con slides, transcripciones, grabaciones, Colab/notebooks, mini-labs y exámenes de práctica.",
+    laboratoryBioinformatics: "Laboratory of Bioinformatics I",
+    laboratoryBioinformaticsShort: "LB1",
+    laboratoryBioinformaticsDesc: "Slide-guided study guide for Capriotti's module: structural bioinformatics, alignments, probabilistic models, HMMs, HMMER, protein complexes and variants.",
     phylo: "Filogenética Molecular",
     phyloDesc: "Guía trilingüe con módulos, flashcards, quizzes, glosario y seguimiento de progreso.",
     drd: "DNA/RNA Dynamics",
@@ -181,6 +205,9 @@ const UI = {
     appliedMLAdvanced: "Applied Machine Learning Advanced",
     appliedMLAdvancedShort: "AMLA",
     appliedMLAdvancedDesc: "راهنمای پیشرفته با اسلایدها، رونوشت‌ها، ضبط‌ها، notebook/Colab، مینی‌لب‌ها و تمرین آزمون.",
+    laboratoryBioinformatics: "Laboratory of Bioinformatics I",
+    laboratoryBioinformaticsShort: "LB1",
+    laboratoryBioinformaticsDesc: "Slide-guided study guide for Capriotti's module: structural bioinformatics, alignments, probabilistic models, HMMs, HMMER, protein complexes and variants.",
     phylo: "تبارزایی مولکولی",
     phyloDesc: "راهنمای سه‌زبانه با ماژول‌ها، فلش‌کارت‌ها، آزمونک‌ها، واژه‌نامه و پیگیری پیشرفت.",
     drd: "DNA/RNA Dynamics",
@@ -692,6 +719,7 @@ function drdCopy() {
 function currentMode() {
   const path = window.location.pathname.toLowerCase();
   if (path.includes("/amla/")) return "amla";
+  if (path.includes("/lb1/")) return "lb1";
   if (path.includes("/amlb/")) return "amlb";
   if (path.includes("/mp/")) return "mp";
   if (path.includes("/drd/")) return "drd";
@@ -750,6 +778,12 @@ function Header({ lang, setLang, mode, t }) {
       icon: "AMLA",
       iconClass: "bg-red-700",
     },
+    lb1: {
+      title: t.laboratoryBioinformatics,
+      subtitle: `${t.laboratoryBioinformaticsShort} · ${t.studyTools}`,
+      icon: "LB1",
+      iconClass: "bg-teal-700",
+    },
     mp: {
       title: t.phylo,
       subtitle: `${t.modules} · ${t.studyTools}`,
@@ -780,8 +814,8 @@ function Hero({ eyebrow, title, subtitle, actions, visual }) {
 }
 
 function HubApp({ t }) {
-  return <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.builtFor} title={<>{t.studyHub}</>} subtitle={t.hubSubtitle} actions={<><a href="AMLB/index.html" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-red-800">{t.appliedML}</a><a href="AMLA/index.html" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100">{t.appliedMLAdvancedShort}</a><a href="MP/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.phylo}</a><a href="DRD/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.drd}</a><a href="AG/index.html" className="rounded-full border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm font-black text-emerald-700 transition hover:-translate-y-0.5 hover:bg-emerald-100">{t.appliedGenomicsShort}</a></>} visual={<div><div className="flex items-start justify-between gap-4"><div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.publishedFolders}</div><div className="mt-2 text-2xl font-black text-stone-950">AMLB · AMLA · MP · DRD · AG</div><div className="mt-1 text-sm font-semibold text-stone-500">{t.sourceText}</div></div><div className="rounded-2xl bg-stone-950 px-3 py-2 text-sm font-black text-white">5</div></div><div className="mt-6 rounded-[2rem] bg-[#fffaf0] p-4"><MiniTreeIcon active/><div className="mt-3"><ProgressBar value={50}/></div></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyTools}</div><p className="mt-2 text-lg font-bold leading-7">{t.tools.join(" · ")}</p></div></div>} />
-    <section id="subjects" className="mt-10"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div><div className="grid gap-5 sm:grid-cols-2"><SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/><SubjectCard href="AMLA/index.html" title={t.appliedMLAdvanced} desc={t.appliedMLAdvancedDesc} progressKey="amla_progress_v1" total={getAMLAProgressTotal()} icon="AMLA"/><SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/><SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={getDRDProgressTotal()} icon="DRD"/><SubjectCard href="AG/index.html" title={t.appliedGenomics} desc={t.appliedGenomicsDesc} progressKey="ag_progress_v1" total={1} icon="AG"/></div></section>
+  return <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.builtFor} title={<>{t.studyHub}</>} subtitle={t.hubSubtitle} actions={<><a href="AMLB/index.html" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-red-800">{t.appliedML}</a><a href="AMLA/index.html" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100">{t.appliedMLAdvancedShort}</a><a href="LB1/index.html" className="rounded-full border border-teal-200 bg-teal-50 px-5 py-3 text-sm font-black text-teal-800 transition hover:-translate-y-0.5 hover:bg-teal-100">{t.laboratoryBioinformaticsShort}</a><a href="MP/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.phylo}</a><a href="DRD/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.drd}</a><a href="AG/index.html" className="rounded-full border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm font-black text-emerald-700 transition hover:-translate-y-0.5 hover:bg-emerald-100">{t.appliedGenomicsShort}</a></>} visual={<div><div className="flex items-start justify-between gap-4"><div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.publishedFolders}</div><div className="mt-2 text-2xl font-black text-stone-950">AMLB · AMLA · LB1 · MP · DRD · AG</div><div className="mt-1 text-sm font-semibold text-stone-500">{t.sourceText}</div></div><div className="rounded-2xl bg-stone-950 px-3 py-2 text-sm font-black text-white">6</div></div><div className="mt-6 rounded-[2rem] bg-[#fffaf0] p-4"><MiniTreeIcon active/><div className="mt-3"><ProgressBar value={50}/></div></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyTools}</div><p className="mt-2 text-lg font-bold leading-7">{t.tools.join(" · ")}</p></div></div>} />
+    <section id="subjects" className="mt-10"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div><div className="grid gap-5 sm:grid-cols-2"><SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/><SubjectCard href="AMLA/index.html" title={t.appliedMLAdvanced} desc={t.appliedMLAdvancedDesc} progressKey="amla_progress_v1" total={getAMLAProgressTotal()} icon="AMLA"/><SubjectCard href="LB1/index.html" title={t.laboratoryBioinformatics} desc={t.laboratoryBioinformaticsDesc} progressKey="lb1_progress_v1" total={getLB1ProgressTotal()} icon="LB1"/><SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/><SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={getDRDProgressTotal()} icon="DRD"/><SubjectCard href="AG/index.html" title={t.appliedGenomics} desc={t.appliedGenomicsDesc} progressKey="ag_progress_v1" total={1} icon="AG"/></div></section>
     <section id="tools" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.studyTools}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.quickReview}</h2><p className="mt-2 max-w-2xl leading-7 text-stone-600">{t.sourceText}</p></div><div className="grid gap-3 md:grid-cols-5">{t.tools.map(tool => <div key={tool} className="rounded-2xl border border-stone-200 bg-white p-4 text-sm font-black text-stone-800 shadow-sm">{tool}</div>)}</div></section></main>;
 }
 function SubjectCard({ href, title, desc, progressKey, total, icon }) {
@@ -842,6 +876,203 @@ function GenomicsApp({ t, hash }) {
         <a href="#/practice-exam" className="inline-flex rounded-full bg-emerald-700 px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-emerald-800">Start now</a>
       </section>
     </main>
+  );
+}
+
+function LB1App({ t, hash }) {
+  const [progress, setProgress] = useState(() => getJSON("lb1_progress_v1", {}));
+  const [query, setQuery] = useState("");
+  const save = (next) => { setProgress(next); setJSON("lb1_progress_v1", next); };
+  const toggle = (id) => save({ ...progress, [id]: !progress[id] });
+  const lessonId = (hash.match(/^#\/lesson\/(.+)$/) || [])[1];
+
+  if (lessonId) {
+    const lesson = getLB1LessonById(lessonId);
+    if (lesson) {
+      const LessonComponent = getLB1LessonComponent(lesson.componentKey);
+      const sharedProps = { lesson, lang: "en", isDone: !!progress[lesson.id], toggle: () => toggle(lesson.id) };
+      return LessonComponent ? (
+        <React.Suspense fallback={<DRDRouteLoading label={`${lesson.code} - ${lesson.title}`} eyebrow="Loading LB1 lesson" />}>
+          <LessonComponent {...sharedProps} />
+        </React.Suspense>
+      ) : <LB1PlannedLesson {...sharedProps} />;
+    }
+  }
+
+  const availableLessons = getAvailableLB1Lessons();
+  const completed = availableLessons.filter((lesson) => progress[lesson.id]).length;
+  const availableTotal = getLB1ProgressTotal();
+  const percent = availableTotal ? completed / availableTotal * 100 : 0;
+  const planned = LB1_LESSONS.filter((lesson) => lesson.status !== "available").length;
+  const filteredModules = LB1_MODULES.map((module) => ({
+    ...module,
+    lessons: filterLB1Lessons(getLB1LessonsByModule(module.id), query),
+  }));
+
+  return (
+    <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
+      <Hero
+        eyebrow="LB1 study guide"
+        title={<>{t.laboratoryBioinformatics} <span className="text-teal-700">Guide</span></>}
+        subtitle={t.laboratoryBioinformaticsDesc}
+        actions={(
+          <>
+            <a href="#/lesson/lb1-00-module-overview" className="rounded-full bg-teal-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-teal-900/10 transition hover:bg-teal-800">Start module</a>
+            <a href="#hmm-route" className="rounded-full border border-teal-200 bg-teal-50 px-5 py-3 text-sm font-black text-teal-800 transition hover:bg-teal-100">HMMs route</a>
+            <a href="#project-route" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">Project route</a>
+            <a href="#high-yield" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-100">High-yield review</a>
+          </>
+        )}
+        visual={(
+          <div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-teal-700">Progress</div>
+            <div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{completed} / {availableTotal} full lessons completed</p>
+            <div className="mt-5"><ProgressBar value={percent}/></div>
+            <div className="mt-6 rounded-[2rem] bg-teal-50 p-4"><LB1ProteinIcon /></div>
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Decks</div><div className="mt-1 text-2xl font-black">{LB1_LESSONS.length}</div></div>
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Available</div><div className="mt-1 text-2xl font-black">{availableTotal}</div></div>
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Planned</div><div className="mt-1 text-2xl font-black">{planned}</div></div>
+            </div>
+          </div>
+        )}
+      />
+
+      <section className="mt-8 grid gap-5 lg:grid-cols-3">
+        <Stat label="Source corpus" value="Capriotti" note="All lesson cards link to the central LB1 Drive folder and deck PDFs." />
+        <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm lg:col-span-2">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-teal-700">What Capriotti expects</div>
+          <div className="mt-4 grid gap-3 md:grid-cols-4">
+            {["Explain tools, not only run them", "Connect question to method", "Justify inference and annotation", "State model assumptions"].map((item) => <div key={item} className="rounded-3xl border border-stone-200 bg-stone-50 p-4 text-sm font-bold leading-6 text-stone-700">{item}</div>)}
+          </div>
+        </div>
+      </section>
+
+      <section className="mt-10 grid gap-5 lg:grid-cols-4">
+        {LB1_STUDY_ROUTES.map((route) => (
+          <article key={route.title} id={route.title === "HMMs route" ? "hmm-route" : route.title === "Project route" ? "project-route" : undefined} className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm">
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-teal-700">Study route</div>
+            <h2 className="mt-2 text-xl font-black text-stone-950">{route.title}</h2>
+            <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{route.body}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {route.lessonIds.map((id) => {
+                const lesson = getLB1LessonById(id);
+                return lesson ? <a key={id} href={lb1LessonHref(lesson)} className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-black text-teal-800">{lesson.code}</a> : null;
+              })}
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <section id="lessons" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/75 p-5 shadow-sm md:p-6">
+        <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-teal-700">Chronological lesson map</div>
+            <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">LB1 decks and study route</h2>
+          </div>
+          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search title, deck, concept, tag..." className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-stone-700 outline-none transition placeholder:text-stone-400 focus:border-teal-300 focus:ring-4 focus:ring-teal-100 md:w-80"/>
+        </div>
+        <div className="space-y-6">
+          {filteredModules.map((module) => <LB1Module key={module.id} module={module} units={module.lessons} progress={progress} toggle={toggle} />)}
+        </div>
+      </section>
+
+      <LB1SourcesSection />
+      <LB1HighYieldSection />
+    </main>
+  );
+}
+
+function LB1Module({ module, units, progress, toggle }) {
+  const available = units.filter((unit) => unit.status === "available");
+  const done = available.filter((unit) => progress[unit.id]).length;
+  const percent = available.length ? done / available.length * 100 : 0;
+  return (
+    <article className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm">
+      <div className="grid gap-4 border-b border-stone-200 bg-stone-50 p-5 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
+        <div>
+          <div className="text-xs font-black uppercase tracking-[0.2em] text-teal-700">{module.code}</div>
+          <h3 className="mt-1 text-2xl font-black text-stone-950">{module.shortTitle}</h3>
+        </div>
+        <div>
+          <p className="text-sm font-semibold leading-6 text-stone-600">{module.description}</p>
+          <div className="mt-3"><ProgressBar value={percent}/></div>
+          <p className="mt-2 text-xs font-bold text-stone-500">{done} / {available.length} available lessons completed</p>
+        </div>
+      </div>
+      <div className="grid gap-4 p-4 lg:grid-cols-2">
+        {units.map(unit => <LB1UnitCard key={unit.id} unit={unit} isDone={!!progress[unit.id]} toggle={() => toggle(unit.id)} />)}
+        {!units.length ? <p className="p-4 text-sm font-bold text-stone-500">No lessons match this search.</p> : null}
+      </div>
+    </article>
+  );
+}
+
+function LB1UnitCard({ unit, isDone, toggle }) {
+  const status = getLB1StatusMeta(unit.status);
+  return (
+    <article className="rounded-[1.6rem] border border-stone-200 bg-white p-5 shadow-sm">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <span className="rounded-full border border-teal-200 bg-teal-50 px-3 py-1 text-xs font-black text-teal-800">{unit.code}</span>
+        <span className={`rounded-full border px-3 py-1 text-xs font-black ${status.className}`}>{status.label}</span>
+      </div>
+      <h4 className="mt-4 text-xl font-black leading-7 text-stone-950">{unit.title}</h4>
+      <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{unit.summary}</p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {(unit.tags || []).slice(0, 5).map((tag) => <span key={tag} className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs font-bold text-stone-600">{tag}</span>)}
+      </div>
+      <div className="mt-4 rounded-2xl border border-stone-200 bg-stone-50 p-4">
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Source deck</div>
+        <div className="mt-1 text-sm font-black text-stone-950">{unit.sourceDeck}</div>
+      </div>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <a href={lb1LessonHref(unit)} className="rounded-full bg-teal-700 px-4 py-2 text-xs font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-teal-800">Open lesson</a>
+        <button type="button" onClick={toggle} className={`rounded-full px-4 py-2 text-xs font-black transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 text-white" : "bg-stone-950 text-white"}`}>{isDone ? "Completed" : "Mark done"}</button>
+      </div>
+      <LB1ResourcePanel lesson={unit} title="Resources" />
+    </article>
+  );
+}
+
+function LB1SourcesSection() {
+  const sourceLesson = {
+    driveFolder: LB1_DRIVE.root,
+    resources: {
+      transcript: LB1_DRIVE.transcriptions,
+      audio: LB1_DRIVE.audio,
+      recording: LB1_DRIVE.recordingsDoc,
+      notebook: LB1_DRIVE.projectNotebook,
+      projectIterativeNotebook: LB1_DRIVE.projectIterativeNotebook,
+      icon: LB1_DRIVE.icon,
+    },
+  };
+  return (
+    <section id="resources" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <div className="mb-5">
+        <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-teal-700">Source corpus</div>
+        <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Capriotti LB1 sources</h2>
+        <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600">The dashboard uses the Capriotti Drive folder as the central course structure. Transcript and audio folders are linked as support, not as invented professor comments.</p>
+      </div>
+      <LB1ResourcePanel lesson={sourceLesson} title="Course resources" />
+    </section>
+  );
+}
+
+function LB1HighYieldSection() {
+  return (
+    <section id="high-yield" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <div className="mb-5">
+        <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">High-yield review</div>
+        <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Questions to practice out loud</h2>
+        <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600">Use these as short oral/written answer prompts. A strong answer defines the concept, states the workflow or model, and names the common trap.</p>
+      </div>
+      <div className="grid gap-3 md:grid-cols-2">
+        {LB1_HIGH_YIELD_QUESTIONS.map((question, index) => (
+          <div key={question} className="rounded-2xl border border-stone-200 bg-stone-50 p-4 text-sm font-bold leading-6 text-stone-700">{index + 1}. {question}</div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -2138,13 +2369,13 @@ function App() {
   const [lang, setLangState] = useState(getInitialLang);
   const mode = currentMode();
   const hash = useHash();
-  const displayLang = mode === "ag" ? "en" : lang;
+  const displayLang = mode === "ag" || mode === "lb1" ? "en" : lang;
   const t = UI[displayLang] || UI.es;
-  const headerLang = mode === "ag" ? lang : displayLang;
+  const headerLang = mode === "ag" || mode === "lb1" ? lang : displayLang;
   const dir = LANGS.find(x => x.code === displayLang)?.dir || "ltr";
   const setLang = (next) => { localStorage.setItem("studyhub_lang", next); localStorage.setItem("phylo_lang", next); setLangState(next); };
   useEffect(() => { document.documentElement.lang = displayLang; document.documentElement.dir = dir; }, [displayLang, dir]);
-  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={headerLang} setLang={setLang} mode={mode} t={t}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={displayLang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={displayLang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
+  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={headerLang} setLang={setLang} mode={mode} t={t}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "lb1" ? <LB1App t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={displayLang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={displayLang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
 }
 
 createRoot(document.getElementById("root")).render(<App />);

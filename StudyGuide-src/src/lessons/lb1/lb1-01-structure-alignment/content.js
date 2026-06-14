@@ -54,7 +54,7 @@ export const lessonContent = {
         {
           label: "Core definition",
           page: 3,
-          image: "/lb1-slides/01-structure-alignment/slide-03.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-03.jpg",
           alt: "Slide 3 from 1-Structure-Alignment.pdf defining structure superimposition",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structure superimposition",
@@ -69,7 +69,7 @@ export const lessonContent = {
         {
           label: "Core definition",
           page: 6,
-          image: "/lb1-slides/01-structure-alignment/slide-06.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-06.jpg",
           alt: "Slide 6 from 1-Structure-Alignment.pdf defining structural alignment and correspondence sets",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structural alignment",
@@ -84,7 +84,7 @@ export const lessonContent = {
         {
           label: "Exam contrast",
           page: 8,
-          image: "/lb1-slides/01-structure-alignment/slide-08.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-08.jpg",
           alt: "Slide 8 from 1-Structure-Alignment.pdf contrasting superimposition and alignment",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Superimposition vs alignment",
@@ -106,7 +106,7 @@ export const lessonContent = {
         {
           label: "Transformation",
           page: 4,
-          image: "/lb1-slides/01-structure-alignment/slide-04.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-04.jpg",
           alt: "Slide 4 from 1-Structure-Alignment.pdf showing the rigid-body transformation formula",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Y = G(X) = A*X + B",
@@ -120,7 +120,7 @@ export const lessonContent = {
         {
           label: "RMSD",
           page: 5,
-          image: "/lb1-slides/01-structure-alignment/slide-05.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-05.jpg",
           alt: "Slide 5 from 1-Structure-Alignment.pdf explaining RMSD after superimposition",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Root mean square deviation",
@@ -141,7 +141,7 @@ export const lessonContent = {
         {
           label: "Comparison pipeline",
           page: 9,
-          image: "/lb1-slides/01-structure-alignment/slide-09.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-09.jpg",
           alt: "Slide 9 from 1-Structure-Alignment.pdf showing a structure-comparison pipeline",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structures comparison",
@@ -156,7 +156,7 @@ export const lessonContent = {
         {
           label: "Domains and flexibility",
           page: 11,
-          image: "/lb1-slides/01-structure-alignment/slide-11.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-11.jpg",
           alt: "Slide 11 from 1-Structure-Alignment.pdf about levels of comparison and domains",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Level of comparison / multi-domain alignment",
@@ -170,7 +170,7 @@ export const lessonContent = {
         {
           label: "Method families",
           page: 15,
-          image: "/lb1-slides/01-structure-alignment/slide-15.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-15.jpg",
           alt: "Slide 15 from 1-Structure-Alignment.pdf listing structural alignment method classes",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structural alignment tools",
@@ -191,7 +191,7 @@ export const lessonContent = {
         {
           label: "Torsion angles",
           page: 18,
-          image: "/lb1-slides/01-structure-alignment/slide-18.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-18.jpg",
           alt: "Slide 18 from 1-Structure-Alignment.pdf about comparing torsion angles",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Comparing torsion angles",
@@ -205,7 +205,7 @@ export const lessonContent = {
         {
           label: "Distance matrix",
           page: 19,
-          image: "/lb1-slides/01-structure-alignment/slide-19.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-19.jpg",
           alt: "Slide 19 from 1-Structure-Alignment.pdf about distance matrices",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Distance matrix",
@@ -219,7 +219,7 @@ export const lessonContent = {
         {
           label: "Algorithm input-output",
           page: 21,
-          image: "/lb1-slides/01-structure-alignment/slide-21.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-21.jpg",
           alt: "Slide 21 from 1-Structure-Alignment.pdf describing inputs and outputs of an alignment algorithm",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Input/output of an alignment algorithm",
@@ -233,7 +233,7 @@ export const lessonContent = {
         {
           label: "CE and MAMMOTH",
           page: 25,
-          image: "/lb1-slides/01-structure-alignment/slide-25.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-25.jpg",
           alt: "Slide 25 from 1-Structure-Alignment.pdf introducing CE and MAMMOTH-style algorithm ideas",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "CE algorithm / MAMMOTH algorithm",
@@ -254,7 +254,7 @@ export const lessonContent = {
         {
           label: "Python exercise",
           page: 33,
-          image: "/lb1-slides/01-structure-alignment/slide-33.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-33.jpg",
           alt: "Slide 33 from 1-Structure-Alignment.pdf with the structure superimposition exercise",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structure superimposition exercise",
@@ -268,7 +268,7 @@ export const lessonContent = {
         {
           label: "RNA structures",
           page: 38,
-          image: "/lb1-slides/01-structure-alignment/slide-38.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-38.jpg",
           alt: "Slide 38 from 1-Structure-Alignment.pdf introducing RNA structural alignment",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "RNA structural alignment",
@@ -289,7 +289,7 @@ export const lessonContent = {
         {
           label: "Low sequence identity",
           page: 10,
-          image: "/lb1-slides/01-structure-alignment/slide-10.jpg",
+          image: "../lb1-slides/01-structure-alignment/slide-10.jpg",
           alt: "Slide 10 from 1-Structure-Alignment.pdf about structural similarity under low sequence identity",
           deckLabel: "1-Structure-Alignment.pdf",
           slideTitle: "Structural similarity under low sequence identity",

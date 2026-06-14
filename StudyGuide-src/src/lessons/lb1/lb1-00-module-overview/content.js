@@ -68,7 +68,7 @@ export const lessonContent = {
         {
           label: "Course overview",
           page: 1,
-          image: "/lb1-slides/00-module-overview/slide-01.jpg",
+          image: "../lb1-slides/00-module-overview/slide-01.jpg",
           alt: "Slide 1 from 0-Module-LSB1-2.pdf introducing Laboratory of Bioinformatics I Module 2",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Laboratory of Bioinformatics I - Module 2",
@@ -82,7 +82,7 @@ export const lessonContent = {
         {
           label: "Main aims",
           page: 2,
-          image: "/lb1-slides/00-module-overview/slide-02.jpg",
+          image: "../lb1-slides/00-module-overview/slide-02.jpg",
           alt: "Slide 2 from 0-Module-LSB1-2.pdf listing the main aims of the module",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Main aims",
@@ -96,7 +96,7 @@ export const lessonContent = {
         {
           label: "Topic map",
           page: 3,
-          image: "/lb1-slides/00-module-overview/slide-03.jpg",
+          image: "../lb1-slides/00-module-overview/slide-03.jpg",
           alt: "Slide 3 from 0-Module-LSB1-2.pdf listing the module topics",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Topics",
@@ -117,7 +117,7 @@ export const lessonContent = {
         {
           label: "Structural bioinformatics",
           page: 4,
-          image: "/lb1-slides/00-module-overview/slide-04.jpg",
+          image: "../lb1-slides/00-module-overview/slide-04.jpg",
           alt: "Slide 4 from 0-Module-LSB1-2.pdf introducing structural alignment concepts",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Structural alignment",
@@ -131,7 +131,7 @@ export const lessonContent = {
         {
           label: "Sequence alignment recap",
           page: 6,
-          image: "/lb1-slides/00-module-overview/slide-06.jpg",
+          image: "../lb1-slides/00-module-overview/slide-06.jpg",
           alt: "Slide 6 from 0-Module-LSB1-2.pdf reviewing sequence alignment scoring ideas",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Sequence alignment",
@@ -145,7 +145,7 @@ export const lessonContent = {
         {
           label: "Twilight zone",
           page: 10,
-          image: "/lb1-slides/00-module-overview/slide-10.jpg",
+          image: "../lb1-slides/00-module-overview/slide-10.jpg",
           alt: "Slide 10 from 0-Module-LSB1-2.pdf about sequence identity and structural similarity",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Sequence identity and structure similarity",
@@ -167,7 +167,7 @@ export const lessonContent = {
         {
           label: "Annotation transfer",
           page: 13,
-          image: "/lb1-slides/00-module-overview/slide-13.jpg",
+          image: "../lb1-slides/00-module-overview/slide-13.jpg",
           alt: "Slide 13 from 0-Module-LSB1-2.pdf about transferring information from known proteins",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Transfer of information",
@@ -182,7 +182,7 @@ export const lessonContent = {
         {
           label: "Counterexamples",
           page: 17,
-          image: "/lb1-slides/00-module-overview/slide-17.jpg",
+          image: "../lb1-slides/00-module-overview/slide-17.jpg",
           alt: "Slide 17 from 0-Module-LSB1-2.pdf showing annotation-transfer caveats",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Same family, different function",
@@ -203,7 +203,7 @@ export const lessonContent = {
         {
           label: "Cytochrome C cases",
           page: 25,
-          image: "/lb1-slides/00-module-overview/slide-25.jpg",
+          image: "../lb1-slides/00-module-overview/slide-25.jpg",
           alt: "Slide 25 from 0-Module-LSB1-2.pdf with a cytochrome C comparison example",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Similar structures, shifted details",
@@ -217,7 +217,7 @@ export const lessonContent = {
         {
           label: "Better alignment",
           page: 30,
-          image: "/lb1-slides/00-module-overview/slide-30.jpg",
+          image: "../lb1-slides/00-module-overview/slide-30.jpg",
           alt: "Slide 30 from 0-Module-LSB1-2.pdf motivating better alignments and profile information",
           deckLabel: "0-Module-LSB1-2.pdf",
           slideTitle: "Search for better alignment",

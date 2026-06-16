@@ -9,9 +9,11 @@ function getResourceHref(lesson, key) {
   return typeof value === "string" ? value : null;
 }
 
-function pendingText(value) {
+function pendingMeta(value) {
   if (!value || typeof value === "string") return null;
-  return value.todo || value.note || "Resource pending.";
+  if (value.todo) return { type: "Missing link", text: value.todo, className: "border-amber-200 bg-amber-50 text-amber-900" };
+  if (value.note) return { type: "Note", text: value.note, className: "border-stone-200 bg-white text-stone-700" };
+  return { type: "Resource pending", text: "Resource pending.", className: "border-amber-200 bg-amber-50 text-amber-900" };
 }
 
 export function AMLAResourcePanel({ lesson, title = "Class resources" }) {
@@ -22,8 +24,8 @@ export function AMLAResourcePanel({ lesson, title = "Class resources" }) {
     const href = getResourceHref(lesson, key);
     const label = AMLA_RESOURCE_LABELS[key] || key;
     if (href) links.push({ key, href, label });
-    const todo = pendingText(lesson?.resources?.[key]);
-    if (todo) pending.push({ key, label, todo });
+    const meta = pendingMeta(lesson?.resources?.[key]);
+    if (meta) pending.push({ key, label, ...meta });
   }
 
   return (
@@ -49,8 +51,9 @@ export function AMLAResourcePanel({ lesson, title = "Class resources" }) {
       {pending.length ? (
         <div className="mt-3 grid gap-2">
           {pending.map((item) => (
-            <div key={item.key} className="rounded-2xl border border-amber-200 bg-amber-50 p-3 text-xs font-bold leading-5 text-amber-900">
-              {item.label}: {item.todo}
+            <div key={item.key} className={`rounded-2xl border p-3 text-xs font-bold leading-5 ${item.className}`}>
+              <span className="mr-2 rounded-full bg-white/70 px-2 py-1 font-black uppercase tracking-[0.12em]">{item.type}</span>
+              {item.label}: {item.text}
             </div>
           ))}
         </div>

@@ -344,6 +344,50 @@ function ChecklistBlock({ items = [], title = "Study checklist" }) {
   );
 }
 
+function chooseChecklistItems(items, pattern, fallbackStart = 0) {
+  const matches = items.filter((item) => pattern.test(item)).slice(0, 3);
+  if (matches.length) return matches;
+  return items.slice(fallbackStart, fallbackStart + 3);
+}
+
+function StudyCloseout({ items = [] }) {
+  if (!items.length) return null;
+  const cards = [
+    {
+      title: "Exam takeaways",
+      tone: "border-red-100 bg-red-50 text-red-950",
+      items: items.slice(0, 3),
+    },
+    {
+      title: "Project relevance",
+      tone: "border-emerald-100 bg-emerald-50 text-emerald-950",
+      items: chooseChecklistItems(items, /project|report|baseline|interpret|metric|visual|failure|explain|xai|fluocells|advanced/i, 1),
+    },
+    {
+      title: "Explain orally",
+      tone: "border-amber-200 bg-amber-50 text-amber-950",
+      items: chooseChecklistItems(items, /explain|justify|describe|compare|state|connect|why|interpret/i, Math.max(items.length - 3, 0)),
+    },
+  ];
+  return (
+    <section className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <SectionHeading eyebrow="Final study closeout" title="Use this before leaving the lesson">
+        Keep the ending practical: what you should remember, how it supports the project, and what you should be able to say without notes.
+      </SectionHeading>
+      <div className="grid gap-4 lg:grid-cols-3">
+        {cards.map((card) => (
+          <article key={card.title} className={`rounded-[2rem] border p-5 ${card.tone}`}>
+            <h3 className="text-lg font-black">{card.title}</h3>
+            <div className="mt-3">
+              <BulletList items={card.items} />
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function AMLALessonTemplate({ lesson, content, interactions: Interactions, isDone = false, toggle = () => {} }) {
   const status = getAMLAStatusMeta(lesson?.status);
   const extractionStatus = content?.extractionStatus || "source-based content unavailable";
@@ -381,6 +425,7 @@ export function AMLALessonTemplate({ lesson, content, interactions: Interactions
       <QuickQuiz items={content?.quickQuiz} />
       <ExamQuestions items={content?.examQuestions} />
       <ChecklistBlock items={content?.studyChecklist} title={content?.checklistTitle} />
+      <StudyCloseout items={content?.studyChecklist} />
       <AMLACanonicalNavigation lesson={lesson} isDone={isDone} toggle={toggle} bottom />
     </main>
   );

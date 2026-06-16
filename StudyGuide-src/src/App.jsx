@@ -1079,6 +1079,7 @@ function LB1HighYieldSection() {
 function AMLAApp({ t, hash }) {
   const [progress, setProgress] = useState(() => getJSON("amla_progress_v1", {}));
   const [query, setQuery] = useState("");
+  const [quickFilter, setQuickFilter] = useState("all");
   const save = (next) => { setProgress(next); setJSON("amla_progress_v1", next); };
   const toggle = (id) => save({ ...progress, [id]: !progress[id] });
   const lessonId = (hash.match(/^#\/lesson\/(.+)$/) || [])[1];
@@ -1108,10 +1109,29 @@ function AMLAApp({ t, hash }) {
   const completed = availableLessons.filter((lesson) => progress[lesson.id]).length;
   const availableTotal = getAMLAProgressTotal();
   const percent = availableTotal ? completed / availableTotal * 100 : 0;
-  const module1 = filterAMLALessons(getAMLALessonsByModule("module-1"), query);
-  const module2 = filterAMLALessons(getAMLALessonsByModule("module-2"), query);
+  const quickFilters = [
+    { id: "all", label: "All" },
+    { id: "exam", label: "Exam" },
+    { id: "project", label: "Project" },
+    { id: "mini-lab", label: "Mini-lab" },
+    { id: "notebook", label: "Notebook/code" },
+    { id: "fluocells", label: "Fluocells" },
+    { id: "xai", label: "XAI" },
+  ];
+  const applyQuickFilter = (lessons) => lessons.filter((lesson) => {
+    if (quickFilter === "all") return true;
+    const haystack = `${lesson.title} ${lesson.summary} ${lesson.lessonType} ${(lesson.tags || []).join(" ")} ${(lesson.products || []).join(" ")}`.toLowerCase();
+    if (quickFilter === "notebook") return Boolean(typeof lesson.resources?.notebook === "string" && lesson.resources.notebook || typeof lesson.resources?.code === "string" && lesson.resources.code);
+    if (quickFilter === "mini-lab") return /mini-lab|hands-on|practice/.test(haystack);
+    if (quickFilter === "xai") return /xai|shap|lime|explain/.test(haystack);
+    return haystack.includes(quickFilter);
+  });
+  const module1 = applyQuickFilter(filterAMLALessons(getAMLALessonsByModule("module-1"), query));
+  const module2 = applyQuickFilter(filterAMLALessons(getAMLALessonsByModule("module-2"), query));
   const pending = AMLA_LESSONS.filter((lesson) => lesson.status !== "available").length;
   const miniLabs = AMLA_LESSONS.filter((lesson) => /mini-lab|hands-on|practice|project/i.test(`${lesson.lessonType} ${lesson.products?.join(" ")}`));
+  const notebookCount = AMLA_LESSONS.filter((lesson) => Boolean(typeof lesson.resources?.notebook === "string" && lesson.resources.notebook || typeof lesson.resources?.code === "string" && lesson.resources.code)).length;
+  const pendingResourceCount = AMLA_LESSONS.reduce((count, lesson) => count + Object.values(lesson.resources || {}).filter((value) => value && typeof value === "object").length, 0);
 
   return (
     <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
@@ -1146,15 +1166,20 @@ function AMLAApp({ t, hash }) {
         )}
       />
 
-      <section className="mt-8 grid gap-5 lg:grid-cols-3">
-        <Stat label="Available resources" value="Drive" note="Slides, transcripts, recordings, notebooks and project docs are manifest-linked." />
-        <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm lg:col-span-2">
+      <section className="mt-8 grid gap-5 lg:grid-cols-4">
+        <Stat label="Lessons" value={AMLA_LESSONS.length} note="All AMLA classes are available in chronological order." />
+        <Stat label="Mini-labs" value={miniLabs.length} note="Hands-on checkpoints across neural nets, vision, XAI and final review." />
+        <Stat label="Notebook/code" value={notebookCount} note="Real linked notebooks or code resources only." />
+        <Stat label="Resources pending" value={pendingResourceCount} note="Explicit TODOs where no verified link exists." />
+        <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm lg:col-span-4">
           <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Study workflow</div>
           <div className="mt-4 grid gap-3 md:grid-cols-3">
             {["Read the static slide path, then open the PDF for detail", "Use transcript notes for professor emphasis and exam traps", "Run or inspect mini-labs, then explain outputs and project relevance"].map((item) => <div key={item} className="rounded-3xl border border-stone-200 bg-stone-50 p-4 text-sm font-bold leading-6 text-stone-700">{item}</div>)}
           </div>
         </div>
       </section>
+
+      <AMLAFocusCards />
 
       <section id="lessons" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/75 p-5 shadow-sm md:p-6">
         <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
@@ -1163,6 +1188,18 @@ function AMLAApp({ t, hash }) {
             <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">AMLA lessons</h2>
           </div>
           <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search topic, concept, notebook..." className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-stone-700 outline-none transition placeholder:text-stone-400 focus:border-red-300 focus:ring-4 focus:ring-red-100 md:w-80"/>
+        </div>
+        <div className="mb-5 flex flex-wrap gap-2">
+          {quickFilters.map((filter) => (
+            <button
+              key={filter.id}
+              type="button"
+              onClick={() => setQuickFilter(filter.id)}
+              className={`rounded-full px-4 py-2 text-xs font-black transition ${quickFilter === filter.id ? "bg-red-700 text-white shadow-sm" : "border border-stone-200 bg-white text-stone-600 hover:bg-stone-50"}`}
+            >
+              {filter.label}
+            </button>
+          ))}
         </div>
         <AMLAModule module={AMLA_MODULES.find((module) => module.id === "module-1")} units={module1} progress={progress} toggle={toggle} />
         <div className="mt-6">
@@ -1175,6 +1212,46 @@ function AMLAApp({ t, hash }) {
       <AMLAProductsSection />
       <AMLAProjectSection />
     </main>
+  );
+}
+
+function AMLAFocusCards() {
+  const cards = [
+    {
+      title: "Practice Exam",
+      href: "#/practice-exam",
+      label: "72 questions",
+      body: "Filter by lesson, difficulty or tag, then review mistakes after practice or mock mode.",
+    },
+    {
+      title: "Fluocells workflow",
+      href: "#/lesson/amla-2026-05-21-vision-mini-project",
+      label: "Vision project",
+      body: "EDA, thresholding, segmentation, object-level metrics and interpretation checkpoints.",
+    },
+    {
+      title: "XAI / project interpretation",
+      href: "#/lesson/amla-2026-05-28-explainable-ai",
+      label: "Explainability",
+      body: "SHAP, LIME, local/global explanations and defensible project claims.",
+    },
+    {
+      title: "RNN + generative wrap-up",
+      href: "#/lesson/amla-2026-05-29-project-xai-sequential",
+      label: "Final review",
+      body: "RNN/BPTT/LSTM/GRU, VAE/GAN, transformers/LLMs and project expectations.",
+    },
+  ];
+  return (
+    <section className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      {cards.map((card) => (
+        <a key={card.title} href={card.href} className="rounded-[2rem] border border-stone-200 bg-white/85 p-5 shadow-sm transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">
+          <div className="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-red-700">{card.label}</div>
+          <h3 className="mt-4 text-xl font-black leading-7 text-stone-950">{card.title}</h3>
+          <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{card.body}</p>
+        </a>
+      ))}
+    </section>
   );
 }
 

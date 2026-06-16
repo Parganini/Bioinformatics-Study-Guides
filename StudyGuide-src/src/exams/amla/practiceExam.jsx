@@ -1152,6 +1152,9 @@ const QUESTIONS = [
 ];
 
 const lessonLookup = new Map(AMLA_LESSONS.map((lesson) => [lesson.id, lesson]));
+const LESSON_FILTERS = ["all", ...AMLA_LESSONS.map((lesson) => lesson.code)];
+const DIFFICULTY_FILTERS = ["all", "easy", "medium", "hard"];
+const TAG_FILTERS = ["all", ...Array.from(new Set(QUESTIONS.flatMap((question) => question.tags))).sort((a, b) => a.localeCompare(b))];
 
 function optionLabel(index) {
   return String.fromCharCode(65 + index);
@@ -1210,15 +1213,29 @@ export default function AMLAPracticeExamPage() {
   const [mode, setMode] = useState("practice");
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
+  const [lessonFilter, setLessonFilter] = useState("all");
+  const [difficultyFilter, setDifficultyFilter] = useState("all");
+  const [tagFilter, setTagFilter] = useState("all");
+  const [reviewMistakes, setReviewMistakes] = useState(false);
 
   const score = useMemo(() => QUESTIONS.filter((question) => answers[question.id] === question.correct).length, [answers]);
   const answeredCount = Object.keys(answers).length;
   const locked = mode === "mock" && submitted;
   const showFeedback = mode === "practice" || submitted;
-  const byLesson = useMemo(() => AMLA_LESSONS.map((lesson) => ({
-    lesson,
-    count: QUESTIONS.filter((question) => question.lessonId === lesson.id).length,
-  })), []);
+  const canReviewMistakes = answeredCount > 0 && score < answeredCount;
+  const filteredQuestions = useMemo(() => QUESTIONS.filter((question) => {
+    const lessonMatch = lessonFilter === "all" || question.lessonCode === lessonFilter;
+    const difficultyMatch = difficultyFilter === "all" || question.difficulty === difficultyFilter;
+    const tagMatch = tagFilter === "all" || question.tags.includes(tagFilter);
+    const mistakeMatch = !reviewMistakes || answers[question.id] !== undefined && answers[question.id] !== question.correct;
+    return lessonMatch && difficultyMatch && tagMatch && mistakeMatch;
+  }), [answers, difficultyFilter, lessonFilter, reviewMistakes, tagFilter]);
+  const byLesson = useMemo(() => AMLA_LESSONS.map((lesson) => {
+    const lessonQuestions = QUESTIONS.filter((question) => question.lessonId === lesson.id);
+    const answered = lessonQuestions.filter((question) => answers[question.id] !== undefined).length;
+    const correct = lessonQuestions.filter((question) => answers[question.id] === question.correct).length;
+    return { lesson, count: lessonQuestions.length, answered, correct };
+  }), [answers]);
 
   const setAnswer = (questionId, value) => {
     if (locked) return;
@@ -1229,6 +1246,14 @@ export default function AMLAPracticeExamPage() {
     setMode(nextMode);
     setAnswers({});
     setSubmitted(false);
+    setReviewMistakes(false);
+  };
+
+  const clearFilters = () => {
+    setLessonFilter("all");
+    setDifficultyFilter("all");
+    setTagFilter("all");
+    setReviewMistakes(false);
   };
 
   return (
@@ -1264,22 +1289,81 @@ export default function AMLAPracticeExamPage() {
           </div>
           {mode === "mock" ? <button type="button" onClick={() => setSubmitted(true)} className="mt-4 rounded-full bg-stone-950 px-5 py-3 text-sm font-black text-white hover:bg-red-800">Submit mock</button> : null}
           {locked ? <p className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-black leading-7 text-emerald-950">Final score: {score} / {QUESTIONS.length}</p> : null}
+          <button
+            type="button"
+            onClick={() => setReviewMistakes((current) => !current)}
+            disabled={!canReviewMistakes}
+            className="mt-3 rounded-full border border-stone-200 bg-white px-5 py-3 text-sm font-black text-stone-700 transition hover:bg-stone-50 disabled:cursor-not-allowed disabled:opacity-45"
+          >
+            {reviewMistakes ? "Show all filtered questions" : "Review mistakes"}
+          </button>
         </aside>
       </section>
 
+      <section className="mt-8 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="rounded-[2rem] border border-stone-200 bg-white/80 p-5 shadow-sm">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Filters</div>
+          <div className="mt-4 grid gap-3">
+            <label className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">
+              Lesson
+              <select value={lessonFilter} onChange={(event) => setLessonFilter(event.target.value)} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold normal-case tracking-normal text-stone-700">
+                {LESSON_FILTERS.map((value) => <option key={value} value={value}>{value === "all" ? "All lessons" : value}</option>)}
+              </select>
+            </label>
+            <label className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">
+              Difficulty
+              <select value={difficultyFilter} onChange={(event) => setDifficultyFilter(event.target.value)} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold normal-case tracking-normal text-stone-700">
+                {DIFFICULTY_FILTERS.map((value) => <option key={value} value={value}>{value === "all" ? "All difficulties" : value}</option>)}
+              </select>
+            </label>
+            <label className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">
+              Topic tag
+              <select value={tagFilter} onChange={(event) => setTagFilter(event.target.value)} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold normal-case tracking-normal text-stone-700">
+                {TAG_FILTERS.map((value) => <option key={value} value={value}>{value === "all" ? "All tags" : value}</option>)}
+              </select>
+            </label>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <button type="button" onClick={clearFilters} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black text-stone-700">Clear filters</button>
+            <span className="rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black text-red-700">{filteredQuestions.length} shown</span>
+          </div>
+        </div>
+
+        <div className="rounded-[2rem] border border-stone-200 bg-white/80 p-5 shadow-sm">
+          <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Coverage and score by lesson</div>
+          <div className="mt-4 grid gap-2 md:grid-cols-2">
+            {byLesson.map(({ lesson, count, answered, correct }) => (
+              <a key={lesson.id} href={amlaLessonHref(lesson)} className="rounded-2xl border border-stone-200 bg-stone-50 p-3 text-sm font-bold leading-6 text-stone-700 transition hover:bg-white">
+                <span className="font-black text-stone-950">{lesson.code}</span> · {correct}/{answered || 0} correct · {count} total
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="mt-8 rounded-[2rem] border border-stone-200 bg-white/80 p-5 shadow-sm">
-        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Coverage</div>
-        <div className="mt-4 grid gap-2 md:grid-cols-3 lg:grid-cols-4">
-          {byLesson.map(({ lesson, count }) => (
-            <a key={lesson.id} href={amlaLessonHref(lesson)} className="rounded-2xl border border-stone-200 bg-stone-50 p-3 text-sm font-bold leading-6 text-stone-700 transition hover:bg-white">
-              <span className="font-black text-stone-950">{lesson.code}</span> · {count} questions
-            </a>
+        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Review status</div>
+        <div className="mt-3 grid gap-3 md:grid-cols-3">
+          {[
+            ["Answered", `${answeredCount} / ${QUESTIONS.length}`],
+            ["Correct", `${score}`],
+            ["Current view", `${filteredQuestions.length} questions`],
+          ].map(([label, value]) => (
+            <div key={label} className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
+              <div className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">{label}</div>
+              <div className="mt-1 text-2xl font-black text-stone-950">{value}</div>
+            </div>
           ))}
         </div>
       </section>
 
       <section id="question-bank" className="mt-10 scroll-mt-28 grid gap-5">
-        {QUESTIONS.map((question, index) => (
+        {filteredQuestions.length === 0 ? (
+          <div className="rounded-[2rem] border border-stone-200 bg-white p-6 text-sm font-bold leading-7 text-stone-600">
+            No questions match the current filters.
+          </div>
+        ) : null}
+        {filteredQuestions.map((question, index) => (
           <QuestionCard
             key={question.id}
             question={question}

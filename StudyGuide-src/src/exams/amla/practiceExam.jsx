@@ -1156,8 +1156,531 @@ const LESSON_FILTERS = ["all", ...AMLA_LESSONS.map((lesson) => lesson.code)];
 const DIFFICULTY_FILTERS = ["all", "easy", "medium", "hard"];
 const TAG_FILTERS = ["all", ...Array.from(new Set(QUESTIONS.flatMap((question) => question.tags))).sort((a, b) => a.localeCompare(b))];
 
+const QUESTION_OPTION_FEEDBACK = {
+  "l01-advanced-expectation": [
+    "AMLA does not restart Python or scikit-learn from zero; it assumes that base and moves faster.",
+    "Basic ML is treated as prior knowledge, while AMLA adds neural networks, notebooks, and interpretation.",
+    "Theory matters, but the course also expects notebook work and implementation choices.",
+    "A metric without interpretation is not enough for Advanced-level project reasoning.",
+  ],
+  "l01-perceptron-linear-boundary": [
+    "A perceptron does have trainable weights; the limitation is the kind of boundary it can represent.",
+    "A single thresholded linear combination creates only one line or hyperplane, so XOR is not separable.",
+    "Perceptrons can accept numeric inputs; the failure is geometric, not about input type.",
+    "A perceptron can be used for classification; it is not restricted to continuous regression.",
+  ],
+  "l01-activation-depth": [
+    "Depth without nonlinear activations still composes linear maps, so it does not create nonlinear behavior.",
+    "Linear layers stacked together collapse to one linear transformation.",
+    "Adding Dense layers does not make the model recurrent; recurrence requires feedback through time.",
+    "Gradient descent can still run, but the model capacity is still effectively linear.",
+  ],
+  "l01-playground-overfit": [
+    "Low loss alone can hide memorization or unstable boundaries, especially in visual toy data.",
+    "Validation behavior and boundary shape show whether the model is learning a general pattern.",
+    "Removing all hidden layers may underfit; the issue is not simply the presence of depth.",
+    "Linear activation is not a general solution and may fail on nonlinear patterns.",
+  ],
+  "l01-feature-representation": [
+    "A better representation can transform a hard boundary into an easier one for the learner.",
+    "Deep learning does not forbid feature engineering; representation choices still matter.",
+    "Squared features help this example, but they are not universally optimal.",
+    "Labels are still required for supervised classification; features only change the input space.",
+  ],
+  "l01-bias-term": [
+    "The bias acts like an intercept, shifting the activation threshold independently of inputs.",
+    "A residual is an error term after prediction, not a learned shift in the neuron.",
+    "A p-value belongs to statistical testing, not the neuron equation.",
+    "A validation split is a data partition, not a parameter in the neuron.",
+  ],
+  "l02-framework-choice": [
+    "These libraries overlap in ML workflows, but they are not interchangeable names for one tool.",
+    "The framework affects baselines, neural-network construction, pretrained models, and project workflow.",
+    "TensorFlow is important in the course, but it is not the only framework capable of training networks.",
+    "Hugging Face is mainly about pretrained models and modern ML tooling, not spreadsheet analysis.",
+  ],
+  "l02-keras-relationship": [
+    "Keras is the high-level API used to define, compile, train, and evaluate models.",
+    "Numerical arrays are handled by tensor libraries; Keras is not a replacement for arrays.",
+    "Keras can produce training curves, but it is not only a plotting package.",
+    "Keras can run on accelerated backends; it does not prevent GPUs or tensors.",
+  ],
+  "l02-sequential-api": [
+    "Sequential is ideal when layers form one straight stack from input to output.",
+    "Branches and multiple inputs are better expressed with the Functional API.",
+    "The input shape still needs to be known or inferable for proper model construction.",
+    "A Sequential model still needs training through compile and fit.",
+  ],
+  "l02-functional-api": [
+    "A simple two-layer Dense classifier is usually clean enough for Sequential.",
+    "Branches, merges, and multiple inputs require graph-style model definition, which Functional supports.",
+    "Training for one epoch is a training choice, not a reason to use Functional API.",
+    "The number of output classes does not by itself require Functional API.",
+  ],
+  "l02-compile-fit-order": [
+    "You cannot fit before defining and compiling the model training recipe.",
+    "This is the standard Keras sequence: define architecture, compile, train, then evaluate.",
+    "Evaluation comes after training; it cannot be the first step.",
+    "Compilation happens before fit, but evaluation still belongs after training.",
+  ],
+  "l02-validation-split": [
+    "Keras withholds that fraction of training data to monitor validation metrics during fitting.",
+    "Test data should not update weights; it is kept for final evaluation.",
+    "The value is a data split fraction, not the learning rate.",
+    "It does not freeze 90% of parameters; it splits the training examples.",
+  ],
+  "l03-mnist-continuity": [
+    "The dataset stays the same so the workflow change is easier to see.",
+    "MNIST continuity lets students compare model setup, training, and diagnostics without changing the task.",
+    "MNIST still requires preprocessing choices, model design, and evaluation.",
+    "MNIST can be approached with classical ML; the course uses it to teach neural workflows.",
+  ],
+  "l03-softmax-output": [
+    "MNIST has ten digit classes, so ten softmax units represent class probabilities.",
+    "Binary regression would not use a ten-unit softmax head.",
+    "Output units represent classes, not the first pixels of the image.",
+    "Softmax still requires labels during supervised training.",
+  ],
+  "l03-flatten-shape": [
+    "Flatten converts a 28x28 grid into a vector that Dense layers can process.",
+    "Flatten changes shape, not the grayscale intensity values themselves.",
+    "Convolution uses spatial filters; flattening is not convolution.",
+    "Train/test splitting is a data workflow step, not the role of Flatten.",
+  ],
+  "l03-history-curves": [
+    "Falling training loss with rising validation loss is a classic overfitting signal.",
+    "Underfitting would usually show poor training performance too.",
+    "Validation loss is useful because it estimates behavior on unseen data during training.",
+    "A worse validation curve does not guarantee the test set will improve.",
+  ],
+  "l03-evaluate-vs-fit": [
+    "Validation guides training monitoring; final evaluation estimates held-out performance.",
+    "Evaluation should not update weights; it measures the trained model.",
+    "Validation data still has labels, otherwise the metric could not be computed.",
+    "They can be numerically different because they use different data and purposes.",
+  ],
+  "l03-loss-choice": [
+    "Sparse categorical crossentropy matches integer class labels and a multiclass softmax output.",
+    "MSE is not the natural loss for integer multiclass classification with softmax.",
+    "Binary crossentropy with one output is for binary tasks, not ten MNIST digits.",
+    "Dice loss is for segmentation mask overlap, not ordinary digit classification.",
+  ],
+  "l04-forward-prop": [
+    "Forward propagation applies weights, biases, and activations layer by layer to produce predictions.",
+    "Labels are provided by the dataset; they are not randomly assigned during prediction.",
+    "Validation data does not replace model weights during forward propagation.",
+    "Earlier layers compute intermediate representations; the final layer is not the only active layer.",
+  ],
+  "l04-bias-unit": [
+    "A bias lets the unit shift its threshold instead of forcing all boundaries through the origin.",
+    "Bias does not remove the need for hidden layers in nonlinear problems.",
+    "Bias helps flexibility, but it does not guarantee zero training error.",
+    "Adding a bias does not turn classification into clustering.",
+  ],
+  "l04-xnor-hidden-layer": [
+    "Hidden layers can combine simpler separations to model patterns a single perceptron cannot.",
+    "Hidden layers change representational capacity; they are not decorative.",
+    "XNOR is a neural-network motivation example, not something only trees can solve.",
+    "Linear activations would remove the nonlinear advantage of hidden layers.",
+  ],
+  "l04-decision-tree-value": [
+    "Trees are useful as interpretable baselines and as contrast with neural decision logic.",
+    "Decision trees and MLPs are different model families with different structures.",
+    "Trees do not always outperform deep learning on image problems.",
+    "Data splits remain necessary for honest evaluation.",
+  ],
+  "l04-cart-splits": [
+    "CART predicts by moving through feature-threshold decisions until a leaf is reached.",
+    "Softmax over pixels is unrelated to tree traversal.",
+    "Unrolling hidden state is an RNN idea, not a CART prediction path.",
+    "Latent Gaussian sampling belongs to generative models such as VAEs, not CART.",
+  ],
+  "l04-tree-overfit": [
+    "Tiny unstable leaves usually mean the tree is too deep or insufficiently regularized.",
+    "BatchNorm is a neural-network normalization layer, not the tree issue here.",
+    "A softmax unit belongs to neural classifiers, not decision-tree leaves.",
+    "A perfect but unstable tree is overparameterized for the data, not underparameterized.",
+  ],
+  "l05-output-heads": [
+    "Single-label multiclass classification uses one probability distribution over classes.",
+    "One linear unit would fit regression or a scalar output, not multiclass class probabilities.",
+    "A sigmoid per pixel is a segmentation-style output, not single-label classification.",
+    "An output activation is usually needed to interpret class probabilities.",
+  ],
+  "l05-bp-vs-gd": [
+    "Backpropagation calculates gradients; gradient descent uses those gradients to update weights.",
+    "They are connected parts of the same training loop.",
+    "Gradient descent does not create labels or split data.",
+    "Backpropagation supplies information to the optimizer; it does not replace it.",
+  ],
+  "l05-epoch-minibatch": [
+    "One epoch means the training loop has seen the full training set once.",
+    "One individual sample is an example, not an epoch.",
+    "A neuron is a model unit, not a training pass.",
+    "A validation metric is measured during training; it is not an epoch.",
+  ],
+  "l05-tensor-rank": [
+    "Tensor rank describes how many axes the data has, which determines layer compatibility.",
+    "Rank does not replace the loss; loss defines the training objective.",
+    "Class names come from labels or metadata, not tensor rank.",
+    "Correct shape handling prevents errors, but it does not prevent overfitting by itself.",
+  ],
+  "l05-dense-operation": [
+    "Dense layers compute a matrix product, add bias, then apply an activation.",
+    "Sorting labels is a preprocessing or bookkeeping operation, not Dense computation.",
+    "Cropping and pooling are image operations, not Dense-layer math.",
+    "A discriminator belongs to GAN training, not a Dense layer operation.",
+  ],
+  "l05-learning-rate": [
+    "Learning rate sets update size, affecting convergence speed and stability.",
+    "Train/test split is a data partition choice, not an optimizer parameter.",
+    "The number of output classes is determined by the task and output head.",
+    "Evaluation is still needed; learning rate does not replace it.",
+  ],
+  "l06-local-receptive-fields": [
+    "CNNs exploit the fact that local pixel neighborhoods often contain meaningful patterns.",
+    "Full connectivity ignores the spatial efficiency that convolutions introduce.",
+    "CNNs are designed specifically to use image structure.",
+    "Convolutions operate on grids such as images; text tokens are a different representation.",
+  ],
+  "l06-weight-sharing": [
+    "A shared filter can detect the same pattern in different positions with fewer parameters.",
+    "Weight sharing does not force every output to be identical; outputs depend on local input patches.",
+    "Activation functions are still used after convolutional operations.",
+    "Convolution creates features; labels still require a trained classifier head and supervision.",
+  ],
+  "l06-padding-stride": [
+    "Larger stride and no padding reduce how many spatial positions are computed.",
+    "Stride and padding change feature-map geometry, not the number of classes.",
+    "Convolution settings do not colorize the input image.",
+    "Stride does not make the architecture recurrent.",
+  ],
+  "l06-pooling-purpose": [
+    "Pooling downsamples spatial maps while retaining strong local responses.",
+    "Pooling alone cannot generate class labels without trained downstream layers.",
+    "Pooling complements convolution; it does not replace every convolutional layer.",
+    "Pooling is not a time-series forecasting conversion.",
+  ],
+  "l06-filter-visualization": [
+    "Feature maps show activations, but they are partial evidence rather than full model reasoning.",
+    "A feature map does not prove fairness or absence of bias.",
+    "Visualization supports diagnostics; it does not replace validation metrics.",
+    "Activated visual patterns are not automatic causal biological mechanisms.",
+  ],
+  "l06-architecture-tour": [
+    "The goal is to recognize reusable CNN design ideas and pretrained-model context.",
+    "CNN architectures differ substantially in depth, blocks, skip connections, and design choices.",
+    "Pretrained CNNs can help projects, but they do not eliminate baselines.",
+    "Validation data remains necessary for model selection and evaluation.",
+  ],
+  "l07-ae-purpose": [
+    "Autoencoders learn to reconstruct inputs through a constrained or structured latent code.",
+    "Classification into fixed labels is supervised learning, not the basic autoencoder objective.",
+    "Discriminator loss belongs to GANs, not basic autoencoder training.",
+    "Decision-tree splits are unrelated to encoder-decoder reconstruction.",
+  ],
+  "l07-denoising-ae": [
+    "Denoising trains the model to recover clean structure from corrupted inputs.",
+    "Noise is used during training; the target is not to keep adding noise forever.",
+    "Random numbers do not provide the clean target needed for denoising.",
+    "A discriminator-generator setup describes GANs, not denoising autoencoders.",
+  ],
+  "l07-sparse-ae": [
+    "Sparsity encourages only a small set of latent units to activate, making representation selective.",
+    "Sparsity is a pressure, not a guarantee of perfect reconstruction.",
+    "Removing the decoder would remove the reconstruction path.",
+    "A sparse autoencoder remains an autoencoder, not a random forest.",
+  ],
+  "l07-svm-margin": [
+    "SVMs choose a boundary that maximizes margin relative to support vectors.",
+    "Depth is a neural-network concept and does not define the SVM margin.",
+    "Points near the boundary are the most important for the margin.",
+    "Softmax is not the defining mechanism of an SVM.",
+  ],
+  "l07-kernel-trick": [
+    "Kernels allow nonlinear separation by computing similarities as if in a richer feature space.",
+    "SVMs still have hyperparameters such as C and kernel settings.",
+    "Kernels are not limited to image data.",
+    "PCA may still be useful; the kernel trick does not make it unnecessary in every case.",
+  ],
+  "l07-pca-purpose": [
+    "PCA finds directions of high variance for compression, visualization, or preprocessing.",
+    "Segmentation masks are a pixel-wise vision output, not PCA.",
+    "Recurrent hidden states belong to sequence models.",
+    "PCA can support analysis, but it does not replace evaluation.",
+  ],
+  "l08-voting-ensemble": [
+    "Voting ensembles combine multiple model predictions into one final decision.",
+    "Training without labels is not the definition of a voting ensemble.",
+    "A single neuron is one model component, not an ensemble.",
+    "Generating images from noise belongs to generative models, not voting.",
+  ],
+  "l08-hard-soft-voting": [
+    "Hard voting counts class predictions; soft voting averages or combines probabilities.",
+    "The difference is prediction aggregation, not which model family is trained.",
+    "The distinction is independent of whether inputs are images or text.",
+    "There is a clear difference: labels versus probabilities.",
+  ],
+  "l08-bagging": [
+    "Bagging trains separate models on bootstrap samples and averages or votes their outputs.",
+    "Making one tree deeper usually increases overfitting rather than reducing variance.",
+    "Randomization is central to bagging.",
+    "The test set should not be used for training bagged models.",
+  ],
+  "l08-random-forest": [
+    "Random forests sample candidate features at splits to make trees less correlated.",
+    "Trees still require training data.",
+    "Random forests are ensembles of trees, not RNNs.",
+    "Labels are required for supervised random-forest training.",
+  ],
+  "l08-boosting": [
+    "Boosting trains learners sequentially, focusing later learners on previous errors.",
+    "Independent bootstrap training describes bagging more than boosting.",
+    "Boosting can overfit if too complex or poorly regularized.",
+    "Boosting is general and not limited to image segmentation.",
+  ],
+  "l08-stacking": [
+    "Stacking must avoid target leakage when training the meta-model on base predictions.",
+    "Having multiple base models is the point of stacking, not the main risk.",
+    "Validation data can be used carefully; the issue is leakage, not validation itself.",
+    "Stacking can use tabular features; feature type is not the core risk.",
+  ],
+  "l09-fluocells-difficulty": [
+    "Fluocells is hard because image quality, overlap, artifacts, and boundaries affect object counts.",
+    "The images do not contain one perfectly centered cell; crowding is part of the problem.",
+    "Labels or masks are needed to train and evaluate counting or segmentation methods.",
+    "Intensity varies and creates thresholding and segmentation difficulty.",
+  ],
+  "l09-threshold-baseline": [
+    "A threshold baseline gives a simple reference and reveals image or metric problems early.",
+    "A simple threshold is not guaranteed to be the best model.",
+    "Thresholding does not remove the need for masks or ground-truth comparison.",
+    "Thresholding operates on image intensity, not text tokens.",
+  ],
+  "l09-pixel-accuracy-trap": [
+    "Background dominance can make pixel accuracy high even when cells are missed.",
+    "Pixel accuracy and Dice measure different things.",
+    "High pixel accuracy does not guarantee correct object-level counting.",
+    "The metric problem is about class imbalance, not RNN architecture.",
+  ],
+  "l09-segmentation-vs-counting": [
+    "Segmentation can produce cell regions that are then counted or post-processed.",
+    "Segmentation still needs evaluation against masks or object-level targets.",
+    "Segmentation predicts spatial masks, not one scalar by definition.",
+    "PCA reduces dimensions; it is not segmentation.",
+  ],
+  "l09-mask-quality": [
+    "Semi-automatic or expert-refined masks can contain noise and subjective boundaries.",
+    "Masks are not automatically perfect ground truth just because experts refine them.",
+    "Validation is still required to estimate how the model behaves on new images.",
+    "Noisy masks complicate training, but they do not make training impossible.",
+  ],
+  "l09-eda-before-model": [
+    "EDA should characterize image shape, intensity, artifacts, class balance, and label examples.",
+    "Leaderboard rank comes after modeling and does not explain the data.",
+    "Epoch count is a training setting, not EDA.",
+    "Optimizer choice is not enough to understand the image dataset.",
+  ],
+  "l10-semantic-segmentation": [
+    "Semantic segmentation assigns a class such as cell or background to each pixel.",
+    "One class for the whole image is image classification, not segmentation.",
+    "Text generation is unrelated to pixel-wise Fluocells masks.",
+    "Clustering tabular patients is not semantic image segmentation.",
+  ],
+  "l10-instance-vs-semantic": [
+    "Instance segmentation separates individual objects, which maps more directly to counting cells.",
+    "Ignoring masks would remove the spatial supervision needed for segmentation.",
+    "Instance segmentation still uses images.",
+    "BatchNorm is a normalization layer, not an instance segmentation synonym.",
+  ],
+  "l10-cresunet": [
+    "Skip connections recover spatial detail while using deep contextual features.",
+    "U-Net and c-ResUNet are convolutional architectures, not replacements for convolution.",
+    "Masks are spatial outputs, not text.",
+    "Skip connections do not remove the need for training data.",
+  ],
+  "l10-dataloaders": [
+    "Segmentation DataLoaders must apply matching transforms to images and masks.",
+    "Weights and optimizer names are training objects, not paired input supervision.",
+    "Class names and extensions do not ensure image-mask alignment.",
+    "Images are essential; labels alone are not a segmentation batch.",
+  ],
+  "l10-augmentation-trap": [
+    "If the image is cropped but the mask is not, the target no longer matches the input.",
+    "Cropping can help only when applied correctly to both image and mask.",
+    "Masks need the same spatial transformations as their images.",
+    "The loss cannot fix corrupted supervision caused by misaligned masks.",
+  ],
+  "l10-dice-loss": [
+    "Dice focuses on overlap, which helps when background pixels dominate.",
+    "Dice loss still requires masks to compute overlap.",
+    "Dice is for segmentation overlap, not language modeling.",
+    "Augmentation and loss solve different parts of the training problem.",
+  ],
+  "l11-interpretability-xai": [
+    "Interpretability concerns understandability; XAI provides methods to explain less transparent models.",
+    "The terms are related but not identical in every context.",
+    "Explainability is about model behavior, not just plotting accuracy.",
+    "Interpretability can reveal bias, but it does not remove it automatically.",
+  ],
+  "l11-global-local": [
+    "A SHAP summary plot aggregates feature influence across many observations.",
+    "One pixel mask for one image would be a local vision explanation, not a global summary.",
+    "Recurrent hidden state is a sequence-model mechanism, not SHAP summary interpretation.",
+    "A train/test split is data partitioning, not an explanation plot.",
+  ],
+  "l11-local-explanation": [
+    "A single prediction may depend on features differently from the global average.",
+    "Global explanations can be useful; they are just not sufficient for every case.",
+    "Local explanations inspect a model prediction; they do not replace the trained model.",
+    "Local explanations still require the instance and model behavior.",
+  ],
+  "l11-lime-surrogate": [
+    "LIME approximates the model near one instance with a simpler interpretable surrogate.",
+    "A GAN discriminator is part of adversarial generative training, not LIME.",
+    "RNN hidden-state normalization is unrelated to local surrogate explanations.",
+    "PCA directions describe variance, not local model behavior around a prediction.",
+  ],
+  "l11-xai-pitfall": [
+    "An explanation plot is evidence to inspect, not proof that the model is correct or unbiased.",
+    "Stating local or global scope is good reporting practice.",
+    "Comparing methods can strengthen interpretation when assumptions are discussed.",
+    "Using XAI on failures is useful for diagnosing model behavior.",
+  ],
+  "l11-shap-disagreement": [
+    "Different explanations should trigger investigation of assumptions, locality, and data context.",
+    "Choosing the prettier plot is not a defensible scientific response.",
+    "Disagreement does not make both methods useless; it exposes assumptions to examine.",
+    "Accuracy alone cannot explain why the model made that prediction.",
+  ],
+  "l12-rnn-input-shape": [
+    "RNN inputs are organized as batches of sequences, each with steps and feature dimensionality.",
+    "Height, width, channels is the usual image tensor framing for CNNs.",
+    "Classes and probabilities describe outputs, not sequence input shape.",
+    "Features, labels, and loss are training concepts, not the RNN input tensor shape.",
+  ],
+  "l12-bptt": [
+    "Long unrolled sequences behave like deep graphs, making gradients vanish or explode.",
+    "RNNs do have trainable parameters.",
+    "Backpropagation through time is specifically how RNNs are trained.",
+    "Sequence data is ordered; the order is exactly why recurrence matters.",
+  ],
+  "l12-lstm-gates": [
+    "LSTM gates regulate what information is stored, forgotten, and exposed from the cell state.",
+    "Gates improve memory handling but do not remove the need for data.",
+    "LSTM memory is controlled, not unlimited.",
+    "Decision-tree splits are threshold rules, not recurrent gates.",
+  ],
+  "l12-vae-objective": [
+    "A VAE balances reconstruction quality with a regularized latent space for meaningful sampling.",
+    "Training only a discriminator describes GANs, not VAEs.",
+    "Pixel accuracy alone does not define the VAE objective.",
+    "Random forest split thresholds are unrelated to latent generative modeling.",
+  ],
+  "l12-gan-training": [
+    "During the generator phase, the generator learns to make outputs that fool the discriminator.",
+    "Manual editing of real images is not GAN generator training.",
+    "The discriminator remains part of adversarial training; it is not deleted.",
+    "Tokenizers and BPTT belong to sequence/language workflows, not the generator update.",
+  ],
+  "l12-transformer-attention": [
+    "Attention lets tokens directly condition on other tokens, rather than relying only on recurrent state.",
+    "Transformers are not decision trees; attention is the central mechanism.",
+    "Transformers still use embeddings to represent tokens.",
+    "RNN hidden state is the older context mechanism; transformers move beyond relying only on it.",
+  ],
+};
+
 function optionLabel(index) {
   return String.fromCharCode(65 + index);
+}
+
+function incorrectOptionExplanation(question, option) {
+  const text = option.toLowerCase();
+  const tags = (question.tags || []).join(" ").toLowerCase();
+
+  if (/only|always|never|guarantees|necessarily|definitely/.test(text)) {
+    return "La afirmación es demasiado absoluta. En estos modelos casi siempre importan las condiciones de entrenamiento, los datos y la validación.";
+  }
+  if (/no |not |cannot|forbidden|prevents|removes the need/.test(text)) {
+    return "La respuesta elimina una parte del flujo que todavía es necesaria. El método puede reducir un problema, pero no hace desaparecer el requisito conceptual.";
+  }
+  if (/manual|human|spreadsheet|deleted|random|permanently/.test(text)) {
+    return "Describe una intervención manual o poco realista. El curso evalúa si el procedimiento de ML justifica el resultado con entrenamiento, métricas e interpretación.";
+  }
+  if (/test data|validation|split|evaluate|metric|accuracy|loss/.test(text)) {
+    return "Habla de evaluación o monitoreo. Eso sirve para diagnosticar el modelo, pero no define el mecanismo central preguntado.";
+  }
+  if (/gpu|tensor|array|pixel|input shape|parameters/.test(text)) {
+    return "Se centra en un detalle de implementación. Es relevante al programar, pero no responde la diferencia conceptual que pide la pregunta.";
+  }
+  if (/labels|classification|class|binary/.test(text)) {
+    return "Lleva la respuesta hacia clasificación supervisada. Aquí lo importante es el origen de la señal de aprendizaje o la estructura del modelo.";
+  }
+  if (/tree|svm|pca|cnn|rnn|transformer|gan|vae|autoencoder|keras|pytorch|tensorflow|hugging face/.test(text)) {
+    return "Nombra una herramienta o familia de modelos relacionada, pero no explica la propiedad específica que la pregunta está evaluando.";
+  }
+
+  if (/perceptron|linear/.test(tags)) {
+    return "Un perceptrón simple representa una frontera lineal. La alternativa no explica esa limitación geométrica.";
+  }
+  if (/activation|nonlinearity/.test(tags)) {
+    return "La clave es que la activación no lineal cambia la capacidad del modelo. Profundidad sin no linealidad sigue siendo una composición lineal.";
+  }
+  if (/overfitting|diagnostics|history/.test(tags)) {
+    return "La respuesta no usa la evidencia de generalización. En AMLA hay que comparar entrenamiento, validación y comportamiento visual.";
+  }
+  if (/keras|sequential|functional|workflow|model.fit/.test(tags)) {
+    return "La alternativa no respeta el flujo de Keras. Primero se define la arquitectura, luego se compila, se entrena y se evalúa.";
+  }
+  if (/mnist|softmax|input shape/.test(tags)) {
+    return "No conecta la arquitectura con la forma de MNIST: imagen de entrada, vectorización o salida de diez clases según corresponda.";
+  }
+  if (/forward|backprop|optimizer|learning rate/.test(tags)) {
+    return "La respuesta no separa cálculo hacia adelante, cálculo de gradientes y actualización de pesos.";
+  }
+  if (/decision tree|entropy|gini|split/.test(tags)) {
+    return "No describe cómo el árbol decide cortes. La idea central es reducir impureza o mejorar separación en cada nodo.";
+  }
+  if (/cnn|convolution|pooling|filter/.test(tags)) {
+    return "No explica la operación espacial. En CNNs importan filtros locales, mapas de activación y reducción controlada de resolución.";
+  }
+  if (/autoencoder|latent|denoising/.test(tags)) {
+    return "No describe bien la relación entrada-objetivo. Un autoencoder aprende una representación latente útil para reconstruir o denoising.";
+  }
+  if (/svm|kernel|margin|support vector/.test(tags)) {
+    return "No corresponde a la lógica del margen. En SVM importan los puntos cercanos a la frontera, el parámetro C y el kernel.";
+  }
+  if (/pca|dimensionality/.test(tags)) {
+    return "No refleja PCA: se busca una proyección que preserve varianza, no una etiqueta ni una frontera de clasificación.";
+  }
+  if (/ensemble|bagging|boosting|random forest/.test(tags)) {
+    return "No distingue cómo se combinan modelos. Bagging reduce varianza; boosting corrige errores de forma secuencial.";
+  }
+  if (/fluocells|thresholding|segmentation/.test(tags)) {
+    return "No encaja con el flujo Fluocells. Primero se razona sobre imagen, máscaras, segmentación y evidencia visual.";
+  }
+  if (/augmentation|loss|c-resunet|fastai/.test(tags)) {
+    return "No apunta al entrenamiento de segmentación. Hay que relacionar pérdida, aumentación, máscaras y error espacial.";
+  }
+  if (/xai|shap|lime|explain/.test(tags)) {
+    return "No responde como explicación interpretativa. XAI debe decir qué rasgos empujan una predicción y con qué alcance local o global.";
+  }
+  if (/rnn|bptt|lstm|gru/.test(tags)) {
+    return "No refleja dependencia secuencial. En modelos recurrentes importa cómo el estado conserva información y cómo se propaga el gradiente.";
+  }
+  if (/gan|vae|generative|transformer|attention|llm/.test(tags)) {
+    return "No identifica el mecanismo generativo o de atención correcto. La respuesta debe distinguir representación latente, adversarial training o atención.";
+  }
+
+  return "La respuesta apunta a una idea cercana, pero no explica el criterio central que hace correcta a la alternativa elegida.";
+}
+
+function optionFeedback(question, optionIndex, selected) {
+  if (question.optionFeedback?.[optionIndex]) return question.optionFeedback[optionIndex];
+  if (QUESTION_OPTION_FEEDBACK[question.id]?.[optionIndex]) return QUESTION_OPTION_FEEDBACK[question.id][optionIndex];
+  if (optionIndex === question.correct) return question.explanation;
+  return incorrectOptionExplanation(question, question.options[optionIndex], selected);
 }
 
 function QuestionCard({ question, index, answer, setAnswer, showFeedback, locked }) {
@@ -1179,13 +1702,14 @@ function QuestionCard({ question, index, answer, setAnswer, showFeedback, locked
           const selected = answer === optionIndex;
           const correct = optionIndex === question.correct;
           const reveal = answered && showFeedback;
+          const feedbackLabel = correct ? "Respuesta correcta" : selected ? "No exactamente" : "Explicación";
           return (
             <button
               key={option}
               type="button"
               disabled={locked}
               onClick={() => setAnswer(optionIndex)}
-              className={`rounded-2xl border p-3 text-left text-sm font-bold leading-6 transition disabled:cursor-not-allowed ${
+              className={`rounded-2xl border p-4 text-left text-sm font-bold leading-6 transition disabled:cursor-not-allowed ${
                 reveal && correct
                   ? "border-emerald-300 bg-emerald-50 text-emerald-950"
                   : reveal && selected && !correct
@@ -1195,16 +1719,23 @@ function QuestionCard({ question, index, answer, setAnswer, showFeedback, locked
                       : "border-stone-200 bg-stone-50 text-stone-700 hover:bg-white"
               }`}
             >
-              {optionLabel(optionIndex)}. {option}
+              <span className="block">{optionLabel(optionIndex)}. {option}</span>
+              {reveal ? (
+                <span className={`mt-3 block border-t pt-3 text-xs font-semibold leading-6 ${
+                  correct
+                    ? "border-emerald-200 text-emerald-900"
+                    : selected
+                      ? "border-red-200 text-red-900"
+                      : "border-stone-200 text-stone-600"
+                }`}>
+                  <span className="mb-1 block font-black uppercase tracking-[0.14em]">{feedbackLabel}</span>
+                  {optionFeedback(question, optionIndex, selected)}
+                </span>
+              ) : null}
             </button>
           );
         })}
       </div>
-      {answered && showFeedback ? (
-        <p className="mt-4 rounded-2xl border border-stone-200 bg-stone-50 p-4 text-sm font-semibold leading-7 text-stone-700">
-          Correct: {optionLabel(question.correct)}. {question.explanation}
-        </p>
-      ) : null}
     </article>
   );
 }

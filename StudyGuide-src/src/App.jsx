@@ -76,6 +76,7 @@ const DRDExamPracticePage = React.lazy(() => import("./exams/drd/examPractice.js
 const DRDExamRadarPage = React.lazy(() => import("./exams/drd/examRadar.jsx"));
 const DRDRapidReviewPage = React.lazy(() => import("./exams/drd/rapidReview.jsx"));
 const AMLAPracticeExamPage = React.lazy(() => import("./exams/amla/practiceExam.jsx"));
+const AMLAMockExamPage = React.lazy(() => import("./exams/amla/mockExam.jsx"));
 const GenomicsPracticeExamPage = React.lazy(() => import("./exams/genomics/practiceExam.jsx"));
 
 const LANGS = [
@@ -1092,6 +1093,14 @@ function AMLAApp({ t, hash }) {
     );
   }
 
+  if (hash.match(/^#\/mock-exam/)) {
+    return (
+      <React.Suspense fallback={<DRDRouteLoading label="AMLA mock exam" />}>
+        <AMLAMockExamPage />
+      </React.Suspense>
+    );
+  }
+
   if (lessonId) {
     const lesson = getAMLALessonById(lessonId);
     if (lesson) {
@@ -1144,6 +1153,7 @@ function AMLAApp({ t, hash }) {
             <a href="#lessons" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">Lessons</a>
             <a href="#mini-labs" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">Mini-labs</a>
             <a href="#/practice-exam" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-100">Practice exam</a>
+            <a href="#/mock-exam" className="rounded-full border border-red-200 bg-white px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-50">Mock exam</a>
             <a href="#project" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">Project relevance</a>
           </>
         )}
@@ -1224,6 +1234,12 @@ function AMLAFocusCards() {
       body: "Filter by lesson, difficulty or tag, then review mistakes after practice or mock mode.",
     },
     {
+      title: "Mock Exam",
+      href: "#/mock-exam",
+      label: "10 questions",
+      body: "A separate mock-exam page using the supplied sample questions and per-option feedback.",
+    },
+    {
       title: "Fluocells workflow",
       href: "#/lesson/amla-2026-05-21-vision-mini-project",
       label: "Vision project",
@@ -1243,7 +1259,7 @@ function AMLAFocusCards() {
     },
   ];
   return (
-    <section className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <section className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
       {cards.map((card) => (
         <a key={card.title} href={card.href} className="rounded-[2rem] border border-stone-200 bg-white/85 p-5 shadow-sm transition hover:-translate-y-0.5 hover:bg-white hover:shadow-md">
           <div className="inline-flex rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-red-700">{card.label}</div>
@@ -1360,7 +1376,10 @@ function AMLAProductsSection() {
           <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Full-course practice bank</h2>
           <p className="mt-2 max-w-3xl leading-7 text-stone-600">Seventy-two multiple-choice questions cover all 12 lessons, with immediate practice feedback and a basic mock-exam mode for end-to-end review.</p>
         </div>
-        <a href="#/practice-exam" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-red-800">Open practice exam</a>
+        <div className="flex flex-wrap gap-2">
+          <a href="#/practice-exam" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-red-800">Open practice exam</a>
+          <a href="#/mock-exam" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-100">Open mock exam</a>
+        </div>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {AMLA_STUDY_PRODUCTS.map(product => <DRDProductCard key={product.title} product={product} />)}

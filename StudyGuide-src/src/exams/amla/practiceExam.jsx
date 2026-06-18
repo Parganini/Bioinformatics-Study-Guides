@@ -1589,7 +1589,7 @@ const QUESTION_OPTION_FEEDBACK = {
   ],
 };
 
-const MOCK_EXAM_QUESTIONS = [
+export const MOCK_EXAM_QUESTIONS = [
   {
     id: "mock-svm-hard-soft-margin",
     lessonCode: "L07",
@@ -1802,25 +1802,6 @@ const MOCK_EXAM_QUESTIONS = [
   },
 ];
 
-const QUESTION_SET_OPTIONS = [
-  {
-    id: "full",
-    label: "Full course bank",
-    eyebrow: "Full-course bank",
-    navLabel: "AMLA full-course exam",
-    description: "Seventy-two reasoning-oriented multiple-choice questions covering all 12 AMLA lessons.",
-    questions: QUESTIONS,
-  },
-  {
-    id: "mock",
-    label: "Mock exam sample",
-    eyebrow: "Mock exam sample",
-    navLabel: "AMLA mock exam",
-    description: "Ten mock-exam questions focused on SVMs, ensembles, CNNs, activations and deep-learning context.",
-    questions: MOCK_EXAM_QUESTIONS,
-  },
-];
-
 function optionLabel(index) {
   return String.fromCharCode(65 + index);
 }
@@ -1913,7 +1894,7 @@ function optionFeedback(question, optionIndex, selected) {
   return incorrectOptionExplanation(question, question.options[optionIndex], selected);
 }
 
-function QuestionCard({ question, index, answer, setAnswer, showFeedback, locked }) {
+export function QuestionCard({ question, index, answer, setAnswer, showFeedback, locked }) {
   const answered = answer !== undefined;
   const lesson = lessonLookup.get(question.lessonId);
 
@@ -1971,7 +1952,6 @@ function QuestionCard({ question, index, answer, setAnswer, showFeedback, locked
 }
 
 export default function AMLAPracticeExamPage() {
-  const [questionSet, setQuestionSet] = useState("full");
   const [mode, setMode] = useState("practice");
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -1980,28 +1960,26 @@ export default function AMLAPracticeExamPage() {
   const [tagFilter, setTagFilter] = useState("all");
   const [reviewMistakes, setReviewMistakes] = useState(false);
 
-  const activeSet = QUESTION_SET_OPTIONS.find((set) => set.id === questionSet) || QUESTION_SET_OPTIONS[0];
-  const activeQuestions = activeSet.questions;
-  const lessonFilters = useMemo(() => ["all", ...Array.from(new Set(activeQuestions.map((question) => question.lessonCode)))], [activeQuestions]);
-  const tagFilters = useMemo(() => ["all", ...Array.from(new Set(activeQuestions.flatMap((question) => question.tags))).sort((a, b) => a.localeCompare(b))], [activeQuestions]);
-  const score = useMemo(() => activeQuestions.filter((question) => answers[question.id] === question.correct).length, [activeQuestions, answers]);
+  const lessonFilters = useMemo(() => ["all", ...Array.from(new Set(QUESTIONS.map((question) => question.lessonCode)))], []);
+  const tagFilters = useMemo(() => ["all", ...Array.from(new Set(QUESTIONS.flatMap((question) => question.tags))).sort((a, b) => a.localeCompare(b))], []);
+  const score = useMemo(() => QUESTIONS.filter((question) => answers[question.id] === question.correct).length, [answers]);
   const answeredCount = Object.keys(answers).length;
   const locked = mode === "mock" && submitted;
   const showFeedback = mode === "practice" || submitted;
   const canReviewMistakes = answeredCount > 0 && score < answeredCount;
-  const filteredQuestions = useMemo(() => activeQuestions.filter((question) => {
+  const filteredQuestions = useMemo(() => QUESTIONS.filter((question) => {
     const lessonMatch = lessonFilter === "all" || question.lessonCode === lessonFilter;
     const difficultyMatch = difficultyFilter === "all" || question.difficulty === difficultyFilter;
     const tagMatch = tagFilter === "all" || question.tags.includes(tagFilter);
     const mistakeMatch = !reviewMistakes || answers[question.id] !== undefined && answers[question.id] !== question.correct;
     return lessonMatch && difficultyMatch && tagMatch && mistakeMatch;
-  }), [activeQuestions, answers, difficultyFilter, lessonFilter, reviewMistakes, tagFilter]);
+  }), [answers, difficultyFilter, lessonFilter, reviewMistakes, tagFilter]);
   const byLesson = useMemo(() => AMLA_LESSONS.map((lesson) => {
-    const lessonQuestions = activeQuestions.filter((question) => question.lessonId === lesson.id);
+    const lessonQuestions = QUESTIONS.filter((question) => question.lessonId === lesson.id);
     const answered = lessonQuestions.filter((question) => answers[question.id] !== undefined).length;
     const correct = lessonQuestions.filter((question) => answers[question.id] === question.correct).length;
     return { lesson, count: lessonQuestions.length, answered, correct };
-  }).filter((row) => questionSet === "full" || row.count > 0), [activeQuestions, answers, questionSet]);
+  }), [answers]);
 
   const setAnswer = (questionId, value) => {
     if (locked) return;
@@ -2013,16 +1991,6 @@ export default function AMLAPracticeExamPage() {
     setAnswers({});
     setSubmitted(false);
     setReviewMistakes(false);
-  };
-
-  const selectQuestionSet = (nextSet) => {
-    setQuestionSet(nextSet);
-    setAnswers({});
-    setSubmitted(false);
-    setReviewMistakes(false);
-    setLessonFilter("all");
-    setDifficultyFilter("all");
-    setTagFilter("all");
   };
 
   const clearFilters = () => {
@@ -2037,31 +2005,24 @@ export default function AMLAPracticeExamPage() {
       <nav className="mb-6 rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-sm font-black text-stone-800 transition hover:bg-stone-50">Back to AMLA dashboard</a>
-          <div className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500">{activeSet.navLabel}</div>
+          <div className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500">AMLA full-course exam</div>
           <a href="#question-bank" className="rounded-full bg-stone-950 px-4 py-2 text-center text-sm font-black text-white transition hover:bg-red-800">Start</a>
         </div>
       </nav>
 
       <section className="grid overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white/85 shadow-sm lg:grid-cols-[1.05fr_0.95fr]">
         <div className="bg-[#fbf4e8] p-8 md:p-12">
-          <div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{activeSet.eyebrow}</div>
+          <div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">Full-course bank</div>
           <h1 className="mt-7 max-w-3xl text-5xl font-black tracking-tight text-stone-950 md:text-6xl">AMLA Practice Exam</h1>
           <p className="mt-6 max-w-3xl text-lg font-semibold leading-8 text-stone-700">
-            {activeSet.description} Practice mode gives immediate feedback; mock mode reveals explanations only after submission.
+            Seventy-two reasoning-oriented multiple-choice questions covering all 12 AMLA lessons. Practice mode gives immediate feedback; mock mode reveals explanations only after submission.
           </p>
         </div>
         <aside className="border-t border-stone-200 bg-white p-8 lg:border-l lg:border-t-0 md:p-10">
           <div className="grid gap-3 sm:grid-cols-3">
-            <div className="rounded-3xl border border-red-200 bg-red-50 p-5 text-red-800"><div className="text-xs font-black uppercase tracking-[0.18em] opacity-70">Questions</div><div className="mt-2 text-3xl font-black">{activeQuestions.length}</div></div>
+            <div className="rounded-3xl border border-red-200 bg-red-50 p-5 text-red-800"><div className="text-xs font-black uppercase tracking-[0.18em] opacity-70">Questions</div><div className="mt-2 text-3xl font-black">{QUESTIONS.length}</div></div>
             <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Answered</div><div className="mt-2 text-3xl font-black text-stone-950">{answeredCount}</div></div>
             <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Score</div><div className="mt-2 text-3xl font-black text-stone-950">{score}</div></div>
-          </div>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {QUESTION_SET_OPTIONS.map((set) => (
-              <button key={set.id} type="button" onClick={() => selectQuestionSet(set.id)} className={`rounded-full border px-4 py-2 text-sm font-black ${questionSet === set.id ? "border-red-300 bg-red-50 text-red-800" : "border-stone-200 bg-white text-stone-700"}`}>
-                {set.label}
-              </button>
-            ))}
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
             {["practice", "mock"].map((option) => (
@@ -2071,7 +2032,8 @@ export default function AMLAPracticeExamPage() {
             ))}
           </div>
           {mode === "mock" ? <button type="button" onClick={() => setSubmitted(true)} className="mt-4 rounded-full bg-stone-950 px-5 py-3 text-sm font-black text-white hover:bg-red-800">Submit mock</button> : null}
-          {locked ? <p className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-black leading-7 text-emerald-950">Final score: {score} / {activeQuestions.length}</p> : null}
+          {locked ? <p className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-black leading-7 text-emerald-950">Final score: {score} / {QUESTIONS.length}</p> : null}
+          <a href="#/mock-exam" className="mt-3 inline-flex rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:bg-red-100">Open mock exam sample</a>
           <button
             type="button"
             onClick={() => setReviewMistakes((current) => !current)}
@@ -2128,7 +2090,7 @@ export default function AMLAPracticeExamPage() {
         <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Review status</div>
         <div className="mt-3 grid gap-3 md:grid-cols-3">
           {[
-            ["Answered", `${answeredCount} / ${activeQuestions.length}`],
+            ["Answered", `${answeredCount} / ${QUESTIONS.length}`],
             ["Correct", `${score}`],
             ["Current view", `${filteredQuestions.length} questions`],
           ].map(([label, value]) => (

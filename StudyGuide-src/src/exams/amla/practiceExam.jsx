@@ -1152,9 +1152,7 @@ const QUESTIONS = [
 ];
 
 const lessonLookup = new Map(AMLA_LESSONS.map((lesson) => [lesson.id, lesson]));
-const LESSON_FILTERS = ["all", ...AMLA_LESSONS.map((lesson) => lesson.code)];
 const DIFFICULTY_FILTERS = ["all", "easy", "medium", "hard"];
-const TAG_FILTERS = ["all", ...Array.from(new Set(QUESTIONS.flatMap((question) => question.tags))).sort((a, b) => a.localeCompare(b))];
 
 const QUESTION_OPTION_FEEDBACK = {
   "l01-advanced-expectation": [
@@ -1591,6 +1589,238 @@ const QUESTION_OPTION_FEEDBACK = {
   ],
 };
 
+const MOCK_EXAM_QUESTIONS = [
+  {
+    id: "mock-svm-hard-soft-margin",
+    lessonCode: "L07",
+    lessonId: "amla-2026-05-08-model-regularization",
+    prompt: "Which of the following is true about hard and soft margin violations in SVM?",
+    options: [
+      "Hard margin is not very sensitive to outliers.",
+      "Soft margin is very sensitive to outliers.",
+      "Soft margin works only if the data is linearly separable.",
+      "Hard margin works only if the data is linearly separable.",
+    ],
+    correct: 3,
+    explanation: "Hard-margin SVM requires perfectly linearly separable data because it allows no margin violations.",
+    optionFeedback: [
+      "Hard margin is actually very sensitive to outliers, because one unusual point can make the strict separating margin impossible or unstable.",
+      "Soft margin is designed to be less brittle by allowing controlled margin violations through the C parameter.",
+      "Soft margin is useful precisely because it can handle non-perfectly separable data by tolerating violations.",
+      "Hard margin allows no violations, so it only works when the classes can be separated linearly.",
+    ],
+    tags: ["SVM", "margin"],
+    difficulty: "medium",
+  },
+  {
+    id: "mock-nonlinear-activation",
+    lessonCode: "L01",
+    lessonId: "amla-2026-04-16-intro-advanced",
+    prompt: "Which of the following cannot be a non-linear activation function in a neural network architecture?",
+    options: ["max(0, z)", "tanh(z)", "A step function", "mz, with m being a real number"],
+    correct: 3,
+    explanation: "mz is a linear function of z, so it cannot provide the nonlinearity needed to increase network expressiveness.",
+    optionFeedback: [
+      "max(0, z) is ReLU. It is nonlinear because negative values collapse to zero while positive values pass through.",
+      "tanh(z) is nonlinear because it squashes inputs into a bounded curved response.",
+      "A step function is nonlinear because it jumps from one output level to another at a threshold.",
+      "mz is just a scaled version of z. Scaling alone is linear and does not add nonlinear representational power.",
+    ],
+    tags: ["activation functions", "nonlinearity"],
+    difficulty: "easy",
+  },
+  {
+    id: "mock-svm-history",
+    lessonCode: "L07",
+    lessonId: "amla-2026-05-08-model-regularization",
+    prompt: "In AI history, Support Vector Machines:",
+    options: [
+      "Were the first working example of unsupervised learning.",
+      "Were conceived in the 1960s, but soon abandoned in favor of neural networks.",
+      "Were the first working example of supervised learning.",
+      "Were conceived in the 1990s and have had remarkable success since then.",
+    ],
+    correct: 3,
+    explanation: "The course frames SVMs as a major supervised-learning success from the 1990s statistical-learning era.",
+    optionFeedback: [
+      "SVMs are supervised methods because they learn separating boundaries from labeled data.",
+      "Earlier theory existed, but the successful SVM formulation is associated with the 1990s, not abandonment in the 1960s.",
+      "Supervised learning existed before SVMs; SVMs were not the first working example.",
+      "Modern SVMs emerged in the 1990s and became highly successful, especially before the recent deep-learning wave.",
+    ],
+    tags: ["SVM", "history"],
+    difficulty: "medium",
+  },
+  {
+    id: "mock-linear-svm-scikit",
+    lessonCode: "L07",
+    lessonId: "amla-2026-05-08-model-regularization",
+    prompt: "Which of the following is true about linear SVM in scikit-learn?",
+    options: [
+      "It can be implemented only with LinearSVC by setting the kernel parameter to \"linear\".",
+      "It requires a Gaussian, polynomial, or sigmoid kernel to be implemented.",
+      "It can be implemented with LinearSVC or the SVC class.",
+      "It cannot be implemented, and Keras is needed.",
+    ],
+    correct: 2,
+    explanation: "scikit-learn supports linear SVMs through LinearSVC and also through SVC with a linear kernel.",
+    optionFeedback: [
+      "LinearSVC is one option, but it does not work by setting a kernel parameter in the same way as SVC.",
+      "Gaussian, polynomial, and sigmoid kernels are alternatives for nonlinear SVMs; a linear SVM does not require them.",
+      "A linear SVM can be trained with LinearSVC or with SVC using a linear kernel.",
+      "Keras is not required for linear SVMs; scikit-learn directly provides SVM implementations.",
+    ],
+    tags: ["SVM", "scikit-learn"],
+    difficulty: "easy",
+  },
+  {
+    id: "mock-soft-voting",
+    lessonCode: "L08",
+    lessonId: "amla-2026-05-15-cnn-practice",
+    prompt: "In ensemble techniques, when using soft voting, you predict the class:",
+    options: [
+      "With the highest class probability averaged over the individual classifiers.",
+      "With lower generalization errors.",
+      "That takes the most votes.",
+      "That has more examples.",
+    ],
+    correct: 0,
+    explanation: "Soft voting combines predicted class probabilities and chooses the class with the highest averaged probability.",
+    optionFeedback: [
+      "Soft voting averages class probabilities from the individual classifiers and selects the highest average.",
+      "Lower generalization error is a goal of ensembles, not the rule used to choose the class in soft voting.",
+      "Taking the most predicted class labels describes hard voting, not soft voting.",
+      "The number of training examples in a class is not the soft-voting prediction rule.",
+    ],
+    tags: ["voting", "probabilities"],
+    difficulty: "easy",
+  },
+  {
+    id: "mock-deep-learning-success",
+    lessonCode: "L01",
+    lessonId: "amla-2026-04-16-intro-advanced",
+    prompt: "Which of the following is not a key reason for the recent success of deep neural networks?",
+    options: [
+      "The availability of large volumes and variety of data.",
+      "The existence of general-purpose GPUs.",
+      "The power of high-throughput computing.",
+      "The ability to access computational resources via cloud interfaces.",
+    ],
+    correct: 2,
+    explanation: "The standard course reasons are data availability, GPUs, and accessible compute; high-throughput computing is less central in this framing.",
+    optionFeedback: [
+      "Large and varied datasets are one of the main drivers of modern deep-learning success.",
+      "General-purpose GPUs made large neural-network training much more practical.",
+      "High-throughput computing is not usually listed as a key deep-learning breakthrough in the same way as data, GPUs, and cloud access.",
+      "Cloud interfaces made powerful compute easier to access without owning the hardware locally.",
+    ],
+    tags: ["deep learning", "course setup"],
+    difficulty: "medium",
+  },
+  {
+    id: "mock-xgboost",
+    lessonCode: "L08",
+    lessonId: "amla-2026-05-15-cnn-practice",
+    prompt: "XGBoost is:",
+    options: [
+      "An algorithm able to beat all neural networks in computer vision tasks.",
+      "An optimized implementation of gradient boosting.",
+      "A bagging/pasting version of random forest.",
+      "A boosted version of gradient descent.",
+    ],
+    correct: 1,
+    explanation: "XGBoost is an efficient, regularized implementation of gradient boosting.",
+    optionFeedback: [
+      "XGBoost is strong on many tabular tasks, but it is not a universal replacement for neural networks in computer vision.",
+      "XGBoost implements gradient boosting efficiently, with practical optimizations and regularization.",
+      "Random forests are bagging-style ensembles; XGBoost belongs to boosting, not bagging.",
+      "Gradient descent is an optimizer; XGBoost boosts weak learners, usually decision trees.",
+    ],
+    tags: ["boosting", "XGBoost"],
+    difficulty: "easy",
+  },
+  {
+    id: "mock-bagging-definition",
+    lessonCode: "L08",
+    lessonId: "amla-2026-05-15-cnn-practice",
+    prompt: "Bagging refers to:",
+    options: [
+      "An algorithm usable only for regression.",
+      "An ensemble method.",
+      "An algorithm usable only for classification.",
+      "A neural network architecture.",
+    ],
+    correct: 1,
+    explanation: "Bagging is an ensemble method that trains models on bootstrap samples and aggregates their predictions.",
+    optionFeedback: [
+      "Bagging can be used for regression, but it is not limited to regression.",
+      "Bagging is an ensemble method based on bootstrap sampling and aggregation.",
+      "Bagging can be used for classification, but it is not limited to classification.",
+      "Bagging is not a neural-network architecture; it is a way to combine multiple models.",
+    ],
+    tags: ["bagging", "ensemble"],
+    difficulty: "easy",
+  },
+  {
+    id: "mock-oldest-cnn",
+    lessonCode: "L06",
+    lessonId: "amla-2026-05-07-training-diagnostics",
+    prompt: "Which of the following is the oldest CNN architecture?",
+    options: ["AlexNet", "ResNet", "GoogLeNet/Inception", "VGGNet"],
+    correct: 0,
+    explanation: "Among the listed architectures, AlexNet is the oldest major CNN architecture.",
+    optionFeedback: [
+      "AlexNet came earlier than VGGNet, GoogLeNet/Inception, and ResNet among these options.",
+      "ResNet is newer and is associated with residual connections.",
+      "GoogLeNet/Inception came after AlexNet and introduced inception-style modules.",
+      "VGGNet is later than AlexNet and is known for stacked small convolutions.",
+    ],
+    tags: ["CNN", "architecture"],
+    difficulty: "easy",
+  },
+  {
+    id: "mock-pooling-purpose",
+    lessonCode: "L06",
+    lessonId: "amla-2026-05-07-training-diagnostics",
+    prompt: "Pooling layers in CNNs for image processing are added in order to:",
+    options: [
+      "Take the maximum of the values in neighboring pixels of the image.",
+      "Avoid the need to apply padding.",
+      "Reduce dimensionality.",
+      "Fight underfitting.",
+    ],
+    correct: 2,
+    explanation: "Pooling reduces spatial dimensionality while retaining salient local information.",
+    optionFeedback: [
+      "Taking a maximum describes max pooling specifically, but the broader purpose of pooling layers is dimensionality reduction.",
+      "Padding and pooling solve different shape issues; pooling does not remove the need for padding in general.",
+      "Pooling reduces the spatial size of feature maps, lowering dimensionality and computation.",
+      "Pooling can regularize slightly, but it is not mainly added to fight underfitting.",
+    ],
+    tags: ["pooling", "CNN"],
+    difficulty: "easy",
+  },
+];
+
+const QUESTION_SET_OPTIONS = [
+  {
+    id: "full",
+    label: "Full course bank",
+    eyebrow: "Full-course bank",
+    navLabel: "AMLA full-course exam",
+    description: "Seventy-two reasoning-oriented multiple-choice questions covering all 12 AMLA lessons.",
+    questions: QUESTIONS,
+  },
+  {
+    id: "mock",
+    label: "Mock exam sample",
+    eyebrow: "Mock exam sample",
+    navLabel: "AMLA mock exam",
+    description: "Ten mock-exam questions focused on SVMs, ensembles, CNNs, activations and deep-learning context.",
+    questions: MOCK_EXAM_QUESTIONS,
+  },
+];
+
 function optionLabel(index) {
   return String.fromCharCode(65 + index);
 }
@@ -1741,6 +1971,7 @@ function QuestionCard({ question, index, answer, setAnswer, showFeedback, locked
 }
 
 export default function AMLAPracticeExamPage() {
+  const [questionSet, setQuestionSet] = useState("full");
   const [mode, setMode] = useState("practice");
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -1749,24 +1980,28 @@ export default function AMLAPracticeExamPage() {
   const [tagFilter, setTagFilter] = useState("all");
   const [reviewMistakes, setReviewMistakes] = useState(false);
 
-  const score = useMemo(() => QUESTIONS.filter((question) => answers[question.id] === question.correct).length, [answers]);
+  const activeSet = QUESTION_SET_OPTIONS.find((set) => set.id === questionSet) || QUESTION_SET_OPTIONS[0];
+  const activeQuestions = activeSet.questions;
+  const lessonFilters = useMemo(() => ["all", ...Array.from(new Set(activeQuestions.map((question) => question.lessonCode)))], [activeQuestions]);
+  const tagFilters = useMemo(() => ["all", ...Array.from(new Set(activeQuestions.flatMap((question) => question.tags))).sort((a, b) => a.localeCompare(b))], [activeQuestions]);
+  const score = useMemo(() => activeQuestions.filter((question) => answers[question.id] === question.correct).length, [activeQuestions, answers]);
   const answeredCount = Object.keys(answers).length;
   const locked = mode === "mock" && submitted;
   const showFeedback = mode === "practice" || submitted;
   const canReviewMistakes = answeredCount > 0 && score < answeredCount;
-  const filteredQuestions = useMemo(() => QUESTIONS.filter((question) => {
+  const filteredQuestions = useMemo(() => activeQuestions.filter((question) => {
     const lessonMatch = lessonFilter === "all" || question.lessonCode === lessonFilter;
     const difficultyMatch = difficultyFilter === "all" || question.difficulty === difficultyFilter;
     const tagMatch = tagFilter === "all" || question.tags.includes(tagFilter);
     const mistakeMatch = !reviewMistakes || answers[question.id] !== undefined && answers[question.id] !== question.correct;
     return lessonMatch && difficultyMatch && tagMatch && mistakeMatch;
-  }), [answers, difficultyFilter, lessonFilter, reviewMistakes, tagFilter]);
+  }), [activeQuestions, answers, difficultyFilter, lessonFilter, reviewMistakes, tagFilter]);
   const byLesson = useMemo(() => AMLA_LESSONS.map((lesson) => {
-    const lessonQuestions = QUESTIONS.filter((question) => question.lessonId === lesson.id);
+    const lessonQuestions = activeQuestions.filter((question) => question.lessonId === lesson.id);
     const answered = lessonQuestions.filter((question) => answers[question.id] !== undefined).length;
     const correct = lessonQuestions.filter((question) => answers[question.id] === question.correct).length;
     return { lesson, count: lessonQuestions.length, answered, correct };
-  }), [answers]);
+  }).filter((row) => questionSet === "full" || row.count > 0), [activeQuestions, answers, questionSet]);
 
   const setAnswer = (questionId, value) => {
     if (locked) return;
@@ -1778,6 +2013,16 @@ export default function AMLAPracticeExamPage() {
     setAnswers({});
     setSubmitted(false);
     setReviewMistakes(false);
+  };
+
+  const selectQuestionSet = (nextSet) => {
+    setQuestionSet(nextSet);
+    setAnswers({});
+    setSubmitted(false);
+    setReviewMistakes(false);
+    setLessonFilter("all");
+    setDifficultyFilter("all");
+    setTagFilter("all");
   };
 
   const clearFilters = () => {
@@ -1792,24 +2037,31 @@ export default function AMLAPracticeExamPage() {
       <nav className="mb-6 rounded-[2rem] border border-stone-200 bg-white/85 p-3 shadow-sm">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <a href="#/" className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-sm font-black text-stone-800 transition hover:bg-stone-50">Back to AMLA dashboard</a>
-          <div className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500">AMLA full-course exam</div>
+          <div className="rounded-full border border-stone-200 bg-white px-4 py-2 text-center text-xs font-black uppercase tracking-[0.2em] text-stone-500">{activeSet.navLabel}</div>
           <a href="#question-bank" className="rounded-full bg-stone-950 px-4 py-2 text-center text-sm font-black text-white transition hover:bg-red-800">Start</a>
         </div>
       </nav>
 
       <section className="grid overflow-hidden rounded-[2.5rem] border border-stone-200 bg-white/85 shadow-sm lg:grid-cols-[1.05fr_0.95fr]">
         <div className="bg-[#fbf4e8] p-8 md:p-12">
-          <div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">Full-course bank</div>
+          <div className="inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{activeSet.eyebrow}</div>
           <h1 className="mt-7 max-w-3xl text-5xl font-black tracking-tight text-stone-950 md:text-6xl">AMLA Practice Exam</h1>
           <p className="mt-6 max-w-3xl text-lg font-semibold leading-8 text-stone-700">
-            Seventy-two reasoning-oriented multiple-choice questions covering all 12 AMLA lessons. Practice mode gives immediate feedback; mock mode reveals explanations only after submission.
+            {activeSet.description} Practice mode gives immediate feedback; mock mode reveals explanations only after submission.
           </p>
         </div>
         <aside className="border-t border-stone-200 bg-white p-8 lg:border-l lg:border-t-0 md:p-10">
           <div className="grid gap-3 sm:grid-cols-3">
-            <div className="rounded-3xl border border-red-200 bg-red-50 p-5 text-red-800"><div className="text-xs font-black uppercase tracking-[0.18em] opacity-70">Questions</div><div className="mt-2 text-3xl font-black">{QUESTIONS.length}</div></div>
+            <div className="rounded-3xl border border-red-200 bg-red-50 p-5 text-red-800"><div className="text-xs font-black uppercase tracking-[0.18em] opacity-70">Questions</div><div className="mt-2 text-3xl font-black">{activeQuestions.length}</div></div>
             <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Answered</div><div className="mt-2 text-3xl font-black text-stone-950">{answeredCount}</div></div>
             <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5"><div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Score</div><div className="mt-2 text-3xl font-black text-stone-950">{score}</div></div>
+          </div>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {QUESTION_SET_OPTIONS.map((set) => (
+              <button key={set.id} type="button" onClick={() => selectQuestionSet(set.id)} className={`rounded-full border px-4 py-2 text-sm font-black ${questionSet === set.id ? "border-red-300 bg-red-50 text-red-800" : "border-stone-200 bg-white text-stone-700"}`}>
+                {set.label}
+              </button>
+            ))}
           </div>
           <div className="mt-4 flex flex-wrap gap-2">
             {["practice", "mock"].map((option) => (
@@ -1819,7 +2071,7 @@ export default function AMLAPracticeExamPage() {
             ))}
           </div>
           {mode === "mock" ? <button type="button" onClick={() => setSubmitted(true)} className="mt-4 rounded-full bg-stone-950 px-5 py-3 text-sm font-black text-white hover:bg-red-800">Submit mock</button> : null}
-          {locked ? <p className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-black leading-7 text-emerald-950">Final score: {score} / {QUESTIONS.length}</p> : null}
+          {locked ? <p className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-black leading-7 text-emerald-950">Final score: {score} / {activeQuestions.length}</p> : null}
           <button
             type="button"
             onClick={() => setReviewMistakes((current) => !current)}
@@ -1838,7 +2090,7 @@ export default function AMLAPracticeExamPage() {
             <label className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">
               Lesson
               <select value={lessonFilter} onChange={(event) => setLessonFilter(event.target.value)} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold normal-case tracking-normal text-stone-700">
-                {LESSON_FILTERS.map((value) => <option key={value} value={value}>{value === "all" ? "All lessons" : value}</option>)}
+                {lessonFilters.map((value) => <option key={value} value={value}>{value === "all" ? "All lessons" : value}</option>)}
               </select>
             </label>
             <label className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">
@@ -1850,7 +2102,7 @@ export default function AMLAPracticeExamPage() {
             <label className="text-xs font-black uppercase tracking-[0.16em] text-stone-500">
               Topic tag
               <select value={tagFilter} onChange={(event) => setTagFilter(event.target.value)} className="mt-2 w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold normal-case tracking-normal text-stone-700">
-                {TAG_FILTERS.map((value) => <option key={value} value={value}>{value === "all" ? "All tags" : value}</option>)}
+                {tagFilters.map((value) => <option key={value} value={value}>{value === "all" ? "All tags" : value}</option>)}
               </select>
             </label>
           </div>
@@ -1876,7 +2128,7 @@ export default function AMLAPracticeExamPage() {
         <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Review status</div>
         <div className="mt-3 grid gap-3 md:grid-cols-3">
           {[
-            ["Answered", `${answeredCount} / ${QUESTIONS.length}`],
+            ["Answered", `${answeredCount} / ${activeQuestions.length}`],
             ["Correct", `${score}`],
             ["Current view", `${filteredQuestions.length} questions`],
           ].map(([label, value]) => (

@@ -10,7 +10,8 @@
     "preview": "vite preview --config StudyGuide-src/vite.config.js",
     "validate:drd": "node scripts/validate-drd.mjs",
     "validate:drd:links": "node scripts/validate-drd.mjs --check-links",
-    "validate:amla": "node scripts/validate-amla.mjs"
+    "validate:amla": "node scripts/validate-amla.mjs",
+    "validate:ibdpi": "node scripts/validate-ibdpi.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

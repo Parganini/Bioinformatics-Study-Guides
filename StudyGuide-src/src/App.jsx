@@ -54,6 +54,22 @@ import { AMLAPlannedLesson } from "./lessons/amla/shared/template.jsx";
 import { getAMLAStatusMeta } from "./lessons/amla/shared/status.js";
 import { AMLAResourcePanel } from "./lessons/amla/shared/resourcePanel.jsx";
 import {
+  IBDPI_DRIVE,
+  IBDPI_LESSONS,
+  IBDPI_MODULES,
+  IBDPI_STUDY_PRODUCTS,
+  filterIBDPILessons,
+  getAvailableIBDPILessons,
+  getIBDPILessonById,
+  getIBDPILessonsByModule,
+  getIBDPIProgressTotal,
+  ibdpiLessonHref,
+} from "./lessons/ibdpi/ibdpiManifest.js";
+import { getIBDPILessonComponent } from "./lessons/ibdpi/ibdpiLessonRegistry.js";
+import { IBDPIPlannedLesson } from "./lessons/ibdpi/shared/template.jsx";
+import { getIBDPIStatusMeta } from "./lessons/ibdpi/shared/status.js";
+import { IBDPIResourcePanel } from "./lessons/ibdpi/shared/resourcePanel.jsx";
+import {
   LB1_DRIVE,
   LB1_HIGH_YIELD_QUESTIONS,
   LB1_LESSONS,
@@ -78,6 +94,7 @@ const DRDRapidReviewPage = React.lazy(() => import("./exams/drd/rapidReview.jsx"
 const AMLAPracticeExamPage = React.lazy(() => import("./exams/amla/practiceExam.jsx"));
 const AMLAMockExamPage = React.lazy(() => import("./exams/amla/mockExam.jsx"));
 const GenomicsPracticeExamPage = React.lazy(() => import("./exams/genomics/practiceExam.jsx"));
+const IBDPIExamPrepPage = React.lazy(() => import("./exams/ibdpi/examPrep.jsx"));
 
 const LANGS = [
   { code: "en", label: "English", short: "EN", dir: "ltr" },
@@ -124,6 +141,9 @@ const UI = {
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
     appliedGenomicsDesc: "Practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
+    ibdpi: "Introduction to Big Data Processing Infrastructures",
+    ibdpiShort: "IBDPI",
+    ibdpiDesc: "Exam-oriented guide for big data infrastructure, cloud, HTC/HPC, containers, storage, AAI, DevOps, Kubernetes, IaC and FaaS.",
     builtFor: "Course study guides",
     uniform: "Study guide",
     studyPath: "Study path",
@@ -170,6 +190,9 @@ const UI = {
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
     appliedGenomicsDesc: "Practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
+    ibdpi: "Introduction to Big Data Processing Infrastructures",
+    ibdpiShort: "IBDPI",
+    ibdpiDesc: "Exam-oriented guide for big data infrastructure, cloud, HTC/HPC, containers, storage, AAI, DevOps, Kubernetes, IaC and FaaS.",
     builtFor: "Guías de curso",
     uniform: "Guía de estudio",
     studyPath: "Ruta de estudio",
@@ -216,6 +239,9 @@ const UI = {
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
     appliedGenomicsDesc: "Practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
+    ibdpi: "Introduction to Big Data Processing Infrastructures",
+    ibdpiShort: "IBDPI",
+    ibdpiDesc: "Exam-oriented guide for big data infrastructure, cloud, HTC/HPC, containers, storage, AAI, DevOps, Kubernetes, IaC and FaaS.",
     builtFor: "راهنماهای درسی",
     uniform: "راهنمای مطالعه",
     studyPath: "مسیر مطالعه",
@@ -725,6 +751,7 @@ function currentMode() {
   if (path.includes("/mp/")) return "mp";
   if (path.includes("/drd/")) return "drd";
   if (path.includes("/ag/")) return "ag";
+  if (path.includes("/ibdpi/")) return "ibdpi";
   return "hub";
 }
 
@@ -803,6 +830,12 @@ function Header({ lang, setLang, mode, t }) {
       icon: "AG",
       iconClass: "bg-emerald-700",
     },
+    ibdpi: {
+      title: t.ibdpi,
+      subtitle: `${t.ibdpiShort} · ${t.studyTools}`,
+      icon: "IBDPI",
+      iconClass: "bg-sky-700",
+    },
   }[mode] || { title: t.studyHub, subtitle: t.subjects, icon: "⌂", iconClass: "bg-stone-950" };
 
   return <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#fffaf0]/88 backdrop-blur-xl"><div className="mx-auto flex w-[min(1180px,calc(100%-24px))] items-center justify-between gap-4 py-3"><a href={mode === "hub" ? "#top" : "../index.html"} className="flex items-center gap-3"><div className={`flex h-10 min-w-10 items-center justify-center rounded-2xl px-2 text-sm font-black text-white ${header.iconClass}`}>{header.icon}</div><div><div className="text-sm font-black leading-4 text-stone-950">{header.title}</div><div className="text-xs font-semibold text-stone-500">{header.subtitle}</div></div></a><nav className="hidden items-center gap-2 lg:flex"><a href={mode === "hub" ? "#subjects" : "#/"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{mode === "hub" ? t.subjects : t.modules}</a><a href={mode === "hub" ? "#tools" : "#/tools"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.studyTools}</a><a href={mode === "hub" ? "#tools" : "#/resources"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.resources}</a></nav><LangSwitcher lang={lang} setLang={setLang} /></div></header>;
@@ -815,15 +848,247 @@ function Hero({ eyebrow, title, subtitle, actions, visual }) {
 }
 
 function HubApp({ t }) {
-  return <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.builtFor} title={<>{t.studyHub}</>} subtitle={t.hubSubtitle} actions={<><a href="AMLB/index.html" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-red-800">{t.appliedML}</a><a href="AMLA/index.html" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100">{t.appliedMLAdvancedShort}</a><a href="LB1/index.html" className="rounded-full border border-teal-200 bg-teal-50 px-5 py-3 text-sm font-black text-teal-800 transition hover:-translate-y-0.5 hover:bg-teal-100">{t.laboratoryBioinformaticsShort}</a><a href="MP/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.phylo}</a><a href="DRD/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.drd}</a><a href="AG/index.html" className="rounded-full border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm font-black text-emerald-700 transition hover:-translate-y-0.5 hover:bg-emerald-100">{t.appliedGenomicsShort}</a></>} visual={<div><div className="flex items-start justify-between gap-4"><div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.publishedFolders}</div><div className="mt-2 text-2xl font-black text-stone-950">AMLB · AMLA · LB1 · MP · DRD · AG</div><div className="mt-1 text-sm font-semibold text-stone-500">{t.sourceText}</div></div><div className="rounded-2xl bg-stone-950 px-3 py-2 text-sm font-black text-white">6</div></div><div className="mt-6 rounded-[2rem] bg-[#fffaf0] p-4"><MiniTreeIcon active/><div className="mt-3"><ProgressBar value={50}/></div></div><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyTools}</div><p className="mt-2 text-lg font-bold leading-7">{t.tools.join(" · ")}</p></div></div>} />
-    <section id="subjects" className="mt-10"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div><div className="grid gap-5 sm:grid-cols-2"><SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/><SubjectCard href="AMLA/index.html" title={t.appliedMLAdvanced} desc={t.appliedMLAdvancedDesc} progressKey="amla_progress_v1" total={getAMLAProgressTotal()} icon="AMLA"/><SubjectCard href="LB1/index.html" title={t.laboratoryBioinformatics} desc={t.laboratoryBioinformaticsDesc} progressKey="lb1_progress_v1" total={getLB1ProgressTotal()} icon="LB1"/><SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/><SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={getDRDProgressTotal()} icon="DRD"/><SubjectCard href="AG/index.html" title={t.appliedGenomics} desc={t.appliedGenomicsDesc} progressKey="ag_progress_v1" total={1} icon="AG"/></div></section>
-    <section id="tools" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8"><div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.studyTools}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.quickReview}</h2><p className="mt-2 max-w-2xl leading-7 text-stone-600">{t.sourceText}</p></div><div className="grid gap-3 md:grid-cols-5">{t.tools.map(tool => <div key={tool} className="rounded-2xl border border-stone-200 bg-white p-4 text-sm font-black text-stone-800 shadow-sm">{tool}</div>)}</div></section></main>;
+  return (
+    <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
+      <Hero
+        eyebrow={t.builtFor}
+        title={<>{t.studyHub}</>}
+        subtitle={t.hubSubtitle}
+        actions={(
+          <>
+            <a href="AMLB/index.html" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-red-800">{t.appliedML}</a>
+            <a href="AMLA/index.html" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100">{t.appliedMLAdvancedShort}</a>
+            <a href="LB1/index.html" className="rounded-full border border-teal-200 bg-teal-50 px-5 py-3 text-sm font-black text-teal-800 transition hover:-translate-y-0.5 hover:bg-teal-100">{t.laboratoryBioinformaticsShort}</a>
+            <a href="MP/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.phylo}</a>
+            <a href="DRD/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.drd}</a>
+            <a href="AG/index.html" className="rounded-full border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm font-black text-emerald-700 transition hover:-translate-y-0.5 hover:bg-emerald-100">{t.appliedGenomicsShort}</a>
+            <a href="IBDPI/index.html" className="rounded-full border border-sky-200 bg-sky-50 px-5 py-3 text-sm font-black text-sky-800 transition hover:-translate-y-0.5 hover:bg-sky-100">{t.ibdpiShort}</a>
+          </>
+        )}
+        visual={(
+          <div>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.publishedFolders}</div>
+                <div className="mt-2 text-2xl font-black text-stone-950">AMLB · AMLA · LB1 · MP · DRD · AG · IBDPI</div>
+                <div className="mt-1 text-sm font-semibold text-stone-500">{t.sourceText}</div>
+              </div>
+              <div className="rounded-2xl bg-stone-950 px-3 py-2 text-sm font-black text-white">7</div>
+            </div>
+            <div className="mt-6 rounded-[2rem] bg-[#fffaf0] p-4"><MiniTreeIcon active/><div className="mt-3"><ProgressBar value={57}/></div></div>
+            <div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyTools}</div><p className="mt-2 text-lg font-bold leading-7">{t.tools.join(" · ")}</p></div>
+          </div>
+        )}
+      />
+      <section id="subjects" className="mt-10">
+        <div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/>
+          <SubjectCard href="AMLA/index.html" title={t.appliedMLAdvanced} desc={t.appliedMLAdvancedDesc} progressKey="amla_progress_v1" total={getAMLAProgressTotal()} icon="AMLA"/>
+          <SubjectCard href="LB1/index.html" title={t.laboratoryBioinformatics} desc={t.laboratoryBioinformaticsDesc} progressKey="lb1_progress_v1" total={getLB1ProgressTotal()} icon="LB1"/>
+          <SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/>
+          <SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={getDRDProgressTotal()} icon="DRD"/>
+          <SubjectCard href="AG/index.html" title={t.appliedGenomics} desc={t.appliedGenomicsDesc} progressKey="ag_progress_v1" total={1} icon="AG"/>
+          <SubjectCard href="IBDPI/index.html" title={t.ibdpi} desc={t.ibdpiDesc} progressKey="ibdpi_progress_v1" total={getIBDPIProgressTotal()} icon="IBDPI"/>
+        </div>
+      </section>
+      <section id="tools" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+        <div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.studyTools}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.quickReview}</h2><p className="mt-2 max-w-2xl leading-7 text-stone-600">{t.sourceText}</p></div>
+        <div className="grid gap-3 md:grid-cols-5">{t.tools.map(tool => <div key={tool} className="rounded-2xl border border-stone-200 bg-white p-4 text-sm font-black text-stone-800 shadow-sm">{tool}</div>)}</div>
+      </section>
+    </main>
+  );
 }
 function SubjectCard({ href, title, desc, progressKey, total, icon }) {
   const progress = getJSON(progressKey, {});
   const count = Object.values(progress).filter(Boolean).length;
   const percent = total ? (count / total) * 100 : 0;
   return <a href={href} className="group rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><div className="flex items-start justify-between gap-4"><div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-stone-950 text-lg font-black text-white">{icon}</div><span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{clamp(percent)}%</span></div><h3 className="mt-5 text-2xl font-black text-stone-950">{title}</h3><p className="mt-2 leading-7 text-stone-600">{desc}</p><div className="mt-5"><ProgressBar value={percent}/></div></a>;
+}
+
+function IBDPIApp({ t, hash }) {
+  const [progress, setProgress] = useState(() => getJSON("ibdpi_progress_v1", {}));
+  const [query, setQuery] = useState("");
+  const [moduleFilter, setModuleFilter] = useState("all");
+  const save = (next) => { setProgress(next); setJSON("ibdpi_progress_v1", next); };
+  const toggle = (id) => save({ ...progress, [id]: !progress[id] });
+  const lessonId = (hash.match(/^#\/lesson\/(.+)$/) || [])[1];
+
+  if (hash.match(/^#\/exam-prep/)) {
+    return (
+      <React.Suspense fallback={<DRDRouteLoading label="IBDPI exam prep" />}>
+        <IBDPIExamPrepPage />
+      </React.Suspense>
+    );
+  }
+
+  if (lessonId) {
+    const lesson = getIBDPILessonById(lessonId);
+    if (lesson) {
+      const LessonComponent = getIBDPILessonComponent(lesson.componentKey);
+      const sharedProps = { lesson, lang: "en", isDone: !!progress[lesson.id], toggle: () => toggle(lesson.id) };
+      return LessonComponent ? (
+        <React.Suspense fallback={<DRDRouteLoading label={`${lesson.code} - ${lesson.title}`} eyebrow="Loading IBDPI lesson" />}>
+          <LessonComponent {...sharedProps} />
+        </React.Suspense>
+      ) : <IBDPIPlannedLesson {...sharedProps} />;
+    }
+  }
+
+  const availableLessons = getAvailableIBDPILessons();
+  const completed = availableLessons.filter((lesson) => progress[lesson.id]).length;
+  const total = getIBDPIProgressTotal();
+  const percent = total ? completed / total * 100 : 0;
+  const filteredByModule = moduleFilter === "all" ? IBDPI_LESSONS : getIBDPILessonsByModule(moduleFilter);
+  const filteredLessons = filterIBDPILessons(filteredByModule, query);
+  const highPriority = IBDPI_LESSONS.filter((lesson) => lesson.examScope?.priority === "high").length;
+  const mixedLessons = IBDPI_LESSONS.filter((lesson) => lesson.lessonType === "mixed").length;
+  const lastOpened = Object.keys(progress).reverse().find((id) => progress[id]);
+  const continueLesson = lastOpened ? getIBDPILessonById(lastOpened) : availableLessons[0];
+
+  return (
+    <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
+      <Hero
+        eyebrow="IBDPI study guide"
+        title={<>{t.ibdpi}</>}
+        subtitle={t.ibdpiDesc}
+        actions={(
+          <>
+            <a href="#lessons" className="rounded-full bg-sky-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-sky-900/10 transition hover:bg-sky-800">Lessons</a>
+            <a href="#/exam-prep" className="rounded-full border border-sky-200 bg-sky-50 px-5 py-3 text-sm font-black text-sky-800 transition hover:bg-sky-100">Exam prep</a>
+            {continueLesson && <a href={ibdpiLessonHref(continueLesson)} className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">Continue</a>}
+            <a href="#resources" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">Resources</a>
+          </>
+        )}
+        visual={(
+          <div>
+            <div className="text-xs font-black uppercase tracking-[0.18em] text-sky-700">Progress</div>
+            <div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{completed} / {total} source-based lessons completed</p>
+            <div className="mt-5"><ProgressBar value={percent}/></div>
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Classes</div><div className="mt-1 text-2xl font-black">{IBDPI_LESSONS.length}</div></div>
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">High priority</div><div className="mt-1 text-2xl font-black">{highPriority}</div></div>
+              <div className="rounded-2xl bg-stone-50 p-4"><div className="text-sm font-bold text-stone-500">Mixed</div><div className="mt-1 text-2xl font-black">{mixedLessons}</div></div>
+            </div>
+            {continueLesson && <div className="mt-6 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-sky-200">Continue where you left off</div><p className="mt-2 text-lg font-bold leading-7">{continueLesson.code} - {continueLesson.title}</p></div>}
+          </div>
+        )}
+      />
+
+      <section className="mt-8 grid gap-5 lg:grid-cols-4">
+        {IBDPI_STUDY_PRODUCTS.map((product) => <DRDProductCard key={product.title} product={product} />)}
+      </section>
+
+      <section id="lessons" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/75 p-5 shadow-sm md:p-6">
+        <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-sky-700">Chronological dashboard</div>
+            <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">IBDPI lessons</h2>
+          </div>
+          <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search concepts, commands or traps..." className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-stone-700 outline-none transition placeholder:text-stone-400 focus:border-sky-300 focus:ring-4 focus:ring-sky-100 md:w-80"/>
+        </div>
+        <div className="mb-5 flex flex-wrap gap-2">
+          {[{ id: "all", label: "All modules" }, ...IBDPI_MODULES.map((module) => ({ id: module.id, label: module.shortTitle }))].map((filter) => (
+            <button key={filter.id} type="button" onClick={() => setModuleFilter(filter.id)} className={`rounded-full px-4 py-2 text-xs font-black transition ${moduleFilter === filter.id ? "bg-sky-700 text-white shadow-sm" : "border border-stone-200 bg-white text-stone-600 hover:bg-stone-50"}`}>{filter.label}</button>
+          ))}
+        </div>
+        {IBDPI_MODULES.map((module) => {
+          const units = moduleFilter === "all" || moduleFilter === module.id ? filterIBDPILessons(getIBDPILessonsByModule(module.id), query) : [];
+          if (!units.length && moduleFilter !== module.id) return null;
+          return <IBDPIModule key={module.id} module={module} units={units} progress={progress} toggle={toggle} />;
+        })}
+      </section>
+
+      <IBDPIResourcesSection />
+    </main>
+  );
+}
+
+function IBDPIModule({ module, units, progress, toggle }) {
+  const available = units.filter((unit) => unit.status === "available");
+  const done = available.filter((unit) => progress[unit.id]).length;
+  const percent = available.length ? done / available.length * 100 : 0;
+  return (
+    <article className="mb-6 overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm last:mb-0">
+      <div className="border-b border-stone-200 bg-stone-50 p-5 md:p-6">
+        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+          <div>
+            <h3 className="text-2xl font-black tracking-tight text-stone-950">{module.title}</h3>
+            <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-stone-500">{module.description}</p>
+            <p className="mt-2 text-sm font-semibold text-stone-500">{done} / {available.length} lessons completed</p>
+          </div>
+          <div className="w-full md:w-64"><ProgressBar value={percent}/></div>
+        </div>
+      </div>
+      <div className="grid gap-4 p-5 md:p-6">
+        {units.length === 0 && <div className="rounded-3xl border border-stone-200 bg-stone-50 p-5 text-sm font-black text-stone-500">No matching lessons.</div>}
+        {units.map((unit) => <IBDPIUnitCard key={unit.id} unit={unit} isDone={!!progress[unit.id]} toggle={() => toggle(unit.id)} />)}
+      </div>
+    </article>
+  );
+}
+
+function IBDPIUnitCard({ unit, isDone, toggle }) {
+  const status = getIBDPIStatusMeta(unit.status);
+  const resourceCount = Object.values(unit.resources || {}).reduce((count, value) => count + (Array.isArray(value) ? value.length : value ? 1 : 0), 0);
+  return (
+    <div className={`rounded-3xl border p-5 transition ${isDone ? "border-emerald-200 bg-emerald-50" : "border-stone-200 bg-stone-50 hover:bg-white"}`}>
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="rounded-full bg-stone-950 px-3 py-1 text-xs font-black text-white">{unit.code}</span>
+            <span className={`rounded-full border px-3 py-1 text-xs font-black ${status.className}`}>{status.label}</span>
+            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{unit.date}</span>
+            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{unit.lessonType}</span>
+            <span className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-500">{resourceCount} resources</span>
+            <span className="rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-black text-sky-700">{unit.examScope?.priority} priority</span>
+          </div>
+          <h4 className="mt-3 text-xl font-black leading-7 text-stone-950">{unit.title}</h4>
+          <p className="mt-2 max-w-4xl text-sm font-semibold leading-7 text-stone-600">{unit.summary}</p>
+        </div>
+        <div className="flex shrink-0 flex-wrap gap-2 md:justify-end">
+          <a href={ibdpiLessonHref(unit)} className="rounded-full bg-sky-700 px-4 py-2 text-xs font-black text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-sky-800">Open lesson</a>
+          <button onClick={toggle} className={`rounded-full px-4 py-2 text-xs font-black ${isDone ? "bg-emerald-600 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{isDone ? "Completed" : "Mark completed"}</button>
+        </div>
+      </div>
+      <div className="mt-4 grid gap-4 lg:grid-cols-2">
+        <div>
+          <div className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">Tags</div>
+          <div className="mt-2 flex flex-wrap gap-2">{(unit.tags || []).map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-black text-stone-600">{tag}</span>)}</div>
+        </div>
+        <IBDPIResourcePanel lesson={unit} title="Resources" />
+      </div>
+    </div>
+  );
+}
+
+function IBDPIResourcesSection() {
+  const sourceLesson = {
+    resources: {
+      slides: IBDPI_DRIVE.root,
+      transcript: IBDPI_DRIVE.transcriptions,
+      recording: { todo: "Per-class recording URLs were not verified for this first pass." },
+      extra: [
+        { label: "Corso OK/SKIP file", href: IBDPI_DRIVE.corso },
+        { label: "Module 1 slides folder", href: IBDPI_DRIVE.module1 },
+        { label: "Module 2 slides folder", href: IBDPI_DRIVE.module2 },
+        { label: "AWS folder", href: IBDPI_DRIVE.aws },
+        { label: "GitHub folder", href: IBDPI_DRIVE.github },
+        { label: "Module 2 audio folder", href: IBDPI_DRIVE.audioModule2 },
+      ],
+    },
+  };
+  return (
+    <section id="resources" className="mt-10 scroll-mt-28 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
+      <div className="mb-5">
+        <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-sky-700">Resources</div>
+        <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">Verified source folders and documents</h2>
+        <p className="mt-3 max-w-3xl text-sm font-semibold leading-7 text-stone-600">Only Drive URLs verified from the source folder are linked here. Slide images and per-class recordings remain TODOs where they were not verified.</p>
+      </div>
+      <IBDPIResourcePanel lesson={sourceLesson} title="Course source set" />
+    </section>
+  );
 }
 
 
@@ -2465,13 +2730,13 @@ function App() {
   const [lang, setLangState] = useState(getInitialLang);
   const mode = currentMode();
   const hash = useHash();
-  const displayLang = mode === "ag" || mode === "lb1" ? "en" : lang;
+  const displayLang = mode === "ag" || mode === "lb1" || mode === "ibdpi" ? "en" : lang;
   const t = UI[displayLang] || UI.es;
-  const headerLang = mode === "ag" || mode === "lb1" ? lang : displayLang;
+  const headerLang = mode === "ag" || mode === "lb1" || mode === "ibdpi" ? lang : displayLang;
   const dir = LANGS.find(x => x.code === displayLang)?.dir || "ltr";
   const setLang = (next) => { localStorage.setItem("studyhub_lang", next); localStorage.setItem("phylo_lang", next); setLangState(next); };
   useEffect(() => { document.documentElement.lang = displayLang; document.documentElement.dir = dir; }, [displayLang, dir]);
-  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={headerLang} setLang={setLang} mode={mode} t={t}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "lb1" ? <LB1App t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={displayLang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={displayLang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
+  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={headerLang} setLang={setLang} mode={mode} t={t}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "lb1" ? <LB1App t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={displayLang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={displayLang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} hash={hash}/> : mode === "ibdpi" ? <IBDPIApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
 }
 
 createRoot(document.getElementById("root")).render(<App />);

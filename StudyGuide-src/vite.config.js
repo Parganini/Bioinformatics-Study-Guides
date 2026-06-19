@@ -25,6 +25,7 @@ export default defineConfig({
         mp: path.resolve(__dirname, "MP/index.html"),
         drd: path.resolve(__dirname, "DRD/index.html"),
         ag: path.resolve(__dirname, "AG/index.html"),
+        ibdpi: path.resolve(__dirname, "IBDPI/index.html"),
       },
     },
   },

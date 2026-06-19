@@ -27,8 +27,13 @@ function hand(title, goal, commands, expectedResult, commonError, examAngle) {
   return { title, goal, commands, expectedResult, commonError, examAngle };
 }
 
-function slide(label, deck, deckLabel, page, title, comment, professor, remember, examPriority = "high", corsoStatus = "OK") {
-  return { label, deck, deckLabel, page, image: imageTodo, title, comment, professor, remember, examPriority, corsoStatus };
+function slideAsset(label) {
+  if (!label || label === "Corso") return imageTodo;
+  return `ibdpi/slides/${label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.png`;
+}
+
+function slide(label, deck, deckLabel, page, title, comment, professor, remember, examPriority = "high", corsoStatus = "OK", trap = "") {
+  return { label, deck, deckLabel, page, image: slideAsset(label), title, comment, professor, remember, examPriority, corsoStatus, trap };
 }
 
 function section(range, title, intro, slides) {
@@ -178,6 +183,165 @@ const moreLessons = {
   "ibdpi-2026-06-10-kubernetes-faas-wrapup": ["Kubernetes, Infrastructure as Code and FaaS wrap-up", ["Minikube", "kubectl", "pod", "deployment", "service", "replica", "secret", "persistent volume", "IaC", "serverless", "FaaS"], "Professor emphasis: Kubernetes is operated through manifests and APIs; serverless still uses servers, but the provider manages them.", ["A pod is the basic Kubernetes unit, not necessarily a whole application.", "Deleting a pod in a deployment causes replacement.", "Serverless does not mean no servers exist."]],
 };
 
+function importantSlide(label, deckLabel, page, title, comment, remember, trap, examPriority = "high", corsoStatus = "OK") {
+  return slide(label, "Verified course PDF", deckLabel, page, title, comment, "Professor emphasis condensed from the matching class transcript and source deck.", remember, examPriority, corsoStatus, trap);
+}
+
+const importantSlideSets = {
+  "ibdpi-2026-04-29-datacenter-building-blocks": [
+    section("Cloud IaaS", "Porting applications to the cloud", "Use these slides to connect cloud abstraction to concrete application deployment.", [
+      importantSlide("cloud-porting", "04 intro cloud BDP1", "IaaS application porting block", "IaaS advantages and tradeoffs", "The cloud gives fast provisioning and elasticity, but the user still owns OS/application choices in IaaS.", "Cloud is not just a VM; the exam asks what operational abstraction is added.", "Calling any virtual machine 'cloud' misses service model, elasticity and provisioning."),
+      importantSlide("aws-iaas", "04 intro cloud BDP1", "AWS usage block", "AWS as course IaaS", "AWS is the hands-on environment for instantiating compute and storage for exercises.", "Know the conceptual route: instantiate, connect, attach storage, inspect.", "Memorizing console screenshots is weaker than knowing the resource lifecycle."),
+    ]),
+    section("Containers", "Basic container concepts", "Container slides become high priority because Docker is an OK topic.", [
+      importantSlide("container-concept", "05 Containers", "container basics", "Container versus VM", "A container packages a runtime and process environment while sharing the host kernel.", "Containers improve reproducibility but do not replace infrastructure knowledge.", "Saying containers are lightweight VMs is too imprecise."),
+      importantSlide("docker-hub", "05 Containers", "Docker Hub block", "Images and registries", "Docker Hub stores images that can be pulled and run locally or on cloud instances.", "Image, container, registry and Dockerfile are separate exam terms.", "Pulling an image is not the same as running a container."),
+    ]),
+    section("Persistence and networking", "Why running is not enough", "The professor emphasis is operational: a useful container must keep data and expose services intentionally.", [
+      importantSlide("dockerfile", "05 Containers", "Dockerfile block", "Dockerfiles", "A Dockerfile records build steps so the image can be reproduced.", "Study the purpose of common Dockerfile instructions, not only syntax.", "A Dockerfile is the recipe, not the image itself."),
+      importantSlide("ports-volumes", "05 Containers", "ports and volumes block", "Ports and volumes", "Ports make services reachable; volumes or bind mounts keep data outside the disposable container layer.", "Use -p for ports and -v for persistence.", "Confusing -p and -v is a classic command-memory trap."),
+    ]),
+  ],
+  "ibdpi-2026-04-30-networking-storage-datacenter": [
+    section("Docker operations", "Images, containers and builds", "These are the highest-yield Docker slides for command recognition.", [
+      importantSlide("docker-build", "05 Containers", "build block", "Build an image", "Building converts a Dockerfile context into an image tag that can be reused.", "A build should be repeatable from source files.", "Changing a running container is not a reliable build process."),
+      importantSlide("docker-run", "05 Containers", "run block", "Run and inspect", "Running creates a container instance from an image; inspection confirms state, ports and mounts.", "Always connect command syntax to lifecycle state.", "Assuming a container is reachable because it is running ignores port/firewall layers."),
+    ]),
+    section("Compose", "From one container to a stack", "Compose is the bridge toward orchestration, but it is still not Kubernetes.", [
+      importantSlide("compose-yaml", "05 Containers", "Compose file block", "Docker Compose YAML", "Compose describes services, networks and volumes for a small multi-container application.", "Compose explains stack structure in one file.", "Compose is not the same as cluster orchestration."),
+      importantSlide("compose-up-down", "05 Containers", "Compose commands block", "Compose lifecycle", "up, stop, start and down describe different operational actions on the stack.", "Know what is created, stopped or removed.", "Using down when you only wanted stop can remove resources."),
+    ]),
+    section("Low-priority boundary", "Optional container topics", "The course mentions adjacent container tools, but the Corso filter decides priority.", [
+      importantSlide("export-import", "05 Containers", "optional image transfer", "Image export/import", "Image transfer may appear as context, but it should not outrank Dockerfiles, ports, volumes and Compose.", "Keep optional tooling below OK Docker fundamentals.", "Overstudying optional mechanics can crowd out exam-core container concepts.", "low", "SKIP"),
+    ]),
+  ],
+  "ibdpi-2026-04-30-cloud-intro-iaas": [
+    section("Userspace containers", "udocker and restricted environments", "This class links container execution to user privileges.", [
+      importantSlide("udocker", "05 Containers", "udocker block", "udocker", "udocker lets users run container-like workflows without normal Docker daemon privileges.", "The exam angle is why userspace execution matters on shared systems.", "Do not confuse udocker with Docker Compose or Kubernetes."),
+      importantSlide("security", "05 Containers", "privilege block", "Container privilege boundary", "Container tooling choices depend on local security policy and available privileges.", "Shared infrastructures often restrict privileged daemons.", "Container isolation does not mean unlimited user permission."),
+    ]),
+    section("Integrity and archives", "Checksums, tar and tgz", "These are small but explicit OK topics.", [
+      importantSlide("checksum", "01 Big Data Introduction", "checksum block", "Checksums", "A checksum verifies whether data changed during transfer or storage.", "Integrity is not confidentiality.", "A checksum is not encryption and does not hide data."),
+      importantSlide("tar-tgz", "01 Big Data Introduction", "archive block", "tar and tgz", "tar groups files into one archive; gzip compresses; tgz/tar.gz combines both.", "Know archive versus compression.", "Saying tar compresses by itself is the usual trap."),
+    ]),
+    section("SKIP boundary", "Mentioned but not exam-centered", "Keep Singularity and continuum topics visibly low priority when the Corso marks them that way.", [
+      importantSlide("singularity", "05 Containers", "optional tools block", "Singularity usage", "Singularity may be named as an adjacent container tool, but its usage is not the main IBDPI exam target.", "Recognize the name only if needed.", "Do not build a full answer around Singularity usage.", "low", "SKIP"),
+    ]),
+  ],
+  "ibdpi-2026-05-14-containers-htc-hpc-computing-models": [
+    section("HTC and grids", "Throughput-first infrastructures", "Start by asking what communication pattern the application has.", [
+      importantSlide("htc", "06 HTC", "HTC definition block", "HTC", "HTC optimizes throughput over many independent or loosely coupled tasks.", "Use HTC for many jobs over time, not tight low-latency parallelism.", "HTC is not simply a synonym for HPC."),
+      importantSlide("grid", "06 HTC", "grid computing block", "Grid computing", "Grids federate distributed resources through common interfaces and policies.", "Grid suitability depends on loose coupling and distributed ownership.", "A grid is not just any cluster."),
+    ]),
+    section("HPC", "Parallel speed and limits", "These slides are likely multiple-choice magnets.", [
+      importantSlide("speedup", "07 HPC", "speedup/efficiency block", "Speedup and efficiency", "Speedup compares runtimes; efficiency asks how well added resources are used.", "Efficiency is speedup divided by processing elements.", "High speedup can still mean poor efficiency."),
+      importantSlide("amdahl", "07 HPC", "Amdahl block", "Amdahl's Law", "The serial fraction limits parallel speedup even with many processors.", "The exam trap is infinite speedup with infinite processors.", "Parallel resources cannot accelerate serial work."),
+      importantSlide("uma-numa", "07 HPC", "memory architecture block", "UMA and NUMA", "Shared-memory architectures differ in whether memory access time is uniform.", "Memory topology affects parallel performance.", "Do not confuse UMA/NUMA with cloud service models."),
+    ]),
+    section("Distributed models", "Push/pull and data placement", "The computing-model slides turn infrastructure into workflow strategy.", [
+      importantSlide("push-pull", "08 Computing Models", "job submission block", "Push versus pull", "Push and pull describe who initiates task dispatch or acquisition.", "Connect submission strategy to workload management.", "This is not about phone notifications or HTTP push."),
+      importantSlide("data-driven", "08 Computing Models", "data strategies block", "Compute-driven versus data-driven", "Compute-driven workflows move data to computation; data-driven models place computation near data when appropriate.", "Data movement can dominate cost and reliability.", "Ignoring data location is a big infrastructure mistake."),
+    ]),
+  ],
+  "ibdpi-2026-05-15-module2-cloud-storage": [
+    section("Module 2 scope", "Beyond IaaS", "This class resets the course from VMs toward services and storage models.", [
+      importantSlide("paas-saas", "00 BDPM2 introduction", "service models block", "PaaS and SaaS", "Module 2 extends cloud thinking beyond raw infrastructure toward managed platforms and applications.", "Know where user responsibility decreases.", "PaaS is not 'power as a service'."),
+      importantSlide("course-cloud", "00 BDPM2 introduction", "course infrastructure block", "Using course cloud resources", "The course infrastructure remains the practical context for storage and services.", "Study operational purpose, not account trivia.", "Cloud UI details are less important than resource logic."),
+    ]),
+    section("Storage access", "POSIX, NFS and object storage", "These slides are the main storage contrast for Module 2.", [
+      importantSlide("posix-nfs", "01 BDPM2 cloud storage", "POSIX/NFS block", "POSIX and NFS", "NFS exposes remote filesystem access with familiar path semantics, but remote latency and sharing matter.", "POSIX is semantics/interface, not a disk brand.", "Object storage is not automatically POSIX."),
+      importantSlide("object-storage", "01 BDPM2 cloud storage", "object storage block", "Object storage", "Object storage organizes data as objects/keys and is commonly accessed through APIs.", "Know why it scales differently from mounted filesystems.", "Treating object storage as a normal mounted directory is the trap."),
+    ]),
+    section("APIs and data formats", "REST, JSON and VFS", "The professor links storage with application-facing interfaces.", [
+      importantSlide("rest-json", "01 BDPM2 cloud storage", "REST/JSON block", "REST and JSON", "REST is an architectural style; JSON is a data representation often carried by APIs.", "Keep architecture and format separate.", "REST is not a file format."),
+      importantSlide("vfs", "01 BDPM2 cloud storage", "VFS block", "Virtual file systems", "VFS layers can present different storage backends through filesystem-like abstractions.", "Ask what semantics are preserved and what is emulated.", "A VFS view does not make every backend truly POSIX."),
+    ]),
+  ],
+  "ibdpi-2026-05-28-advanced-containers-part1": [
+    section("Container networking", "Reachability across layers", "A running service may still be unreachable unless each layer is open.", [
+      importantSlide("bridge-host", "02 BDPM2 containers part 1", "networking block", "Bridge and host networking", "Container networking determines how container processes see each other and the host network.", "Distinguish container IPs, host ports and cloud security groups.", "Mapping a port does not bypass a blocked security group."),
+      importantSlide("ports", "02 BDPM2 containers part 1", "port exposure block", "Exposing services", "The service must listen, Docker must map the port, and the cloud/network must allow traffic.", "Debug reachability layer by layer.", "A correct application can look broken when the network layer blocks it."),
+    ]),
+    section("Operations", "Processes, logs and monitoring", "These slides are about running containers as services, not demos.", [
+      importantSlide("logs", "02 BDPM2 containers part 1", "logging block", "docker logs", "Logs expose application output and failure clues.", "Use logs to explain behavior after startup.", "docker logs is not docker stats."),
+      importantSlide("stats", "02 BDPM2 containers part 1", "process/resource block", "Process and resource state", "Stats and process inspection show whether a container is consuming resources or failing.", "Operation includes observation.", "Starting a container is not the same as confirming it is healthy."),
+    ]),
+    section("Development workflow", "Git and security", "This class begins connecting containers to reproducible development.", [
+      importantSlide("git", "02 BDPM2 containers part 1", "Git workflow block", "Git workflow", "Commits, pushes and remote repositories structure reproducible development.", "Local commits and remote pushes are different steps.", "A commit is not visible remotely until pushed."),
+      importantSlide("tokens", "02 BDPM2 containers part 1", "security block", "Tokens and credentials", "Tokens should be treated as secrets and not hard-coded into public files.", "Credentials belong in protected secret stores.", "Publishing a token in source code is an operational failure."),
+    ]),
+  ],
+  "ibdpi-2026-05-29-advanced-containers-part2": [
+    section("CI/CD", "Automating builds", "This lesson links GitHub activity to container image production.", [
+      importantSlide("actions", "03 BDPM2 containers part 2", "GitHub Actions block", "GitHub Actions", "A workflow can build and publish images after repository events.", "Automation should make repeated steps reproducible.", "CI/CD does not prove the application is correct unless tests check it."),
+      importantSlide("workflow", "03 BDPM2 containers part 2", "workflow YAML block", "Workflow YAML", "Workflow files describe triggers, jobs, steps and actions.", "Study what each block is for.", "A syntax-valid workflow can still be semantically wrong."),
+    ]),
+    section("Registries", "Docker Hub and image tags", "The registry slides are exam-useful because they separate source code from built artifacts.", [
+      importantSlide("dockerhub", "03 BDPM2 containers part 2", "Docker Hub block", "Docker Hub publishing", "Published images can be pulled elsewhere by name and tag.", "Tags identify image versions or channels.", "latest is not a reliable scientific version by itself."),
+      importantSlide("secrets", "03 BDPM2 containers part 2", "secrets block", "Secrets", "Registry credentials should be injected through GitHub secrets, not written in workflow text.", "Secret handling is part of secure automation.", "A working workflow with leaked credentials is still wrong."),
+    ]),
+    section("Release thinking", "From local to shared", "The professor frames automation as workflow discipline.", [
+      importantSlide("pipeline", "03 BDPM2 containers part 2", "pipeline block", "Local to GitHub to registry", "The practical path is edit locally, commit, push, let the workflow build/publish, then pull/run the image.", "Know the sequence and artifacts.", "Confusing source repository with image registry blurs the pipeline."),
+    ]),
+  ],
+  "ibdpi-2026-06-03-authentication-authorization": [
+    section("AAI basics", "Identity versus permission", "The AAI classes are concept-heavy and easy to confuse.", [
+      importantSlide("authn-authz", "04 BDPM2 AAI", "authentication/authorization block", "Authentication and authorization", "Authentication proves identity; authorization decides permitted actions.", "Always separate who you are from what you may do.", "A successful login does not imply all permissions."),
+      importantSlide("identity", "04 BDPM2 AAI", "identity attributes block", "Identity attributes", "Services often rely on attributes, groups and policies rather than only usernames.", "Federated systems need structured identity information.", "Password-only thinking does not scale to federated services."),
+    ]),
+    section("Directory and access systems", "X.500, LDAP, Radius and Kerberos", "These slides are classic acronym traps.", [
+      importantSlide("ldap", "04 BDPM2 AAI", "X.500/LDAP block", "X.500 and LDAP", "LDAP is a protocol for accessing directory information; X.500 is the directory standard context.", "LDAP is access to directory information, not the whole federation.", "Calling LDAP the database itself is imprecise."),
+      importantSlide("radius", "04 BDPM2 AAI", "Radius block", "Radius", "Radius supports centralized authentication/authorization/accounting scenarios.", "Recognize its AAA role.", "Radius is not a container networking protocol."),
+      importantSlide("kerberos", "04 BDPM2 AAI", "Kerberos block", "Kerberos", "Kerberos uses tickets to support authenticated access without repeatedly sending passwords.", "Tickets and realms are the key vocabulary.", "Kerberos tickets are not OAuth tokens."),
+    ]),
+    section("Certificates", "Public-key identity", "X.509 links identity to certificates and cryptography.", [
+      importantSlide("x509", "04 BDPM2 AAI", "X.509 block", "X.509 certificates", "X.509 certificates bind identities to public keys under a certificate authority model.", "Certificates are credentials with trust chains.", "A certificate is not a password."),
+    ]),
+  ],
+  "ibdpi-2026-06-05-cloud-automation-part1": [
+    section("Federation", "SAML, eduGAIN, IDEM and SPID", "These slides explain institutional identity across services.", [
+      importantSlide("saml", "04 BDPM2 AAI", "SAML block", "SAML", "SAML carries identity assertions between identity providers and service providers.", "Know IdP, SP and assertion roles.", "SAML is not OAuth."),
+      importantSlide("edugain-idem-spid", "04 BDPM2 AAI", "federation block", "eduGAIN, IDEM and SPID", "Federations connect identity providers and services across organizations or national contexts.", "The exam may ask the role of federation, not implementation minutiae.", "Federation is not simply a shared password database."),
+    ]),
+    section("Modern web authorization", "OAuth and OpenID Connect", "This is one of the most important distinction pairs.", [
+      importantSlide("oauth", "04 BDPM2 AAI", "OAuth block", "OAuth", "OAuth is a delegated authorization framework using tokens.", "OAuth answers delegated access, not identity by itself.", "OAuth alone is not an authentication protocol."),
+      importantSlide("oidc", "04 BDPM2 AAI", "OIDC block", "OpenID Connect", "OIDC adds an authentication layer and identity information on top of OAuth 2.0 flows.", "Use OIDC when the question asks about login/identity over OAuth foundations.", "Answering OAuth when the question asks identity is the trap."),
+    ]),
+    section("IAM", "INDIGO-IAM", "The course-specific identity platform links tokens, groups and services.", [
+      importantSlide("indigo", "04 BDPM2 AAI", "INDIGO-IAM block", "INDIGO-IAM", "INDIGO-IAM manages identity and access for services using federation and token-based flows.", "Claims and groups influence service authorization.", "IAM is not just a login page."),
+    ]),
+  ],
+  "ibdpi-2026-06-08-cloud-automation-part2": [
+    section("Automation mindset", "Reproducibility and DevOps", "This class moves from manual use to repeatable operation.", [
+      importantSlide("automation", "05 BDPM2 cloud automation part 1", "automation block", "Cloud automation", "Automation makes infrastructure and deployment steps repeatable and reviewable.", "Manual success is not the same as reproducible infrastructure.", "Clicking through a console is hard to audit and repeat."),
+      importantSlide("devops", "05 BDPM2 cloud automation part 1", "DevOps block", "DevOps", "DevOps combines development and operations practices around feedback, automation and ownership.", "Study DevOps as a practice model, not a tool name.", "Buying a tool does not mean doing DevOps."),
+    ]),
+    section("Architecture", "Monoliths and microservices", "The professor frames microservices as a tradeoff, not free magic.", [
+      importantSlide("monolith", "05 BDPM2 cloud automation part 1", "monolith block", "Monolith", "A monolith packages multiple functions in one deployable application.", "It can be simpler to operate at small scale.", "Monolith does not automatically mean bad design."),
+      importantSlide("microservices", "05 BDPM2 cloud automation part 1", "microservices block", "Microservices", "Microservices split an application into focused services with independent scaling and releases.", "They improve modularity but increase operational complexity.", "Microservices do not eliminate networking, monitoring or failure coupling."),
+    ]),
+    section("Orchestration preview", "Swarm, Kubernetes and pods", "These slides introduce the orchestration layer before the final class.", [
+      importantSlide("swarm", "05 BDPM2 cloud automation part 1", "Docker Swarm block", "Docker Swarm", "Swarm is Docker-native orchestration for services across nodes.", "Recognize it as an orchestration option.", "Swarm is not Docker Compose."),
+      importantSlide("k8s-pod", "05 BDPM2 cloud automation part 1", "Kubernetes preview block", "Kubernetes pod", "A pod is the basic deployable Kubernetes unit, often wrapping one or more containers.", "Pods are scheduled by the cluster, not manually SSH-managed as the main workflow.", "A pod is not the entire cluster."),
+    ]),
+  ],
+  "ibdpi-2026-06-10-kubernetes-faas-wrapup": [
+    section("Kubernetes hands-on", "Manifests and desired state", "The key is declarative operation through API objects.", [
+      importantSlide("kubectl", "06 BDPM2 cloud automation part 2", "kubectl block", "kubectl and manifests", "kubectl applies and inspects YAML-defined Kubernetes resources.", "The manifest describes desired state; the control plane reconciles.", "Typing kubectl is not enough if you cannot name the resource kind."),
+      importantSlide("deployment", "06 BDPM2 cloud automation part 2", "deployment block", "Deployments and replicas", "A deployment maintains the desired number of pod replicas.", "Deleting one managed pod usually triggers replacement.", "A pod failure is not the same as deleting the deployment."),
+      importantSlide("service", "06 BDPM2 cloud automation part 2", "service block", "Services", "A service gives stable access to changing pods.", "Know why services exist when pods are replaceable.", "Using a pod IP directly is fragile."),
+    ]),
+    section("Infrastructure as Code", "Templates and orchestration", "These slides generalize Kubernetes manifests to infrastructure templates.", [
+      importantSlide("iac", "06 BDPM2 cloud automation part 2", "IaC block", "Infrastructure as Code", "IaC describes infrastructure and services in machine-readable templates.", "Templates support review, repeatability and automation.", "IaC is not manual clicking written down after the fact."),
+      importantSlide("template-orchestration", "06 BDPM2 cloud automation part 2", "template orchestration block", "Template-based orchestration", "Application stacks can be described as templates that platforms instantiate and manage.", "Know the split between template, orchestrator and created resources.", "A template is not the running infrastructure."),
+    ]),
+    section("Serverless and FaaS", "Functions as managed execution", "The wrap-up closes with provider-managed execution.", [
+      importantSlide("serverless", "06 BDPM2 cloud automation part 2", "serverless block", "Serverless", "Serverless means the provider manages server provisioning and scaling for the execution model.", "Servers still exist; the abstraction shifts responsibility.", "Serverless does not mean no servers or no cost."),
+      importantSlide("faas", "06 BDPM2 cloud automation part 2", "FaaS block", "Function as a Service", "FaaS runs functions in response to events, usually with short-lived execution.", "Study trigger, function, deployment and logs as the conceptual workflow.", "FaaS is not a long-running VM."),
+    ]),
+  ],
+};
+
 function buildGenericLesson(id, [title, keywords, professorNote, traps]) {
   const objectives = [
     `Define the key terms in ${title}.`,
@@ -195,7 +359,7 @@ function buildGenericLesson(id, [title, keywords, professorNote, traps]) {
   while (coreConcepts.length < 8) {
     coreConcepts.push(concept(`Exam link ${coreConcepts.length + 1}`, "Use this class as an exam bridge: define the term, state the infrastructure consequence and name the operational trap.", ["exam", "infrastructure"]));
   }
-  const walkthroughSections = [
+  const walkthroughSections = importantSlideSets[id] || [
     section("Part 1", "Core framing", "Start from the conceptual problem and define the infrastructure layer.", [
       slide("Main deck", "Verified course PDF", "Class slides", "opening", keywords[0], `This part introduces ${keywords[0]} as an exam-relevant concept.`, professorNote, "Use the professor note to prioritize exam study.", "high", "OK"),
       slide("Scope", "Corso OK/SKIP", "Corso", "scope", "Exam boundary", "The Corso file decides whether this topic is high priority.", "OK material should be studied actively; SKIP material is only contextual.", "Do not give SKIP topics equal weight.", "high", "OK"),

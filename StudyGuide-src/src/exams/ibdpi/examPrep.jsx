@@ -1,8 +1,186 @@
 import React, { useMemo, useState } from "react";
 import { IBDPI_OK_TOPICS, IBDPI_SKIPPED_TOPICS } from "../../lessons/ibdpi/ibdpiManifest.js";
 
-function q(question, options, correct, explanation, trap, module = "M1") {
-  return { question, options, correct, explanation, trap, module };
+function optionLabel(index) {
+  return String.fromCharCode(65 + index);
+}
+
+function makeQuestionId(question) {
+  return question.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 72);
+}
+
+const DISTRACTOR_FEEDBACK = {
+  "Only files larger than RAM": "Not correct. This reduces Big Data to one size threshold. The course definition is broader: volume, velocity, variety, veracity/value and the infrastructure pressure caused by processing.",
+  "Any dataset stored in the cloud": "Not correct. Cloud storage is an infrastructure choice; it does not make a dataset Big Data by itself.",
+  "Any AI training dataset": "Not correct. AI datasets can be Big Data, but the label depends on scale, heterogeneity, speed and processing constraints, not on the fact that AI is involved.",
+  "tar compresses; gzip groups files": "Not correct. This reverses the tools: tar collects files into one archive, while gzip compresses bytes.",
+  "checksum encrypts; tgz signs": "Not correct. Checksums are for integrity checks, and tgz is a compressed tar archive, not a digital signature mechanism.",
+  "tgz is a filesystem": "Not correct. A tgz file is an archive format. It is not mounted as the filesystem where files live during normal operation.",
+  "Confidentiality": "Not correct. Confidentiality is about preventing unauthorized reading. A checksum can reveal accidental or malicious changes, but it does not hide data.",
+  "Compression": "Not correct. Compression reduces representation size. A checksum is a small integrity value computed from the data.",
+  "Network routing": "Not correct. Routing decides packet paths through networks. Checksums in this course are about verifying data integrity after storage or transfer.",
+  "It avoids all infrastructure work": "Not correct. A good application choice can reduce waste, but infrastructure design is still necessary for big data workloads.",
+  "It is a licensing requirement": "Not correct. The professor's point was technical: application choice changes CPU, memory, storage and network pressure.",
+  "It replaces checksums": "Not correct. Choosing the right application and verifying file integrity solve different problems.",
+  "A thread is always a physical core": "Not correct. Hardware threads can be logical execution contexts exposed by a core; they are not automatically separate cores.",
+  "Threads are storage devices": "Not correct. Threads are execution contexts for computation. Storage devices are disks, volumes, arrays or networked storage systems.",
+  "Threads replace caches": "Not correct. Threads and CPU caches are different parts of the architecture: threads execute work, caches reduce memory access cost.",
+  "Bandwidth is delay; latency is throughput": "Not correct. The terms are swapped. Bandwidth is amount per time; latency is waiting time before response or transfer.",
+  "They are synonyms": "Not correct. A system can have high bandwidth and still high latency, which matters for interactive and small random operations.",
+  "Latency applies only to storage": "Not correct. Latency applies to memory, networks, storage and services. It is not limited to disks.",
+  "CPU cycles": "Not correct. CPU cycles measure processor activity. IOPS measures storage operation rate.",
+  "Network addresses per subnet": "Not correct. Subnets and IP addressing belong to networking. IOPS belongs to storage performance.",
+  "Power usage": "Not correct. Power usage is datacenter efficiency territory, such as PUE. IOPS is an I/O performance metric.",
+  "It has excellent random access": "Not correct. Tape is weak for random access because positioning is slow; it fits sequential cold archive patterns better.",
+  "It replaces RAM": "Not correct. Tape is persistent archival storage with very different latency and bandwidth behavior from memory.",
+  "It is POSIX by default": "Not correct. Tape is a storage medium. POSIX semantics come from filesystem interfaces, not automatically from the medium.",
+  "A cloud provider": "Not correct. POSIX is not AWS, Azure or another provider; it refers to file interface and behavior expectations.",
+  "A RAID level": "Not correct. RAID is a storage redundancy/performance arrangement. POSIX describes file semantics and APIs.",
+  "A Docker image format": "Not correct. Docker images package container filesystems and metadata; POSIX is about operating-system file semantics.",
+  "Mount, attach, format": "Not correct. You cannot mount a cloud block device before it is attached and has a filesystem.",
+  "Format, detach, mount": "Not correct. Detaching removes the device from the server, so mounting after detach is the wrong operational sequence.",
+  "SSH, gzip, route": "Not correct. SSH, gzip and routing do not turn a raw block volume into a mounted filesystem.",
+  "A filesystem backup": "Not correct. Fairshare is a scheduling/accounting policy, not a data-protection copy.",
+  "A network protocol": "Not correct. Protocols move data or define communication rules; fairshare influences job priority in batch systems.",
+  "A Docker option": "Not correct. Docker options affect containers. Fairshare belongs to workload and batch scheduling policy.",
+  "A checksum type": "Not correct. Quota limits resource usage; it is not a hash or integrity value.",
+  "A cloud deployment model": "Not correct. Deployment models are public, private, hybrid or community clouds. Quota is an allocation limit.",
+  "A cache level": "Not correct. Cache levels are CPU/memory hierarchy terms such as L1, L2 and L3. Quota is a policy limit.",
+  "IaaS = application, SaaS = raw VM": "Not correct. This reverses the abstraction levels: IaaS exposes infrastructure such as VMs, while SaaS exposes finished software.",
+  "PaaS = power as a service": "Not correct. PaaS is Platform as a Service, not power infrastructure.",
+  "SaaS = storage area service": "Not correct. SaaS is Software as a Service; storage area network is a separate storage concept.",
+  "Cloud forbids VMs": "Not correct. VMs are common in IaaS. The course point is that cloud adds service and operational layers on top of virtualization.",
+  "Virtualization is always physical": "Not correct. Virtualization is explicitly about creating virtual resources over physical hardware.",
+  "Cloud has no networks": "Not correct. Cloud systems still rely on networking, subnets, security groups and service connectivity.",
+  "Protocol usage estimate": "Not correct. PUE is a datacenter power-efficiency metric, not a network protocol metric.",
+  "Public user endpoint": "Not correct. Endpoints are service access points; PUE concerns facility energy overhead.",
+  "Parallel unit efficiency": "Not correct. Parallel efficiency is speedup divided by processing elements. PUE is Power Usage Effectiveness.",
+  "NAS has no network": "Not correct. The N in NAS is network; NAS provides storage over a networked file-service model.",
+  "SAN means server archive number": "Not correct. SAN is Storage Area Network, not a server numbering or archive label.",
+  "TAN is a Docker feature": "Not correct. TAN appears in the storage-system discussion; it is not part of Docker container configuration.",
+  "Tightly coupled low-latency parallel jobs": "Not correct. That description fits HPC more than HTC. HTC favors many independent or loosely coupled tasks.",
+  "Single-thread latency only": "Not correct. HTC is about aggregate throughput across many jobs, not optimizing one thread's response time.",
+  "Filesystem formatting": "Not correct. Formatting a filesystem is storage administration, not the defining goal of HTC.",
+  "Only web hosting": "Not correct. HPC is about high-performance computation, simulations and parallel workloads, not merely serving web pages.",
+  "Cold archives": "Not correct. Cold archives are storage/data-management use cases. HPC focuses on computation.",
+  "Identity federation": "Not correct. Identity federation belongs to AAI topics such as SAML, eduGAIN and OIDC, not HPC performance.",
+  "Compression always helps": "Not correct. Amdahl's Law is about serial fractions limiting speedup; compression is unrelated unless it changes the workload bottleneck.",
+  "OAuth authenticates users": "Not correct. OAuth is an authorization framework, and it is not what Amdahl's Law describes.",
+  "Containers need volumes": "Not correct. Containers and volumes are relevant to persistency, but Amdahl's Law is a parallel-computing limit.",
+  "Checksum divided by archive size": "Not correct. That ratio is not a parallel efficiency metric. Efficiency compares achieved speedup to resources used.",
+  "Latency times bandwidth": "Not correct. Latency and bandwidth are performance properties, but their product is not the course definition of parallel efficiency.",
+  "GPU memory size": "Not correct. GPU memory capacity may constrain workloads, but efficiency measures how well processing elements are used.",
+  "Universal mount archive": "Not correct. This sounds like a storage/archive acronym, but UMA is a memory-architecture term.",
+  "User managed authorization": "Not correct. Authorization belongs to AAI. UMA here means Uniform Memory Access.",
+  "Untrusted machine account": "Not correct. This is not the course meaning. UMA describes uniform memory access latency from processors.",
+  "GPUs never accelerate code": "Not correct. GPUs can accelerate suitable parallel workloads; the caution is about fair benchmarking.",
+  "CPUs cannot run serial code": "Not correct. CPUs are well suited for serial control-heavy work. The comparison issue is optimization and data movement.",
+  "GPU means grid protocol unit": "Not correct. GPU means Graphics Processing Unit, used as an accelerator for some parallel computation.",
+  "A REST format": "Not correct. REST is an API architectural style. A WMS manages jobs and scheduling.",
+  "An archive utility": "Not correct. Archive utilities package files. A workload management system handles job queues and execution policy.",
+  "A checksum store": "Not correct. Checksums verify data integrity; WMS software manages computational workloads.",
+  "How tar compresses files": "Not correct. tar does not compress by itself, and push/pull here is about job dispatch, not archives.",
+  "Which cache is closest": "Not correct. Cache levels belong to CPU topology. Push/pull describes who initiates task placement or execution.",
+  "Which IDP signs SAML": "Not correct. IDP signatures belong to federation. Push/pull is a workload-management strategy.",
+  "A CPU thread": "Not correct. A replica is a data copy for locality, policy or resilience, not an execution context.",
+  "A Dockerfile line": "Not correct. Dockerfile lines build images; replicas are copies of data or service instances depending on context.",
+  "A Kerberos ticket": "Not correct. Kerberos tickets prove authentication state. Replicas are data-management copies.",
+  "Making a filesystem POSIX": "Not correct. POSIX semantics are a filesystem/interface matter; disaster recovery is service and data recovery after failure.",
+  "Opening Docker port 80": "Not correct. Port exposure is container networking. Disaster recovery is a broader continuity plan.",
+  "Running chmod": "Not correct. chmod changes permissions on files; it is not failover or recovery planning.",
+  "A running process": "Not correct. The running process is the container instance. The image is the template used to create it.",
+  "A mounted volume": "Not correct. Volumes store persistent data. Images package application/runtime layers.",
+  "A subnet": "Not correct. A subnet is a network-addressing concept, not a container image artifact.",
+  "A checksum only": "Not correct. A Dockerfile can produce reproducible builds; a checksum alone only verifies content.",
+  "A cloud billing account": "Not correct. Billing accounts handle costs and ownership. Dockerfiles define image build steps.",
+  "A Kerberos realm": "Not correct. Kerberos realms are authentication domains, not Docker build recipes or DevOps practices.",
+  "Maps ports": "Not correct. Port mapping is the role of -p. The -v flag is for volumes or bind mounts.",
+  "Deletes an image": "Not correct. Removing images uses Docker image commands, not the -v run option.",
+  "Starts Kubernetes": "Not correct. Kubernetes is a separate orchestration system; -v is a Docker run mount option.",
+  "Creates a checksum": "Not correct. Docker -p publishes ports. Checksums are computed with checksum tools, not container port flags.",
+  "Formats a filesystem": "Not correct. Formatting creates a filesystem on a block device; -p maps container ports.",
+  "Requests fairshare": "Not correct. Fairshare belongs to batch scheduling policy. Docker -p exposes network ports.",
+  "Federated identity": "Not correct. Federated identity belongs to AAI. Compose describes multi-container applications on one host.",
+  "Replacing Kubernetes in production always": "Not correct. Compose is useful for local/single-host stacks, but it is not a universal replacement for cluster orchestration.",
+  "Creating POSIX filesystems": "Not correct. Compose can mount volumes, but it does not create POSIX filesystem semantics by itself.",
+  "Replace checksums": "Not correct. udocker is about running containers without normal Docker privileges; it does not verify file integrity.",
+  "Create SAML tokens": "Not correct. SAML tokens/assertions come from identity federation flows, not udocker.",
+  "Measure PUE": "Not correct. PUE is a datacenter power metric. udocker is a userspace container tool.",
+  "Always a mounted NFS directory": "Not correct. Object storage is usually accessed by object/key APIs; NFS is a file-service interface.",
+  "A CPU cache": "Not correct. CPU caches are processor memory hierarchy. Object storage stores data objects through service APIs.",
+  "A Docker volume only": "Not correct. Docker volumes are container storage mounts. Object storage is a broader cloud storage model.",
+  "A data format": "Not correct. JSON is a data format; REST is the architectural style often used to expose resources.",
+  "A filesystem": "Not correct. A filesystem provides file naming and access semantics. REST describes API interaction style.",
+  "A batch queue": "Not correct. Batch queues manage jobs. REST describes stateless resource-oriented API design.",
+  "A cloud deployment model": "Not correct. Cloud deployment models describe where cloud resources live. JSON is a syntax for exchanging structured data.",
+  "A network switch": "Not correct. A switch forwards network frames. JSON represents data as text objects, arrays and values.",
+  "A Kubernetes node": "Not correct. A Kubernetes node runs workloads. JSON is a data interchange format frequently used by APIs.",
+  "New function server": "Not correct. This expands the acronym incorrectly. NFS means Network File System.",
+  "Node filesystem scheduler": "Not correct. That phrase mixes Kubernetes/node and scheduling vocabulary; NFS is remote filesystem access.",
+  "Network federation service": "Not correct. Federation belongs to identity systems. NFS is a network file service.",
+  "CPU topology": "Not correct. docker logs shows application/container output, not cores, sockets, caches or NUMA layout.",
+  "SAML assertions": "Not correct. SAML assertions are identity-federation messages, not Docker runtime logs.",
+  "RAID stripes": "Not correct. RAID stripes are storage layout details. docker logs reads container output streams.",
+  "Deciding permitted actions": "Not correct. That is authorization. Authentication answers who or what the entity is.",
+  "Compressing files": "Not correct. Compression changes data representation size; it does not establish identity.",
+  "Scheduling jobs": "Not correct. Scheduling is workload management. Authentication proves identity.",
+  "Proving password correctness only": "Not correct. Password checking is one authentication method. Authorization is about permissions after identity is known.",
+  "Archiving data": "Not correct. Archiving stores or packages data. Authorization decides access rights.",
+  "Launching an EC2 VM": "Not correct. VM launch is an IaaS operation; authorization decides whether that operation is allowed.",
+  "A container engine": "Not correct. LDAP is a directory-access protocol, not Docker or another runtime.",
+  "A GPU metric": "Not correct. GPU metrics measure accelerator behavior. LDAP accesses directory information.",
+  "A compression tool": "Not correct. Compression tools reduce data size. LDAP queries and manages directory entries.",
+  "Object storage APIs": "Not correct. Object storage APIs address data objects. Kerberos is a ticket-based authentication system.",
+  "Docker images": "Not correct. Docker images are container templates. Kerberos uses tickets for authentication.",
+  "PUE calculation": "Not correct. PUE is facility power efficiency. Kerberos is about authentication tickets.",
+  "Batch fairshare": "Not correct. Fairshare is scheduler policy. X.509 concerns public-key certificates.",
+  "Docker Compose networks": "Not correct. Compose networks connect containers. X.509 certificates support identity and secure communication.",
+  "Tape random access": "Not correct. Tape access pattern is a storage-performance issue. X.509 is an identity/certificate standard.",
+  "Filesystem mounting": "Not correct. Mounting attaches a filesystem into a path tree. SAML handles federation messages between identity and service providers.",
+  "GPU acceleration": "Not correct. GPU acceleration belongs to HPC/accelerators. SAML belongs to authentication and federation.",
+  "Image compression": "Not correct. Image compression changes binary size. SAML exchanges identity assertions.",
+  "Authentication protocol by itself": "Not correct. OAuth delegates authorization; OpenID Connect adds the authentication layer on top.",
+  "Directory schema": "Not correct. Directory schemas belong to LDAP/X.500 style directories. OAuth is delegated authorization.",
+  "Container runtime": "Not correct. Container runtimes run containers. OAuth manages delegated access decisions.",
+  "RAID parity": "Not correct. RAID parity protects storage arrays. OpenID Connect is an identity layer over OAuth.",
+  "NFS mounting": "Not correct. NFS mounting provides remote filesystem access. OIDC provides identity information and ID tokens.",
+  "Batch queues": "Not correct. Batch queues schedule jobs. OIDC is used in authentication/federated identity flows.",
+  "A Docker image registry": "Not correct. Registries store container images. INDIGO-IAM manages identity, groups and access tokens.",
+  "A filesystem type": "Not correct. INDIGO-IAM is not ext4, NFS or another filesystem; it is an identity and access service.",
+  "An HPC benchmark": "Not correct. Benchmarks measure performance. INDIGO-IAM is used for authentication/authorization workflows.",
+  "They eliminate networking": "Not correct. Microservices usually increase network communication between services; they do not remove it.",
+  "They require no monitoring": "Not correct. Microservices need strong monitoring because failures and dependencies are distributed.",
+  "They are always simpler than monoliths": "Not correct. They can improve scaling and ownership, but they add deployment, networking and observability complexity.",
+  "A cloud storage protocol": "Not correct. DevOps is an operating and development practice, not an object or file storage protocol.",
+  "A checksum algorithm": "Not correct. Checksums verify data integrity. DevOps is about development, operations and feedback loops.",
+  "A public IP": "Not correct. A pod may receive cluster networking, but the pod itself is the deployable workload unit, not an IP address.",
+  "A Docker Hub token": "Not correct. Registry tokens authenticate image access. Pods encapsulate one or more containers and their resources.",
+  "A RAID group": "Not correct. RAID groups belong to storage arrays. Pods belong to Kubernetes workload scheduling.",
+  "Formats block devices": "Not correct. Formatting block devices is storage setup. Deployments control desired pod replica state.",
+  "Authenticates with SAML": "Not correct. SAML belongs to identity federation. Kubernetes deployments manage workload rollout and replica state.",
+  "Compresses archives": "Not correct. Archive compression is done with tools such as gzip; deployments manage Kubernetes pods.",
+  "Writing data inside Docker images": "Not correct. IaC describes infrastructure and services as templates; baking mutable data into images is not the idea.",
+  "Manual clicking only": "Not correct. IaC is specifically meant to reduce manual clicking by using machine-readable descriptions.",
+  "A checksum table": "Not correct. Checksums verify content. IaC templates describe desired infrastructure.",
+  "There are literally no servers": "Not correct. Servers still exist; the provider hides provisioning and management from the user.",
+  "It is only SaaS": "Not correct. Serverless is a cloud execution model and can include FaaS; it is not simply SaaS.",
+  "It means no cost": "Not correct. Serverless changes billing and scaling models, but resources still cost money when used.",
+  "Fairshare as a Service": "Not correct. Fairshare is a scheduler policy concept, not the meaning of FaaS.",
+  "Filesystem archive access": "Not correct. Filesystem/archive access concerns storage. FaaS is event-triggered function execution.",
+  "Federated authentication assertion": "Not correct. Federated assertions belong to SAML/OIDC identity flows. FaaS runs functions in response to events."
+};
+
+function q(question, options, correct, explanation, trap, module = "M1", optionFeedback = null) {
+  const feedback = optionFeedback || options.map((option, optionIndex) => {
+    if (optionIndex === correct) {
+      return `Correct. ${explanation}`;
+    }
+    if (!DISTRACTOR_FEEDBACK[option]) {
+      throw new Error(`Missing IBDPI option feedback for "${option}" in "${question}"`);
+    }
+    return DISTRACTOR_FEEDBACK[option];
+  });
+  return { id: makeQuestionId(question), question, options, correct, explanation, trap, module, optionFeedback: feedback };
 }
 
 const QUESTIONS = [
@@ -170,9 +348,81 @@ function Section({ eyebrow, title, children }) {
   );
 }
 
+function QuestionCard({ item, index, selected, onSelect }) {
+  const answered = selected !== undefined;
+  const correct = selected === item.correct;
+  return (
+    <article className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm">
+      <div className="flex flex-wrap gap-2">
+        <span className="rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-black text-sky-700">Q{index + 1}</span>
+        <span className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs font-black text-stone-600">{item.module}</span>
+        {answered ? (
+          <span className={`rounded-full px-3 py-1 text-xs font-black ${correct ? "bg-emerald-100 text-emerald-800" : "bg-red-100 text-red-800"}`}>
+            {correct ? "Correct" : `Correct: ${optionLabel(item.correct)}`}
+          </span>
+        ) : null}
+      </div>
+      <h3 className="mt-3 text-xl font-black leading-8 text-stone-950">{item.question}</h3>
+      <div className="mt-4 grid gap-2">
+        {item.options.map((option, optionIndex) => {
+          const isSelected = selected === optionIndex;
+          const isCorrect = optionIndex === item.correct;
+          const reveal = answered;
+          return (
+            <button
+              key={option}
+              type="button"
+              onClick={() => onSelect(optionIndex)}
+              className={`rounded-2xl border p-4 text-left text-sm font-bold leading-6 transition ${
+                reveal && isCorrect
+                  ? "border-emerald-300 bg-emerald-50 text-emerald-950"
+                  : reveal && isSelected && !isCorrect
+                    ? "border-red-300 bg-red-50 text-red-950"
+                    : isSelected
+                      ? "border-stone-900 bg-stone-950 text-white"
+                      : "border-stone-200 bg-stone-50 text-stone-700 hover:bg-white"
+              }`}
+            >
+              <span className="block">{optionLabel(optionIndex)}. {option}</span>
+              {reveal ? (
+                <span className={`mt-3 block border-t pt-3 text-xs font-semibold leading-6 ${
+                  isCorrect
+                    ? "border-emerald-200 text-emerald-900"
+                    : isSelected
+                      ? "border-red-200 text-red-900"
+                      : "border-stone-200 text-stone-600"
+                }`}>
+                  <span className="mb-1 block font-black uppercase tracking-[0.14em]">
+                    {isCorrect ? "Why this is correct" : isSelected ? "Why this is not correct" : "Why this option is not best"}
+                  </span>
+                  {item.optionFeedback[optionIndex]}
+                </span>
+              ) : null}
+            </button>
+          );
+        })}
+      </div>
+      {answered && !correct ? (
+        <p className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-bold leading-6 text-amber-900">
+          Correct answer: {optionLabel(item.correct)}. {item.explanation}
+        </p>
+      ) : null}
+    </article>
+  );
+}
+
 export default function IBDPIExamPrepPage() {
   const [filter, setFilter] = useState("all");
-  const filteredQuestions = useMemo(() => QUESTIONS.filter((item) => filter === "all" || item.module === filter), [filter]);
+  const [answers, setAnswers] = useState({});
+  const [reviewMistakes, setReviewMistakes] = useState(false);
+  const answeredCount = Object.keys(answers).length;
+  const score = useMemo(() => QUESTIONS.filter((item) => answers[item.id] === item.correct).length, [answers]);
+  const filteredQuestions = useMemo(() => QUESTIONS.filter((item) => {
+    const moduleMatch = filter === "all" || item.module === filter;
+    const mistakeMatch = !reviewMistakes || answers[item.id] !== undefined && answers[item.id] !== item.correct;
+    return moduleMatch && mistakeMatch;
+  }), [answers, filter, reviewMistakes]);
+  const setAnswer = (questionId, optionIndex) => setAnswers((current) => ({ ...current, [questionId]: optionIndex }));
   return (
     <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
       <section className="rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/95 p-7 shadow-xl shadow-stone-900/5 md:p-9">
@@ -199,22 +449,23 @@ export default function IBDPIExamPrepPage() {
         <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-sky-700">Multiple-choice trap trainer</div>
-            <h2 className="text-3xl font-black tracking-tight text-stone-950">50 first-pass questions</h2>
+            <h2 className="text-3xl font-black tracking-tight text-stone-950">{QUESTIONS.length} interactive first-pass questions</h2>
+            <p className="mt-2 text-sm font-bold leading-6 text-stone-600">Select an option to reveal whether it is correct, why that option works or fails, and the correct answer when needed.</p>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 md:justify-end">
             {["all", "M1", "M2"].map((item) => <button key={item} type="button" onClick={() => setFilter(item)} className={`rounded-full px-4 py-2 text-xs font-black ${filter === item ? "bg-sky-700 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{item}</button>)}
+            <button type="button" onClick={() => setReviewMistakes((current) => !current)} disabled={answeredCount === 0} className={`rounded-full px-4 py-2 text-xs font-black disabled:opacity-50 ${reviewMistakes ? "bg-red-700 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>Mistakes only</button>
+            <button type="button" onClick={() => { setAnswers({}); setReviewMistakes(false); }} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black text-stone-600">Reset</button>
           </div>
+        </div>
+        <div className="mb-5 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-3xl border border-sky-200 bg-sky-50 p-4 text-sky-900"><div className="text-xs font-black uppercase tracking-[0.16em]">Answered</div><div className="mt-1 text-3xl font-black">{answeredCount}</div></div>
+          <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900"><div className="text-xs font-black uppercase tracking-[0.16em]">Correct</div><div className="mt-1 text-3xl font-black">{score}</div></div>
+          <div className="rounded-3xl border border-stone-200 bg-stone-50 p-4 text-stone-900"><div className="text-xs font-black uppercase tracking-[0.16em]">Visible</div><div className="mt-1 text-3xl font-black">{filteredQuestions.length}</div></div>
         </div>
         <div className="grid gap-4">
           {filteredQuestions.map((item, index) => (
-            <details key={item.question} className="rounded-3xl border border-stone-200 bg-stone-50 p-4">
-              <summary className="cursor-pointer text-sm font-black leading-6 text-stone-950">{index + 1}. {item.question}</summary>
-              <ol className="mt-3 grid gap-2 text-sm font-semibold leading-6 text-stone-700">
-                {item.options.map((option, optionIndex) => <li key={option} className={optionIndex === item.correct ? "font-black text-emerald-700" : ""}>{String.fromCharCode(65 + optionIndex)}. {option}</li>)}
-              </ol>
-              <p className="mt-3 text-sm font-bold text-emerald-700">Correct: {String.fromCharCode(65 + item.correct)}. {item.explanation}</p>
-              <p className="mt-2 text-sm font-bold text-amber-700">Trap: {item.trap}</p>
-            </details>
+            <QuestionCard key={item.id} item={item} index={index} selected={answers[item.id]} onSelect={(optionIndex) => setAnswer(item.id, optionIndex)} />
           ))}
         </div>
       </section>

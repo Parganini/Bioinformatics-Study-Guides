@@ -430,10 +430,162 @@ const SECTION_FA = {
 export function localizeAgSection(section, lang) {
   if (lang !== "fa") return section;
   const override = SECTION_FA[section.id];
-  if (!override) return section;
-  return { ...section, ...override };
+  const localized = override ? { ...section, ...override } : section;
+  return {
+    ...localized,
+    studyBlocks: localizeStudyBlocks(localized, section.studyBlocks || []),
+    formulas: localizeFormulas(localized, section.formulas || []),
+    exercises: localizeExercises(localized, section.exercises || []),
+  };
 }
 
 export function localizeAgSections(sections, lang) {
   return sections.map((section) => localizeAgSection(section, lang));
+}
+
+function localizeStudyBlocks(section, blocks) {
+  if (!blocks.length) return blocks;
+  return blocks.map((block, index) => ({
+    ...block,
+    title: faBlockTitle(section, block, index),
+    what: faBlockWhat(section, block),
+    why: faBlockWhy(section, block),
+    examFocus: faBlockExamFocus(section, block),
+    answerTemplate: faBlockAnswer(section, block),
+    traps: block.traps?.length ? block.traps.map((trap) => faTrapText(section, trap)) : block.traps,
+    exercise: block.exercise ? faExercise(section, block.exercise) : block.exercise,
+  }));
+}
+
+function localizeFormulas(section, formulas) {
+  return formulas.map((formula) => ({
+    ...formula,
+    title: faFormulaTitle(formula.title),
+    variables: (formula.variables || []).map((variable) => faFormulaVariable(variable)),
+    example: faFormulaExample(section, formula),
+  }));
+}
+
+function localizeExercises(section, exercises) {
+  return exercises.map((exercise) => faExercise(section, exercise));
+}
+
+function faBlockTitle(section, block, index) {
+  const label = block.slide ? `اسلاید ${index + 1}` : `تمرین ${index + 1}`;
+  return `${label}: ${section.title}`;
+}
+
+function faBlockWhat(section, block) {
+  const keyword = faKeyword(block.title || section.title);
+  return `این بلوک نکته‌ی اصلی «${keyword}» را برای ${section.title} خلاصه می‌کند. هنگام مرور، اول تصویر اسلاید اصلی و source badge را نگاه کن، بعد این نکته را به تعریف، فایل، فناوری، نمودار یا فرمول مربوط وصل کن.`;
+}
+
+function faBlockWhy(section, block) {
+  if (!block.why && !block.examFocus) return null;
+  return `اهمیت امتحانی آن این است که استاد معمولا بین مفاهیم نزدیک دام می‌گذارد. برای پاسخ کوتاه، فقط اسم اصطلاح را ننویس؛ ورودی، خروجی، دلیل استفاده و یک محدودیت یا caveat را هم اضافه کن.`;
+}
+
+function faBlockExamFocus(section, block) {
+  if (!block.examFocus) return null;
+  return `تمرکز امتحانی: بتوانی این نکته را در یک یا دو جمله توضیح بدهی و آن را از distractorهای مشابه جدا کنی. اگر سؤال محاسباتی است، فرمول و واحدها را مرحله‌ای بنویس.`;
+}
+
+function faBlockAnswer(section, block) {
+  if (!block.answerTemplate) return null;
+  return `قالب پاسخ: تعریف کوتاه بده، سپس بگو داده‌ی ورودی چیست، خروجی چیست و چرا برای مسئله‌ی applied genomics مهم است. در پایان یک هشدار کوتاه مثل خطا، bias، coverage، population structure یا محدودیت platform اضافه کن.`;
+}
+
+function faTrapText(section, trap) {
+  return `دام امتحانی مرتبط با ${section.title}: مفاهیم مشابه را با هم عوض نکن و همیشه تعریف دقیق، فایل/خروجی یا کاربرد را چک کن.`;
+}
+
+function faExercise(section, exercise) {
+  const prompt = exercise.prompt || exercise.question || "";
+  if (/N50/i.test(prompt)) {
+    return {
+      ...exercise,
+      prompt: "N50 را برای contigها حساب کن و نشان بده کدام contig از آستانه ۵۰٪ عبور می‌کند.",
+      answer: "روش حل: contigها را از بلندترین به کوتاه‌ترین مرتب کن، طول کل assembly را جمع بزن، نصف آن را پیدا کن و cumulative sum را جلو ببر. طول contigای که cumulative sum را از نصف کل عبور می‌دهد N50 است. N50 فقط contiguity را می‌سنجد، نه correctness یا completeness.",
+    };
+  }
+  if (/coverage|depth/i.test(prompt)) {
+    return {
+      ...exercise,
+      prompt: "Coverage/depth را با فرمول coverage = (N x L) / G حساب کن.",
+      answer: "روش حل: تعداد readها را در طول read ضرب کن تا bases sequenced به دست آید، سپس بر اندازه haploid genome تقسیم کن. نتیجه average depth است؛ breadth of coverage چیز دیگری است و نشان می‌دهد چه نسبتی از genome واقعا پوشش گرفته است.",
+    };
+  }
+  if (/Hardy|HWE|p and q|allele/i.test(prompt)) {
+    return {
+      ...exercise,
+      prompt: "Allele frequency و Hardy-Weinberg expected genotype count را محاسبه کن.",
+      answer: "روش حل: در diploidها total alleles = 2N است. Homozygote دو copy از همان allele می‌دهد و heterozygote یک copy از هر allele. بعد p و q را حساب کن و expected genotype frequencies را با p²، 2pq و q² به دست آور. برای expected counts، هر frequency را در تعداد افراد ضرب کن.",
+    };
+  }
+  if (/Bonferroni|threshold/i.test(prompt)) {
+    return {
+      ...exercise,
+      prompt: "آستانه Bonferroni را برای تعداد markerهای داده‌شده حساب کن.",
+      answer: "روش حل: alpha را بر تعداد testها تقسیم کن. این روش ساده و محافظه‌کارانه است، چون در GWAS بسیاری از SNPها به خاطر LD کاملا مستقل نیستند.",
+    };
+  }
+  return {
+    ...exercise,
+    prompt: `تمرین کوتاه برای ${section.title}: مفهوم را بدون نگاه کردن در دو جمله توضیح بده.`,
+    answer: `پاسخ خوب باید تعریف دقیق، ورودی/خروجی، کاربرد در applied genomics و یک caveat امتحانی را شامل شود. اصطلاحات فنی مثل FASTQ، VCF، GWAS، BUSCO یا N50 را اگر لازم است به انگلیسی نگه دار.`,
+  };
+}
+
+function faFormulaTitle(title = "") {
+  if (/coverage|depth/i.test(title)) return "فرمول coverage / depth";
+  if (/Hardy|HWE/i.test(title)) return "فرمول Hardy-Weinberg";
+  if (/N50/i.test(title)) return "فرمول/روش N50";
+  if (/Bonferroni/i.test(title)) return "فرمول Bonferroni";
+  if (/FST|F_ST/i.test(title)) return "فرمول FST";
+  return "فرمول امتحانی";
+}
+
+function faFormulaVariable(variable = "") {
+  if (/N/i.test(variable) && /read/i.test(variable)) return "N = تعداد readها";
+  if (/L/i.test(variable) && /length/i.test(variable)) return "L = طول read";
+  if (/G/i.test(variable) && /genome/i.test(variable)) return "G = اندازه genome";
+  if (/p/i.test(variable) && /q/i.test(variable)) return "p و q = فراوانی alleleها";
+  return variable
+    .replace("where", "که در آن")
+    .replace("coverage", "coverage")
+    .replace("genome size", "اندازه genome")
+    .replace("read length", "طول read")
+    .replace("number of reads", "تعداد readها");
+}
+
+function faFormulaExample(section, formula) {
+  if (/coverage|depth/i.test(formula.title || formula.expression || "")) {
+    return "مثال امتحانی: اگر ۱۰۰ میلیون read با طول ۱۰۰ bp برای genome یک Gbp داشته باشی، bases sequenced برابر ۱۰ Gbp است و depth متوسط 10x می‌شود.";
+  }
+  if (/Hardy|HWE/i.test(formula.title || formula.expression || "")) {
+    return "مثال امتحانی: بعد از محاسبه p و q، expected genotypeها را با p²، 2pq و q² حساب کن و با observed count مقایسه کن.";
+  }
+  if (/Bonferroni/i.test(formula.title || formula.expression || "")) {
+    return "مثال امتحانی: اگر alpha = 0.05 و یک میلیون marker تست شود، threshold برابر 5e-8 است.";
+  }
+  return `این فرمول را در زمینه‌ی ${section.title} با واحدها و تفسیر کوتاه بنویس.`;
+}
+
+function faKeyword(text = "") {
+  return text
+    .replace(/Gene, allele, genotype and phenotype/i, "gene، allele، genotype و phenotype")
+    .replace(/Hardy-Weinberg equilibrium/i, "Hardy-Weinberg equilibrium")
+    .replace(/Sanger/i, "Sanger sequencing")
+    .replace(/Illumina/i, "Illumina sequencing")
+    .replace(/Ion Torrent/i, "Ion Torrent")
+    .replace(/FASTQ/i, "FASTQ")
+    .replace(/FastQC/i, "FastQC")
+    .replace(/BWA/i, "BWA")
+    .replace(/SAM\/BAM/i, "SAM/BAM")
+    .replace(/VCF/i, "VCF")
+    .replace(/N50/i, "N50")
+    .replace(/BUSCO/i, "BUSCO")
+    .replace(/GWAS/i, "GWAS")
+    .replace(/Manhattan/i, "Manhattan plot")
+    .replace(/Population structure/i, "population structure");
 }

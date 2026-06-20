@@ -464,6 +464,277 @@ function getCorrectOption(question) {
   return question.options.find((option) => option.correct);
 }
 
+const TOPIC_FA = {
+  "Foundational genetics": "ژنتیک پایه",
+  "Sequencing technologies": "فناوری‌های توالی‌یابی",
+  "NGS technologies": "فناوری‌های NGS",
+  "NGS file formats": "فرمت‌های فایل NGS",
+  "NGS data analysis": "تحلیل داده NGS",
+  "Variant formats": "فرمت‌های variant",
+  "NGS library design": "طراحی library در NGS",
+  "Population genomics": "ژنومیکس جمعیتی",
+  "Genome assembly": "مونتاژ ژنوم",
+  "Population genetics": "ژنتیک جمعیت",
+  "Genome annotation and quality": "حاشیه‌نویسی و کیفیت ژنوم",
+  "Genome annotation": "حاشیه‌نویسی ژنوم",
+  CNV: "CNV",
+  GWAS: "GWAS",
+  "Post-GWAS interpretation": "تفسیر پس از GWAS",
+  "Functional genomics": "ژنومیکس عملکردی",
+  Transcriptomics: "ترنسکریپتومیکس",
+  Epigenomics: "اپی‌ژنومیکس",
+  "Genome size": "اندازه ژنوم",
+  Coverage: "Coverage",
+  "NGS quality control": "کنترل کیفیت NGS",
+  "NGS pipeline": "Pipeline NGS",
+};
+
+const MCQ_FA = {
+  "allele-definition": {
+    question: "Allele چیست؟",
+    options: {
+      a: "یک مجموعه کامل از کروموزوم‌ها",
+      b: "یک شکل جایگزین از یک ژن",
+      c: "یک read توالی‌یابی که به ژنوم align شده است",
+      d: "نوعی mutation که فقط در نواحی coding دیده می‌شود",
+    },
+  },
+  sanger: {
+    question: "Sanger sequencing عمدتا بر چه اصلی استوار است؟",
+    options: { a: "Sequencing by ligation", b: "Chain termination با dideoxynucleotideها", c: "تشخیص یون‌های H+", d: "Single-molecule sequencing در زمان واقعی" },
+  },
+  "ion-torrent-principle": {
+    question: "اصل پایه Ion Torrent sequencing چیست؟",
+    options: { a: "تشخیص نور ناشی از آزاد شدن pyrophosphate", b: "تشخیص H+ آزادشده هنگام اضافه شدن nucleotide", c: "تشخیص reversible terminatorهای فلورسنت", d: "تشخیص methylation با bisulfite conversion" },
+  },
+  fastq: {
+    question: "فایل FASTQ چه اطلاعاتی را نگه می‌دارد؟",
+    options: { a: "Variant callها و genotypeها", b: "Readهای خام و quality scoreهای آن‌ها", c: "حاشیه‌نویسی ژنوم و مختصات ژن‌ها", d: "ساختار جمعیتی و مختصات MDS" },
+  },
+  sam: {
+    question: "کاربرد فایل SAM در تحلیل NGS چیست؟",
+    options: { a: "ذخیره readهای خام و quality scoreها", b: "ذخیره alignment readها روی reference genome", c: "ذخیره فقط SNP genotypeها", d: "ذخیره functional annotation ژن‌ها" },
+  },
+  bam: {
+    question: "BAM نشان‌دهنده چیست؟",
+    options: { a: "نسخه binary و compressed از SAM", b: "پایگاه داده ژن‌های annotated", c: "فایل فقط شامل readهای خام", d: "روشی برای تخمین اندازه ژنوم" },
+  },
+  bwa: {
+    question: "کدام ابزار معمولا برای align کردن short readها به reference genome استفاده می‌شود؟",
+    options: { a: "BUSCO", b: "BWA", c: "ORA", d: "FastQC" },
+  },
+  cigar: {
+    question: "CIGAR string چه چیزی را توصیف می‌کند؟",
+    options: { a: "Quality score هر base در read", b: "عملیات alignment read نسبت به reference", c: "Allele frequency یک SNP", d: "تعداد contigها در assembly" },
+  },
+  "phased-genotype": {
+    question: "Notation ژنوتیپی 0|1 در VCF معمولا چه معنایی دارد؟",
+    options: { a: "Homozygous reference genotype", b: "Heterozygous phased genotype با یک allele reference و یک alternate", c: "Genotype missing", d: "Structural variant" },
+  },
+  solid: {
+    question: "ABI SOLiD sequencing با چه چیزی شناخته می‌شود؟",
+    options: { a: "Two-base encoding و sequencing by ligation", b: "Long-read single-molecule sequencing", c: "تشخیص H+ هنگام nucleotide incorporation", d: "Bisulfite conversion cytosineها" },
+  },
+  "long-reads": {
+    question: "کدام فناوری NGS معمولا با long reads مفید برای de novo assembly مرتبط است؟",
+    options: { a: "Illumina", b: "Ion Torrent", c: "PacBio", d: "ABI SOLiD" },
+  },
+  illumina: {
+    question: "Illumina sequencing معمولا با چه چیزی مرتبط است؟",
+    options: { a: "Short reads و throughput بالا", b: "فقط ultra-long reads", c: "تشخیص یون‌های H+", d: "Sequencing by ligation با two-base encoding" },
+  },
+  "paired-end": {
+    question: "Paired-end sequencing چیست؟",
+    options: { a: "توالی‌یابی فقط یک strand از DNA", b: "توالی‌یابی هر دو انتهای همان fragment DNA", c: "توالی‌یابی دو نمونه نامرتبط با هم", d: "توالی‌یابی فقط DNA methylated" },
+  },
+  "ld-definition": {
+    question: "Linkage disequilibrium چه چیزی را توصیف می‌کند؟",
+    options: { a: "شباهت بین دو population", b: "Correlation بین alleleهای دو SNP در یک population", c: "تعداد contigهای link شده در assembly", d: "Mutation rate markerهای ژنتیکی" },
+  },
+  "inbreeding-assembly": {
+    question: "در فرد highly inbred، چرا genome assembly ممکن است آسان‌تر شود؟",
+    options: { a: "ژنوم بزرگ‌تر می‌شود", b: "Heterozygosity زیاد می‌شود", c: "Homozygosity زیاد می‌شود", d: "Sequencing error حذف می‌شود" },
+  },
+  roh: {
+    question: "Runs of Homozygosity یا ROH چیست؟",
+    options: { a: "ناحیه‌هایی با SNPهای heterozygous زیاد", b: "ناحیه‌های طولانی ژنومی که فرد در آن‌ها homozygous است", c: "ناحیه‌هایی بدون sequencing coverage", d: "ناحیه‌هایی فقط شامل structural variantها" },
+  },
+  "hwe-definition": {
+    question: "یک population چه زمانی در Hardy-Weinberg equilibrium است؟",
+    options: { a: "وقتی genotype frequencyها تحت فرض‌های ایده‌آل p²، 2pq و q² باشند", b: "وقتی همه افراد homozygous باشند", c: "وقتی allele frequencyها هر نسل تغییر کنند", d: "وقتی selection شدیدا یک genotype را ترجیح دهد" },
+  },
+  debruijn: {
+    question: "در assembly مبتنی بر de Bruijn graph، مسئله بازسازی معمولا به یافتن چه چیزی مرتبط است؟",
+    options: { a: "فقط Hamiltonian cycle", b: "Eulerian path یا Eulerian cycle", c: "Manhattan distance", d: "Hardy-Weinberg equilibrium" },
+  },
+  n50: {
+    question: "N50 در genome assembly چه چیزی را اندازه می‌گیرد؟",
+    options: { a: "تعداد ژن‌ها در genome", b: "طول کوچک‌ترین contig لازم برای پوشش ۵۰٪ assembly هنگام مرتب‌سازی از بلندترین به کوتاه‌ترین", c: "Average sequencing depth", d: "تعداد BUSCOهای missing" },
+  },
+  busco: {
+    question: "BUSCO برای چه استفاده می‌شود؟",
+    options: { a: "تخمین allele frequency در Pool-seq", b: "ارزیابی completeness ژنوم با conserved single-copy orthologs", c: "تشخیص H+ هنگام sequencing", d: "اصلاح p-valueهای GWAS" },
+  },
+  "structural-annotation": {
+    question: "Structural annotation عمدتا به چه معناست؟",
+    options: { a: "اختصاص نقش زیستی به ژن‌های پیش‌بینی‌شده", b: "شناسایی موقعیت و ساختار ژن‌ها و featureهای ژنومی", c: "تخمین sequencing depth", d: "محاسبه allele frequency" },
+  },
+  "functional-annotation": {
+    question: "Functional annotation عمدتا به چه معناست؟",
+    options: { a: "اختصاص نقش زیستی احتمالی به ژن‌ها یا featureها", b: "Align کردن readها به reference genome", c: "Calling SNP و indel", d: "محاسبه N50" },
+  },
+  acgh: {
+    question: "aCGH چیست؟",
+    options: { a: "فناوری chip-based برای resequencing ژنوم", b: "روش microarray-based برای تشخیص copy number variation", c: "استراتژی paired-end NGS", d: "روشی برای محاسبه LD" },
+  },
+  "gwas-aim-mcq": {
+    question: "هدف اصلی GWAS چیست؟",
+    options: { a: "Assembly ژنوم بدون reference", b: "شناسایی variantهای ژنتیکی associated با phenotype", c: "Trim کردن readهای کم‌کیفیت", d: "تخمین غلظت DNA" },
+  },
+  "manhattan-x-axis": {
+    question: "در Manhattan plot، محور x معمولا چه چیزی را نشان می‌دهد؟",
+    options: { a: "موقعیت SNPها روی chromosomeها", b: "طول sequencing read", c: "BUSCO completeness", d: "Sample quality score" },
+  },
+  "manhattan-y-axis": {
+    question: "در Manhattan plot، محور y معمولا چه چیزی را نشان می‌دهد؟",
+    options: { a: "Minor allele frequency", b: "-log10(P-value) مربوط به association SNP", c: "Read depth", d: "تعداد contigها" },
+  },
+  "multiple-testing": {
+    question: "چرا multiple testing correction در GWAS مهم است؟",
+    options: { a: "چون هزاران یا میلیون‌ها SNP همزمان تست می‌شوند", b: "چون readها همیشه paired-end هستند", c: "چون همه SNPها effect size یکسان دارند", d: "چون GWAS از p-value استفاده نمی‌کند" },
+  },
+  bonferroni: {
+    question: "کدام correction در GWAS ساده ولی محافظه‌کارانه محسوب می‌شود؟",
+    options: { a: "Bonferroni correction", b: "Sanger correction", c: "BUSCO correction", d: "De Bruijn correction" },
+  },
+  mds: {
+    question: "MDS معمولا در تحلیل ژنومیکس جمعیتی برای چه استفاده می‌شود؟",
+    options: { a: "نمایش رابطه ژنتیکی یا ساختار جمعیتی افراد", b: "محاسبه sequencing depth", c: "تشخیص cytosineهای methylated", d: "اندازه‌گیری purity DNA" },
+  },
+  ora: {
+    question: "ORA در تحلیل پس از GWAS چیست؟",
+    options: { a: "Over-Representation Analysis برای یافتن categoryهای زیستی enriched در candidate geneها", b: "روشی برای align کردن readها", c: "روشی برای محاسبه genome size از C-value", d: "فناوری long-read sequencing" },
+  },
+};
+
+const OPEN_FA = {
+  "gwas-aim": {
+    question: "هدف GWAS چیست؟",
+    answer: "GWAS یا genome-wide association study، variantهای ژنتیکی در سراسر ژنوم را تست می‌کند تا markerهایی پیدا شوند که از نظر آماری با یک phenotype مرتبط‌اند. Phenotype می‌تواند binary مثل case/control یا quantitative مثل وزن و expression باشد. هدف فقط پیدا کردن SNP significant نیست؛ باید regionهای ژنومی، candidate geneها و pathwayهای احتمالی را هم تفسیر کرد. Association به‌تنهایی causality را ثابت نمی‌کند، چون SNP ممکن است فقط به‌واسطه LD، causal variant را tag کند.",
+  },
+  "gwas-design": {
+    question: "عناصر اصلی طراحی GWAS را توضیح بده.",
+    answer: "GWAS خوب با phenotype دقیق شروع می‌شود، چون phenotype noisy قدرت تحلیل را کم می‌کند. Sample size کافی، genotyping/sequencing قابل اعتماد، QC برای sample و marker، و شناخت LD structure لازم است. Population structure باید با PCA، MDS، covariate یا mixed model کنترل شود، چون ancestry می‌تواند false association بسازد. در پایان باید multiple testing correction و ترجیحا replication یا validation انجام شود.",
+  },
+  "manhattan-detail": {
+    question: "Manhattan plot را با جزئیات توضیح بده.",
+    answer: "Manhattan plot نمایش استاندارد نتایج GWAS است. هر نقطه معمولا یک SNP یا marker است؛ محور x موقعیت ژنومی مرتب‌شده بر اساس chromosome را نشان می‌دهد و محور y معمولا -log10(P-value) است. P-value کوچک‌تر نقطه بالاتری می‌سازد، بنابراین peakها regionهای دارای evidence قوی‌تر را نشان می‌دهند. خطوط افقی thresholdهای suggestive یا genome-wide significance هستند. Peak ممکن است causal variant یا marker در LD با causal variant باشد، پس annotation و prioritization لازم است.",
+  },
+  "ld-open": {
+    question: "LD چیست و چرا برای GWAS مهم است؟",
+    answer: "Linkage disequilibrium یا LD یعنی association غیرتصادفی بین alleleهای loci مختلف در یک population. اگر allele یک SNP اطلاعاتی درباره allele SNP دیگر بدهد، LD وجود دارد. در GWAS، SNPهای chip معمولا همه causal نیستند، اما می‌توانند variantهای causal نزدیک را tag کنند. میزان LD روی marker density، resolution و interpretation peakها اثر می‌گذارد: LD بالا detection را آسان‌تر ولی pinpoint کردن causal variant را سخت‌تر می‌کند.",
+  },
+  chipseq: {
+    question: "هدف اصلی ChIP-seq چیست؟",
+    answer: "ChIP-seq برای شناسایی regionهای ژنومی bound by a protein یا دارای chromatin mark خاص استفاده می‌شود. DNA-protein complexها crosslink می‌شوند، chromatin fragment می‌شود، target با antibody immunoprecipitate می‌شود، DNA enriched sequence و سپس به reference map می‌شود. Output اصلی peak/enriched region است، نه expression مستقیم. این روش برای transcription factor binding، promoter، enhancer و epigenomic regulation کاربرد دارد.",
+  },
+  rnaseq: {
+    question: "RNA-seq چیست و به چه سؤال‌های زیستی پاسخ می‌دهد؟",
+    answer: "RNA-seq روشی sequencing-based برای مطالعه transcriptome است. RNA استخراج، به cDNA تبدیل، sequence و سپس quantification می‌شود. با آن می‌توان فهمید کدام geneها expressed هستند، کدام geneها بین conditionها differential expression دارند و آیا transcript یا isoform جایگزین وجود دارد. RNA-seq همچنین با evidence برای exon boundary و expressed gene به genome annotation کمک می‌کند.",
+  },
+  poolseq: {
+    question: "Pool-seq چیست؟",
+    answer: "Pool-seq یعنی sequencing DNA pool ساخته‌شده از چند فرد، معمولا با مقدار برابر DNA. به جای sequencing تک‌تک افراد، pool به عنوان یک sample sequence می‌شود و allele frequency از read countها تخمین زده می‌شود. برای مقایسه populationها و selection signature کم‌هزینه است، اما individual genotype نمی‌دهد؛ بنابراین برای ROH فردی، kinship یا GWAS استاندارد مناسب نیست.",
+  },
+  bisulfite: {
+    question: "Bisulfite sequencing چیست؟",
+    answer: "Bisulfite sequencing برای مطالعه DNA methylation، مخصوصا cytosine methylation، استفاده می‌شود. Sodium bisulfite cytosineهای unmethylated را به uracil تبدیل می‌کند که بعد از PCR مثل thymine خوانده می‌شود؛ cytosineهای methylated محافظت می‌شوند و C باقی می‌مانند. بعد از sequencing، الگوی C-to-T برای inference methylation استفاده می‌شود. این تفاوت‌ها mutation معمولی نیستند و به aligner/control مناسب نیاز دارند.",
+  },
+  cvalue: {
+    question: "چطور می‌توان genome size را قبل از sequencing با C-value تخمین زد؟",
+    answer: "C-value مقدار DNA در haploid genome است. قبل از sequencing می‌توان nuclear DNA content را با روش‌هایی مثل flow cytometry اندازه گرفت و mass DNA را به base pair تبدیل کرد. تقریب رایج این است که 1 pg DNA حدود 978 Mbp است. این تخمین مهم است چون depth به genome size وابسته است؛ اگر genome بزرگ‌تر از انتظار باشد، همان تعداد read coverage پایین‌تری می‌دهد.",
+  },
+  "kmer-genome-size": {
+    question: "چطور genome size با k-mer تخمین زده می‌شود؟",
+    answer: "در روش k-mer، readها به تمام زیررشته‌های طول k شکسته و frequency هر k-mer شمرده می‌شود. Genome size تقریبا برابر total reliable k-mers تقسیم بر depth peak اصلی است. Low-frequency k-merها معمولا sequencing error هستند؛ peak اصلی true single-copy k-merها را نشان می‌دهد؛ high-frequency k-merها معمولا repeat یا duplication هستند. در genome heterozygous ممکن است peak اضافی نزدیک نصف coverage دیده شود.",
+  },
+  "n50-exercise": {
+    question: "N50 را برای contigهای 100، 70، 60، 50، 50، 40 و 30 kb حساب کن.",
+    answer: "Contigها از بلند به کوتاه مرتب‌اند. طول کل 400 kb است، پس نصف آن 200 kb است. Cumulative sum: ابتدا 100، سپس 170، هنوز کمتر از 200 است. با اضافه کردن contig بعدی به 230 می‌رسیم و از آستانه 50٪ عبور می‌کنیم. آن contig طول 60 kb دارد، پس N50 = 60 kb. N50 contiguity را می‌سنجد، نه correctness یا gene completeness.",
+  },
+  "coverage-direct": {
+    question: "Depth متوسط را برای genome یک Gbp با 100 میلیون read صد bp تخمین بزن.",
+    answer: "فرمول depth = (N x L) / G است. N = 100,000,000 و L = 100 bp، پس bases sequenced برابر 10,000,000,000 bp یا 10 Gbp است. Genome size برابر 1 Gbp است، پس depth = 10 Gbp / 1 Gbp = 10x. این depth متوسط است و depth موضعی ممکن است متفاوت باشد.",
+  },
+  "coverage-inverse": {
+    question: "برای 30x coverage از genome 2.8 Gbp با readهای 150 bp چند read لازم است؟",
+    answer: "از فرم معکوس استفاده کن: N = (coverage x genome size) / read length. هدف 30x و genome size برابر 2.8 x 10^9 bp است؛ bases لازم 84 x 10^9 bp می‌شود. اگر هر read برابر 150 bp باشد، N = 84 x 10^9 / 150 = 560,000,000 read. در paired-end باید روشن کنی N read است یا read pair.",
+  },
+  "hwe-exercise": {
+    question: "بررسی کن population با 500 AA، 200 Aa و 300 aa در HWE هست یا نه.",
+    answer: "کل افراد 1000 و کل alleleها 2000 است. تعداد A برابر 2x500 + 200 = 1200 است، پس p = 0.6 و q = 0.4. تحت HWE، expected frequencies برابر p² = 0.36، 2pq = 0.48 و q² = 0.16 هستند. برای 1000 فرد، expected counts برابر 360 AA، 480 Aa و 160 aa می‌شود. Observed counts بسیار فرق دارند، به‌خصوص heterozygote deficit، پس population ظاهرا در HWE نیست.",
+  },
+  "fastqc-boxplot": {
+    question: "ماژول FastQC Per base sequence quality را توضیح بده و بگو trimming کی لازم است.",
+    answer: "این ماژول distribution Phred quality score را در هر position از readها، معمولا به شکل boxplot، نشان می‌دهد. خط مرکزی median، box محدوده interquartile و whisker پراکندگی وسیع‌تر را نشان می‌دهد. در بسیاری از datasetهای Illumina کیفیت انتهای 3' پایین می‌آید. اگر adapter، primer یا tail کم‌کیفیت mapping/variant calling را خراب کند trimming لازم است، اما over-trimming readها را خیلی کوتاه و ambiguous می‌کند.",
+  },
+  "fastq-to-vcf": {
+    question: "یک workflow ساده variant discovery از FASTQ تا VCF را توضیح بده.",
+    answer: "Workflow از FASTQ خام شروع می‌شود و با FastQC کنترل کیفیت انجام می‌دهد. اگر adapter یا tail کم‌کیفیت وجود داشته باشد، trimming و سپس QC دوباره انجام می‌شود. Readهای تمیز با BWA یا mapper مشابه به reference align می‌شوند و SAM/BAM تولید می‌شود. BAM sort/index و گاهی duplicate-mark می‌شود. سپس variant caller SNP/indel را call می‌کند و VCF تولید می‌شود. در پایان variantها بر اساس quality، depth، missingness یا معیارهای دیگر filter و annotate می‌شوند.",
+  },
+  "busco-open": {
+    question: "BUSCO چیست و چطور genome assembly را ارزیابی می‌کند؟",
+    answer: "BUSCO مخفف Benchmarking Universal Single-Copy Orthologs است. Completeness genome یا transcriptome را با جستجوی geneهای conserved که انتظار می‌رود در یک lineage به صورت single copy باشند ارزیابی می‌کند. BUSCOها به complete، duplicated، fragmented یا missing طبقه‌بندی می‌شوند. Complete BUSCO بالا یعنی gene space زیادی حاضر است؛ duplicated BUSCO زیاد می‌تواند assembly redundancy یا uncollapsed haplotypes را نشان دهد.",
+  },
+  "annotation-open": {
+    question: "تفاوت structural annotation و functional annotation را توضیح بده.",
+    answer: "Structural annotation مشخص می‌کند featureهای ژنومی کجا هستند و چه ساختاری دارند: gene، exon، intron، UTR، non-coding RNA، repeat و غیره. Functional annotation بعد از آن می‌آید و برای این featureها معنی زیستی پیشنهاد می‌کند، مثل gene name، protein domain، GO term، pathway، orthology یا enzyme code. خلاصه: structural می‌پرسد feature کجاست و ساختارش چیست؛ functional می‌پرسد احتمالا چه کاری انجام می‌دهد.",
+  },
+  "ora-open": {
+    question: "نقش ORA بعد از GWAS چیست؟",
+    answer: "ORA یا Over-Representation Analysis برای تفسیر candidate gene list بعد از GWAS استفاده می‌شود. بررسی می‌کند آیا pathwayها، Gene Ontology termها یا categoryهای زیستی در candidate geneها بیشتر از انتظار دیده می‌شوند یا نه. این کار کمک می‌کند از marker list به تفسیر زیستی برسیم. نتیجه ORA به تعریف candidate gene و background gene set بسیار حساس است.",
+  },
+  "depth-breadth": {
+    question: "تفاوت depth of coverage و breadth of coverage چیست؟",
+    answer: "Depth of coverage تعداد readهایی است که یک base یا region را پوشش می‌دهند و اغلب به صورت average coverage گزارش می‌شود؛ مثلا 30x یعنی هر base به طور متوسط با 30 read پوشیده شده است. Breadth of coverage نسبت genome یا target region است که حداقل یک بار یا بالاتر از threshold مشخص پوشش گرفته است. Dataset می‌تواند average depth بالا ولی breadth ضعیف داشته باشد اگر readها uneven یا duplicated باشند.",
+  },
+};
+
+function faExplanation(option) {
+  if (option.correct) {
+    return "درست. این گزینه تعریف یا کاربرد اصلی مفهوم را نشان می‌دهد و با wording امتحانی سازگار است.";
+  }
+  return "نادرست. این گزینه به مفهوم دیگری مربوط است یا یکی از distractorهای رایج امتحان است؛ تعریف دقیق و خروجی/کاربرد را دوباره چک کن.";
+}
+
+function localizeQuestions(items, lang) {
+  if (lang !== "fa") return items;
+  return items.map((question) => {
+    const entry = MCQ_FA[question.id];
+    if (!entry) return question;
+    return {
+      ...question,
+      topic: TOPIC_FA[question.topic] || question.topic,
+      question: entry.question,
+      options: question.options.map((option) => ({
+        ...option,
+        text: entry.options?.[option.id] || option.text,
+        explanation: faExplanation(option),
+      })),
+    };
+  });
+}
+
+function localizeOpenQuestions(items, lang) {
+  if (lang !== "fa") return items;
+  return items.map((item) => ({
+    ...item,
+    topic: TOPIC_FA[item.topic] || item.topic,
+    question: OPEN_FA[item.id]?.question || item.question,
+    answer: OPEN_FA[item.id]?.answer || item.answer,
+  }));
+}
+
 function examCopy(lang) {
   if (lang !== "fa") {
     return {
@@ -525,12 +796,14 @@ export default function GenomicsPracticeExamPage({ lang = "en" }) {
   const backArrow = lang === "fa" ? "→" : "←";
   const [answers, setAnswers] = useState({});
   const [openAnswers, setOpenAnswers] = useState({});
-  const total = QUESTIONS.length;
+  const questions = useMemo(() => localizeQuestions(QUESTIONS, lang), [lang]);
+  const openQuestions = useMemo(() => localizeOpenQuestions(OPEN_QUESTIONS, lang), [lang]);
+  const total = questions.length;
   const answered = Object.keys(answers).length;
   const openPracticed = Object.values(openAnswers).filter((value) => value.trim().length > 0).length;
   const score = useMemo(
-    () => QUESTIONS.filter((question) => answers[question.id] === getCorrectOption(question)?.id).length,
-    [answers],
+    () => questions.filter((question) => answers[question.id] === getCorrectOption(question)?.id).length,
+    [answers, questions],
   );
   const percent = answered ? Math.round((score / answered) * 100) : 0;
 
@@ -603,7 +876,7 @@ export default function GenomicsPracticeExamPage({ lang = "en" }) {
       </section>
 
       <section className="mt-5 grid gap-5">
-        {QUESTIONS.map((question, index) => {
+        {questions.map((question, index) => {
           const selected = answers[question.id];
           const correct = getCorrectOption(question);
           const isAnswered = Boolean(selected);
@@ -677,7 +950,7 @@ export default function GenomicsPracticeExamPage({ lang = "en" }) {
       </section>
 
       <section className="mt-5 grid gap-5">
-        {OPEN_QUESTIONS.map((item, index) => (
+        {openQuestions.map((item, index) => (
           <article key={item.id} className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm md:p-7">
             <div className="inline-flex rounded-full bg-stone-100 px-3 py-1 text-xs font-black uppercase tracking-[0.14em] text-stone-500">
               {copy.open} {String(index + 1).padStart(2, "0")} · {item.topic}

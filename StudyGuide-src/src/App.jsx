@@ -904,6 +904,9 @@ function GlobalThemeStyles() {
       .studyhub-theme-dark [class~="bg-stone-950"] {
         background-color: #09051a !important;
       }
+      .studyhub-theme-dark [class~="bg-stone-200"] {
+        background-color: rgba(76, 29, 149, 0.72) !important;
+      }
       .studyhub-theme-dark [class~="bg-red-700"],
       .studyhub-theme-dark [class~="bg-red-800"],
       .studyhub-theme-dark [class~="bg-rose-700"],
@@ -958,6 +961,13 @@ function GlobalThemeStyles() {
       .studyhub-theme-dark [class~="border-sky-200"],
       .studyhub-theme-dark [class~="border-teal-200"] {
         border-color: rgba(139, 92, 246, 0.42) !important;
+      }
+      .studyhub-theme-dark [class~="border-red-300"],
+      .studyhub-theme-dark [class~="border-rose-300"] {
+        border-color: rgba(216, 180, 254, 0.54) !important;
+      }
+      .studyhub-theme-dark [class~="border-emerald-300"] {
+        border-color: rgba(52, 211, 153, 0.66) !important;
       }
       .studyhub-theme-dark [class~="text-emerald-950"],
       .studyhub-theme-dark [class~="text-red-950"],

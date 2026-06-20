@@ -760,6 +760,11 @@ function currentMode() {
 function getInitialLang() {
   return localStorage.getItem("studyhub_lang") || localStorage.getItem("phylo_lang") || "es";
 }
+function getInitialTheme() {
+  const saved = localStorage.getItem("studyhub_theme");
+  if (saved === "dark" || saved === "light") return saved;
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
 function getJSON(key, fallback = {}) {
   try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch { return fallback; }
 }
@@ -776,7 +781,10 @@ function useHash() {
   return hash;
 }
 
-function Background() {
+function Background({ theme = "light" }) {
+  if (theme === "dark") {
+    return <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_12%_8%,rgba(124,58,237,0.22),transparent_30%),radial-gradient(circle_at_88%_10%,rgba(168,85,247,0.16),transparent_28%),radial-gradient(circle_at_50%_110%,rgba(20,184,166,0.10),transparent_36%),linear-gradient(180deg,#08051a_0%,#120b2d_48%,#0b1024_100%)]" />;
+  }
   return <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_10%_10%,rgba(220,38,38,0.13),transparent_28%),radial-gradient(circle_at_90%_5%,rgba(15,118,110,0.12),transparent_25%),linear-gradient(180deg,#fffaf0_0%,#f8f1e6_48%,#f4eadb_100%)]" />;
 }
 function MiniTreeIcon({ active }) {
@@ -788,7 +796,22 @@ function ProgressBar({ value }) {
 function LangSwitcher({ lang, setLang }) {
   return <div className="flex rounded-full border border-stone-200 bg-white p-1 shadow-sm">{LANGS.map(item => <button key={item.code} onClick={() => setLang(item.code)} className={`rounded-full px-3 py-1.5 text-xs font-black transition ${lang === item.code ? "bg-red-700 text-white" : "text-stone-500 hover:bg-stone-100"}`} title={item.label}>{item.short}</button>)}</div>;
 }
-function Header({ lang, setLang, mode, t }) {
+function ThemeSwitcher({ theme, setTheme }) {
+  const isDark = theme === "dark";
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-black text-stone-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-stone-50"
+      aria-pressed={isDark}
+      title={isDark ? "Switch to light theme" : "Switch to dark theme"}
+    >
+      <span aria-hidden="true">{isDark ? "☾" : "☼"}</span>
+      <span className="hidden sm:inline">{isDark ? "Dark" : "Light"}</span>
+    </button>
+  );
+}
+function Header({ lang, setLang, mode, t, theme, setTheme }) {
   const header = {
     hub: {
       title: t.studyHub,
@@ -840,13 +863,123 @@ function Header({ lang, setLang, mode, t }) {
     },
   }[mode] || { title: t.studyHub, subtitle: t.subjects, icon: "⌂", iconClass: "bg-stone-950" };
 
-  return <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#fffaf0]/88 backdrop-blur-xl"><div className="mx-auto flex w-[min(1180px,calc(100%-24px))] items-center justify-between gap-4 py-3"><a href={mode === "hub" ? "#top" : "../index.html"} className="flex items-center gap-3"><div className={`flex h-10 min-w-10 items-center justify-center rounded-2xl px-2 text-sm font-black text-white ${header.iconClass}`}>{header.icon}</div><div><div className="text-sm font-black leading-4 text-stone-950">{header.title}</div><div className="text-xs font-semibold text-stone-500">{header.subtitle}</div></div></a><nav className="hidden items-center gap-2 lg:flex"><a href={mode === "hub" ? "#subjects" : "#/"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{mode === "hub" ? t.subjects : t.modules}</a><a href={mode === "hub" ? "#tools" : "#/tools"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.studyTools}</a><a href={mode === "hub" ? "#tools" : "#/resources"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.resources}</a></nav><LangSwitcher lang={lang} setLang={setLang} /></div></header>;
+  return <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#fffaf0]/88 backdrop-blur-xl"><div className="mx-auto flex w-[min(1180px,calc(100%-24px))] items-center justify-between gap-4 py-3"><a href={mode === "hub" ? "#top" : "../index.html"} className="flex items-center gap-3"><div className={`flex h-10 min-w-10 items-center justify-center rounded-2xl px-2 text-sm font-black text-white ${header.iconClass}`}>{header.icon}</div><div><div className="text-sm font-black leading-4 text-stone-950">{header.title}</div><div className="text-xs font-semibold text-stone-500">{header.subtitle}</div></div></a><nav className="hidden items-center gap-2 lg:flex"><a href={mode === "hub" ? "#subjects" : "#/"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{mode === "hub" ? t.subjects : t.modules}</a><a href={mode === "hub" ? "#tools" : "#/tools"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.studyTools}</a><a href={mode === "hub" ? "#tools" : "#/resources"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.resources}</a></nav><div className="flex items-center gap-2"><ThemeSwitcher theme={theme} setTheme={setTheme} /><LangSwitcher lang={lang} setLang={setLang} /></div></div></header>;
 }
 function Stat({ label, value, note }) {
   return <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm"><div className="text-sm font-bold text-stone-500">{label}</div><div className="mt-2 text-4xl font-black tracking-tight text-stone-950">{value}</div>{note && <div className="mt-2 text-xs font-semibold text-stone-500">{note}</div>}</div>;
 }
 function Hero({ eyebrow, title, subtitle, actions, visual }) {
   return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="mb-5 inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{eyebrow}</div><h1 className="max-w-3xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-700">{subtitle}</p>{actions && <div className="mt-8 flex flex-wrap gap-3">{actions}</div>}</div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner">{visual}</div></div></div></section>;
+}
+
+function GlobalThemeStyles() {
+  return (
+    <style>{`
+      .studyhub-theme-dark {
+        color-scheme: dark;
+        background: #0b061d;
+      }
+      .studyhub-theme-dark header {
+        background: rgba(14, 8, 35, 0.9) !important;
+        border-color: rgba(139, 92, 246, 0.32) !important;
+      }
+      .studyhub-theme-dark [class~="bg-white"],
+      .studyhub-theme-dark [class~="bg-white/90"],
+      .studyhub-theme-dark [class~="bg-white/80"],
+      .studyhub-theme-dark [class~="bg-white/70"],
+      .studyhub-theme-dark [class~="bg-[#fffaf0]"],
+      .studyhub-theme-dark [class~="bg-[#fffaf0]/92"],
+      .studyhub-theme-dark [class~="bg-[#fffaf0]/88"],
+      .studyhub-theme-dark [class~="bg-stone-50"],
+      .studyhub-theme-dark [class~="bg-stone-100"] {
+        background-color: rgba(24, 17, 52, 0.88) !important;
+      }
+      .studyhub-theme-dark [class~="bg-stone-900"],
+      .studyhub-theme-dark [class~="bg-stone-950"] {
+        background-color: #09051a !important;
+      }
+      .studyhub-theme-dark [class~="bg-red-700"],
+      .studyhub-theme-dark [class~="bg-red-800"],
+      .studyhub-theme-dark [class~="bg-rose-700"],
+      .studyhub-theme-dark [class~="bg-rose-800"] {
+        background-color: #7c3aed !important;
+      }
+      .studyhub-theme-dark [class~="border-stone-100"],
+      .studyhub-theme-dark [class~="border-stone-200"],
+      .studyhub-theme-dark [class~="border-stone-200/80"],
+      .studyhub-theme-dark [class~="border-stone-300"] {
+        border-color: rgba(139, 92, 246, 0.34) !important;
+      }
+      .studyhub-theme-dark [class~="text-stone-950"],
+      .studyhub-theme-dark [class~="text-stone-900"],
+      .studyhub-theme-dark [class~="text-stone-800"] {
+        color: #f7f3ff !important;
+      }
+      .studyhub-theme-dark [class~="text-stone-700"],
+      .studyhub-theme-dark [class~="text-stone-600"] {
+        color: #ddd6fe !important;
+      }
+      .studyhub-theme-dark [class~="text-stone-500"],
+      .studyhub-theme-dark [class~="text-stone-400"] {
+        color: #c4b5fd !important;
+      }
+      .studyhub-theme-dark [class~="shadow-sm"],
+      .studyhub-theme-dark [class~="shadow-md"],
+      .studyhub-theme-dark [class~="shadow-xl"],
+      .studyhub-theme-dark [class~="shadow-2xl"] {
+        box-shadow: 0 18px 55px rgba(3, 2, 16, 0.46) !important;
+      }
+      .studyhub-theme-dark [class~="bg-emerald-50"] {
+        background-color: rgba(15, 118, 110, 0.20) !important;
+      }
+      .studyhub-theme-dark [class~="bg-red-50"],
+      .studyhub-theme-dark [class~="bg-rose-50"] {
+        background-color: rgba(88, 28, 135, 0.38) !important;
+      }
+      .studyhub-theme-dark [class~="bg-amber-50"] {
+        background-color: rgba(91, 33, 182, 0.32) !important;
+      }
+      .studyhub-theme-dark [class~="bg-sky-50"] {
+        background-color: rgba(76, 29, 149, 0.34) !important;
+      }
+      .studyhub-theme-dark [class~="bg-teal-50"] {
+        background-color: rgba(20, 184, 166, 0.16) !important;
+      }
+      .studyhub-theme-dark [class~="border-emerald-200"],
+      .studyhub-theme-dark [class~="border-red-200"],
+      .studyhub-theme-dark [class~="border-rose-200"],
+      .studyhub-theme-dark [class~="border-amber-200"],
+      .studyhub-theme-dark [class~="border-sky-200"],
+      .studyhub-theme-dark [class~="border-teal-200"] {
+        border-color: rgba(139, 92, 246, 0.42) !important;
+      }
+      .studyhub-theme-dark [class~="text-emerald-950"],
+      .studyhub-theme-dark [class~="text-red-950"],
+      .studyhub-theme-dark [class~="text-rose-950"],
+      .studyhub-theme-dark [class~="text-amber-950"],
+      .studyhub-theme-dark [class~="text-sky-950"] {
+        color: #f5f3ff !important;
+      }
+      .studyhub-theme-dark input,
+      .studyhub-theme-dark textarea,
+      .studyhub-theme-dark select {
+        background-color: rgba(24, 17, 52, 0.92) !important;
+        border-color: rgba(139, 92, 246, 0.42) !important;
+        color: #f7f3ff !important;
+      }
+      .studyhub-theme-dark [class~="text-emerald-700"],
+      .studyhub-theme-dark [class~="text-emerald-800"],
+      .studyhub-theme-dark [class~="text-emerald-900"] {
+        color: #34d399 !important;
+      }
+      .studyhub-theme-dark [class~="border-emerald-200"] {
+        border-color: rgba(16, 185, 129, 0.58) !important;
+      }
+      .studyhub-theme-dark img {
+        background-color: #f8fafc;
+      }
+    `}</style>
+  );
 }
 
 function HubApp({ t }) {
@@ -2695,6 +2828,7 @@ function MPLessonPage({ lang, lessonNo, progress, save, t }) {
 
 function App() {
   const [lang, setLangState] = useState(getInitialLang);
+  const [theme, setThemeState] = useState(getInitialTheme);
   const mode = currentMode();
   const hash = useHash();
   const displayLang = mode === "ag" || mode === "lb1" || mode === "ibdpi" ? "en" : lang;
@@ -2702,8 +2836,13 @@ function App() {
   const headerLang = mode === "ag" || mode === "lb1" || mode === "ibdpi" ? lang : displayLang;
   const dir = LANGS.find(x => x.code === displayLang)?.dir || "ltr";
   const setLang = (next) => { localStorage.setItem("studyhub_lang", next); localStorage.setItem("phylo_lang", next); setLangState(next); };
+  const setTheme = (next) => { localStorage.setItem("studyhub_theme", next); setThemeState(next); };
   useEffect(() => { document.documentElement.lang = displayLang; document.documentElement.dir = dir; }, [displayLang, dir]);
-  return <div dir={dir} className="min-h-screen bg-[#f8f1e6] text-stone-900"><Background/><Header lang={headerLang} setLang={setLang} mode={mode} t={t}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "lb1" ? <LB1App t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={displayLang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={displayLang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} hash={hash}/> : mode === "ibdpi" ? <IBDPIApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.classList.toggle("studyhub-theme-dark", theme === "dark");
+  }, [theme]);
+  return <div dir={dir} className={`min-h-screen transition-colors ${theme === "dark" ? "studyhub-theme-dark bg-[#0b061d] text-stone-100" : "studyhub-theme-light bg-[#f8f1e6] text-stone-900"}`}><GlobalThemeStyles/><Background theme={theme}/><Header lang={headerLang} setLang={setLang} mode={mode} t={t} theme={theme} setTheme={setTheme}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "lb1" ? <LB1App t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={displayLang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={displayLang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} hash={hash}/> : mode === "ibdpi" ? <IBDPIApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
 }
 
 createRoot(document.getElementById("root")).render(<App />);

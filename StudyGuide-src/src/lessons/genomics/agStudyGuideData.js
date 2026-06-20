@@ -1250,6 +1250,88 @@ export const AG_GUIDE_SECTIONS = [
         answerTemplate: "In RNA-seq, RNA is converted to cDNA and sequenced. Reads are aligned or quantified against transcripts/genes, counted and normalized before comparing expression between samples or conditions.",
         traps: ["More reads for a gene can reflect higher expression, longer transcript length or higher sequencing depth; normalization is needed."],
       },
+      {
+        title: "High-yield NGS application chooser",
+        what: "For the exam, the safest way to distinguish NGS applications is to identify four elements: the input molecule, the biological question, the main computational output and the caveat. DNA resequencing asks 'which variants?'; RNA-seq asks 'which transcripts and how much?'; ChIP-seq asks 'where is this protein or chromatin mark bound?'; bisulfite sequencing asks 'which cytosines are methylated?'; Pool-seq asks 'what are allele frequencies in a group?'",
+        why: "Many multiple-choice questions are written by mixing the correct definition of one method with the output of another method. This block prevents that confusion by focusing on input-output logic rather than memorizing isolated names.",
+        examFocus: "If you can say input -> question -> output in one sentence, you can usually eliminate wrong options quickly.",
+        answerTemplate: "I would distinguish the methods by what they measure: WGS/targeted sequencing measure DNA variants, RNA-seq measures transcript abundance/structure, ChIP-seq maps protein-DNA or histone-mark enrichment, bisulfite sequencing measures methylation and Pool-seq estimates group allele frequencies.",
+        traps: [
+          "Do not answer ChIP-seq as if it measured RNA abundance; that is RNA-seq.",
+          "Do not answer bisulfite sequencing as if it were a generic SNP-calling method; its main purpose is methylation.",
+          "Do not answer Pool-seq as if it gives individual genotypes for every animal in the pool."
+        ],
+      },
+      {
+        title: "Pool-seq read counts: how allele frequency is inferred",
+        slide: "lecture09-poolseq-canary",
+        what: "After pooling DNA from many individuals, reads are mapped to a reference and allele counts are obtained at SNP positions. If 70 reads support allele A and 30 reads support allele T in a pool, the estimated allele frequency is roughly A = 0.70 and T = 0.30, assuming the pool and sequencing are unbiased.",
+        why: "This is the practical meaning of Pool-seq: the unit of analysis is the pool-level allele frequency. It is excellent for cheap population contrasts, but it cannot tell which individual carried which genotype.",
+        examFocus: "Mention allele-frequency estimation from read counts. Also mention the loss of individual-level genotype information as the key limitation.",
+        answerTemplate: "In Pool-seq, allele frequencies are estimated from the proportion of reads supporting each allele at a SNP. This is useful for comparing populations cheaply, but individual genotypes cannot be reconstructed reliably from the pool.",
+        exercise: {
+          prompt: "A pooled sample has 120 reads at a SNP: 90 reads show C and 30 reads show G. Estimate the allele frequencies.",
+          answer: "C frequency = 90 / 120 = 0.75. G frequency = 30 / 120 = 0.25. The result describes the pool, not individual genotypes."
+        },
+        traps: ["Read-count allele frequencies are affected by sequencing depth, mapping bias, pool construction and sampling variance."],
+      },
+      {
+        title: "Targeted sequencing versus WES versus WGS",
+        slide: "lecture09-targeted-seq",
+        what: "Targeted sequencing is an umbrella term for sequencing selected genomic regions. Amplicon sequencing targets PCR-amplified loci, WES targets the exome through capture, and WGS sequences the genome more broadly without selecting only a panel or exons.",
+        why: "This distinction matters in project design. If the hypothesis concerns known genes or exons and the budget is limited, targeted sequencing or WES may be more efficient. If the goal is genome-wide discovery, structural variation or non-coding variants, WGS is more appropriate.",
+        examFocus: "Use the word 'targeted' for selected genes/regions, 'exome' for protein-coding exons and 'whole genome' for broad genomic coverage. Do not call WES a whole-genome method.",
+        answerTemplate: "Targeted sequencing enriches selected loci before sequencing. Amplicon sequencing uses PCR products, WES captures exons and WGS sequences across the genome, including coding and non-coding regions.",
+        traps: [
+          "WES misses most non-coding regions and many structural variants outside captured intervals.",
+          "Amplicon sequencing is powerful for known targets but poor for unbiased genome-wide discovery."
+        ],
+      },
+      {
+        title: "Bisulfite interpretation: methylation becomes a sequence signal",
+        slide: "lecture09-bisulfite-snp",
+        what: "Bisulfite treatment converts unmethylated cytosines into uracils, which are read as thymine after PCR/sequencing. Methylated cytosines remain as cytosines. Therefore, after alignment to the reference, C retention suggests methylation, while C-to-T change suggests lack of methylation at that cytosine.",
+        why: "The method is powerful but conceptually tricky because it deliberately changes the sequence. A C-to-T difference in bisulfite data is not automatically a SNP; it may be the expected chemical conversion of an unmethylated cytosine.",
+        examFocus: "For an open question, state the conversion rule, the purpose of the method and the SNP caveat.",
+        answerTemplate: "Bisulfite sequencing detects methylation by converting unmethylated C to U/T while methylated C remains C. Sequencing treated DNA allows methylation status to be inferred, but real C/T SNPs and incomplete conversion must be considered.",
+        exercise: {
+          prompt: "After bisulfite treatment, a reference C is read mostly as T. What does that suggest?",
+          answer: "It suggests that the cytosine was mostly unmethylated, because unmethylated C is converted to U and then read as T. However, SNPs and conversion efficiency should be checked."
+        },
+      },
+      {
+        title: "ChIP-seq output: peaks, not genotypes or expression counts",
+        slide: "lecture09-chipseq-workflow",
+        what: "ChIP-seq enriches DNA fragments bound by a protein or associated with a chromatin mark. After sequencing and mapping, peak-calling identifies genomic regions where reads pile up more than expected, representing candidate binding or enrichment sites.",
+        why: "This is the main output distinction. A ChIP-seq experiment may later be linked to nearby genes, but the direct result is a set of enriched genomic intervals/peaks, not a VCF and not a table of RNA expression values.",
+        examFocus: "If the question asks the primary purpose of ChIP-seq, answer: to identify DNA regions bound by proteins or associated with chromatin marks.",
+        answerTemplate: "ChIP-seq uses immunoprecipitation to enrich DNA bound by a protein or histone modification, sequences those fragments and maps reads to call peaks representing enriched binding regions.",
+        traps: [
+          "ChIP-seq does not require converting RNA to cDNA; RNA-seq does.",
+          "ChIP-seq peak calling is not the same as variant calling."
+        ],
+      },
+      {
+        title: "RNA-seq exam answer: from RNA to differential expression",
+        slide: "lecture09-rnaseq-experiment",
+        what: "In a typical RNA-seq experiment, RNA is extracted, often mRNA is selected or rRNA is depleted, RNA is converted to cDNA, libraries are sequenced, reads are mapped or pseudoaligned, and counts are compared across biological conditions.",
+        why: "RNA-seq is likely to appear as an open-question topic. The answer should include both the wet-lab transformation from RNA to cDNA and the computational idea of counting/normalizing reads per gene or transcript.",
+        examFocus: "Mention biological replicates and normalization. Differential expression is not reliable from one sample per condition and raw counts alone.",
+        answerTemplate: "RNA-seq converts RNA into cDNA, sequences it and quantifies reads per gene or transcript. After normalization and statistical testing, it can identify genes that are differentially expressed between conditions.",
+        exercise: {
+          prompt: "Why are biological replicates needed in RNA-seq?",
+          answer: "They allow estimation of biological variability between individuals or samples, which is necessary for reliable differential expression testing."
+        },
+        traps: ["RNA-seq expression changes do not automatically prove causality; they identify transcriptional differences associated with conditions."],
+      },
+      {
+        title: "Do not mix the main output files",
+        what: "A fast way to check your understanding is to match each analysis to its main output: variant discovery produces VCF; read mapping produces SAM/BAM; genome annotation produces GFF/GTF/BED-like feature coordinates; ChIP-seq produces peaks/enriched intervals; RNA-seq produces count or expression matrices; Pool-seq produces allele-frequency estimates; bisulfite sequencing produces methylation calls or methylation proportions.",
+        why: "This matches the style of many multiple-choice distractors, where a method is paired with the wrong file or output type.",
+        examFocus: "When uncertain, ask yourself: what was the starting molecule and what biological question is being asked?",
+        answerTemplate: "The output depends on the question: FASTQ stores reads, SAM/BAM stores alignments, VCF stores variants/genotypes, ChIP-seq produces peaks, RNA-seq produces expression/count tables and bisulfite sequencing produces methylation information.",
+      },
+
     ],
     bullets: [
       "Galaxy is an analysis platform, not a sequencing technology; it makes workflows accessible and reproducible.",
@@ -1258,12 +1340,16 @@ export const AG_GUIDE_SECTIONS = [
       "Pool-seq estimates allele frequencies from pooled individuals and is useful for population comparisons at lower cost.",
       "Targeted sequencing, amplicon sequencing and WES focus sequencing effort on selected regions rather than the entire genome.",
       "Bisulfite sequencing studies methylation through C-to-T conversion of unmethylated cytosines.",
-      "ChIP-seq maps protein-DNA binding or chromatin marks; RNA-seq measures transcript abundance and transcript structure.",
+      "ChIP-seq maps protein-DNA binding or chromatin marks and produces peaks/enriched genomic intervals.",
+      "RNA-seq measures transcript abundance and transcript structure after RNA-to-cDNA conversion, read quantification and normalization.",
+      "Targeted sequencing includes amplicon panels and capture-based approaches such as WES; WGS is broader but usually more expensive per sample.",
+      "For each method, memorize input, question, output and caveat.",
     ],
     remember: "For each NGS application, memorize four things: input material, biological question, main output and one caveat.",
     traps: [
       "ChIP-seq is not an expression assay; it maps protein-DNA interactions or chromatin marks.",
       "RNA-seq reads usually need alignment/counting/normalization before expression interpretation.",
+      "A ChIP-seq peak is not a SNP and not an expressed transcript; it is an enriched genomic region.",
       "Pool-seq is cheap for allele frequencies but does not preserve individual genotypes.",
       "Bisulfite C-to-T changes are chemical conversion signals, not automatically true SNPs.",
     ],
@@ -1273,6 +1359,8 @@ export const AG_GUIDE_SECTIONS = [
       "Can I explain Pool-seq in one sentence?",
       "Can I explain bisulfite conversion without mixing it up with variant calling?",
       "Can I distinguish RNA-seq from ChIP-seq?",
+      "Can I state the bisulfite conversion rule from memory?",
+      "Can I match each method to its main output: VCF, peaks, counts, methylation calls or allele frequencies?",
     ],
   },
   {
@@ -1500,6 +1588,48 @@ export const AG_GUIDE_SECTIONS = [
           "PED is not only pedigree in the everyday sense; in PLINK it also stores sample and genotype information in the text format.",
         ],
       },
+
+      {
+        title: "PED file columns: what the first six fields mean",
+        slide: "lecture10-ped-file",
+        what: "The PLINK PED file is a white-space delimited text file. The first six columns are mandatory: Family ID, Individual ID, Paternal ID, Maternal ID, Sex and Phenotype. Genotype columns then follow, usually two alleles per marker.",
+        why: "This is high yield because it connects genetics metadata to computational input. PLINK cannot interpret samples correctly if phenotype, sex or pedigree fields are wrong or missing.",
+        examFocus: "Remember the first six columns. If the exam asks which file contains individual/phenotype information, answer PED in text format or FAM in binary format.",
+        answerTemplate: "A PED file stores sample metadata in the first six columns—family ID, individual ID, father, mother, sex and phenotype—followed by genotype calls for the markers.",
+        traps: [
+          "The PED file usually has no header line in standard PLINK format.",
+          "The phenotype column can encode case/control status or a quantitative trait, depending on the analysis."
+        ],
+      },
+      {
+        title: "MAP, BIM and FAM: marker and sample metadata",
+        slide: "lecture10-map-file",
+        what: "The MAP file describes marker positions in the text PLINK format, usually chromosome, marker ID, genetic distance and base-pair position. In binary PLINK, BIM contains marker information and FAM contains the sample information corresponding to PED's first six columns.",
+        why: "The exam can mix PLINK files with NGS files. Keep the logic clear: MAP/BIM are marker maps, PED/FAM are sample metadata, BED is compressed genotype data.",
+        examFocus: "Text PLINK: PED + MAP. Binary PLINK: BED + BIM + FAM. Do not confuse PLINK BED with BED genomic interval files or BAM alignment files.",
+        answerTemplate: "MAP or BIM describes markers and their genomic positions, FAM describes individuals and phenotypes, and PLINK BED stores the binary genotype matrix.",
+      },
+      {
+        title: "PLINK QC mindset: remove bad markers and bad samples before interpretation",
+        slide: "lecture10-qc-summary",
+        what: "PLINK can compute summary statistics for quality control, including missing genotype rates, allele frequencies, Hardy-Weinberg equilibrium tests and basic sample/marker summaries. QC is done before population structure analysis or association testing.",
+        why: "Bad markers or poor-quality samples can create false clusters, false associations or misleading allele-frequency estimates. QC is the population-genomics equivalent of FastQC before NGS analysis.",
+        examFocus: "If asked why QC matters, say it removes unreliable samples/markers and reduces false biological interpretation. Typical filters include missingness/call rate, MAF and HWE depending on the analysis.",
+        answerTemplate: "PLINK QC summarizes genotype missingness, allele frequency, Hardy-Weinberg equilibrium and other marker/sample metrics so unreliable data can be filtered before MDS, ROH or GWAS analyses.",
+        traps: ["HWE filtering is usually applied carefully: deviations can indicate genotyping error, but in structured or selected populations they may also reflect biology."],
+      },
+      {
+        title: "Allele frequency and HWE output in PLINK",
+        slide: "lecture10-hwe-output",
+        what: "PLINK can estimate allele frequencies and test Hardy-Weinberg equilibrium for markers. Allele frequency output helps interpret common versus rare variants; HWE output helps identify markers whose genotype counts deviate from expected p2, 2pq and q2 proportions.",
+        why: "The course repeatedly links basic population genetics to software output. The calculation exercise is manual, but PLINK automates the same logic genome-wide.",
+        examFocus: "Know the manual HWE exercise and the interpretation: observed genotype counts are compared with expected counts from allele frequencies. Strong differences suggest the population/marker is not in HWE or that assumptions/data quality are problematic.",
+        answerTemplate: "PLINK HWE output reports whether observed genotype frequencies deviate from Hardy-Weinberg expectations. It is useful for marker QC and population-genetic interpretation, but deviations must be interpreted in context.",
+        exercise: {
+          prompt: "Why might a marker fail HWE in a genotype dataset?",
+          answer: "Possible reasons include genotyping error, population stratification, selection, inbreeding, non-random mating or a real biological/demographic process. It should not be interpreted automatically as one single cause."
+        },
+      },
       {
         title: "MDS/PCA: structure before association",
         slide: "lecture10-mds-plot",
@@ -1581,6 +1711,8 @@ export const AG_GUIDE_SECTIONS = [
     bullets: [
       "Population genomics studies genome-wide diversity, structure, demographic history, gene flow, drift, inbreeding and selection.",
       "PLINK genotype files are not NGS read files: PED/MAP and BED/BIM/FAM represent genotypes, samples and markers.",
+      "PED/FAM describe individuals and phenotypes; MAP/BIM describe markers; PLINK BED stores the genotype matrix.",
+      "PLINK QC includes missingness/call rate, allele frequency, HWE checks and sample/marker summaries before MDS, ROH or GWAS.",
       "MDS/PCA visualizes genetic similarity and population structure; it is a key pre-GWAS diagnostic.",
       "LD is the non-random association between alleles at different loci within a population.",
       "Selection signatures are regional patterns produced when a selected allele rises in frequency with linked neighboring variants.",
@@ -1627,6 +1759,8 @@ export const AG_GUIDE_SECTIONS = [
       "Can I define LD exactly as in the sample exam?",
       "Can I explain why LD lets one SNP tag another SNP?",
       "Can I distinguish PED/MAP from BED/BIM/FAM?",
+      "Can I list the first six PED/FAM columns?",
+      "Can I explain why PLINK QC comes before MDS/GWAS?",
       "Can I define ROH and calculate FROH?",
       "Can I explain why MDS matters before GWAS?",
       "Can I answer the inbreeding/assembly trap?",

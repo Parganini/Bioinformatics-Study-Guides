@@ -735,6 +735,16 @@ function localizeOpenQuestions(items, lang) {
   }));
 }
 
+function resolveAgLang(lang) {
+  const normalize = (value) => String(value || "").trim().toLowerCase().replace(/^["']|["']$/g, "");
+  const propLang = normalize(lang);
+  if (propLang === "fa") return "fa";
+  const savedLang = typeof localStorage !== "undefined"
+    ? normalize(localStorage.getItem("studyhub_lang") || localStorage.getItem("phylo_lang"))
+    : "";
+  return savedLang === "fa" ? "fa" : "en";
+}
+
 function examCopy(lang) {
   if (lang !== "fa") {
     return {
@@ -792,12 +802,13 @@ function examCopy(lang) {
 }
 
 export default function GenomicsPracticeExamPage({ lang = "en" }) {
-  const copy = examCopy(lang);
-  const backArrow = lang === "fa" ? "→" : "←";
+  const activeLang = resolveAgLang(lang);
+  const copy = examCopy(activeLang);
+  const backArrow = activeLang === "fa" ? "→" : "←";
   const [answers, setAnswers] = useState({});
   const [openAnswers, setOpenAnswers] = useState({});
-  const questions = useMemo(() => localizeQuestions(QUESTIONS, lang), [lang]);
-  const openQuestions = useMemo(() => localizeOpenQuestions(OPEN_QUESTIONS, lang), [lang]);
+  const questions = useMemo(() => localizeQuestions(QUESTIONS, activeLang), [activeLang]);
+  const openQuestions = useMemo(() => localizeOpenQuestions(OPEN_QUESTIONS, activeLang), [activeLang]);
   const total = questions.length;
   const answered = Object.keys(answers).length;
   const openPracticed = Object.values(openAnswers).filter((value) => value.trim().length > 0).length;

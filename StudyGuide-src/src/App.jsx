@@ -761,7 +761,7 @@ function getInitialLang() {
   return normalizeLang(localStorage.getItem("studyhub_lang") || localStorage.getItem("phylo_lang") || "es");
 }
 function normalizeLang(value) {
-  const code = String(value || "").trim().toLowerCase();
+  const code = String(value || "").trim().toLowerCase().replace(/^["']|["']$/g, "");
   return LANGS.some((item) => item.code === code) ? code : "es";
 }
 function getInitialTheme() {

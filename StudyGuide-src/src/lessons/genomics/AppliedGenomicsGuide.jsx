@@ -35,6 +35,16 @@ function sectionHref(section) {
   return `#/section/${section.id}`;
 }
 
+function resolveAgLang(lang) {
+  const normalize = (value) => String(value || "").trim().toLowerCase().replace(/^["']|["']$/g, "");
+  const propLang = normalize(lang);
+  if (propLang === "fa") return "fa";
+  const savedLang = typeof localStorage !== "undefined"
+    ? normalize(localStorage.getItem("studyhub_lang") || localStorage.getItem("phylo_lang"))
+    : "";
+  return savedLang === "fa" ? "fa" : "en";
+}
+
 function GuideHeader({ completedCount, progress, nextSection, sourceLinks, labels }) {
   return (
     <>
@@ -185,8 +195,9 @@ export default function AppliedGenomicsGuide({ hash = "", lang = "en" }) {
   const [completed, setCompleted] = useState(() => readJson(AG_PROGRESS_KEY, {}));
   const [checks, setChecks] = useState(() => readJson(`${AG_PROGRESS_KEY}_checks`, {}));
   const [zoomSlide, setZoomSlide] = useState(null);
-  const labels = agUiCopy(lang);
-  const sections = useMemo(() => localizeAgSections(AG_GUIDE_SECTIONS, lang), [lang]);
+  const activeLang = resolveAgLang(lang);
+  const labels = agUiCopy(activeLang);
+  const sections = useMemo(() => localizeAgSections(AG_GUIDE_SECTIONS, activeLang), [activeLang]);
 
   useEffect(() => writeJson(AG_PROGRESS_KEY, completed), [completed]);
   useEffect(() => writeJson(`${AG_PROGRESS_KEY}_checks`, checks), [checks]);

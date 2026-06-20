@@ -1649,6 +1649,8 @@ export const AG_GUIDE_SECTIONS = [
       "lecture10-genotype-data",
       "lecture10-ped-file",
       "lecture10-map-file",
+      "lecture10-qc-summary",
+      "lecture10-hwe-output",
       "lecture10-mds-plot",
       "lecture11-popgen-overview",
       "lecture11-popgen-framework",

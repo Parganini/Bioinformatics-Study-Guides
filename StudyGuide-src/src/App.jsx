@@ -1245,18 +1245,18 @@ function IBDPIResourcesSection() {
 
 
 
-function GenomicsApp({ t, hash }) {
+function GenomicsApp({ t, hash, lang = "en" }) {
   if (hash.match(/^#\/practice-exam/)) {
     return (
       <React.Suspense fallback={<DRDRouteLoading label="Applied Genomics practice exam" />}>
-        <GenomicsPracticeExamPage />
+        <GenomicsPracticeExamPage lang={lang} />
       </React.Suspense>
     );
   }
 
   return (
     <React.Suspense fallback={<DRDRouteLoading label="Applied Genomics study guide" />}>
-      <AppliedGenomicsGuidePage hash={hash} />
+      <AppliedGenomicsGuidePage hash={hash} lang={lang} />
     </React.Suspense>
   );
 }
@@ -2858,7 +2858,7 @@ function App() {
     document.documentElement.dataset.theme = theme;
     document.documentElement.classList.toggle("studyhub-theme-dark", theme === "dark");
   }, [theme]);
-  return <div dir={dir} className={`min-h-screen transition-colors ${theme === "dark" ? "studyhub-theme-dark bg-[#0b061d] text-stone-100" : "studyhub-theme-light bg-[#f8f1e6] text-stone-900"}`}><GlobalThemeStyles/><Background theme={theme}/><Header lang={headerLang} setLang={setLang} mode={mode} t={t} theme={theme} setTheme={setTheme}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "lb1" ? <LB1App t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={displayLang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={displayLang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} hash={hash}/> : mode === "ibdpi" ? <IBDPIApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
+  return <div dir={dir} className={`min-h-screen transition-colors ${theme === "dark" ? "studyhub-theme-dark bg-[#0b061d] text-stone-100" : "studyhub-theme-light bg-[#f8f1e6] text-stone-900"}`}><GlobalThemeStyles/><Background theme={theme}/><Header lang={headerLang} setLang={setLang} mode={mode} t={t} theme={theme} setTheme={setTheme}/>{mode === "amla" ? <AMLAApp t={t} hash={hash}/> : mode === "lb1" ? <LB1App t={t} hash={hash}/> : mode === "amlb" ? <AMLBApp t={t} hash={hash}/> : mode === "mp" ? <MPApp t={t} lang={displayLang} hash={hash}/> : mode === "drd" ? <DRDApp t={t} lang={displayLang} hash={hash}/> : mode === "ag" ? <GenomicsApp t={t} lang={displayLang} hash={hash}/> : mode === "ibdpi" ? <IBDPIApp t={t} hash={hash}/> : <HubApp t={t}/>}</div>;
 }
 
 createRoot(document.getElementById("root")).render(<App />);

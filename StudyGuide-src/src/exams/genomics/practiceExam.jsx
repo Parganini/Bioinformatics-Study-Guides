@@ -464,7 +464,64 @@ function getCorrectOption(question) {
   return question.options.find((option) => option.correct);
 }
 
-export default function GenomicsPracticeExamPage() {
+function examCopy(lang) {
+  if (lang !== "fa") {
+    return {
+      back: "Back to Applied Genomics",
+      eyebrow: "Practice exam",
+      title: "Applied Genomics · Practice exam",
+      intro:
+        "Answer the 30 multiple-choice questions first. After selecting an option, the page shows whether you were correct and explains every option, including why the distractors are wrong. Then use the open-question section to draft short answers and reveal the model answer only after practicing.",
+      progress: "Progress",
+      mcAnswered: "MC answered",
+      correct: "Correct",
+      currentScore: "Current score",
+      openPracticed: "Open practiced",
+      reset: "Reset practice",
+      multipleChoice: "Multiple choice",
+      mcTitle: "30 exam-style questions",
+      mcBody: "One and only one answer is correct. The feedback appears after you select an option.",
+      incorrect: "Incorrect",
+      correctPrefix: "correct",
+      openQuestions: "Open questions",
+      shortAnswerPractice: "Short-answer practice",
+      openBody: "Draft your answer in the box first. Then open the model answer and compare whether you included the key concepts, calculations and interpretation.",
+      open: "Open",
+      yourAnswer: "Your practice answer",
+      placeholder: "Write a short exam-style answer here before revealing the model answer...",
+      showModel: "Show model answer",
+    };
+  }
+
+  return {
+    back: "بازگشت به ژنومیکس کاربردی",
+    eyebrow: "آزمون تمرینی",
+    title: "ژنومیکس کاربردی · آزمون تمرینی",
+    intro:
+      "اول سؤال‌های چندگزینه‌ای را پاسخ بده. بعد از انتخاب گزینه، صفحه درست یا غلط بودن پاسخ را نشان می‌دهد و توضیح می‌دهد چرا گزینه‌های دیگر رد می‌شوند. سپس در بخش سؤال‌های باز، پاسخ کوتاه بنویس و فقط بعد از تمرین پاسخ نمونه را باز کن.",
+    progress: "پیشرفت",
+    mcAnswered: "MC پاسخ‌داده‌شده",
+    correct: "درست",
+    currentScore: "امتیاز فعلی",
+    openPracticed: "پاسخ باز تمرین‌شده",
+    reset: "شروع دوباره تمرین",
+    multipleChoice: "چندگزینه‌ای",
+    mcTitle: "۳۰ سؤال به سبک امتحان",
+    mcBody: "فقط یک پاسخ درست است. بازخورد بعد از انتخاب گزینه ظاهر می‌شود.",
+    incorrect: "نادرست",
+    correctPrefix: "پاسخ درست",
+    openQuestions: "سؤال‌های باز",
+    shortAnswerPractice: "تمرین پاسخ کوتاه",
+    openBody: "اول پاسخ خودت را در کادر بنویس. سپس پاسخ نمونه را باز کن و بررسی کن آیا مفاهیم، محاسبات و تفسیرهای کلیدی را آورده‌ای یا نه.",
+    open: "باز",
+    yourAnswer: "پاسخ تمرینی تو",
+    placeholder: "قبل از دیدن پاسخ نمونه، یک پاسخ کوتاه امتحانی بنویس...",
+    showModel: "نمایش پاسخ نمونه",
+  };
+}
+
+export default function GenomicsPracticeExamPage({ lang = "en" }) {
+  const copy = examCopy(lang);
   const [answers, setAnswers] = useState({});
   const [openAnswers, setOpenAnswers] = useState({});
   const total = QUESTIONS.length;
@@ -490,43 +547,43 @@ export default function GenomicsPracticeExamPage() {
       <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/95 shadow-xl shadow-stone-900/5">
         <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="p-7 md:p-10 lg:p-12">
-            <a href="#/" className="text-sm font-black text-red-700">← Back to Applied Genomics</a>
+            <a href="#/" className="text-sm font-black text-red-700">← {copy.back}</a>
             <div className="mt-6 inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">
-              Practice exam
+              {copy.eyebrow}
             </div>
             <h1 className="mt-5 text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">
-              Applied Genomics · Practice exam
+              {copy.title}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
-              Answer the 30 multiple-choice questions first. After selecting an option, the page shows whether you were correct and explains every option, including why the distractors are wrong. Then use the open-question section to draft short answers and reveal the model answer only after practicing.
+              {copy.intro}
             </p>
           </div>
           <div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0">
             <div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner">
-              <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Progress</div>
+              <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.progress}</div>
               <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-4">
                 <div className="rounded-2xl bg-stone-50 p-4 text-center">
                   <div className="text-3xl font-black text-stone-950">{answered}</div>
-                  <div className="mt-1 text-xs font-bold text-stone-500">MC answered</div>
+                  <div className="mt-1 text-xs font-bold text-stone-500">{copy.mcAnswered}</div>
                 </div>
                 <div className="rounded-2xl bg-stone-50 p-4 text-center">
                   <div className="text-3xl font-black text-stone-950">{score}</div>
-                  <div className="mt-1 text-xs font-bold text-stone-500">Correct</div>
+                  <div className="mt-1 text-xs font-bold text-stone-500">{copy.correct}</div>
                 </div>
                 <div className="rounded-2xl bg-stone-50 p-4 text-center">
                   <div className="text-3xl font-black text-stone-950">{percent}%</div>
-                  <div className="mt-1 text-xs font-bold text-stone-500">Current score</div>
+                  <div className="mt-1 text-xs font-bold text-stone-500">{copy.currentScore}</div>
                 </div>
                 <div className="rounded-2xl bg-stone-50 p-4 text-center">
                   <div className="text-3xl font-black text-stone-950">{openPracticed}</div>
-                  <div className="mt-1 text-xs font-bold text-stone-500">Open practiced</div>
+                  <div className="mt-1 text-xs font-bold text-stone-500">{copy.openPracticed}</div>
                 </div>
               </div>
               <div className="mt-5 h-3 overflow-hidden rounded-full border border-stone-200 bg-stone-100">
                 <div className="h-full rounded-full bg-red-700 transition-all" style={{ width: `${Math.round((answered / total) * 100)}%` }} />
               </div>
               <button onClick={reset} className="mt-5 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-800 transition hover:bg-stone-50">
-                Reset practice
+                {copy.reset}
               </button>
             </div>
           </div>
@@ -534,10 +591,10 @@ export default function GenomicsPracticeExamPage() {
       </section>
 
       <section className="mt-8 rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm md:p-7">
-        <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Multiple choice</div>
-        <h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950">30 exam-style questions</h2>
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.multipleChoice}</div>
+        <h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950">{copy.mcTitle}</h2>
         <p className="mt-2 max-w-3xl leading-7 text-stone-600">
-          One and only one answer is correct. The feedback appears after you select an option.
+          {copy.mcBody}
         </p>
       </section>
 
@@ -559,7 +616,7 @@ export default function GenomicsPracticeExamPage() {
                     "rounded-full px-3 py-1 text-xs font-black uppercase tracking-[0.14em]",
                     isCorrect ? "bg-emerald-50 text-emerald-700" : "bg-red-50 text-red-700",
                   )}>
-                    {isCorrect ? "Correct" : `Incorrect · correct: ${correct?.id.toUpperCase()}`}
+                    {isCorrect ? copy.correct : `${copy.incorrect} · ${copy.correctPrefix}: ${correct?.id.toUpperCase()}`}
                   </div>
                 )}
               </div>
@@ -575,7 +632,7 @@ export default function GenomicsPracticeExamPage() {
                       type="button"
                       onClick={() => choose(question.id, option.id)}
                       className={cx(
-                        "rounded-2xl border p-4 text-left transition hover:-translate-y-0.5 hover:shadow-md",
+                        "rounded-2xl border p-4 text-start transition hover:-translate-y-0.5 hover:shadow-md",
                         !shouldShowFeedback && "border-stone-200 bg-white",
                         shouldShowFeedback && option.correct && "border-emerald-300 bg-emerald-50",
                         shouldShowFeedback && wasSelected && !option.correct && "border-red-300 bg-red-50",
@@ -608,10 +665,10 @@ export default function GenomicsPracticeExamPage() {
       </section>
 
       <section className="mt-10 rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm md:p-7">
-        <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Open questions</div>
-        <h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950">Short-answer practice</h2>
+        <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy.openQuestions}</div>
+        <h2 className="mt-2 text-3xl font-black tracking-tight text-stone-950">{copy.shortAnswerPractice}</h2>
         <p className="mt-2 max-w-3xl leading-7 text-stone-600">
-          Draft your answer in the box first. Then open the model answer and compare whether you included the key concepts, calculations and interpretation.
+          {copy.openBody}
         </p>
       </section>
 
@@ -619,21 +676,21 @@ export default function GenomicsPracticeExamPage() {
         {OPEN_QUESTIONS.map((item, index) => (
           <article key={item.id} className="rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm md:p-7">
             <div className="inline-flex rounded-full bg-stone-100 px-3 py-1 text-xs font-black uppercase tracking-[0.14em] text-stone-500">
-              Open {String(index + 1).padStart(2, "0")} · {item.topic}
+              {copy.open} {String(index + 1).padStart(2, "0")} · {item.topic}
             </div>
             <h3 className="mt-4 text-2xl font-black leading-tight text-stone-950">{item.question}</h3>
             <label className="mt-5 block text-sm font-black uppercase tracking-[0.14em] text-stone-500" htmlFor={`open-${item.id}`}>
-              Your practice answer
+              {copy.yourAnswer}
             </label>
             <textarea
               id={`open-${item.id}`}
               value={openAnswers[item.id] || ""}
               onChange={(event) => setOpenAnswers((current) => ({ ...current, [item.id]: event.target.value }))}
-              placeholder="Write a short exam-style answer here before revealing the model answer..."
+              placeholder={copy.placeholder}
               className="mt-2 min-h-36 w-full rounded-2xl border border-stone-200 bg-stone-50 p-4 text-sm font-semibold leading-6 text-stone-800 outline-none transition focus:border-red-300 focus:bg-white focus:ring-4 focus:ring-red-100"
             />
             <details className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
-              <summary className="cursor-pointer text-sm font-black uppercase tracking-[0.14em] text-emerald-800">Show model answer</summary>
+              <summary className="cursor-pointer text-sm font-black uppercase tracking-[0.14em] text-emerald-800">{copy.showModel}</summary>
               <p className="mt-3 text-sm font-semibold leading-7 text-stone-700">{item.answer}</p>
             </details>
           </article>

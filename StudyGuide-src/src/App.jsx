@@ -758,7 +758,11 @@ function currentMode() {
 }
 
 function getInitialLang() {
-  return localStorage.getItem("studyhub_lang") || localStorage.getItem("phylo_lang") || "es";
+  return normalizeLang(localStorage.getItem("studyhub_lang") || localStorage.getItem("phylo_lang") || "es");
+}
+function normalizeLang(value) {
+  const code = String(value || "").trim().toLowerCase();
+  return LANGS.some((item) => item.code === code) ? code : "es";
 }
 function getInitialTheme() {
   const saved = localStorage.getItem("studyhub_theme");
@@ -2847,11 +2851,17 @@ function App() {
   const [theme, setThemeState] = useState(getInitialTheme);
   const mode = currentMode();
   const hash = useHash();
-  const displayLang = mode === "ag" ? (lang === "fa" ? "fa" : "en") : mode === "lb1" || mode === "ibdpi" ? "en" : lang;
+  const selectedLang = normalizeLang(lang);
+  const displayLang = mode === "ag" ? (selectedLang === "fa" ? "fa" : "en") : mode === "lb1" || mode === "ibdpi" ? "en" : selectedLang;
   const t = UI[displayLang] || UI.es;
-  const headerLang = mode === "ag" || mode === "lb1" || mode === "ibdpi" ? lang : displayLang;
+  const headerLang = mode === "ag" || mode === "lb1" || mode === "ibdpi" ? selectedLang : displayLang;
   const dir = LANGS.find(x => x.code === displayLang)?.dir || "ltr";
-  const setLang = (next) => { localStorage.setItem("studyhub_lang", next); localStorage.setItem("phylo_lang", next); setLangState(next); };
+  const setLang = (next) => {
+    const normalized = normalizeLang(next);
+    localStorage.setItem("studyhub_lang", normalized);
+    localStorage.setItem("phylo_lang", normalized);
+    setLangState(normalized);
+  };
   const setTheme = (next) => { localStorage.setItem("studyhub_theme", next); setThemeState(next); };
   useEffect(() => { document.documentElement.lang = displayLang; document.documentElement.dir = dir; }, [displayLang, dir]);
   useEffect(() => {

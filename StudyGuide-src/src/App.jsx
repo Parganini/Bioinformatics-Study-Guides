@@ -2847,7 +2847,7 @@ function App() {
   const [theme, setThemeState] = useState(getInitialTheme);
   const mode = currentMode();
   const hash = useHash();
-  const displayLang = mode === "ag" || mode === "lb1" || mode === "ibdpi" ? "en" : lang;
+  const displayLang = mode === "ag" ? (lang === "fa" ? "fa" : "en") : mode === "lb1" || mode === "ibdpi" ? "en" : lang;
   const t = UI[displayLang] || UI.es;
   const headerLang = mode === "ag" || mode === "lb1" || mode === "ibdpi" ? lang : displayLang;
   const dir = LANGS.find(x => x.code === displayLang)?.dir || "ltr";

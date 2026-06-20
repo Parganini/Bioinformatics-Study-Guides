@@ -522,6 +522,7 @@ function examCopy(lang) {
 
 export default function GenomicsPracticeExamPage({ lang = "en" }) {
   const copy = examCopy(lang);
+  const backArrow = lang === "fa" ? "→" : "←";
   const [answers, setAnswers] = useState({});
   const [openAnswers, setOpenAnswers] = useState({});
   const total = QUESTIONS.length;
@@ -547,7 +548,10 @@ export default function GenomicsPracticeExamPage({ lang = "en" }) {
       <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/95 shadow-xl shadow-stone-900/5">
         <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="p-7 md:p-10 lg:p-12">
-            <a href="#/" className="text-sm font-black text-red-700">← {copy.back}</a>
+            <a href="#/" className="inline-flex items-center gap-1 text-sm font-black text-red-700">
+              <span aria-hidden="true">{backArrow}</span>
+              <span>{copy.back}</span>
+            </a>
             <div className="mt-6 inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">
               {copy.eyebrow}
             </div>

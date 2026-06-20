@@ -87,7 +87,7 @@ function GuideHeader({ completedCount, progress, nextSection, sourceLinks }) {
           <div>
             <p className="text-xs font-black uppercase tracking-[0.28em] text-stone-500">Original sources</p>
             <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">
-              Drive path confirmed from the provided Applied Genomics source list. Professor transcript files were not included in this lightweight archive, so unsupported comments are not fabricated.
+              Slides and transcript notes are linked from the Drive folders. Professor comments are included only when they are supported by the available transcript material.
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               <a href={AG_SOURCE_FOLDER} target="_blank" rel="noreferrer" className="rounded-full bg-stone-900 px-3 py-2 text-xs font-black text-white">Drive folder</a>

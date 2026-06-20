@@ -88,6 +88,14 @@ import { getLB1StatusMeta } from "./lessons/lb1/shared/status.js";
 import { LB1ResourcePanel } from "./lessons/lb1/shared/resourcePanel.jsx";
 import { LB1ProteinIcon } from "./lessons/lb1/shared/components.jsx";
 import { AG_GUIDE_SECTIONS } from "./lessons/genomics/agStudyGuideData.js";
+import hubIcon from "../favicons/hub.svg";
+import amlbIcon from "../favicons/amlb.svg";
+import amlaIcon from "../favicons/amla.svg";
+import lb1Icon from "../favicons/lb1.svg";
+import mpIcon from "../favicons/mp.svg";
+import drdIcon from "../favicons/drd.svg";
+import agIcon from "../favicons/ag.svg";
+import ibdpiIcon from "../favicons/ibdpi.svg";
 
 const DRDExamPracticePage = React.lazy(() => import("./exams/drd/examPractice.jsx"));
 const DRDExamRadarPage = React.lazy(() => import("./exams/drd/examRadar.jsx"));
@@ -128,7 +136,7 @@ const UI = {
     openFullPage: "Open original full page",
     legacyNote: "This lesson content is preserved from the original guide and displayed inside the new unified shell.",
     search: "Search lessons or concepts...",
-    appliedML: "Applied Machine Learning",
+    appliedML: "Applied Machine Learning Basic",
     appliedMLDesc: "Lecture notes, practical material, recordings, exam preparation and progress tracking.",
     appliedMLAdvanced: "Applied Machine Learning Advanced",
     appliedMLAdvancedShort: "AMLA",
@@ -177,7 +185,7 @@ const UI = {
     openFullPage: "Abrir página original completa",
     legacyNote: "Este contenido se conserva de la guía original y se muestra dentro del nuevo contenedor unificado.",
     search: "Buscar lecciones o conceptos...",
-    appliedML: "Applied Machine Learning",
+    appliedML: "Applied Machine Learning Basic",
     appliedMLDesc: "Apuntes de clase, material práctico, grabaciones, preparación de examen y seguimiento de progreso.",
     appliedMLAdvanced: "Applied Machine Learning Advanced",
     appliedMLAdvancedShort: "AMLA",
@@ -226,7 +234,7 @@ const UI = {
     openFullPage: "باز کردن صفحهٔ اصلی کامل",
     legacyNote: "این محتوای درس از راهنمای قبلی حفظ شده و داخل پوستهٔ یکپارچهٔ جدید نمایش داده می‌شود.",
     search: "جستجوی درس‌ها یا مفاهیم...",
-    appliedML: "یادگیری ماشین کاربردی",
+    appliedML: "Applied Machine Learning Basic",
     appliedMLDesc: "یادداشت‌های درس، مواد عملی، ضبط‌ها، آمادگی امتحان و پیگیری پیشرفت.",
     appliedMLAdvanced: "Applied Machine Learning Advanced",
     appliedMLAdvancedShort: "AMLA",
@@ -815,59 +823,123 @@ function ThemeSwitcher({ theme, setTheme }) {
     </button>
   );
 }
+function CourseIcon({ icon, iconSrc, iconClass, size = "md" }) {
+  const sizeClass = size === "lg" ? "h-14 w-14 rounded-2xl" : "h-10 min-w-10 rounded-2xl";
+  if (iconSrc) {
+    return (
+      <span className={`flex ${sizeClass} items-center justify-center overflow-hidden shadow-sm`}>
+        <img src={iconSrc} alt="" aria-hidden="true" className="course-favicon h-full w-full object-cover" />
+      </span>
+    );
+  }
+  return (
+    <span className={`flex ${sizeClass} items-center justify-center px-2 text-sm font-black text-white ${iconClass}`}>
+      {icon}
+    </span>
+  );
+}
 function Header({ lang, setLang, mode, t, theme, setTheme }) {
   const header = {
     hub: {
       title: t.studyHub,
       subtitle: t.subjects,
       icon: "⌂",
+      iconSrc: hubIcon,
       iconClass: "bg-stone-950",
     },
     amlb: {
       title: t.appliedML,
       subtitle: `${t.lessons} · ${t.examMode}`,
       icon: "ML",
+      iconSrc: amlbIcon,
       iconClass: "bg-violet-700",
     },
     amla: {
       title: t.appliedMLAdvanced,
       subtitle: `${t.appliedMLAdvancedShort} · ${t.studyTools}`,
       icon: "AMLA",
+      iconSrc: amlaIcon,
       iconClass: "bg-red-700",
     },
     lb1: {
       title: t.laboratoryBioinformatics,
       subtitle: `${t.laboratoryBioinformaticsShort} · ${t.studyTools}`,
       icon: "LB1",
+      iconSrc: lb1Icon,
       iconClass: "bg-teal-700",
     },
     mp: {
       title: t.phylo,
       subtitle: `${t.modules} · ${t.studyTools}`,
       icon: "Φ",
+      iconSrc: mpIcon,
       iconClass: "bg-red-700",
     },
     drd: {
       title: t.drd,
       subtitle: `${t.modules} · ${t.studyTools}`,
       icon: "DRD",
+      iconSrc: drdIcon,
       iconClass: "bg-teal-700",
     },
     ag: {
       title: t.appliedGenomics,
       subtitle: `${t.examMode} · ${t.studyTools}`,
       icon: "AG",
+      iconSrc: agIcon,
       iconClass: "bg-emerald-700",
     },
     ibdpi: {
       title: t.ibdpi,
       subtitle: `${t.ibdpiShort} · ${t.studyTools}`,
       icon: "IBDPI",
+      iconSrc: ibdpiIcon,
       iconClass: "bg-sky-700",
     },
-  }[mode] || { title: t.studyHub, subtitle: t.subjects, icon: "⌂", iconClass: "bg-stone-950" };
+  }[mode] || { title: t.studyHub, subtitle: t.subjects, icon: "⌂", iconSrc: hubIcon, iconClass: "bg-stone-950" };
 
-  return <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#fffaf0]/88 backdrop-blur-xl"><div className="mx-auto flex w-[min(1180px,calc(100%-24px))] items-center justify-between gap-4 py-3"><a href={mode === "hub" ? "#top" : "../index.html"} className="flex items-center gap-3"><div className={`flex h-10 min-w-10 items-center justify-center rounded-2xl px-2 text-sm font-black text-white ${header.iconClass}`}>{header.icon}</div><div><div className="text-sm font-black leading-4 text-stone-950">{header.title}</div><div className="text-xs font-semibold text-stone-500">{header.subtitle}</div></div></a><nav className="hidden items-center gap-2 lg:flex"><a href={mode === "hub" ? "#subjects" : "#/"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{mode === "hub" ? t.subjects : t.modules}</a><a href={mode === "hub" ? "#tools" : "#/tools"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.studyTools}</a><a href={mode === "hub" ? "#tools" : "#/resources"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">{t.resources}</a></nav><div className="flex items-center gap-2"><ThemeSwitcher theme={theme} setTheme={setTheme} /><LangSwitcher lang={lang} setLang={setLang} /></div></div></header>;
+  const isHub = mode === "hub";
+  const courseHomeHref = isHub ? "#top" : "#/";
+  const studyHubHref = isHub ? "#top" : "../index.html";
+
+  return (
+    <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#fffaf0]/88 backdrop-blur-xl">
+      <div className="mx-auto flex w-[min(1180px,calc(100%-24px))] items-center justify-between gap-4 py-3">
+        <a href={courseHomeHref} className="flex min-w-0 items-center gap-3">
+          <CourseIcon icon={header.icon} iconSrc={header.iconSrc} iconClass={header.iconClass} />
+          <div className="min-w-0">
+            <div className="truncate text-sm font-black leading-4 text-stone-950">{header.title}</div>
+            <div className="truncate text-xs font-semibold text-stone-500">{header.subtitle}</div>
+          </div>
+        </a>
+        <nav className="hidden items-center gap-2 lg:flex">
+          {!isHub && (
+            <a href={studyHubHref} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">
+              {t.studyHub}
+            </a>
+          )}
+          <a href={isHub ? "#subjects" : "#/"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">
+            {isHub ? t.subjects : t.modules}
+          </a>
+          <a href={isHub ? "#tools" : "#/tools"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">
+            {t.studyTools}
+          </a>
+          <a href={isHub ? "#tools" : "#/resources"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">
+            {t.resources}
+          </a>
+        </nav>
+        <div className="flex items-center gap-2">
+          {!isHub && (
+            <a href={studyHubHref} className="hidden rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-black text-stone-600 shadow-sm transition hover:-translate-y-0.5 hover:text-red-700 sm:inline-flex lg:hidden">
+              {t.studyHub}
+            </a>
+          )}
+          <ThemeSwitcher theme={theme} setTheme={setTheme} />
+          <LangSwitcher lang={lang} setLang={setLang} />
+        </div>
+      </div>
+    </header>
+  );
 }
 function Stat({ label, value, note }) {
   return <div className="rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm"><div className="text-sm font-bold text-stone-500">{label}</div><div className="mt-2 text-4xl font-black tracking-tight text-stone-950">{value}</div>{note && <div className="mt-2 text-xs font-semibold text-stone-500">{note}</div>}</div>;
@@ -998,11 +1070,25 @@ function GlobalThemeStyles() {
       .studyhub-theme-dark img {
         background-color: #f8fafc;
       }
+      .studyhub-theme-dark img.course-favicon,
+      img.course-favicon {
+        background-color: transparent !important;
+      }
     `}</style>
   );
 }
 
 function HubApp({ t }) {
+  const subjects = [
+    { href: "AMLB/index.html", title: t.appliedML, desc: t.appliedMLDesc, progressKey: "aml_progress", total: allAmlLessons().length, icon: "ML", iconSrc: amlbIcon },
+    { href: "AMLA/index.html", title: t.appliedMLAdvanced, desc: t.appliedMLAdvancedDesc, progressKey: "amla_progress_v1", total: getAMLAProgressTotal(), icon: "AMLA", iconSrc: amlaIcon },
+    { href: "LB1/index.html", title: t.laboratoryBioinformatics, desc: t.laboratoryBioinformaticsDesc, progressKey: "lb1_progress_v1", total: getLB1ProgressTotal(), icon: "LB1", iconSrc: lb1Icon },
+    { href: "MP/index.html", title: t.phylo, desc: t.phyloDesc, progressKey: "phylo_progress_v2", total: 16, icon: "Φ", iconSrc: mpIcon },
+    { href: "DRD/index.html", title: t.drd, desc: t.drdDesc, progressKey: "drd_progress_v1", total: getDRDProgressTotal(), icon: "DRD", iconSrc: drdIcon },
+    { href: "AG/index.html", title: t.appliedGenomics, desc: t.appliedGenomicsDesc, progressKey: "ag_progress_v1", total: AG_GUIDE_SECTIONS.length, icon: "AG", iconSrc: agIcon },
+    { href: "IBDPI/index.html", title: t.ibdpi, desc: t.ibdpiDesc, progressKey: "ibdpi_progress_v1", total: getIBDPIProgressTotal(), icon: "IBDPI", iconSrc: ibdpiIcon },
+  ].sort((a, b) => a.title.localeCompare(b.title));
+
   return (
     <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
       <Hero
@@ -1038,13 +1124,7 @@ function HubApp({ t }) {
       <section id="subjects" className="mt-10">
         <div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div>
         <div className="grid gap-5 sm:grid-cols-2">
-          <SubjectCard href="AMLB/index.html" title={t.appliedML} desc={t.appliedMLDesc} progressKey="aml_progress" total={allAmlLessons().length} icon="ML"/>
-          <SubjectCard href="AMLA/index.html" title={t.appliedMLAdvanced} desc={t.appliedMLAdvancedDesc} progressKey="amla_progress_v1" total={getAMLAProgressTotal()} icon="AMLA"/>
-          <SubjectCard href="LB1/index.html" title={t.laboratoryBioinformatics} desc={t.laboratoryBioinformaticsDesc} progressKey="lb1_progress_v1" total={getLB1ProgressTotal()} icon="LB1"/>
-          <SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/>
-          <SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={getDRDProgressTotal()} icon="DRD"/>
-          <SubjectCard href="AG/index.html" title={t.appliedGenomics} desc={t.appliedGenomicsDesc} progressKey="ag_progress_v1" total={AG_GUIDE_SECTIONS.length} icon="AG"/>
-          <SubjectCard href="IBDPI/index.html" title={t.ibdpi} desc={t.ibdpiDesc} progressKey="ibdpi_progress_v1" total={getIBDPIProgressTotal()} icon="IBDPI"/>
+          {subjects.map((subject) => <SubjectCard key={subject.href} {...subject} />)}
         </div>
       </section>
       <section id="tools" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
@@ -1054,11 +1134,11 @@ function HubApp({ t }) {
     </main>
   );
 }
-function SubjectCard({ href, title, desc, progressKey, total, icon }) {
+function SubjectCard({ href, title, desc, progressKey, total, icon, iconSrc }) {
   const progress = getJSON(progressKey, {});
   const count = Object.values(progress).filter(Boolean).length;
   const percent = total ? (count / total) * 100 : 0;
-  return <a href={href} className="group rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><div className="flex items-start justify-between gap-4"><div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-stone-950 text-lg font-black text-white">{icon}</div><span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{clamp(percent)}%</span></div><h3 className="mt-5 text-2xl font-black text-stone-950">{title}</h3><p className="mt-2 leading-7 text-stone-600">{desc}</p><div className="mt-5"><ProgressBar value={percent}/></div></a>;
+  return <a href={href} className="group rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"><div className="flex items-start justify-between gap-4"><CourseIcon icon={icon} iconSrc={iconSrc} iconClass="bg-stone-950" size="lg" /><span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{clamp(percent)}%</span></div><h3 className="mt-5 text-2xl font-black text-stone-950">{title}</h3><p className="mt-2 leading-7 text-stone-600">{desc}</p><div className="mt-5"><ProgressBar value={percent}/></div></a>;
 }
 
 function IBDPIApp({ t, hash }) {

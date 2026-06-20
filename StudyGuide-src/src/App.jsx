@@ -87,6 +87,7 @@ import { LB1PlannedLesson } from "./lessons/lb1/shared/template.jsx";
 import { getLB1StatusMeta } from "./lessons/lb1/shared/status.js";
 import { LB1ResourcePanel } from "./lessons/lb1/shared/resourcePanel.jsx";
 import { LB1ProteinIcon } from "./lessons/lb1/shared/components.jsx";
+import { AG_GUIDE_SECTIONS } from "./lessons/genomics/agStudyGuideData.js";
 
 const DRDExamPracticePage = React.lazy(() => import("./exams/drd/examPractice.jsx"));
 const DRDExamRadarPage = React.lazy(() => import("./exams/drd/examRadar.jsx"));
@@ -94,6 +95,7 @@ const DRDRapidReviewPage = React.lazy(() => import("./exams/drd/rapidReview.jsx"
 const AMLAPracticeExamPage = React.lazy(() => import("./exams/amla/practiceExam.jsx"));
 const AMLAMockExamPage = React.lazy(() => import("./exams/amla/mockExam.jsx"));
 const GenomicsPracticeExamPage = React.lazy(() => import("./exams/genomics/practiceExam.jsx"));
+const AppliedGenomicsGuidePage = React.lazy(() => import("./lessons/genomics/AppliedGenomicsGuide.jsx"));
 const IBDPIExamPrepPage = React.lazy(() => import("./exams/ibdpi/examPrep.jsx"));
 
 const LANGS = [
@@ -140,7 +142,7 @@ const UI = {
     drdDesc: "Course map for Module 1 theory and Module 2 methylation-array pipelines, updated with the June 5 status and upcoming topics.",
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
-    appliedGenomicsDesc: "Practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
+    appliedGenomicsDesc: "Chronological English-only study guide for NGS, assembly, annotation, population genomics, GWAS, project design and exam traps.",
     ibdpi: "Introduction to Big Data Processing Infrastructures",
     ibdpiShort: "IBDPI",
     ibdpiDesc: "Exam-oriented guide for big data infrastructure, cloud, HTC/HPC, containers, storage, AAI, DevOps, Kubernetes, IaC and FaaS.",
@@ -189,7 +191,7 @@ const UI = {
     drdDesc: "Mapa de la materia con Module 1 teórico y Module 2 de pipelines de metilación, actualizado al 5 de junio e incluyendo los temas pendientes.",
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
-    appliedGenomicsDesc: "Practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
+    appliedGenomicsDesc: "Chronological English-only study guide for NGS, assembly, annotation, population genomics, GWAS, project design and exam traps.",
     ibdpi: "Introduction to Big Data Processing Infrastructures",
     ibdpiShort: "IBDPI",
     ibdpiDesc: "Exam-oriented guide for big data infrastructure, cloud, HTC/HPC, containers, storage, AAI, DevOps, Kubernetes, IaC and FaaS.",
@@ -238,7 +240,7 @@ const UI = {
     drdDesc: "نقشهٔ درس برای ماژول ۱ نظری و ماژول ۲ پایپ‌لاین‌های methylation array، با وضعیت ۵ ژوئن و موضوعات آینده.",
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
-    appliedGenomicsDesc: "Practice exam focused on NGS technologies, GWAS, assembly, annotation, population genomics and exam-style traps.",
+    appliedGenomicsDesc: "Chronological English-only study guide for NGS, assembly, annotation, population genomics, GWAS, project design and exam traps.",
     ibdpi: "Introduction to Big Data Processing Infrastructures",
     ibdpiShort: "IBDPI",
     ibdpiDesc: "Exam-oriented guide for big data infrastructure, cloud, HTC/HPC, containers, storage, AAI, DevOps, Kubernetes, IaC and FaaS.",
@@ -888,7 +890,7 @@ function HubApp({ t }) {
           <SubjectCard href="LB1/index.html" title={t.laboratoryBioinformatics} desc={t.laboratoryBioinformaticsDesc} progressKey="lb1_progress_v1" total={getLB1ProgressTotal()} icon="LB1"/>
           <SubjectCard href="MP/index.html" title={t.phylo} desc={t.phyloDesc} progressKey="phylo_progress_v2" total={16} icon="Φ"/>
           <SubjectCard href="DRD/index.html" title={t.drd} desc={t.drdDesc} progressKey="drd_progress_v1" total={getDRDProgressTotal()} icon="DRD"/>
-          <SubjectCard href="AG/index.html" title={t.appliedGenomics} desc={t.appliedGenomicsDesc} progressKey="ag_progress_v1" total={1} icon="AG"/>
+          <SubjectCard href="AG/index.html" title={t.appliedGenomics} desc={t.appliedGenomicsDesc} progressKey="ag_progress_v1" total={AG_GUIDE_SECTIONS.length} icon="AG"/>
           <SubjectCard href="IBDPI/index.html" title={t.ibdpi} desc={t.ibdpiDesc} progressKey="ibdpi_progress_v1" total={getIBDPIProgressTotal()} icon="IBDPI"/>
         </div>
       </section>
@@ -1104,44 +1106,9 @@ function GenomicsApp({ t, hash }) {
   }
 
   return (
-    <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
-      <Hero
-        eyebrow="Applied Genomics"
-        title={<>Practice exam</>}
-        subtitle="Exam-style practice on NGS, FASTQ/SAM/VCF files, genome assembly, BUSCO, annotation, population genomics, CNV and GWAS. It includes 30 multiple-choice questions with explanations for every option, plus open questions with a practice field and collapsible model answers."
-        actions={
-          <>
-            <a href="#/practice-exam" className="rounded-full bg-emerald-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-emerald-900/10 transition hover:-translate-y-0.5 hover:bg-emerald-800">Open practice exam</a>
-            <a href="../index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">Back to hub</a>
-          </>
-        }
-        visual={
-          <div>
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <div className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">Exam focus</div>
-                <div className="mt-2 text-2xl font-black text-stone-950">30 multiple-choice questions</div>
-                <div className="mt-1 text-sm font-semibold text-stone-500">Immediate grading + open-answer practice.</div>
-              </div>
-              <div className="rounded-2xl bg-emerald-700 px-3 py-2 text-sm font-black text-white">AG</div>
-            </div>
-            <div className="mt-6 grid gap-3">
-              {["NGS technologies", "FASTQ · SAM · VCF", "Genome assembly", "BUSCO · annotation", "LD · ROH · GWAS"].map((item) => (
-                <div key={item} className="rounded-2xl border border-stone-200 bg-stone-50 p-3 text-sm font-black text-stone-700">{item}</div>
-              ))}
-            </div>
-          </div>
-        }
-      />
-      <section id="tools" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
-        <div className="mb-6">
-          <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-emerald-700">Study tool</div>
-          <h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">How to use it</h2>
-          <p className="mt-2 max-w-3xl leading-7 text-stone-600">First answer the multiple-choice section without checking your notes. Then read every option explanation, even when your answer is correct, because many distractors are classic exam traps: confusing FASTQ with SAM, the Manhattan plot axis, aCGH with sequencing, or LD with population similarity. After that, practice the open questions in the text fields and reveal the model answers only at the end.</p>
-        </div>
-        <a href="#/practice-exam" className="inline-flex rounded-full bg-emerald-700 px-5 py-3 text-sm font-black text-white shadow-sm transition hover:bg-emerald-800">Start now</a>
-      </section>
-    </main>
+    <React.Suspense fallback={<DRDRouteLoading label="Applied Genomics study guide" />}>
+      <AppliedGenomicsGuidePage hash={hash} />
+    </React.Suspense>
   );
 }
 

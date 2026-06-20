@@ -1,96 +1,76 @@
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { AG_SLIDE_SELECTION } from "../StudyGuide-src/src/lessons/genomics/agSources.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
-const sourceDir = path.join(repoRoot, "tmp", "ag-sources");
+const sourceDir = path.resolve(process.env.AG_SOURCE_DIR || path.join(repoRoot, "tmp", "ag-sources"));
 const outputRoot = path.join(repoRoot, "StudyGuide-src", "public");
 const tempDir = path.join(repoRoot, "tmp", "ag-slide-renders");
+const python = process.env.PYTHON || "python3";
+const pdftoppm = process.env.PDFTOPPM || "pdftoppm";
 
-const dependencyRoot = path.join(
-  process.env.USERPROFILE || "",
-  ".cache",
-  "codex-runtimes",
-  "codex-primary-runtime",
-  "dependencies"
-);
+mkdirSync(tempDir, { recursive: true });
+const manifestPath = path.join(tempDir, "ag-slide-selection.json");
+writeFileSync(manifestPath, JSON.stringify(AG_SLIDE_SELECTION, null, 2));
 
-const pdftoppm = path.join(dependencyRoot, "bin", "pdftoppm.cmd");
-const python = path.join(dependencyRoot, "python", "python.exe");
+const py = String.raw`
+import json, os, shutil, subprocess, sys
+from pathlib import Path
+from PIL import Image
 
-function run(command, args, label) {
-  const result = spawnSync(command, args, { encoding: "utf8", stdio: "pipe" });
-  if (result.status !== 0) {
-    throw new Error(`${label} failed\n${result.stdout}\n${result.stderr}`);
-  }
-  return result;
+manifest, source_dir, output_root, temp_dir, pdftoppm = map(Path, sys.argv[1:6])
+# pdftoppm is a command, not always a path-like file.
+pdftoppm_cmd = str(pdftoppm)
+slides = json.loads(manifest.read_text())
+temp_dir.mkdir(parents=True, exist_ok=True)
+missing = []
+rendered = 0
+
+for slide in slides:
+    pdf = source_dir / slide["source"]
+    if not pdf.exists():
+        missing.append(str(pdf))
+        continue
+    print(f"Rendering {slide['id']} ({slide['source']} p.{slide['page']})", flush=True)
+    prefix = temp_dir / f"{slide['id']}-p{int(slide['page']):03d}"
+    subprocess.run([pdftoppm_cmd, "-f", str(slide["page"]), "-l", str(slide["page"]), "-r", "120", "-png", str(pdf), str(prefix)], check=True, timeout=60)
+    pngs = sorted(temp_dir.glob(prefix.name + "*.png"))
+    if not pngs:
+        raise RuntimeError(f"Expected render not found for {slide['id']}")
+    out = output_root / slide["asset"]
+    out.parent.mkdir(parents=True, exist_ok=True)
+    im = Image.open(pngs[0]).convert("RGB")
+    im.thumbnail((1280, 800), Image.Resampling.LANCZOS)
+    im.save(out, "WEBP", quality=78, method=0)
+    pngs[0].unlink(missing_ok=True)
+    rendered += 1
+    print(f"Rendered {slide['id']} -> {slide['asset']}", flush=True)
+
+shutil.rmtree(temp_dir, ignore_errors=True)
+if missing:
+    print(f"\nMissing source PDFs in {source_dir}. Place these files there, or run with AG_SOURCE_DIR=/path/to/pdfs:", file=sys.stderr)
+    for item in sorted(set(missing)):
+        print(f"- {item}", file=sys.stderr)
+    sys.exit(1)
+print(f"\nRendered {rendered} Applied Genomics slide assets.", flush=True)
+`;
+
+if (!existsSync(sourceDir)) {
+  console.error(`Missing AG source directory: ${sourceDir}`);
+  console.error("Put the Applied Genomics PDFs there, or run with AG_SOURCE_DIR=/path/to/pdfs.");
+  process.exit(1);
 }
 
-function renderSlide(slide) {
-  const pdfPath = path.join(sourceDir, slide.source);
-  if (!existsSync(pdfPath)) {
-    return { ok: false, missing: pdfPath };
-  }
+const result = spawnSync(python, ["-c", py, manifestPath, sourceDir, outputRoot, tempDir, pdftoppm], {
+  encoding: "utf8",
+  stdio: "inherit",
+  timeout: 180000,
+});
 
-  const assetPath = path.join(outputRoot, slide.asset);
-  mkdirSync(path.dirname(assetPath), { recursive: true });
-  mkdirSync(tempDir, { recursive: true });
-
-  const prefix = path.join(tempDir, `${slide.id}-p${String(slide.page).padStart(3, "0")}`);
-  run(pdftoppm, ["-f", String(slide.page), "-l", String(slide.page), "-r", "150", "-png", pdfPath, prefix], `Render ${slide.id}`);
-
-  const renderedPng = readdirSync(tempDir)
-    .filter((file) => file.startsWith(path.basename(prefix)) && file.endsWith(".png"))
-    .map((file) => path.join(tempDir, file))[0];
-  if (!renderedPng || !existsSync(renderedPng)) {
-    throw new Error(`Expected render not found for ${slide.id}`);
-  }
-
-  const code = [
-    "from PIL import Image",
-    "import sys",
-    "src, dst = sys.argv[1], sys.argv[2]",
-    "im = Image.open(src).convert('RGB')",
-    "im.thumbnail((1600, 1000), Image.Resampling.LANCZOS)",
-    "im.save(dst, 'WEBP', quality=82, method=6)",
-  ].join("\n");
-
-  run(python, ["-c", code, renderedPng, assetPath], `Optimize ${slide.id}`);
-  rmSync(renderedPng, { force: true });
-  return { ok: true, asset: assetPath };
+if (result.error) {
+  throw result.error;
 }
-
-if (!existsSync(pdftoppm)) {
-  throw new Error(`Poppler renderer not found: ${pdftoppm}`);
-}
-
-if (!existsSync(python)) {
-  throw new Error(`Python runtime not found: ${python}`);
-}
-
-const missing = [];
-let rendered = 0;
-
-for (const slide of AG_SLIDE_SELECTION) {
-  const result = renderSlide(slide);
-  if (result.ok) {
-    rendered += 1;
-    console.log(`Rendered ${slide.id} -> ${slide.asset}`);
-  } else {
-    missing.push(result.missing);
-  }
-}
-
-if (missing.length) {
-  console.error("\nMissing source PDFs. Place these files before rerunning:");
-  for (const file of [...new Set(missing)]) {
-    console.error(`- ${file}`);
-  }
-  process.exitCode = 1;
-} else {
-  rmSync(tempDir, { recursive: true, force: true });
-  console.log(`\nRendered ${rendered} Applied Genomics slide assets.`);
-}
+process.exit(result.status ?? 1);

@@ -16,7 +16,7 @@ export function ProfessorNote({ note }) {
   if (!note) return null;
   return (
     <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
-      <p className="text-xs font-black uppercase tracking-[0.22em] text-amber-700">Professor comment</p>
+      <p className="text-xs font-black uppercase tracking-[0.22em] text-amber-700">Professor / exam emphasis</p>
       <p className="mt-2 text-sm leading-6 text-amber-950">{note.text}</p>
       <p className="mt-2 text-xs font-bold text-amber-800">Supported by: {note.source}</p>
     </div>
@@ -104,7 +104,10 @@ export function Checklist({ items = [], checked = {}, onToggle }) {
 }
 
 function assetUrl(asset) {
-  return `${import.meta.env.BASE_URL}${asset}`.replace(/\/{2,}/g, "/");
+  const normalized = asset.replace(/^\/+/, "");
+  const path = typeof window !== "undefined" ? window.location.pathname.toLowerCase() : "";
+  const prefix = path.includes("/ag/") ? "../" : import.meta.env.BASE_URL || "./";
+  return `${prefix}${normalized}`.replace(/([^:]\/)\/+/g, "$1");
 }
 
 export function SlideCallout({ slide, onZoom }) {

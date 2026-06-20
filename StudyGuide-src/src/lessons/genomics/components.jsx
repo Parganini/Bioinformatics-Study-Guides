@@ -16,7 +16,7 @@ export function ProfessorNote({ note }) {
   if (!note) return null;
   return (
     <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
-      <p className="text-xs font-black uppercase tracking-[0.22em] text-amber-700">Professor / exam emphasis</p>
+      <p className="text-xs font-black uppercase tracking-[0.22em] text-amber-700">Professor comment</p>
       <p className="mt-2 text-sm leading-6 text-amber-950">{note.text}</p>
       <p className="mt-2 text-xs font-bold text-amber-800">Supported by: {note.source}</p>
     </div>
@@ -104,10 +104,7 @@ export function Checklist({ items = [], checked = {}, onToggle }) {
 }
 
 function assetUrl(asset) {
-  const normalized = asset.replace(/^\/+/, "");
-  const path = typeof window !== "undefined" ? window.location.pathname.toLowerCase() : "";
-  const prefix = path.includes("/ag/") ? "../" : import.meta.env.BASE_URL || "./";
-  return `${prefix}${normalized}`.replace(/([^:]\/)\/+/g, "$1");
+  return `${import.meta.env.BASE_URL}${asset}`.replace(/\/{2,}/g, "/");
 }
 
 export function SlideCallout({ slide, onZoom }) {
@@ -166,7 +163,68 @@ export function SlideZoom({ slide, onClose }) {
   );
 }
 
+function StudyBlock({ block, slide, onZoom }) {
+  return (
+    <article className="overflow-hidden rounded-[1.75rem] border border-stone-200 bg-white shadow-sm">
+      <div className="grid gap-0 xl:grid-cols-[minmax(0,0.96fr)_minmax(340px,0.72fr)]">
+        <div className="space-y-4 p-5 md:p-6">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.24em] text-emerald-700">Slide-guided study</p>
+            <h3 className="mt-2 text-xl font-black leading-7 text-stone-950">{block.title}</h3>
+          </div>
+
+          <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-stone-500">What this slide is saying</p>
+            <p className="mt-2 text-sm font-semibold leading-6 text-stone-700">{block.what}</p>
+          </div>
+
+          {block.why && (
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-emerald-700">Why it matters</p>
+              <p className="mt-2 text-sm font-semibold leading-6 text-emerald-950">{block.why}</p>
+            </div>
+          )}
+
+          <div className="grid gap-3 lg:grid-cols-2">
+            {block.examFocus && (
+              <div className="rounded-2xl border border-red-200 bg-red-50 p-4">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Exam focus</p>
+                <p className="mt-2 text-sm font-semibold leading-6 text-red-950">{block.examFocus}</p>
+              </div>
+            )}
+            {block.answerTemplate && (
+              <div className="rounded-2xl border border-sky-200 bg-sky-50 p-4">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-sky-700">How to say it</p>
+                <p className="mt-2 text-sm font-semibold leading-6 text-sky-950">{block.answerTemplate}</p>
+              </div>
+            )}
+          </div>
+
+          <ProfessorNote note={block.professorNote} />
+          <ExamTrap items={block.traps} />
+          {block.exercise && <MiniExercise exercise={block.exercise} />}
+        </div>
+
+        <div className="border-t border-stone-200 bg-stone-50 p-4 xl:border-l xl:border-t-0">
+          {slide ? (
+            <SlideCallout slide={slide} onZoom={onZoom} />
+          ) : (
+            <div className="flex h-full min-h-64 flex-col justify-center rounded-2xl border border-dashed border-stone-300 bg-white p-6 text-center">
+              <p className="text-sm font-black text-stone-800">Text-only block</p>
+              <p className="mt-2 text-sm leading-6 text-stone-600">No slide image is needed for this particular exam drill.</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
+
 export function LectureSection({ section, slides, completed, onToggle, checklistState, onChecklistToggle, onZoom }) {
+  const slideMap = useMemo(() => Object.fromEntries(slides.map((slide) => [slide.id, slide])), [slides]);
+  const studyBlocks = section.studyBlocks || [];
+  const asideSlides = studyBlocks.length ? slides.filter((slide) => !studyBlocks.some((block) => block.slide === slide.id)) : slides;
+
   return (
     <section id={section.id} className="scroll-mt-24 rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm md:p-7">
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -193,16 +251,27 @@ export function LectureSection({ section, slides, completed, onToggle, checklist
         </button>
       </div>
 
+      {studyBlocks.length > 0 && (
+        <div className="mt-6 space-y-5">
+          {studyBlocks.map((block) => (
+            <StudyBlock key={block.title} block={block} slide={slideMap[block.slide]} onZoom={onZoom} />
+          ))}
+        </div>
+      )}
+
       <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
         <div className="space-y-5">
-          <ul className="space-y-3 text-base leading-7 text-stone-700">
-            {section.bullets.map((bullet) => (
-              <li key={bullet} className="flex gap-3">
-                <span className="mt-3 h-2 w-2 shrink-0 rounded-full bg-emerald-600" />
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-stone-500">Condensed checklist</p>
+            <ul className="mt-3 space-y-3 text-base leading-7 text-stone-700">
+              {section.bullets.map((bullet) => (
+                <li key={bullet} className="flex gap-3">
+                  <span className="mt-3 h-2 w-2 shrink-0 rounded-full bg-emerald-600" />
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
             <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-700">Remember for the exam</p>
             <p className="mt-2 text-sm font-bold leading-6 text-emerald-950">{section.remember}</p>
@@ -222,12 +291,12 @@ export function LectureSection({ section, slides, completed, onToggle, checklist
           <Checklist items={section.checklist} checked={checklistState} onToggle={onChecklistToggle} />
         </div>
         <aside className="space-y-4">
-          {slides.length ? (
-            slides.map((slide) => <SlideCallout key={slide.id} slide={slide} onZoom={onZoom} />)
+          {asideSlides.length ? (
+            asideSlides.map((slide) => <SlideCallout key={slide.id} slide={slide} onZoom={onZoom} />)
           ) : (
             <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
-              <p className="text-sm font-black text-stone-800">No slide image selected</p>
-              <p className="mt-2 text-sm leading-6 text-stone-600">This section is source-labeled but intentionally text-only to keep the guide compact.</p>
+              <p className="text-sm font-black text-stone-800">No extra slide image selected</p>
+              <p className="mt-2 text-sm leading-6 text-stone-600">The main slide assets for this section are embedded in the study blocks above.</p>
             </div>
           )}
         </aside>

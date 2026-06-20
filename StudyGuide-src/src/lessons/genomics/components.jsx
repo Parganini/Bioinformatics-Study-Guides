@@ -104,7 +104,23 @@ export function Checklist({ items = [], checked = {}, onToggle }) {
 }
 
 function assetUrl(asset) {
-  return `${import.meta.env.BASE_URL}${asset}`.replace(/\/{2,}/g, "/");
+  if (!asset) return "";
+  if (/^https?:\/\//.test(asset)) return asset;
+
+  const cleanAsset = asset.replace(/^\/+/, "");
+  const base = import.meta.env.BASE_URL || "./";
+
+  // This project uses Vite with base: "./" and serves AG from /AG/index.html.
+  // Files placed in public/ag-slides are emitted at the build root, so from the
+  // nested AG page the correct relative path is ../ag-slides/..., not
+  // ./ag-slides/... (which would incorrectly look under /AG/ag-slides/...).
+  if (base === "./" || base === "") {
+    const pathname = globalThis?.location?.pathname || "";
+    const isNestedAgPage = pathname.includes("/AG/") || pathname.endsWith("/AG") || pathname.endsWith("/AG/index.html");
+    return `${isNestedAgPage ? "../" : "./"}${cleanAsset}`;
+  }
+
+  return `${base.replace(/\/$/, "")}/${cleanAsset}`;
 }
 
 export function SlideCallout({ slide, onZoom }) {

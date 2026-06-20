@@ -888,8 +888,14 @@ function GlobalThemeStyles() {
       .studyhub-theme-dark [class~="bg-white/80"],
       .studyhub-theme-dark [class~="bg-white/70"],
       .studyhub-theme-dark [class~="bg-[#fffaf0]"],
+      .studyhub-theme-dark [class~="bg-[#fffaf0]/90"],
       .studyhub-theme-dark [class~="bg-[#fffaf0]/92"],
+      .studyhub-theme-dark [class~="bg-[#fffaf0]/95"],
       .studyhub-theme-dark [class~="bg-[#fffaf0]/88"],
+      .studyhub-theme-dark [class~="bg-[#fbf4e8]"],
+      .studyhub-theme-dark [class~="bg-[#f3fff7]"],
+      .studyhub-theme-dark [class~="bg-[#f3fff7]/95"],
+      .studyhub-theme-dark [class~="bg-[#effdf9]"],
       .studyhub-theme-dark [class~="bg-stone-50"],
       .studyhub-theme-dark [class~="bg-stone-100"] {
         background-color: rgba(24, 17, 52, 0.88) !important;

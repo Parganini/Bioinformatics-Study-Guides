@@ -115,7 +115,7 @@ const LANGS = [
 const UI = {
   en: {
     studyHub: "Study Hub",
-    hubSubtitle: "Bioinformatics, genomics, machine learning, phylogenetics and computing infrastructure.",
+    hubSubtitle: "Personal study guide for the Second Cycle Degree in Bioinformatics at the University of Bologna.",
     subjects: "Subjects",
     continue: "Continue",
     open: "Open",
@@ -164,7 +164,7 @@ const UI = {
   },
   es: {
     studyHub: "Study Hub",
-    hubSubtitle: "Bioinformática, genómica, machine learning, filogenética e infraestructura computacional.",
+    hubSubtitle: "Guía personal de estudio para la Laurea Magistrale en Bioinformatics de la Universidad de Bologna.",
     subjects: "Materias",
     continue: "Continuar",
     open: "Abrir",
@@ -213,7 +213,7 @@ const UI = {
   },
   fa: {
     studyHub: "مرکز مطالعه",
-    hubSubtitle: "بیوانفورماتیک، ژنومیکس، یادگیری ماشین، تبارزایی و زیرساخت محاسباتی.",
+    hubSubtitle: "راهنمای مطالعه شخصی برای دوره کارشناسی ارشد Bioinformatics در University of Bologna.",
     subjects: "درس‌ها",
     continue: "ادامه",
     open: "باز کردن",
@@ -952,6 +952,68 @@ function Hero({ eyebrow, title, subtitle, actions, visual }) {
   return <section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]"><div className="p-7 md:p-10 lg:p-12"><div className="mb-5 inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{eyebrow}</div><h1 className="max-w-3xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{title}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-700">{subtitle}</p>{actions && <div className="mt-8 flex flex-wrap gap-3">{actions}</div>}</div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner">{visual}</div></div></div></section>;
 }
 
+function BioinformaticsHeroVisual() {
+  const nodes = [
+    [106, 74, "#0f766e"],
+    [166, 120, "#7c3aed"],
+    [112, 174, "#dc2626"],
+    [214, 70, "#0284c7"],
+    [272, 138, "#d97706"],
+    [222, 224, "#0d9488"],
+    [332, 96, "#9333ea"],
+    [384, 174, "#059669"],
+    [324, 246, "#ef4444"],
+  ];
+
+  return (
+    <svg viewBox="0 0 520 320" className="h-full min-h-[300px] w-full" role="img" aria-label="Bioinformatics workflow graphic">
+      <defs>
+        <linearGradient id="bioFlow" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stopColor="#0f766e" />
+          <stop offset="52%" stopColor="#7c3aed" />
+          <stop offset="100%" stopColor="#dc2626" />
+        </linearGradient>
+        <radialGradient id="bioGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#ede9fe" />
+          <stop offset="100%" stopColor="#ffffff" />
+        </radialGradient>
+      </defs>
+      <rect x="18" y="18" width="484" height="284" rx="34" fill="url(#bioGlow)" stroke="#e7e5e4" strokeWidth="2" />
+      <path d="M78 56 C136 90 136 136 78 170 C20 204 20 250 78 284" fill="none" stroke="#0f766e" strokeWidth="8" strokeLinecap="round" />
+      <path d="M30 56 C88 90 88 136 30 170 C-28 204 -28 250 30 284" fill="none" stroke="#7c3aed" strokeWidth="8" strokeLinecap="round" transform="translate(78 0)" />
+      {[64, 92, 120, 148, 176, 204, 232, 260].map((y, index) => (
+        <line key={y} x1={index % 2 ? 88 : 102} y1={y} x2={index % 2 ? 134 : 120} y2={y + 10} stroke="#c4b5fd" strokeWidth="4" strokeLinecap="round" />
+      ))}
+      <path d="M158 96 C210 54 272 54 324 96 S424 138 458 88" fill="none" stroke="url(#bioFlow)" strokeWidth="5" strokeLinecap="round" />
+      <path d="M162 178 C218 236 292 242 352 198 S432 164 468 226" fill="none" stroke="url(#bioFlow)" strokeWidth="5" strokeLinecap="round" />
+      {nodes.map(([cx, cy, fill], index) => (
+        <g key={`${cx}-${cy}`}>
+          <circle cx={cx} cy={cy} r={index % 3 === 0 ? 15 : 12} fill={fill} opacity="0.96" />
+          <circle cx={cx} cy={cy} r={index % 3 === 0 ? 21 : 17} fill="none" stroke={fill} strokeOpacity="0.18" strokeWidth="8" />
+        </g>
+      ))}
+      <g fill="#ffffff" stroke="#4c1d95" strokeWidth="2">
+        <rect x="360" y="64" width="96" height="30" rx="15" />
+        <rect x="374" y="96" width="96" height="30" rx="15" />
+        <rect x="360" y="128" width="96" height="30" rx="15" />
+      </g>
+      <g stroke="#111827" strokeLinecap="round" strokeWidth="4">
+        <line x1="382" y1="79" x2="434" y2="79" />
+        <line x1="396" y1="111" x2="448" y2="111" />
+        <line x1="382" y1="143" x2="434" y2="143" />
+      </g>
+      <g fill="none" stroke="#0f766e" strokeLinecap="round" strokeWidth="5">
+        <path d="M362 224 h74" />
+        <path d="M374 246 h86" />
+        <path d="M392 268 h52" />
+      </g>
+      <circle cx="354" cy="224" r="7" fill="#0f766e" />
+      <circle cx="366" cy="246" r="7" fill="#7c3aed" />
+      <circle cx="384" cy="268" r="7" fill="#dc2626" />
+    </svg>
+  );
+}
+
 function GlobalThemeStyles() {
   return (
     <style>{`
@@ -1084,14 +1146,14 @@ function GlobalThemeStyles() {
 
 function HubApp({ t }) {
   const subjects = [
-    { href: "AG/index.html", short: t.appliedGenomicsShort, desc: t.appliedGenomicsDesc, progressKey: "ag_progress_v1", total: AG_GUIDE_SECTIONS.length, icon: "AG", iconSrc: agIcon },
-    { href: "AMLA/index.html", short: t.appliedMLAdvancedShort, desc: t.appliedMLAdvancedDesc, progressKey: "amla_progress_v1", total: getAMLAProgressTotal(), icon: "AMLA", iconSrc: amlaIcon },
-    { href: "AMLB/index.html", short: "AMLB", desc: t.appliedMLDesc, progressKey: "aml_progress", total: allAmlLessons().length, icon: "ML", iconSrc: amlbIcon },
-    { href: "DRD/index.html", short: "DRD", desc: t.drdDesc, progressKey: "drd_progress_v1", total: getDRDProgressTotal(), icon: "DRD", iconSrc: drdIcon },
-    { href: "IBDPI/index.html", short: t.ibdpiShort, desc: t.ibdpiDesc, progressKey: "ibdpi_progress_v1", total: getIBDPIProgressTotal(), icon: "IBDPI", iconSrc: ibdpiIcon },
-    { href: "LB1/index.html", short: t.laboratoryBioinformaticsShort, desc: t.laboratoryBioinformaticsDesc, progressKey: "lb1_progress_v1", total: getLB1ProgressTotal(), icon: "LB1", iconSrc: lb1Icon },
-    { href: "MP/index.html", short: "MP", desc: t.phyloDesc, progressKey: "phylo_progress_v2", total: 16, icon: "Φ", iconSrc: mpIcon },
-  ].sort((a, b) => a.short.localeCompare(b.short));
+    { href: "AG/index.html", title: t.appliedGenomics, short: t.appliedGenomicsShort, desc: t.appliedGenomicsDesc, progressKey: "ag_progress_v1", total: AG_GUIDE_SECTIONS.length, icon: "AG", iconSrc: agIcon },
+    { href: "AMLA/index.html", title: t.appliedMLAdvanced, short: t.appliedMLAdvancedShort, desc: t.appliedMLAdvancedDesc, progressKey: "amla_progress_v1", total: getAMLAProgressTotal(), icon: "AMLA", iconSrc: amlaIcon },
+    { href: "AMLB/index.html", title: t.appliedML, short: "AMLB", desc: t.appliedMLDesc, progressKey: "aml_progress", total: allAmlLessons().length, icon: "ML", iconSrc: amlbIcon },
+    { href: "DRD/index.html", title: t.drd, short: "DRD", desc: t.drdDesc, progressKey: "drd_progress_v1", total: getDRDProgressTotal(), icon: "DRD", iconSrc: drdIcon },
+    { href: "IBDPI/index.html", title: t.ibdpi, short: t.ibdpiShort, desc: t.ibdpiDesc, progressKey: "ibdpi_progress_v1", total: getIBDPIProgressTotal(), icon: "IBDPI", iconSrc: ibdpiIcon },
+    { href: "LB1/index.html", title: t.laboratoryBioinformatics, short: t.laboratoryBioinformaticsShort, desc: t.laboratoryBioinformaticsDesc, progressKey: "lb1_progress_v1", total: getLB1ProgressTotal(), icon: "LB1", iconSrc: lb1Icon },
+    { href: "MP/index.html", title: t.phylo, short: "MP", desc: t.phyloDesc, progressKey: "phylo_progress_v2", total: 16, icon: "Φ", iconSrc: mpIcon },
+  ].sort((a, b) => a.title.localeCompare(b.title));
 
   return (
     <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
@@ -1099,29 +1161,12 @@ function HubApp({ t }) {
         eyebrow={t.builtFor}
         title={<>{t.studyHub}</>}
         subtitle={t.hubSubtitle}
-        actions={(
-          <>
-            {subjects.map((subject) => (
-              <a key={subject.href} href={subject.href} className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">
-                {subject.short}
-              </a>
-            ))}
-          </>
-        )}
-        visual={(
-          <div className="grid grid-cols-3 gap-3">
-              {subjects.map((subject) => (
-                <a key={subject.href} href={subject.href} className="flex items-center justify-center rounded-2xl border border-stone-200 bg-white p-3 transition hover:-translate-y-0.5 hover:shadow-md" title={subject.short}>
-                  <CourseIcon icon={subject.icon} iconSrc={subject.iconSrc} iconClass="bg-stone-950" />
-                </a>
-              ))}
-          </div>
-        )}
+        visual={<BioinformaticsHeroVisual />}
       />
       <section id="subjects" className="mt-10">
         <div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div>
         <div className="grid gap-5 sm:grid-cols-2">
-          {subjects.map((subject) => <SubjectCard key={subject.href} {...subject} title={subject.short} />)}
+          {subjects.map((subject) => <SubjectCard key={subject.href} {...subject} />)}
         </div>
       </section>
     </main>

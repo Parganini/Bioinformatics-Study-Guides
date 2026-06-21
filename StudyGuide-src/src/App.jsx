@@ -115,7 +115,7 @@ const LANGS = [
 const UI = {
   en: {
     studyHub: "Study Hub",
-    hubSubtitle: "One polished home for your course study guides, progress tracking, quick review tools and exam preparation.",
+    hubSubtitle: "Bioinformatics, genomics, machine learning, phylogenetics and computing infrastructure.",
     subjects: "Subjects",
     continue: "Continue",
     open: "Open",
@@ -137,34 +137,34 @@ const UI = {
     legacyNote: "This lesson content is preserved from the original guide and displayed inside the new unified shell.",
     search: "Search lessons or concepts...",
     appliedML: "Applied Machine Learning Basic",
-    appliedMLDesc: "Lecture notes, practical material, recordings, exam preparation and progress tracking.",
+    appliedMLDesc: "Core machine learning foundations: regression, classification, optimization, evaluation and practical Python workflows.",
     appliedMLAdvanced: "Applied Machine Learning Advanced",
     appliedMLAdvancedShort: "AMLA",
-    appliedMLAdvancedDesc: "Advanced study guide with slides, transcripts, recordings, Colab/notebooks, mini-labs and practice exams.",
+    appliedMLAdvancedDesc: "Neural networks, CNNs, segmentation, explainability, training diagnostics and biomedical machine-learning workflows.",
     laboratoryBioinformatics: "Laboratory of Bioinformatics I",
     laboratoryBioinformaticsShort: "LB1",
-    laboratoryBioinformaticsDesc: "Slide-guided study guide for Capriotti's module: structural bioinformatics, alignments, probabilistic models, HMMs, HMMER, protein complexes and variants.",
+    laboratoryBioinformaticsDesc: "Structural bioinformatics, sequence and structure alignments, probabilistic models, HMMs, HMMER, protein complexes and variants.",
     phylo: "Molecular Phylogenetics",
-    phyloDesc: "Trilingual study guide with modules, flashcards, quizzes, glossary tools and progress tracking.",
+    phyloDesc: "Tree thinking, sequence evolution models, maximum-likelihood and Bayesian inference, support metrics, discordance, dating and trait evolution.",
     drd: "DNA/RNA Dynamics",
-    drdDesc: "Course map for Module 1 theory and Module 2 methylation-array pipelines, updated with the June 5 status and upcoming topics.",
+    drdDesc: "Gene expression, methylation arrays, normalization, quality control, differential analysis, enrichment and reproducible reporting.",
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
-    appliedGenomicsDesc: "Chronological English-only study guide for NGS, assembly, annotation, population genomics, GWAS, project design and exam traps.",
+    appliedGenomicsDesc: "NGS technologies, FASTQ quality control, mapping, assembly, annotation, genotyping, population genomics, GWAS and project design.",
     ibdpi: "Introduction to Big Data Processing Infrastructures",
     ibdpiShort: "IBDPI",
-    ibdpiDesc: "Exam-oriented guide for big data infrastructure, cloud, HTC/HPC, containers, storage, AAI, DevOps, Kubernetes, IaC and FaaS.",
-    builtFor: "Course study guides",
+    ibdpiDesc: "Cloud computing, big data infrastructure, HTC/HPC, containers, storage, AAI, DevOps, Kubernetes, IaC and FaaS.",
+    builtFor: "Courses",
     uniform: "Study guide",
     studyPath: "Study path",
     tools: ["Glossary", "Flashcards", "Common mistakes", "Concept maps", "Practice questions"],
     sourceTitle: "Study plan",
-    sourceText: "Choose a course, continue where you left off, or use quick review tools before an exam.",
+    sourceText: "Choose a subject by topic area, from molecular data and genomics to machine learning and cloud infrastructure.",
     publishedFolders: "Courses",
   },
   es: {
     studyHub: "Study Hub",
-    hubSubtitle: "Un inicio más bonito para tus guías de estudio, con progreso, repaso rápido y preparación de examen en un mismo lugar.",
+    hubSubtitle: "Bioinformática, genómica, machine learning, filogenética e infraestructura computacional.",
     subjects: "Materias",
     continue: "Continuar",
     open: "Abrir",
@@ -186,34 +186,34 @@ const UI = {
     legacyNote: "Este contenido se conserva de la guía original y se muestra dentro del nuevo contenedor unificado.",
     search: "Buscar lecciones o conceptos...",
     appliedML: "Applied Machine Learning Basic",
-    appliedMLDesc: "Apuntes de clase, material práctico, grabaciones, preparación de examen y seguimiento de progreso.",
+    appliedMLDesc: "Fundamentos de machine learning: regresión, clasificación, optimización, evaluación y flujos prácticos en Python.",
     appliedMLAdvanced: "Applied Machine Learning Advanced",
     appliedMLAdvancedShort: "AMLA",
-    appliedMLAdvancedDesc: "Guía avanzada con slides, transcripciones, grabaciones, Colab/notebooks, mini-labs y exámenes de práctica.",
+    appliedMLAdvancedDesc: "Redes neuronales, CNNs, segmentación, explicabilidad, diagnóstico de entrenamiento y flujos biomédicos de machine learning.",
     laboratoryBioinformatics: "Laboratory of Bioinformatics I",
     laboratoryBioinformaticsShort: "LB1",
-    laboratoryBioinformaticsDesc: "Slide-guided study guide for Capriotti's module: structural bioinformatics, alignments, probabilistic models, HMMs, HMMER, protein complexes and variants.",
+    laboratoryBioinformaticsDesc: "Bioinformática estructural, alineamientos de secuencia y estructura, modelos probabilísticos, HMMs, HMMER, complejos proteicos y variantes.",
     phylo: "Filogenética Molecular",
-    phyloDesc: "Guía trilingüe con módulos, flashcards, quizzes, glosario y seguimiento de progreso.",
+    phyloDesc: "Pensamiento filogenético, modelos de evolución de secuencias, inferencia ML/Bayesiana, soporte, discordancia, datación y evolución de rasgos.",
     drd: "DNA/RNA Dynamics",
-    drdDesc: "Mapa de la materia con Module 1 teórico y Module 2 de pipelines de metilación, actualizado al 5 de junio e incluyendo los temas pendientes.",
+    drdDesc: "Expresión génica, arrays de metilación, normalización, control de calidad, análisis diferencial, enriquecimiento y reportes reproducibles.",
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
-    appliedGenomicsDesc: "Chronological English-only study guide for NGS, assembly, annotation, population genomics, GWAS, project design and exam traps.",
+    appliedGenomicsDesc: "Tecnologías NGS, control de calidad FASTQ, mapeo, ensamblaje, anotación, genotipado, genómica poblacional, GWAS y diseño de proyectos.",
     ibdpi: "Introduction to Big Data Processing Infrastructures",
     ibdpiShort: "IBDPI",
-    ibdpiDesc: "Exam-oriented guide for big data infrastructure, cloud, HTC/HPC, containers, storage, AAI, DevOps, Kubernetes, IaC and FaaS.",
-    builtFor: "Guías de curso",
+    ibdpiDesc: "Cloud computing, infraestructura big data, HTC/HPC, contenedores, almacenamiento, AAI, DevOps, Kubernetes, IaC y FaaS.",
+    builtFor: "Materias",
     uniform: "Guía de estudio",
     studyPath: "Ruta de estudio",
     tools: ["Glosario", "Flashcards", "Errores comunes", "Mapas conceptuales", "Preguntas de práctica"],
     sourceTitle: "Plan de estudio",
-    sourceText: "Elige una materia, continúa donde te quedaste o usa herramientas de repaso antes del examen.",
+    sourceText: "Elige una materia por área: datos moleculares, genómica, machine learning, filogenética o infraestructura cloud.",
     publishedFolders: "Materias",
   },
   fa: {
     studyHub: "مرکز مطالعه",
-    hubSubtitle: "یک خانهٔ منظم برای راهنماهای مطالعه، پیگیری پیشرفت، مرور سریع و آمادگی امتحان.",
+    hubSubtitle: "بیوانفورماتیک، ژنومیکس، یادگیری ماشین، تبارزایی و زیرساخت محاسباتی.",
     subjects: "درس‌ها",
     continue: "ادامه",
     open: "باز کردن",
@@ -235,29 +235,29 @@ const UI = {
     legacyNote: "این محتوای درس از راهنمای قبلی حفظ شده و داخل پوستهٔ یکپارچهٔ جدید نمایش داده می‌شود.",
     search: "جستجوی درس‌ها یا مفاهیم...",
     appliedML: "Applied Machine Learning Basic",
-    appliedMLDesc: "یادداشت‌های درس، مواد عملی، ضبط‌ها، آمادگی امتحان و پیگیری پیشرفت.",
+    appliedMLDesc: "مبانی یادگیری ماشین: رگرسیون، classification، optimization، evaluation و workflowهای عملی Python.",
     appliedMLAdvanced: "Applied Machine Learning Advanced",
     appliedMLAdvancedShort: "AMLA",
-    appliedMLAdvancedDesc: "راهنمای پیشرفته با اسلایدها، رونوشت‌ها، ضبط‌ها، notebook/Colab، مینی‌لب‌ها و تمرین آزمون.",
+    appliedMLAdvancedDesc: "شبکه‌های عصبی، CNN، segmentation، explainability، training diagnostics و workflowهای biomedical machine learning.",
     laboratoryBioinformatics: "Laboratory of Bioinformatics I",
     laboratoryBioinformaticsShort: "LB1",
-    laboratoryBioinformaticsDesc: "Slide-guided study guide for Capriotti's module: structural bioinformatics, alignments, probabilistic models, HMMs, HMMER, protein complexes and variants.",
+    laboratoryBioinformaticsDesc: "بیوانفورماتیک ساختاری، alignment توالی و ساختار، مدل‌های احتمالاتی، HMM، HMMER، کمپلکس‌های پروتئینی و variantها.",
     phylo: "تبارزایی مولکولی",
-    phyloDesc: "راهنمای سه‌زبانه با ماژول‌ها، فلش‌کارت‌ها، آزمونک‌ها، واژه‌نامه و پیگیری پیشرفت.",
+    phyloDesc: "تفکر درختی، مدل‌های تکامل توالی، maximum likelihood، Bayesian inference، support metrics، discordance، dating و trait evolution.",
     drd: "DNA/RNA Dynamics",
-    drdDesc: "نقشهٔ درس برای ماژول ۱ نظری و ماژول ۲ پایپ‌لاین‌های methylation array، با وضعیت ۵ ژوئن و موضوعات آینده.",
+    drdDesc: "بیان ژن، methylation array، normalization، کنترل کیفیت، differential analysis، enrichment و گزارش‌نویسی reproducible.",
     appliedGenomics: "Applied Genomics",
     appliedGenomicsShort: "AG",
-    appliedGenomicsDesc: "Chronological English-only study guide for NGS, assembly, annotation, population genomics, GWAS, project design and exam traps.",
+    appliedGenomicsDesc: "فناوری‌های NGS، کنترل کیفیت FASTQ، mapping، assembly، annotation، genotyping، population genomics، GWAS و طراحی پروژه.",
     ibdpi: "Introduction to Big Data Processing Infrastructures",
     ibdpiShort: "IBDPI",
-    ibdpiDesc: "Exam-oriented guide for big data infrastructure, cloud, HTC/HPC, containers, storage, AAI, DevOps, Kubernetes, IaC and FaaS.",
-    builtFor: "راهنماهای درسی",
+    ibdpiDesc: "Cloud computing، زیرساخت big data، HTC/HPC، containerها، storage، AAI، DevOps، Kubernetes، IaC و FaaS.",
+    builtFor: "درس‌ها",
     uniform: "راهنمای مطالعه",
     studyPath: "مسیر مطالعه",
     tools: ["واژه‌نامه", "فلش‌کارت‌ها", "خطاهای رایج", "نقشه‌های مفهومی", "پرسش‌های تمرینی"],
     sourceTitle: "برنامهٔ مطالعه",
-    sourceText: "یک درس را انتخاب کنید، از جایی که متوقف شده‌اید ادامه دهید، یا پیش از امتحان از ابزارهای مرور سریع استفاده کنید.",
+    sourceText: "درس را بر اساس حوزه انتخاب کنید: داده‌های مولکولی، ژنومیکس، یادگیری ماشین، تبارزایی یا زیرساخت cloud.",
     publishedFolders: "درس‌ها",
   },
 };
@@ -921,12 +921,16 @@ function Header({ lang, setLang, mode, t, theme, setTheme }) {
           <a href={isHub ? "#subjects" : "#/"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">
             {isHub ? t.subjects : t.modules}
           </a>
-          <a href={isHub ? "#tools" : "#/tools"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">
-            {t.studyTools}
-          </a>
-          <a href={isHub ? "#tools" : "#/resources"} className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">
-            {t.resources}
-          </a>
+          {!isHub && (
+            <>
+              <a href="#/tools" className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">
+                {t.studyTools}
+              </a>
+              <a href="#/resources" className="rounded-full px-3 py-2 text-sm font-bold text-stone-600 transition hover:bg-white hover:text-red-700">
+                {t.resources}
+              </a>
+            </>
+          )}
         </nav>
         <div className="flex items-center gap-2">
           {!isHub && (
@@ -1080,14 +1084,14 @@ function GlobalThemeStyles() {
 
 function HubApp({ t }) {
   const subjects = [
-    { href: "AMLB/index.html", title: t.appliedML, desc: t.appliedMLDesc, progressKey: "aml_progress", total: allAmlLessons().length, icon: "ML", iconSrc: amlbIcon },
-    { href: "AMLA/index.html", title: t.appliedMLAdvanced, desc: t.appliedMLAdvancedDesc, progressKey: "amla_progress_v1", total: getAMLAProgressTotal(), icon: "AMLA", iconSrc: amlaIcon },
-    { href: "LB1/index.html", title: t.laboratoryBioinformatics, desc: t.laboratoryBioinformaticsDesc, progressKey: "lb1_progress_v1", total: getLB1ProgressTotal(), icon: "LB1", iconSrc: lb1Icon },
-    { href: "MP/index.html", title: t.phylo, desc: t.phyloDesc, progressKey: "phylo_progress_v2", total: 16, icon: "Φ", iconSrc: mpIcon },
-    { href: "DRD/index.html", title: t.drd, desc: t.drdDesc, progressKey: "drd_progress_v1", total: getDRDProgressTotal(), icon: "DRD", iconSrc: drdIcon },
-    { href: "AG/index.html", title: t.appliedGenomics, desc: t.appliedGenomicsDesc, progressKey: "ag_progress_v1", total: AG_GUIDE_SECTIONS.length, icon: "AG", iconSrc: agIcon },
-    { href: "IBDPI/index.html", title: t.ibdpi, desc: t.ibdpiDesc, progressKey: "ibdpi_progress_v1", total: getIBDPIProgressTotal(), icon: "IBDPI", iconSrc: ibdpiIcon },
-  ].sort((a, b) => a.title.localeCompare(b.title));
+    { href: "AG/index.html", short: t.appliedGenomicsShort, desc: t.appliedGenomicsDesc, progressKey: "ag_progress_v1", total: AG_GUIDE_SECTIONS.length, icon: "AG", iconSrc: agIcon },
+    { href: "AMLA/index.html", short: t.appliedMLAdvancedShort, desc: t.appliedMLAdvancedDesc, progressKey: "amla_progress_v1", total: getAMLAProgressTotal(), icon: "AMLA", iconSrc: amlaIcon },
+    { href: "AMLB/index.html", short: "AMLB", desc: t.appliedMLDesc, progressKey: "aml_progress", total: allAmlLessons().length, icon: "ML", iconSrc: amlbIcon },
+    { href: "DRD/index.html", short: "DRD", desc: t.drdDesc, progressKey: "drd_progress_v1", total: getDRDProgressTotal(), icon: "DRD", iconSrc: drdIcon },
+    { href: "IBDPI/index.html", short: t.ibdpiShort, desc: t.ibdpiDesc, progressKey: "ibdpi_progress_v1", total: getIBDPIProgressTotal(), icon: "IBDPI", iconSrc: ibdpiIcon },
+    { href: "LB1/index.html", short: t.laboratoryBioinformaticsShort, desc: t.laboratoryBioinformaticsDesc, progressKey: "lb1_progress_v1", total: getLB1ProgressTotal(), icon: "LB1", iconSrc: lb1Icon },
+    { href: "MP/index.html", short: "MP", desc: t.phyloDesc, progressKey: "phylo_progress_v2", total: 16, icon: "Φ", iconSrc: mpIcon },
+  ].sort((a, b) => a.short.localeCompare(b.short));
 
   return (
     <main id="top" className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
@@ -1097,39 +1101,28 @@ function HubApp({ t }) {
         subtitle={t.hubSubtitle}
         actions={(
           <>
-            <a href="AMLB/index.html" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-red-800">{t.appliedML}</a>
-            <a href="AMLA/index.html" className="rounded-full border border-red-200 bg-red-50 px-5 py-3 text-sm font-black text-red-700 transition hover:-translate-y-0.5 hover:bg-red-100">{t.appliedMLAdvancedShort}</a>
-            <a href="LB1/index.html" className="rounded-full border border-teal-200 bg-teal-50 px-5 py-3 text-sm font-black text-teal-800 transition hover:-translate-y-0.5 hover:bg-teal-100">{t.laboratoryBioinformaticsShort}</a>
-            <a href="MP/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.phylo}</a>
-            <a href="DRD/index.html" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">{t.drd}</a>
-            <a href="AG/index.html" className="rounded-full border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm font-black text-emerald-700 transition hover:-translate-y-0.5 hover:bg-emerald-100">{t.appliedGenomicsShort}</a>
-            <a href="IBDPI/index.html" className="rounded-full border border-sky-200 bg-sky-50 px-5 py-3 text-sm font-black text-sky-800 transition hover:-translate-y-0.5 hover:bg-sky-100">{t.ibdpiShort}</a>
+            {subjects.map((subject) => (
+              <a key={subject.href} href={subject.href} className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md">
+                {subject.short}
+              </a>
+            ))}
           </>
         )}
         visual={(
-          <div>
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.publishedFolders}</div>
-                <div className="mt-2 text-2xl font-black text-stone-950">AMLB · AMLA · LB1 · MP · DRD · AG · IBDPI</div>
-                <div className="mt-1 text-sm font-semibold text-stone-500">{t.sourceText}</div>
-              </div>
-              <div className="rounded-2xl bg-stone-950 px-3 py-2 text-sm font-black text-white">7</div>
-            </div>
-            <div className="mt-6 rounded-[2rem] bg-[#fffaf0] p-4"><MiniTreeIcon active/><div className="mt-3"><ProgressBar value={57}/></div></div>
-            <div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyTools}</div><p className="mt-2 text-lg font-bold leading-7">{t.tools.join(" · ")}</p></div>
+          <div className="grid grid-cols-3 gap-3">
+              {subjects.map((subject) => (
+                <a key={subject.href} href={subject.href} className="flex items-center justify-center rounded-2xl border border-stone-200 bg-white p-3 transition hover:-translate-y-0.5 hover:shadow-md" title={subject.short}>
+                  <CourseIcon icon={subject.icon} iconSrc={subject.iconSrc} iconClass="bg-stone-950" />
+                </a>
+              ))}
           </div>
         )}
       />
       <section id="subjects" className="mt-10">
         <div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.subjects}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.subjects}</h2></div>
         <div className="grid gap-5 sm:grid-cols-2">
-          {subjects.map((subject) => <SubjectCard key={subject.href} {...subject} />)}
+          {subjects.map((subject) => <SubjectCard key={subject.href} {...subject} title={subject.short} />)}
         </div>
-      </section>
-      <section id="tools" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/80 p-6 shadow-sm md:p-8">
-        <div className="mb-6"><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.studyTools}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.quickReview}</h2><p className="mt-2 max-w-2xl leading-7 text-stone-600">{t.sourceText}</p></div>
-        <div className="grid gap-3 md:grid-cols-5">{t.tools.map(tool => <div key={tool} className="rounded-2xl border border-stone-200 bg-white p-4 text-sm font-black text-stone-800 shadow-sm">{tool}</div>)}</div>
       </section>
     </main>
   );

@@ -9,6 +9,10 @@ function makeQuestionId(question) {
   return question.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 72);
 }
 
+function cleanOptionFeedback(text) {
+  return text.replace(/^(Correct|Not correct)\.\s*/i, "");
+}
+
 const DISTRACTOR_FEEDBACK = {
   "Only files larger than RAM": "Not correct. This reduces Big Data to one size threshold. The course definition is broader: volume, velocity, variety, veracity/value and the infrastructure pressure caused by processing.",
   "Any dataset stored in the cloud": "Not correct. Cloud storage is an infrastructure choice; it does not make a dataset Big Data by itself.",
@@ -356,11 +360,6 @@ function QuestionCard({ item, index, selected, onSelect }) {
       <div className="flex flex-wrap gap-2">
         <span className="rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-black text-sky-700">Q{index + 1}</span>
         <span className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs font-black text-stone-600">{item.module}</span>
-        {answered ? (
-          <span className={`rounded-full px-3 py-1 text-xs font-black ${correct ? "bg-emerald-100 text-emerald-800" : "bg-red-100 text-red-800"}`}>
-            {correct ? "Correct" : `Correct: ${optionLabel(item.correct)}`}
-          </span>
-        ) : null}
       </div>
       <h3 className="mt-3 text-xl font-black leading-8 text-stone-950">{item.question}</h3>
       <div className="mt-4 grid gap-2">
@@ -383,8 +382,16 @@ function QuestionCard({ item, index, selected, onSelect }) {
                       : "border-stone-200 bg-stone-50 text-stone-700 hover:bg-white"
               }`}
             >
-              <span className="block">{optionLabel(optionIndex)}. {option}</span>
-              {reveal ? (
+              <span className="flex flex-wrap items-start justify-between gap-3">
+                <span>{optionLabel(optionIndex)}. {option}</span>
+                {reveal && isCorrect ? (
+                  <span className="rounded-full bg-emerald-600 px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-[0.12em] text-white">Correct</span>
+                ) : null}
+                {reveal && isSelected && !isCorrect ? (
+                  <span className="rounded-full bg-red-600 px-2.5 py-1 text-[0.65rem] font-black uppercase tracking-[0.12em] text-white">Not correct</span>
+                ) : null}
+              </span>
+              {reveal && (isCorrect || isSelected) ? (
                 <span className={`mt-3 block border-t pt-3 text-xs font-semibold leading-6 ${
                   isCorrect
                     ? "border-emerald-200 text-emerald-900"
@@ -392,21 +399,13 @@ function QuestionCard({ item, index, selected, onSelect }) {
                       ? "border-red-200 text-red-900"
                       : "border-stone-200 text-stone-600"
                 }`}>
-                  <span className="mb-1 block font-black uppercase tracking-[0.14em]">
-                    {isCorrect ? "Why this is correct" : isSelected ? "Why this is not correct" : "Why this option is not best"}
-                  </span>
-                  {item.optionFeedback[optionIndex]}
+                  {cleanOptionFeedback(item.optionFeedback[optionIndex])}
                 </span>
               ) : null}
             </button>
           );
         })}
       </div>
-      {answered && !correct ? (
-        <p className="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-bold leading-6 text-amber-900">
-          Correct answer: {optionLabel(item.correct)}. {item.explanation}
-        </p>
-      ) : null}
     </article>
   );
 }
@@ -450,7 +449,7 @@ export default function IBDPIExamPrepPage() {
           <div>
             <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-sky-700">Multiple-choice trap trainer</div>
             <h2 className="text-3xl font-black tracking-tight text-stone-950">{QUESTIONS.length} interactive first-pass questions</h2>
-            <p className="mt-2 text-sm font-bold leading-6 text-stone-600">Select an option to reveal whether it is correct, why that option works or fails, and the correct answer when needed.</p>
+            <p className="mt-2 text-sm font-bold leading-6 text-stone-600">Select an option to reveal direct feedback. The correct option is marked in green; an incorrect selection is marked in red.</p>
           </div>
           <div className="flex flex-wrap gap-2 md:justify-end">
             {["all", "M1", "M2"].map((item) => <button key={item} type="button" onClick={() => setFilter(item)} className={`rounded-full px-4 py-2 text-xs font-black ${filter === item ? "bg-sky-700 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{item}</button>)}

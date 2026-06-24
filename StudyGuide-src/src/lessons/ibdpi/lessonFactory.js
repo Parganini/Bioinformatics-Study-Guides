@@ -306,6 +306,11 @@ const importantSlideSets = {
     ]),
   ],
   "ibdpi-2026-04-30-cloud-intro-iaas": [
+    section("Application choice", "Computational challenge lessons", "The computational-challenge deck is mostly low-priority hands-on, but its takeaways are exam-useful.", [
+      importantSlide("applications", "02 Computational challenge", "brute force versus indexed search block", "Choose the right application", "The brute-force, BLAST and BWA comparison shows that algorithm/application choice can dominate infrastructure needs.", "Before adding machines, ask whether the application is appropriate.", "Scaling a bad method can be worse than choosing a better tool."),
+      importantSlide("applications", "02 Computational challenge", "BLAST/BWA comparison block", "BLAST and BWA comparison", "The slides compare single-read and many-read alignment timings to make application selection concrete.", "This is not a genomics exam; it is an infrastructure-design warning.", "Do not memorize every timing value; remember the order-of-magnitude lesson."),
+      importantSlide("big-data", "02 Computational challenge", "is this Big Data block", "Challenge conclusion", "The exercise may not meet the strict Big Data definition, but it can still be solved with Big Data techniques and infrastructures.", "Big Data infrastructure can be useful even when a toy exercise is not itself full Big Data.", "Do not classify every course dataset as Big Data just because it uses cloud resources."),
+    ]),
     section("Userspace containers", "udocker and restricted environments", "This class links container execution to user privileges.", [
       importantSlide("udocker", "05 Containers", "udocker block", "udocker", "udocker lets users run container-like workflows without normal Docker daemon privileges.", "The exam angle is why userspace execution matters on shared systems.", "Do not confuse udocker with Docker Compose or Kubernetes."),
       importantSlide("security", "05 Containers", "privilege block", "Container privilege boundary", "Container tooling choices depend on local security policy and available privileges.", "Shared infrastructures often restrict privileged daemons.", "Container isolation does not mean unlimited user permission."),
@@ -370,6 +375,8 @@ const importantSlideSets = {
       importantSlide("bridge-host", "02 BDPM2 containers part 1", "networking block", "Bridge and host networking", "Container networking determines how container processes see each other and the host network.", "Distinguish container IPs, host ports and cloud security groups.", "Mapping a port does not bypass a blocked security group."),
       importantSlide("ports", "02 BDPM2 containers part 1", "port exposure block", "Exposing services", "The service must listen, Docker must map the port, and the cloud/network must allow traffic.", "Debug reachability layer by layer.", "A correct application can look broken when the network layer blocks it."),
       importantSlide("bridge-host", "02 BDPM2 containers part 1", "none/bridge/host block", "Docker network modes", "The lecture compares no networking, bridge networking and host networking as different isolation/connectivity choices.", "Default bridge networking is not the same as host networking.", "host networking removes a layer of isolation and changes port behavior."),
+      importantSlide("bridge-host", "02 BDPM2 containers part 1", "multiple bridges block", "Multiple bridges", "Containers on the same bridge can communicate; containers on different bridges are isolated unless explicitly connected.", "Bridge membership is a connectivity boundary.", "Being on the same Docker host does not mean every container can reach every other container."),
+      importantSlide("bridge-host", "02 BDPM2 containers part 1", "NAT block", "NAT and outbound access", "A container can reach the Internet through NAT while still being isolated from containers on other bridges.", "Outbound connectivity and peer/container reachability are different questions.", "A successful ping to the Internet does not prove all container-to-container paths work."),
     ]),
     section("Operations", "Processes, logs and monitoring", "These slides are about running containers as services, not demos.", [
       importantSlide("logs", "02 BDPM2 containers part 1", "logging block", "docker logs", "Logs expose application output and failure clues.", "Use logs to explain behavior after startup.", "docker logs is not docker stats."),
@@ -477,6 +484,7 @@ const importantSlideSets = {
       importantSlide("service", "06 BDPM2 cloud automation part 2", "load balancer block", "Load balancing service replicas", "A load balancer can expose several replicated web servers behind one public endpoint.", "Use this to connect orchestration to user-facing access.", "Internal private IP reachability is not the same as public access."),
       importantSlide("secrets", "06 BDPM2 cloud automation part 2", "secrets block", "Secrets", "Secrets store sensitive data such as passwords, tokens and keys outside source code and images.", "The course highlights plaintext passwords in Compose files as the anti-pattern.", "Secrets are not the same as normal configuration files."),
       importantSlide("secrets", "06 BDPM2 cloud automation part 2", "configs block", "Configs", "Configs store non-sensitive configuration separately from images; unlike secrets, they are not encrypted at rest.", "Separate sensitive from non-sensitive operational data.", "Do not store passwords as configs."),
+      importantSlide("ports-volumes", "06 BDPM2 cloud automation part 2", "persistence recap block", "Where application data persists", "The recap distinguishes Docker volumes, bind mounts, Swarm/Kubernetes secrets/configs and object/storage services as different persistence or configuration mechanisms.", "Choose the mechanism based on whether the data is state, sensitive secret, non-sensitive config or external storage.", "Persistence, secrets and configs are not interchangeable labels."),
     ]),
     section("Infrastructure as Code", "Templates and orchestration", "These slides generalize Kubernetes manifests to infrastructure templates.", [
       importantSlide("iac", "06 BDPM2 cloud automation part 2", "IaC block", "Infrastructure as Code", "IaC describes infrastructure and services in machine-readable templates.", "Templates support review, repeatability and automation.", "IaC is not manual clicking written down after the fact."),
@@ -598,6 +606,7 @@ const expandedLessonDetails = {
       "Explain the build-with-Docker/run-with-udocker workflow.",
       "Use checksums as integrity checks, not confidentiality tools.",
       "Distinguish tar archives from gzip compression and tgz combined archives.",
+      "Explain the BLAST/BWA/computational-challenge takeaway: better applications can beat brute-force scaling.",
       "Keep Singularity and related optional container topics visibly low priority.",
     ],
     coreConcepts: [
@@ -607,19 +616,24 @@ const expandedLessonDetails = {
       concept("udocker command subset", "udocker supports Docker-like commands such as search, pull, import, export, load, create and run, but only for a subset of Docker behavior.", ["udocker commands", "subset"]),
       concept("udocker limitation", "udocker cannot build images and cannot perform privileged OS operations. Images must be built elsewhere with Docker if a custom image is needed.", ["udocker limitation", "build"]),
       concept("Root emulation", "udocker can emulate some root-like behavior inside the extracted container filesystem, but this is not host root privilege.", ["root emulation", "privilege"]),
+      concept("Application choice before infrastructure", "The computational-challenge deck compares brute force, BLAST and BWA to show that the selected application can change runtime by orders of magnitude before infrastructure changes are considered.", ["application choice", "BLAST", "BWA"]),
+      concept("Indexed search lesson", "BLAST and BWA illustrate that creating or using an index can transform a search problem. The exam lesson is algorithm/infrastructure fit, not genomics command syntax.", ["index", "alignment"]),
       concept("Checksum", "A checksum is computed from data and used to detect changes after storage or transfer. It verifies integrity, not secrecy.", ["checksum", "integrity"]),
       concept("tar", "tar packages multiple files/directories into one archive. It is an archive tool, not compression by itself.", ["tar", "archive"]),
       concept("tgz/tar.gz", "A tgz file is a tar archive compressed with gzip. The two operations are archive first, compress second.", ["tgz", "gzip"]),
+      concept("Compressed transfer discipline", "The course explicitly warns against moving huge uncompressed ASCII files when a compressed archive is appropriate.", ["compression", "transfer"]),
       concept("Singularity boundary", "Singularity is relevant to HPC/container contexts, but this course marks its usage low priority compared with Docker, Compose and udocker.", ["Singularity", "SKIP"]),
     ],
     handsOn: [
       hand("Run with udocker", "Remember the conceptual workflow for restricted systems.", ["udocker pull IMAGE", "udocker create IMAGE", "udocker run CONTAINER COMMAND", "Mount local directory if needed"], "A user can execute container contents without a Docker daemon.", "Trying to build a new image with udocker.", "Exam angle: udocker runs images; Docker builds images."),
+      hand("Read the computational challenge correctly", "Extract the infrastructure lesson without overstudying skipped hands-on details.", ["Compare brute force, BLAST and BWA by role", "Ask whether an index or better application exists", "Only then decide whether more compute/cloud resources are needed", "Use checksums and compressed archives when moving important data"], "You can explain why the professor says application choice comes before infrastructure choice.", "Memorizing genome-alignment commands instead of the application-selection lesson.", "Exam angle: this is an application/infrastructure-fit question, not a BLAST syntax question."),
       hand("Integrity and packaging memory", "Separate data integrity from packaging/compression.", ["Compute checksum before transfer", "Transfer/copy data", "Recompute checksum after transfer", "Use tar to group files", "Use gzip/tgz when compression is needed"], "You can say whether data changed and package many files sanely.", "Calling checksum encryption or tar compression.", "Small commands, big exam traps."),
     ],
     examCheckpoints: [
       checkpoint("Why was udocker included?", "It supports user-space execution of Docker image contents when normal Docker privileges are unavailable.", "Calling it Kubernetes or a full Docker replacement.", ["udocker"]),
       checkpoint("What can udocker not do?", "It cannot build images and cannot perform privileged OS operations.", "Trying to use udocker as a daemon-based Docker installation.", ["udocker"]),
       checkpoint("What is a checksum used for?", "Integrity verification: detecting whether data changed.", "Calling checksum encryption or compression.", ["checksum"]),
+      checkpoint("What is the BLAST/BWA takeaway?", "Before scaling infrastructure, choose an application/algorithm that fits the data and can use indexing or optimized search.", "Thinking the only solution is to add more cloud machines.", ["application choice"]),
       checkpoint("What is the tar/tgz distinction?", "tar archives/groups files; gzip compresses; tgz is a gzip-compressed tar archive.", "Reversing tar and gzip roles.", ["tar", "tgz"]),
       checkpoint("How should Singularity be studied here?", "As a contextual adjacent container tool, low priority if marked SKIP/optional by Corso.", "Building a full exam answer around Singularity usage.", ["SKIP"]),
     ],
@@ -627,13 +641,15 @@ const expandedLessonDetails = {
       card("udocker", "Userspace tool to run contents of Docker images without Docker daemon privileges."),
       card("Docker daemon risk", "Compromise of the host daemon can break container isolation."),
       card("udocker cannot...", "Build images or perform privileged OS operations."),
+      card("Application choice", "A better method can reduce infrastructure pressure before adding machines."),
+      card("BWA/BLAST lesson", "Use the right indexed/optimized tool; do not blindly scale brute force."),
       card("checksum", "Integrity verification value."),
       card("tar", "Groups files into an archive."),
       card("gzip", "Compresses data."),
       card("tgz", "gzip-compressed tar archive."),
       card("Singularity priority", "Recognize only; usage is low priority here."),
     ],
-    glossary: [["udocker", "Userspace runner for Docker image contents."], ["root emulation", "Container-internal root-like behavior without host root privilege."], ["checksum", "Computed integrity value."], ["tar", "Archive format/tool for grouping files."], ["tgz", "Compressed tar archive."]],
+    glossary: [["udocker", "Userspace runner for Docker image contents."], ["root emulation", "Container-internal root-like behavior without host root privilege."], ["application choice", "Selecting an appropriate algorithm/tool before scaling infrastructure."], ["checksum", "Computed integrity value."], ["tar", "Archive format/tool for grouping files."], ["tgz", "Compressed tar archive."]],
     skippedOrLowPriority: [{ topic: "Singularity usage", reason: "Marked SKIP/low priority in Corso", whatToKnowAtMost: "Recognize it as an HPC-friendly container platform, but do not prioritize command usage." }, { topic: "IoT, Edge, Fog, Digital Twins and Computing Continuum", reason: "Marked SKIP in Corso", whatToKnowAtMost: "Do not build a main lesson around them." }],
   },
   "ibdpi-2026-05-14-containers-htc-hpc-computing-models": {
@@ -746,6 +762,7 @@ const expandedLessonDetails = {
     objectives: [
       "Review Docker daemon, image/container and permission basics from Module 1.",
       "Distinguish container network modes: none, bridge and host.",
+      "Explain how Docker bridge membership, NAT and user-defined bridges affect container reachability.",
       "Explain container IPs, host ports, bridges, NAT and security-group reachability.",
       "Use docker top/stats/logs conceptually to inspect running containers.",
       "Explain why resource limits matter for containers sharing one host.",
@@ -757,8 +774,10 @@ const expandedLessonDetails = {
       concept("No-network mode", "--network=none creates a container with no network connectivity, useful when a workload should stay local.", ["none", "isolation"]),
       concept("Bridge networking", "Bridge mode is Docker's default local networking model: containers share a virtual bridge and can communicate according to bridge membership and rules.", ["bridge", "default"]),
       concept("User-defined bridges", "User-defined bridges can isolate groups of containers and allow more controlled service discovery/connectivity.", ["bridge", "isolation"]),
+      concept("Bridge membership", "Containers attached to the same bridge can communicate; containers on different bridges are isolated unless connected explicitly.", ["bridge", "membership"]),
       concept("Host networking", "Host networking places the container directly on the host network namespace, reducing isolation and changing port behavior.", ["host network", "namespace"]),
       concept("NAT and reachability", "A container may reach the Internet through NAT while still being isolated from other bridges or blocked from inbound access.", ["NAT", "reachability"]),
+      concept("Multiple bridge attachment", "A running container can be connected to an additional bridge with docker network connect, changing its communication neighborhood.", ["docker network connect", "bridge"]),
       concept("Port exposure layers", "A reachable service needs an application listening, Docker port mapping, host firewall and cloud security group all aligned.", ["ports", "security group"]),
       concept("docker top", "docker top inspects processes running inside a container from the host side.", ["docker top", "process"]),
       concept("docker stats", "docker stats reports runtime resource usage such as CPU and memory.", ["docker stats", "resources"]),
@@ -772,6 +791,7 @@ const expandedLessonDetails = {
     ],
     examCheckpoints: [
       checkpoint("What is the bridge/host networking trap?", "Bridge keeps container networking behind a Docker bridge; host networking uses the host network namespace.", "Assuming both expose ports the same way.", ["networking"]),
+      checkpoint("What does bridge membership decide?", "It decides which containers can communicate directly on the Docker host unless extra network connections are added.", "Assuming all containers on one VM can automatically reach each other.", ["bridge"]),
       checkpoint("Why can a mapped port still be unreachable?", "The app, Docker mapping, host firewall and cloud security group must all allow traffic.", "Thinking -p bypasses AWS security groups.", ["ports"]),
       checkpoint("What does docker logs show?", "The container's stdout/stderr output.", "Using logs to answer CPU or memory usage questions.", ["logs"]),
       checkpoint("What does docker stats show?", "Runtime resource usage such as CPU and memory.", "Using stats as if it were application log output.", ["stats"]),
@@ -780,6 +800,7 @@ const expandedLessonDetails = {
     flashcards: [
       card("--network=none", "Container has no network connectivity."),
       card("bridge network", "Default Docker network using a virtual bridge."),
+      card("bridge membership", "Containers on the same bridge can communicate; different bridges isolate."),
       card("--network=host", "Container shares host network namespace."),
       card("NAT", "Address translation enabling outbound connectivity."),
       card("docker top", "Inspect processes in a container."),
@@ -787,7 +808,7 @@ const expandedLessonDetails = {
       card("docker logs", "Inspect stdout/stderr logs."),
       card("Portainer", "GUI for Docker management."),
     ],
-    glossary: [["Docker bridge", "Virtual network connecting containers on one host."], ["host networking", "Mode where container uses host network namespace."], ["NAT", "Network Address Translation."], ["resource limit", "Constraint on container CPU or memory use."], ["Portainer", "Graphical Docker management tool."]],
+    glossary: [["Docker bridge", "Virtual network connecting containers on one host."], ["user-defined bridge", "Docker bridge created to control container grouping/connectivity."], ["host networking", "Mode where container uses host network namespace."], ["NAT", "Network Address Translation."], ["resource limit", "Constraint on container CPU or memory use."], ["Portainer", "Graphical Docker management tool."]],
     skippedOrLowPriority: [{ topic: "macvlan and overlay network details", reason: "Mentioned as advanced Docker networking; not the main class emphasis", whatToKnowAtMost: "Recognize that Docker has additional network modes beyond none/bridge/host." }],
   },
   "ibdpi-2026-05-29-advanced-containers-part2": {

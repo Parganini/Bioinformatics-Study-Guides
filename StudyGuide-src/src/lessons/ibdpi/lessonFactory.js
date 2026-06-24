@@ -268,6 +268,10 @@ function importantSlide(label, deckLabel, page, title, comment, remember, trap, 
 
 const importantSlideSets = {
   "ibdpi-2026-04-29-datacenter-building-blocks": [
+    section("Cloud context", "Virtualization, service models and application porting", "This class finishes the cloud transition before starting containers.", [
+      importantSlide("cloud-definition", "04 intro cloud BDP1", "NIST characteristics block", "Cloud characteristics", "Cloud combines self-service, network access, resource pooling, elasticity and measured service.", "A cloud VM only makes sense inside a service/provisioning model.", "Provisioning a VM alone is not the whole cloud concept."),
+      importantSlide("paas-saas", "04 intro cloud BDP1", "service models block", "IaaS, PaaS and SaaS", "Service models differ by what the user manages: infrastructure, platform or finished application.", "Know responsibility boundaries before choosing an answer.", "Do not map SaaS to raw infrastructure."),
+    ]),
     section("Cloud IaaS", "Porting applications to the cloud", "Use these slides to connect cloud abstraction to concrete application deployment.", [
       importantSlide("cloud-porting", "04 intro cloud BDP1", "IaaS application porting block", "IaaS advantages and tradeoffs", "The cloud gives fast provisioning and elasticity, but the user still owns OS/application choices in IaaS.", "Cloud is not just a VM; the exam asks what operational abstraction is added.", "Calling any virtual machine 'cloud' misses service model, elasticity and provisioning."),
       importantSlide("aws-iaas", "04 intro cloud BDP1", "AWS usage block", "AWS as course IaaS", "AWS is the hands-on environment for instantiating compute and storage for exercises.", "Know the conceptual route: instantiate, connect, attach storage, inspect.", "Memorizing console screenshots is weaker than knowing the resource lifecycle."),
@@ -275,6 +279,7 @@ const importantSlideSets = {
     section("Containers", "Basic container concepts", "Container slides become high priority because Docker is an OK topic.", [
       importantSlide("container-concept", "05 Containers", "container basics", "Container versus VM", "A container packages a runtime and process environment while sharing the host kernel.", "Containers improve reproducibility but do not replace infrastructure knowledge.", "Saying containers are lightweight VMs is too imprecise."),
       importantSlide("docker-hub", "05 Containers", "Docker Hub block", "Images and registries", "Docker Hub stores images that can be pulled and run locally or on cloud instances.", "Image, container, registry and Dockerfile are separate exam terms.", "Pulling an image is not the same as running a container."),
+      importantSlide("docker-run", "05 Containers", "search/pull/run block", "Search, pull and run", "The first Docker workflow separates finding an image, downloading it and creating a running container.", "Study the lifecycle verbs by purpose.", "docker pull does not run the image."),
     ]),
     section("Persistence and networking", "Why running is not enough", "The professor emphasis is operational: a useful container must keep data and expose services intentionally.", [
       importantSlide("dockerfile", "05 Containers", "Dockerfile block", "Dockerfiles", "A Dockerfile records build steps so the image can be reproduced.", "Study the purpose of common Dockerfile instructions, not only syntax.", "A Dockerfile is the recipe, not the image itself."),
@@ -283,12 +288,18 @@ const importantSlideSets = {
   ],
   "ibdpi-2026-04-30-networking-storage-datacenter": [
     section("Docker operations", "Images, containers and builds", "These are the highest-yield Docker slides for command recognition.", [
+      importantSlide("dockerfile", "05 Containers", "Dockerfile recipe block", "Dockerfile as recipe", "Dockerfiles turn manual container changes into a reproducible image build process.", "Prefer repeatable recipes over interactive one-off changes.", "Installing packages inside a running container is not a stable build strategy."),
       importantSlide("docker-build", "05 Containers", "build block", "Build an image", "Building converts a Dockerfile context into an image tag that can be reused.", "A build should be repeatable from source files.", "Changing a running container is not a reliable build process."),
       importantSlide("docker-run", "05 Containers", "run block", "Run and inspect", "Running creates a container instance from an image; inspection confirms state, ports and mounts.", "Always connect command syntax to lifecycle state.", "Assuming a container is reachable because it is running ignores port/firewall layers."),
+    ]),
+    section("Persistence", "Bind mounts and Docker volumes", "This section is exam-heavy because it decides whether data survives container removal.", [
+      importantSlide("ports-volumes", "05 Containers", "bind mounts and volumes block", "Persistency choices", "Bind mounts use a host path; Docker volumes are managed by Docker; tmpfs is memory-backed and temporary.", "Know why data inside the writable container layer is disposable.", "A running container with data inside it is not a persistence plan."),
+      importantSlide("tar-tgz", "05 Containers", "tar detour block", "tar for packaging", "The Docker volume transfer detour reuses tar: archive a directory tree before moving it elsewhere.", "tar packages files; compression is a separate step.", "Do not say tar is the same as gzip."),
     ]),
     section("Compose", "From one container to a stack", "Compose is the bridge toward orchestration, but it is still not Kubernetes.", [
       importantSlide("compose-yaml", "05 Containers", "Compose file block", "Docker Compose YAML", "Compose describes services, networks and volumes for a small multi-container application.", "Compose explains stack structure in one file.", "Compose is not the same as cluster orchestration."),
       importantSlide("compose-up-down", "05 Containers", "Compose commands block", "Compose lifecycle", "up, stop, start and down describe different operational actions on the stack.", "Know what is created, stopped or removed.", "Using down when you only wanted stop can remove resources."),
+      importantSlide("compose-yaml", "05 Containers", "WordPress/MySQL stack block", "Application stacks", "The WordPress/MySQL example separates frontend/backend networks, database state and service definitions.", "Compose is useful because it describes a multi-container application, not just one process.", "depends_on controls start order, not application readiness."),
     ]),
     section("Low-priority boundary", "Optional container topics", "The course mentions adjacent container tools, but the Corso filter decides priority.", [
       importantSlide("export-import", "05 Containers", "optional image transfer", "Image export/import", "Image transfer may appear as context, but it should not outrank Dockerfiles, ports, volumes and Compose.", "Keep optional tooling below OK Docker fundamentals.", "Overstudying optional mechanics can crowd out exam-core container concepts.", "low", "SKIP"),
@@ -298,10 +309,12 @@ const importantSlideSets = {
     section("Userspace containers", "udocker and restricted environments", "This class links container execution to user privileges.", [
       importantSlide("udocker", "05 Containers", "udocker block", "udocker", "udocker lets users run container-like workflows without normal Docker daemon privileges.", "The exam angle is why userspace execution matters on shared systems.", "Do not confuse udocker with Docker Compose or Kubernetes."),
       importantSlide("security", "05 Containers", "privilege block", "Container privilege boundary", "Container tooling choices depend on local security policy and available privileges.", "Shared infrastructures often restrict privileged daemons.", "Container isolation does not mean unlimited user permission."),
+      importantSlide("udocker", "05 Containers", "docker versus udocker comparison", "Docker versus udocker", "udocker can search, pull, create and run Docker images in userspace, but it cannot build images and cannot perform privileged OS operations.", "The professor frames udocker as a workaround for restricted shared infrastructures.", "udocker is not a complete Docker daemon replacement."),
     ]),
     section("Integrity and archives", "Checksums, tar and tgz", "These are small but explicit OK topics.", [
       importantSlide("checksum", "01 Big Data Introduction", "checksum block", "Checksums", "A checksum verifies whether data changed during transfer or storage.", "Integrity is not confidentiality.", "A checksum is not encryption and does not hide data."),
       importantSlide("tar-tgz", "01 Big Data Introduction", "archive block", "tar and tgz", "tar groups files into one archive; gzip compresses; tgz/tar.gz combines both.", "Know archive versus compression.", "Saying tar compresses by itself is the usual trap."),
+      importantSlide("docker-build", "05 Containers", "build elsewhere for udocker", "Build with Docker, run with udocker", "Because udocker cannot create images, the workflow can be: build/push with Docker on one system, then pull/run with udocker on the restricted system.", "Separate image creation from userspace execution.", "Trying to build images with udocker is the wrong mental model."),
     ]),
     section("SKIP boundary", "Mentioned but not exam-centered", "Keep Singularity and continuum topics visibly low priority when the Corso marks them that way.", [
       importantSlide("singularity", "05 Containers", "optional tools block", "Singularity usage", "Singularity may be named as an adjacent container tool, but its usage is not the main IBDPI exam target.", "Recognize the name only if needed.", "Do not build a full answer around Singularity usage.", "low", "SKIP"),
@@ -311,15 +324,23 @@ const importantSlideSets = {
     section("HTC and grids", "Throughput-first infrastructures", "Start by asking what communication pattern the application has.", [
       importantSlide("htc", "06 HTC", "HTC definition block", "HTC", "HTC optimizes throughput over many independent or loosely coupled tasks.", "Use HTC for many jobs over time, not tight low-latency parallelism.", "HTC is not simply a synonym for HPC."),
       importantSlide("grid", "06 HTC", "grid computing block", "Grid computing", "Grids federate distributed resources through common interfaces and policies.", "Grid suitability depends on loose coupling and distributed ownership.", "A grid is not just any cluster."),
+      importantSlide("htc", "06 HTC", "grid applications block", "HTC applications", "Embarrassingly parallel jobs, parametric sweeps, genome sequencing and protein annotation fit HTC because many tasks can run independently.", "Application communication pattern decides infrastructure fit.", "Small MPI/OpenMP jobs are not the main HTC definition."),
+      importantSlide("grid", "06 HTC", "virtual organizations block", "Virtual organizations and federation", "Grid resources are shared through controlled rules, virtual organizations and security mechanisms.", "Grid is agreement, standards and controlled sharing, not just more hardware.", "More sites do not automatically make a useful grid."),
     ]),
     section("HPC", "Parallel speed and limits", "These slides are likely multiple-choice magnets.", [
       importantSlide("speedup", "07 HPC", "speedup/efficiency block", "Speedup and efficiency", "Speedup compares runtimes; efficiency asks how well added resources are used.", "Efficiency is speedup divided by processing elements.", "High speedup can still mean poor efficiency."),
       importantSlide("amdahl", "07 HPC", "Amdahl block", "Amdahl's Law", "The serial fraction limits parallel speedup even with many processors.", "The exam trap is infinite speedup with infinite processors.", "Parallel resources cannot accelerate serial work."),
       importantSlide("uma-numa", "07 HPC", "memory architecture block", "UMA and NUMA", "Shared-memory architectures differ in whether memory access time is uniform.", "Memory topology affects parallel performance.", "Do not confuse UMA/NUMA with cloud service models."),
+      importantSlide("speedup", "07 HPC", "superlinear and examples block", "Speedup examples", "Real speedup can be linear, sublinear or occasionally superlinear due to cache effects, but the explanation must be tied to architecture.", "Measure performance with definitions, not vibes.", "Superlinear speedup is not the default expectation."),
+      importantSlide("uma-numa", "07 HPC", "shared/distributed memory block", "Shared versus distributed memory", "Shared memory uses common address space; distributed memory gives each process private memory and requires communication such as MPI.", "Programming model follows memory architecture.", "OpenMP and MPI are not interchangeable labels."),
+    ]),
+    section("Accelerators", "GPU and fair performance comparisons", "The GPU slides matter because the professor explicitly warns about unfair comparisons.", [
+      importantSlide("speedup", "07 HPC", "GPU speedup block", "Accelerators and GPUs", "Accelerators can improve suitable compute- or bandwidth-bound kernels, but data transfer and optimization level matter.", "Compare optimized CPU and GPU implementations fairly.", "Do not compare a latest GPU to old or unoptimized CPU code."),
     ]),
     section("Distributed models", "Push/pull and data placement", "The computing-model slides turn infrastructure into workflow strategy.", [
       importantSlide("push-pull", "08 Computing Models", "job submission block", "Push versus pull", "Push and pull describe who initiates task dispatch or acquisition.", "Connect submission strategy to workload management.", "This is not about phone notifications or HTTP push."),
       importantSlide("data-driven", "08 Computing Models", "data strategies block", "Compute-driven versus data-driven", "Compute-driven workflows move data to computation; data-driven models place computation near data when appropriate.", "Data movement can dominate cost and reliability.", "Ignoring data location is a big infrastructure mistake."),
+      importantSlide("data-driven", "08 Computing Models", "replicas and QoS block", "Replicas, QoS and failover", "Data-management services can maintain replicas and policies so workflows survive site failure or data locality constraints.", "Distributed workflows are also data-management problems.", "Replica is not automatically the same as a backup unless policy makes it so."),
     ]),
   ],
   "ibdpi-2026-05-15-module2-cloud-storage": [
@@ -421,8 +442,210 @@ const importantSlideSets = {
   ],
 };
 
+const expandedLessonDetails = {
+  "ibdpi-2026-04-29-datacenter-building-blocks": {
+    objectives: [
+      "Connect Cloud IaaS tradeoffs to application migration decisions.",
+      "Distinguish virtualization, cloud computing and cloud service models.",
+      "Explain what a container is and why it is lighter than a VM.",
+      "Separate Docker image, container, registry and Dockerfile roles.",
+      "Describe the basic search, pull, run and build lifecycle.",
+      "Explain why ports and volumes are required for useful containerized services.",
+      "Recognize Docker Hub as an image registry, not a runtime.",
+    ],
+    coreConcepts: [
+      concept("Cloud IaaS responsibility", "In IaaS the provider supplies compute, storage and network resources, but the user still manages operating systems, application configuration, backups and security choices.", ["IaaS", "responsibility"]),
+      concept("Virtualization versus cloud", "Virtualization creates virtual machines; cloud adds service models, self-service provisioning, elasticity, measured use and operational abstraction.", ["virtualization", "cloud"]),
+      concept("Cloud-friendly applications", "Cloud-aware applications tend to be distributed, stateless where possible, scalable and designed for failure. Moving a legacy stateful monolith onto a VM is not automatically cloud-native.", ["cloud porting", "stateless"]),
+      concept("Container", "A container packages a process runtime and dependencies while sharing the host kernel. It is lighter than a VM but not a full virtual machine.", ["container", "kernel"]),
+      concept("Docker image", "An image is the packaged template used to create containers. It is not the running process.", ["image", "template"]),
+      concept("Docker container", "A container is a running or stopped instance created from an image. Its writable layer is disposable unless persistence is configured.", ["container", "instance"]),
+      concept("Docker Hub", "Docker Hub is a registry where images can be searched, pulled and pushed. The registry stores artifacts; the Docker engine runs them.", ["Docker Hub", "registry"]),
+      concept("Dockerfile", "A Dockerfile records image build steps and makes the runtime reproducible. The exam trap is confusing recipe, built image and running container.", ["Dockerfile", "reproducibility"]),
+      concept("Container ports", "A service inside a container is not reachable just because it is running. The container port must be mapped to a host port and allowed by host/cloud networking.", ["ports", "networking"]),
+      concept("Container volumes", "Volumes or bind mounts keep data outside the disposable container layer. They are required when data must survive container removal.", ["volumes", "persistence"]),
+    ],
+    handsOn: [
+      hand("Docker lifecycle memory", "Remember the purpose of the first Docker commands.", ["docker search IMAGE", "docker pull IMAGE", "docker run IMAGE COMMAND", "docker ps", "docker images"], "You can tell whether the action searches a registry, downloads an image or starts a container.", "Treating pull, run and build as interchangeable.", "Exam angle: command-purpose questions are likely."),
+      hand("Build a simple image", "Turn manual changes into a reproducible build.", ["Create Dockerfile", "Add required packages/files", "docker build -t NAME .", "docker run NAME"], "A named image can be rebuilt and reused.", "Installing packages interactively in a container and calling that reproducible.", "Dockerfile is the recipe; the image is the result."),
+    ],
+    examCheckpoints: [
+      checkpoint("Why is cloud not just virtualization?", "Cloud adds self-service, elasticity, service models, resource pooling and measured/provisioned operation around virtualized or physical resources.", "Equating one VM with cloud computing.", ["cloud"]),
+      checkpoint("What is the difference between a Docker image and a container?", "An image is a template; a container is an instance created from that image.", "Calling every running container an image.", ["Docker"]),
+      checkpoint("Why does Docker Hub matter?", "It is the registry where images are searched, pulled and pushed, enabling reuse and distribution.", "Thinking Docker Hub runs the container for you.", ["registry"]),
+      checkpoint("What does a Dockerfile solve?", "It makes image construction repeatable instead of depending on manual interactive edits.", "Confusing Dockerfile with the built image.", ["Dockerfile"]),
+      checkpoint("Why are ports and volumes both needed?", "Ports expose services; volumes preserve or share data. They solve different operational problems.", "Using -p when persistence requires -v, or the reverse.", ["ports", "volumes"]),
+    ],
+    flashcards: [
+      card("IaaS", "Cloud model where the user manages VMs/OS/application over provider infrastructure."),
+      card("Container", "Process-level packaged runtime sharing the host kernel."),
+      card("Docker image", "Template used to create containers."),
+      card("Docker container", "Running or stopped instance of an image."),
+      card("Docker Hub", "Registry for container images."),
+      card("Dockerfile", "Recipe for building an image."),
+      card("-p", "Maps host and container ports."),
+      card("-v", "Mounts a volume or host path for persistence."),
+    ],
+    glossary: [["cloud-friendly application", "Application designed for elasticity, distribution and failure handling."], ["registry", "Service that stores and distributes container images."], ["container writable layer", "Disposable per-container filesystem changes unless persisted."], ["port mapping", "Connecting a host port to a container port."], ["bind mount", "Mounting a host path into a container."]],
+    skippedOrLowPriority: [{ topic: "Hadoop cluster creation and MapReduce exercise", reason: "Marked SKIP in Corso / optional", whatToKnowAtMost: "Recognize them as possible big-data technologies, but do not prioritize hands-on details here." }],
+  },
+  "ibdpi-2026-04-30-networking-storage-datacenter": {
+    objectives: [
+      "Explain Dockerfile build flow and image tagging.",
+      "Describe container inspection with docker ps/images and lifecycle state.",
+      "Distinguish bind mounts, Docker volumes and tmpfs mounts.",
+      "Explain why data inside a container is ephemeral.",
+      "Use tar/tgz correctly when packaging files or volume contents.",
+      "Describe Docker Compose YAML services, networks and volumes.",
+      "Explain the difference between docker-compose stop and down.",
+      "Recognize Compose as single-host stack management, not full cluster orchestration.",
+    ],
+    coreConcepts: [
+      concept("Docker build context", "docker build uses a Dockerfile and context directory to produce an image. The final dot in common commands means the current directory is the build context.", ["docker build", "context"]),
+      concept("Image tag", "A tag gives an image a usable name/version. Tags help identify what should be run or pushed.", ["tag", "image"]),
+      concept("Container lifecycle", "Containers can be created, running, stopped or removed. docker ps and docker ps -a answer different state questions.", ["lifecycle", "docker ps"]),
+      concept("Ephemeral container data", "Data written only inside the container layer disappears with that container. Persistency must be planned explicitly.", ["ephemeral", "persistence"]),
+      concept("Bind mount", "A bind mount maps a specific host path into the container. It is useful but depends on host filesystem layout.", ["bind mount", "-v"]),
+      concept("Docker volume", "A Docker volume is managed by Docker and can be referenced by name. It persists independently from a single container.", ["Docker volume", "persistence"]),
+      concept("tmpfs mount", "A tmpfs mount stores data in memory and is temporary. It is not for durable persistence.", ["tmpfs", "memory"]),
+      concept("tar/tgz packaging", "tar groups files/directories into one archive; gzip compresses. tgz/tar.gz means tar archive compressed with gzip.", ["tar", "tgz"]),
+      concept("Docker Compose", "Compose uses YAML to define a multi-container application stack: services, networks, volumes and configuration.", ["Compose", "YAML"]),
+      concept("Compose lifecycle", "compose up creates/starts, stop stops, start restarts stopped services, and down removes the stack resources more aggressively.", ["compose up", "compose down"]),
+      concept("depends_on limitation", "depends_on controls start order, not service readiness. Applications still need health/retry logic.", ["depends_on", "readiness"]),
+      concept("Compose limit", "Compose is handy on one host. Multi-node scheduling and self-healing are orchestration topics such as Swarm/Kubernetes.", ["single host", "orchestration"]),
+    ],
+    handsOn: [
+      hand("Persist container data", "Choose the correct persistence mechanism.", ["docker run -v /host/path:/container/path IMAGE", "docker volume create NAME", "docker run -v NAME:/container/path IMAGE", "docker volume ls"], "Data survives the container lifecycle when mapped through a host path or Docker volume.", "Writing important files only inside the container writable layer.", "Exam angle: know why -v is not the same as -p."),
+      hand("Compose stack memory", "Read a Compose file as infrastructure description.", ["Identify services", "Identify images/build contexts", "Identify networks", "Identify volumes", "Map ports only where external access is needed"], "You can explain the stack architecture from YAML.", "Thinking Compose guarantees application readiness just because depends_on is present.", "Compose questions often ask what the YAML defines."),
+    ],
+    examCheckpoints: [
+      checkpoint("Why is a Docker volume different from container data?", "A volume is managed independently and can persist across container removal; container writable-layer data is tied to that container.", "Assuming a running container automatically preserves data.", ["volumes"]),
+      checkpoint("What does tar do in this block?", "It packages files/directories, useful when moving content such as volume data; compression is separate.", "Saying tar is gzip.", ["tar"]),
+      checkpoint("What is Docker Compose for?", "Defining and running a multi-container application stack on one host.", "Calling Compose a full multi-node orchestrator.", ["Compose"]),
+      checkpoint("Why can compose down be dangerous?", "It removes stack resources more aggressively than stopping services, so state/persistence choices matter.", "Using down when you intended a temporary stop.", ["Compose"]),
+      checkpoint("What is the depends_on trap?", "It controls startup order but does not prove that the dependency is ready to serve requests.", "Assuming start order equals readiness.", ["Compose"]),
+    ],
+    flashcards: [
+      card("docker build -t name .", "Builds an image named/tagged name from the current context."),
+      card("docker ps", "Shows running containers."),
+      card("docker ps -a", "Shows all containers, including stopped ones."),
+      card("bind mount", "Host path mounted into a container."),
+      card("Docker volume", "Docker-managed persistent storage."),
+      card("tmpfs", "Temporary memory-backed mount."),
+      card("tar", "Archive/group files."),
+      card("tgz", "gzip-compressed tar archive."),
+      card("docker compose up", "Creates/starts a stack from Compose YAML."),
+      card("docker compose down", "Stops and removes stack resources."),
+    ],
+    glossary: [["Docker volume", "Docker-managed persistent storage object."], ["bind mount", "Direct host path mounted in a container."], ["tmpfs", "Temporary memory-backed filesystem mount."], ["Compose service", "A service definition in docker-compose YAML."], ["depends_on", "Compose directive for startup order, not readiness."]],
+    skippedOrLowPriority: [{ topic: "Container image export/import", reason: "Marked optional/SKIP priority in Corso", whatToKnowAtMost: "Know export/import exists for moving images, but prioritize Dockerfile, volumes, ports and Compose." }],
+  },
+  "ibdpi-2026-04-30-cloud-intro-iaas": {
+    objectives: [
+      "Explain why shared infrastructures may restrict the Docker daemon.",
+      "Describe udocker as userspace execution for Docker images.",
+      "Compare Docker and udocker capabilities and limits.",
+      "Explain the build-with-Docker/run-with-udocker workflow.",
+      "Use checksums as integrity checks, not confidentiality tools.",
+      "Distinguish tar archives from gzip compression and tgz combined archives.",
+      "Keep Singularity and related optional container topics visibly low priority.",
+    ],
+    coreConcepts: [
+      concept("Docker daemon security", "Normal Docker requires a daemon with high host privileges. On shared systems, administrators may restrict Docker because daemon compromise can compromise isolation.", ["Docker daemon", "security"]),
+      concept("Userspace container execution", "Userspace execution lets a normal user run container contents without privileged kernel support. That is the main udocker motivation.", ["userspace", "udocker"]),
+      concept("udocker", "udocker is a single-file Python tool from INDIGO-DataCloud for running contents of Docker images without requiring Docker support from the kernel.", ["udocker", "INDIGO"]),
+      concept("udocker command subset", "udocker supports Docker-like commands such as search, pull, import, export, load, create and run, but only for a subset of Docker behavior.", ["udocker commands", "subset"]),
+      concept("udocker limitation", "udocker cannot build images and cannot perform privileged OS operations. Images must be built elsewhere with Docker if a custom image is needed.", ["udocker limitation", "build"]),
+      concept("Root emulation", "udocker can emulate some root-like behavior inside the extracted container filesystem, but this is not host root privilege.", ["root emulation", "privilege"]),
+      concept("Checksum", "A checksum is computed from data and used to detect changes after storage or transfer. It verifies integrity, not secrecy.", ["checksum", "integrity"]),
+      concept("tar", "tar packages multiple files/directories into one archive. It is an archive tool, not compression by itself.", ["tar", "archive"]),
+      concept("tgz/tar.gz", "A tgz file is a tar archive compressed with gzip. The two operations are archive first, compress second.", ["tgz", "gzip"]),
+      concept("Singularity boundary", "Singularity is relevant to HPC/container contexts, but this course marks its usage low priority compared with Docker, Compose and udocker.", ["Singularity", "SKIP"]),
+    ],
+    handsOn: [
+      hand("Run with udocker", "Remember the conceptual workflow for restricted systems.", ["udocker pull IMAGE", "udocker create IMAGE", "udocker run CONTAINER COMMAND", "Mount local directory if needed"], "A user can execute container contents without a Docker daemon.", "Trying to build a new image with udocker.", "Exam angle: udocker runs images; Docker builds images."),
+      hand("Integrity and packaging memory", "Separate data integrity from packaging/compression.", ["Compute checksum before transfer", "Transfer/copy data", "Recompute checksum after transfer", "Use tar to group files", "Use gzip/tgz when compression is needed"], "You can say whether data changed and package many files sanely.", "Calling checksum encryption or tar compression.", "Small commands, big exam traps."),
+    ],
+    examCheckpoints: [
+      checkpoint("Why was udocker included?", "It supports user-space execution of Docker image contents when normal Docker privileges are unavailable.", "Calling it Kubernetes or a full Docker replacement.", ["udocker"]),
+      checkpoint("What can udocker not do?", "It cannot build images and cannot perform privileged OS operations.", "Trying to use udocker as a daemon-based Docker installation.", ["udocker"]),
+      checkpoint("What is a checksum used for?", "Integrity verification: detecting whether data changed.", "Calling checksum encryption or compression.", ["checksum"]),
+      checkpoint("What is the tar/tgz distinction?", "tar archives/groups files; gzip compresses; tgz is a gzip-compressed tar archive.", "Reversing tar and gzip roles.", ["tar", "tgz"]),
+      checkpoint("How should Singularity be studied here?", "As a contextual adjacent container tool, low priority if marked SKIP/optional by Corso.", "Building a full exam answer around Singularity usage.", ["SKIP"]),
+    ],
+    flashcards: [
+      card("udocker", "Userspace tool to run contents of Docker images without Docker daemon privileges."),
+      card("Docker daemon risk", "Compromise of the host daemon can break container isolation."),
+      card("udocker cannot...", "Build images or perform privileged OS operations."),
+      card("checksum", "Integrity verification value."),
+      card("tar", "Groups files into an archive."),
+      card("gzip", "Compresses data."),
+      card("tgz", "gzip-compressed tar archive."),
+      card("Singularity priority", "Recognize only; usage is low priority here."),
+    ],
+    glossary: [["udocker", "Userspace runner for Docker image contents."], ["root emulation", "Container-internal root-like behavior without host root privilege."], ["checksum", "Computed integrity value."], ["tar", "Archive format/tool for grouping files."], ["tgz", "Compressed tar archive."]],
+    skippedOrLowPriority: [{ topic: "Singularity usage", reason: "Marked SKIP/low priority in Corso", whatToKnowAtMost: "Recognize it as an HPC-friendly container platform, but do not prioritize command usage." }, { topic: "IoT, Edge, Fog, Digital Twins and Computing Continuum", reason: "Marked SKIP in Corso", whatToKnowAtMost: "Do not build a main lesson around them." }],
+  },
+  "ibdpi-2026-05-14-containers-htc-hpc-computing-models": {
+    objectives: [
+      "Differentiate HTC from HPC by workload and performance goal.",
+      "Explain grid computing through federation, standards and virtual organizations.",
+      "Identify HTC-suitable applications such as parameter sweeps and embarrassingly parallel workloads.",
+      "Define speedup, efficiency and Amdahl's Law.",
+      "Compare shared memory, distributed memory, UMA and NUMA.",
+      "Explain why accelerator/GPU comparisons must be fair.",
+      "Distinguish push and pull job submission strategies.",
+      "Compare compute-driven and data-driven computing models.",
+    ],
+    coreConcepts: [
+      concept("HTC", "High Throughput Computing maximizes completed work over many independent or loosely coupled tasks, not the speedup of one tightly coupled job.", ["HTC", "throughput"]),
+      concept("HPC", "High Performance Computing targets fast execution of demanding parallel applications, often with low-latency communication and specialized interconnects.", ["HPC", "performance"]),
+      concept("Grid computing", "A grid coordinates resources across administrative domains using standards, protocols and agreements. It is not just a bigger cluster.", ["grid", "federation"]),
+      concept("Virtual organization", "A VO groups users/institutions that share resources under agreed rules; providers decide which VOs can access resources.", ["VO", "authorization"]),
+      concept("HTC applications", "Embarrassingly parallel jobs, parameter sweeps, protein annotation and many genome sequencing workflows fit HTC because tasks can run independently.", ["embarrassingly parallel", "parameter sweep"]),
+      concept("Speedup", "Speedup compares sequential runtime with parallel runtime. It measures faster completion, not resource efficiency by itself.", ["speedup", "runtime"]),
+      concept("Efficiency", "Efficiency is speedup divided by the number of processing elements, measuring how well resources are used.", ["efficiency", "parallelism"]),
+      concept("Amdahl's Law", "Amdahl's Law warns that the serial fraction limits speedup no matter how many processors are added.", ["Amdahl", "serial fraction"]),
+      concept("UMA and NUMA", "UMA gives uniform memory access; NUMA means access time depends on where memory is relative to the processor.", ["UMA", "NUMA"]),
+      concept("Shared versus distributed memory", "Shared memory allows communication through common address space; distributed memory requires explicit communication such as MPI.", ["shared memory", "distributed memory"]),
+      concept("Accelerators", "GPUs and accelerators can help suitable kernels, but results depend on optimization, data movement and whether the workload is compute- or bandwidth-bound.", ["GPU", "accelerator"]),
+      concept("Push and pull scheduling", "Push binds work to resources early through a WMS; pull/pilot models acquire work after resources have been checked or reserved by pilot jobs.", ["push", "pull"]),
+      concept("Compute-driven model", "Jobs are sent where compute is available and data is moved accordingly.", ["compute-driven", "data transfer"]),
+      concept("Data-driven model", "Data location and availability drive where jobs run, reducing expensive or impossible data movement.", ["data-driven", "locality"]),
+      concept("Replicas and failover", "Replicas support access, policy and resilience; failover/disaster recovery concerns service continuity after failures.", ["replica", "failover"]),
+    ],
+    handsOn: [
+      hand("Choose HTC or HPC", "Classify a workload by coupling and performance objective.", ["Ask if tasks communicate frequently", "Ask whether goal is one job faster or many jobs completed", "Check data movement needs", "Choose HTC, HPC or mixed workflow"], "The infrastructure choice follows workload communication and data placement.", "Calling every cluster workload HPC.", "Exam angle: HTC versus HPC is one of the clearest traps."),
+      hand("Reason about distributed scheduling", "Explain why push/pull and data locality matter.", ["Identify WMS role", "Choose push or pilot/pull", "Identify where input data lives", "Decide whether to move data or compute", "Plan replicas/failover if needed"], "You can explain a distributed workflow without memorizing middleware names.", "Ignoring data location and assuming CPU availability is enough.", "Computing models are workflow strategies, not only acronyms."),
+    ],
+    examCheckpoints: [
+      checkpoint("What is the core HTC/HPC distinction?", "HTC maximizes throughput over many independent tasks; HPC accelerates one tightly coupled or high-performance workload.", "Defining both as 'using a cluster'.", ["HTC", "HPC"]),
+      checkpoint("What makes a grid a grid?", "Federated resources, lack of single centralized control, standard interfaces/protocols and shared policies/agreements.", "Calling any cluster a grid.", ["grid"]),
+      checkpoint("What does Amdahl's Law warn about?", "Serial work caps parallel speedup even if many processors are added.", "Assuming infinite processors imply infinite speedup.", ["Amdahl"]),
+      checkpoint("Why can GPU comparisons be misleading?", "They may compare optimized GPU code against unoptimized/old CPU code or ignore data-transfer costs.", "Treating vendor peak FLOPS as application speedup.", ["GPU"]),
+      checkpoint("What is the push versus pull distinction?", "Push assigns work to resources early; pull/pilot models let resources acquire tasks after availability/checks.", "Confusing it with network push notifications.", ["push", "pull"]),
+      checkpoint("When is data-driven scheduling preferred?", "When data is hard, expensive or impossible to move, so jobs should run near the data.", "Always sending jobs only where CPU is free.", ["data-driven"]),
+    ],
+    flashcards: [
+      card("HTC", "Many independent/loosely coupled tasks; maximize throughput."),
+      card("HPC", "Fast execution of demanding parallel workloads."),
+      card("Grid", "Federated resources with standards and shared policies."),
+      card("Speedup", "Tseq / Tpar."),
+      card("Efficiency", "Speedup divided by number of processing elements."),
+      card("Amdahl's Law", "Serial fraction limits parallel speedup."),
+      card("UMA", "Uniform Memory Access."),
+      card("NUMA", "Non-Uniform Memory Access."),
+      card("Push model", "WMS binds jobs to resources."),
+      card("Data-driven model", "Data location drives where computation runs."),
+    ],
+    glossary: [["HTC", "High Throughput Computing."], ["HPC", "High Performance Computing."], ["virtual organization", "Group sharing grid resources under rules."], ["pilot job", "Special job that pulls real tasks after reaching resources."], ["Amdahl's Law", "Limit on speedup from serial fraction."], ["replica", "Extra data copy for access, policy or resilience."]],
+    skippedOrLowPriority: [{ topic: "GridFTP/WebDAV hands-on", reason: "Marked SKIP/low priority in Corso", whatToKnowAtMost: "Recognize that data transfer tools exist; prioritize computing-model concepts." }, { topic: "OpenMPI/OpenMP optional part and NAMD/GPU live demo", reason: "Marked optional/SKIP priority", whatToKnowAtMost: "Know shared/distributed memory and fair GPU comparison concepts, not demo commands." }],
+  },
+};
+
 function buildGenericLesson(id, [title, keywords, professorNote, traps]) {
-  const objectives = [
+  const detail = expandedLessonDetails[id] || {};
+  const objectives = detail.objectives || [
     `Define the key terms in ${title}.`,
     "Explain why the topic matters for big data infrastructure design.",
     "Connect the slide concepts to the professor's exam emphasis.",
@@ -430,13 +653,15 @@ function buildGenericLesson(id, [title, keywords, professorNote, traps]) {
     "Recognize multiple-choice traps that confuse adjacent technologies.",
     "Explain the hands-on workflow at command or conceptual level.",
   ];
-  const coreConcepts = keywords.slice(0, 12).map((keyword, index) => concept(
+  const coreConcepts = detail.coreConcepts || keywords.slice(0, 12).map((keyword, index) => concept(
     keyword,
     `${keyword} is part of the course infrastructure vocabulary for this class. Study it by asking what it is, why it matters for scalable or reproducible processing, and which neighboring term it is commonly confused with.`,
     [keyword, index < 4 ? "core" : "support"]
   ));
-  while (coreConcepts.length < 8) {
-    coreConcepts.push(concept(`Exam link ${coreConcepts.length + 1}`, "Use this class as an exam bridge: define the term, state the infrastructure consequence and name the operational trap.", ["exam", "infrastructure"]));
+  if (!detail.coreConcepts) {
+    while (coreConcepts.length < 8) {
+      coreConcepts.push(concept(`Exam link ${coreConcepts.length + 1}`, "Use this class as an exam bridge: define the term, state the infrastructure consequence and name the operational trap.", ["exam", "infrastructure"]));
+    }
   }
   const walkthroughSections = importantSlideSets[id] || [
     section("Part 1", "Core framing", "Start from the conceptual problem and define the infrastructure layer.", [
@@ -451,16 +676,16 @@ function buildGenericLesson(id, [title, keywords, professorNote, traps]) {
       slide("Comparison", "Verified course PDF", "Class slides", "wrap-up", keywords[2] || "comparison", "The course often tests differences between close terms.", professorNote, traps[2] || "Name the difference before choosing an answer.", "high", "OK"),
     ]),
   ];
-  const handsOn = [
+  const handsOn = detail.handsOn || [
     hand("Command/concept memory", "Remember the purpose of the workflow, not only the syntax.", ["Identify the resource", "Apply the configuration or command", "Inspect state/output", "Fix network, permission or persistence errors"], "The resource is running, reachable or correctly persisted.", "Skipping inspection and assuming provisioning succeeded.", "Multiple-choice questions may show a command and ask what it does."),
   ];
-  const examCheckpoints = [
+  const examCheckpoints = detail.examCheckpoints || [
     checkpoint(`What is the main exam idea in ${title}?`, professorNote, traps[0], keywords.slice(0, 3)),
     checkpoint(`Which neighboring concepts are easy to confuse?`, `Compare ${keywords.slice(0, 3).join(", ")} by role and layer.`, traps[1] || traps[0], keywords.slice(0, 4)),
     checkpoint("What is the operational trap?", traps[2] || "A named resource is not necessarily configured, reachable or persistent.", "Memorizing names without checking state.", keywords.slice(0, 4)),
   ];
-  const flashcards = keywords.slice(0, 7).map((keyword) => card(keyword, `Define ${keyword} by role, infrastructure consequence and common trap.`));
-  return { objectives, coreConcepts, walkthroughSections, handsOn, examCheckpoints, flashcards, glossary: keywords.slice(0, 6).map((keyword) => [keyword, `High-yield term from ${title}.`]), skippedOrLowPriority: [] };
+  const flashcards = detail.flashcards || keywords.slice(0, 7).map((keyword) => card(keyword, `Define ${keyword} by role, infrastructure consequence and common trap.`));
+  return { objectives, coreConcepts, walkthroughSections, handsOn, examCheckpoints, flashcards, glossary: detail.glossary || keywords.slice(0, 6).map((keyword) => [keyword, `High-yield term from ${title}.`]), skippedOrLowPriority: detail.skippedOrLowPriority || [] };
 }
 
 for (const [id, data] of Object.entries(moreLessons)) {

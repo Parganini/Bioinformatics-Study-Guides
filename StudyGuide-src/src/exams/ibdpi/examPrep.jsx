@@ -14,7 +14,7 @@ function cleanOptionFeedback(text) {
 }
 
 const DISTRACTOR_FEEDBACK = {
-  "Only files larger than RAM": "Not correct. This reduces Big Data to one size threshold. The course definition is broader: volume, velocity, variety, veracity/value and the infrastructure pressure caused by processing.",
+  "Only files larger than RAM": "Not correct. This reduces Big Data to one size threshold. The technical definition is broader: volume, velocity, variety, veracity/value and the infrastructure pressure caused by processing.",
   "Any dataset stored in the cloud": "Not correct. Cloud storage is an infrastructure choice; it does not make a dataset Big Data by itself.",
   "Any AI training dataset": "Not correct. AI datasets can be Big Data, but the label depends on scale, heterogeneity, speed and processing constraints, not on the fact that AI is involved.",
   "tar compresses; gzip groups files": "Not correct. This reverses the tools: tar collects files into one archive, while gzip compresses bytes.",
@@ -22,9 +22,9 @@ const DISTRACTOR_FEEDBACK = {
   "tgz is a filesystem": "Not correct. A tgz file is an archive format. It is not mounted as the filesystem where files live during normal operation.",
   "Confidentiality": "Not correct. Confidentiality is about preventing unauthorized reading. A checksum can reveal accidental or malicious changes, but it does not hide data.",
   "Compression": "Not correct. Compression reduces representation size. A checksum is a small integrity value computed from the data.",
-  "Network routing": "Not correct. Routing decides packet paths through networks. Checksums in this course are about verifying data integrity after storage or transfer.",
+  "Network routing": "Not correct. Routing decides packet paths through networks. Checksums verify data integrity after storage or transfer.",
   "It avoids all infrastructure work": "Not correct. A good application choice can reduce waste, but infrastructure design is still necessary for big data workloads.",
-  "It is a licensing requirement": "Not correct. The professor's point was technical: application choice changes CPU, memory, storage and network pressure.",
+  "It is a licensing requirement": "Not correct. The point is technical: application choice changes CPU, memory, storage and network pressure.",
   "It replaces checksums": "Not correct. Choosing the right application and verifying file integrity solve different problems.",
   "A thread is always a physical core": "Not correct. Hardware threads can be logical execution contexts exposed by a core; they are not automatically separate cores.",
   "Threads are storage devices": "Not correct. Threads are execution contexts for computation. Storage devices are disks, volumes, arrays or networked storage systems.",
@@ -53,7 +53,7 @@ const DISTRACTOR_FEEDBACK = {
   "IaaS = application, SaaS = raw VM": "Not correct. This reverses the abstraction levels: IaaS exposes infrastructure such as VMs, while SaaS exposes finished software.",
   "PaaS = power as a service": "Not correct. PaaS is Platform as a Service, not power infrastructure.",
   "SaaS = storage area service": "Not correct. SaaS is Software as a Service; storage area network is a separate storage concept.",
-  "Cloud forbids VMs": "Not correct. VMs are common in IaaS. The course point is that cloud adds service and operational layers on top of virtualization.",
+  "Cloud forbids VMs": "Not correct. VMs are common in IaaS. Cloud adds service and operational layers on top of virtualization.",
   "Virtualization is always physical": "Not correct. Virtualization is explicitly about creating virtual resources over physical hardware.",
   "Cloud has no networks": "Not correct. Cloud systems still rely on networking, subnets, security groups and service connectivity.",
   "Protocol usage estimate": "Not correct. PUE is a datacenter power-efficiency metric, not a network protocol metric.",
@@ -72,11 +72,11 @@ const DISTRACTOR_FEEDBACK = {
   "OAuth authenticates users": "Not correct. OAuth is an authorization framework, and it is not what Amdahl's Law describes.",
   "Containers need volumes": "Not correct. Containers and volumes are relevant to persistency, but Amdahl's Law is a parallel-computing limit.",
   "Checksum divided by archive size": "Not correct. That ratio is not a parallel efficiency metric. Efficiency compares achieved speedup to resources used.",
-  "Latency times bandwidth": "Not correct. Latency and bandwidth are performance properties, but their product is not the course definition of parallel efficiency.",
+  "Latency times bandwidth": "Not correct. Latency and bandwidth are performance properties, but their product is not the definition of parallel efficiency.",
   "GPU memory size": "Not correct. GPU memory capacity may constrain workloads, but efficiency measures how well processing elements are used.",
   "Universal mount archive": "Not correct. This sounds like a storage/archive acronym, but UMA is a memory-architecture term.",
   "User managed authorization": "Not correct. Authorization belongs to AAI. UMA here means Uniform Memory Access.",
-  "Untrusted machine account": "Not correct. This is not the course meaning. UMA describes uniform memory access latency from processors.",
+  "Untrusted machine account": "Not correct. UMA describes uniform memory access latency from processors.",
   "GPUs never accelerate code": "Not correct. GPUs can accelerate suitable parallel workloads; the caution is about fair benchmarking.",
   "CPUs cannot run serial code": "Not correct. CPUs are well suited for serial control-heavy work. The comparison issue is optimization and data movement.",
   "GPU means grid protocol unit": "Not correct. GPU means Graphics Processing Unit, used as an accelerator for some parallel computation.",
@@ -187,18 +187,33 @@ function q(question, options, correct, explanation, trap, module = "M1", optionF
   return { id: makeQuestionId(question), question, options, correct, explanation, trap, module, optionFeedback: feedback };
 }
 
+function distributeCorrectOption(item, index) {
+  const offset = index % item.options.length;
+  if (offset === 0) return item;
+  const rotate = (values) => values.map((_, newIndex) => {
+    const oldIndex = (newIndex - offset + values.length) % values.length;
+    return values[oldIndex];
+  });
+  return {
+    ...item,
+    options: rotate(item.options),
+    optionFeedback: rotate(item.optionFeedback),
+    correct: (item.correct + offset) % item.options.length,
+  };
+}
+
 const QUESTIONS = [
-  q("What is the best course-specific definition of Big Data?", ["Only files larger than RAM", "Data whose size, speed, variety or value extraction creates infrastructure pressure", "Any dataset stored in the cloud", "Any AI training dataset"], 1, "The course uses the 5 Vs and infrastructure consequences.", "Volume alone is not enough."),
+  q("Which definition best captures Big Data in infrastructure terms?", ["Only files larger than RAM", "Data whose size, speed, variety or value extraction creates infrastructure pressure", "Any dataset stored in the cloud", "Any AI training dataset"], 1, "The 5 Vs matter because they create storage, transfer, processing and reliability constraints.", "Volume alone is not enough."),
   q("Which pair is most accurate?", ["tar compresses; gzip groups files", "tar groups files; gzip compresses", "checksum encrypts; tgz signs", "tgz is a filesystem"], 1, "tar creates an archive; gzip compresses it, producing tgz/tar.gz.", "Do not confuse archiving with compression."),
   q("What is a checksum used for?", ["Confidentiality", "Integrity verification", "Compression", "Network routing"], 1, "A checksum helps detect whether data changed during storage or transfer.", "It is not encryption."),
-  q("Why did the professor stress choosing the right application?", ["It avoids all infrastructure work", "The algorithm/application can dominate resource needs", "It is a licensing requirement", "It replaces checksums"], 1, "Better application choice can reduce the need for brute-force scaling.", "More machines are not always the answer."),
-  q("What is the main lesson of the brute force vs BLAST/BWA comparison?", ["Always buy more cloud machines first", "The selected application or indexed method can dominate runtime", "Checksums make searches faster", "BWA is a storage system"], 1, "The computational-challenge slides use BLAST/BWA to show that tool choice can change the infrastructure problem before scaling resources.", "Do not turn an application-choice lesson into a cloud-capacity answer.", "M1", [
-    "Adding machines may help later, but the professor's point was to choose a suitable application before scaling.",
-    "Correct. The comparison shows that an indexed/optimized tool can beat brute-force scaling by orders of magnitude.",
-    "Checksums verify integrity after storage or transfer; they do not accelerate sequence search.",
-    "BWA is an alignment tool in the example, not a storage architecture such as NAS or SAN.",
+  q("Why can choosing the right application reduce infrastructure pressure?", ["It avoids all infrastructure work", "The algorithm/application can dominate resource needs", "It is a licensing requirement", "It replaces checksums"], 1, "Better application choice can reduce the need for brute-force scaling.", "More machines are not always the answer."),
+  q("What is the infrastructure impact of choosing an indexed or optimized algorithm?", ["Always buy more cloud machines first", "It can reduce runtime and data-access pressure before scaling hardware", "Checksums make searches faster", "It turns storage into a SAN"], 1, "Algorithmic structure can change the amount of CPU, memory, storage and network capacity needed.", "Do not turn an algorithm-choice problem into a cloud-capacity answer.", "M1", [
+    "Adding machines may help later, but it does not fix an unnecessarily expensive algorithmic strategy.",
+    "Correct. Indexed or optimized methods can reduce the work that infrastructure must absorb.",
+    "Checksums verify integrity after storage or transfer; they do not accelerate search or indexing.",
+    "SAN is a storage architecture; it is not the result of choosing a better algorithm.",
   ]),
-  q("Why should huge uncompressed ASCII files usually not be moved around casually in this course?", ["Because ASCII cannot be checksummed", "Because compression/archive choices reduce transfer and storage pressure", "Because tar encrypts the file", "Because POSIX forbids text files"], 1, "The course explicitly warns against moving huge uncompressed ASCII files when a compressed archive is appropriate.", "Do not confuse compression, archiving and integrity checks.", "M1", [
+  q("Why should huge uncompressed ASCII files usually not be moved around casually?", ["Because ASCII cannot be checksummed", "Because compression/archive choices reduce transfer and storage pressure", "Because tar encrypts the file", "Because POSIX forbids text files"], 1, "Huge text data can create avoidable transfer and storage pressure when a compressed archive is appropriate.", "Do not confuse compression, archiving and integrity checks.", "M1", [
     "ASCII files can be checksummed; checksum is about integrity, not whether text data can be moved.",
     "Correct. tar/tgz and compression choices matter because data movement is part of infrastructure cost.",
     "tar groups files; encryption is a different security operation.",
@@ -208,31 +223,31 @@ const QUESTIONS = [
   q("Which is the main difference between bandwidth and latency?", ["Bandwidth is delay; latency is throughput", "Bandwidth is transfer rate; latency is response delay", "They are synonyms", "Latency applies only to storage"], 1, "Bandwidth measures amount per time; latency measures waiting time.", "Fast bandwidth does not eliminate latency."),
   q("What does IOPS measure?", ["CPU cycles", "Input/output operations per second", "Network addresses per subnet", "Power usage"], 1, "IOPS is useful for small/random I/O behavior.", "Bandwidth and IOPS answer different questions."),
   q("Why can tape be useful in large infrastructures?", ["It has excellent random access", "It can be cost-effective for cold/sequential data", "It replaces RAM", "It is POSIX by default"], 1, "Tape is often useful for cold archival data with sequential access patterns.", "Tape is not good for random access."),
-  q("What is POSIX in this course?", ["A cloud provider", "A filesystem/interface semantics concept", "A RAID level", "A Docker image format"], 1, "POSIX describes familiar file operations and semantics.", "It is not simply any disk."),
+  q("What is POSIX?", ["A cloud provider", "A filesystem/interface semantics concept", "A RAID level", "A Docker image format"], 1, "POSIX describes familiar file operations and semantics.", "It is not simply any disk."),
   q("Which sequence makes a cloud block volume usable as files?", ["Attach, format, mount", "Mount, attach, format", "Format, detach, mount", "SSH, gzip, route"], 0, "The block device must be attached, given a filesystem and mounted.", "Provisioning alone is not mounting."),
   q("What is fairshare in a batch system?", ["A filesystem backup", "A scheduling policy considering usage/allocation", "A network protocol", "A Docker option"], 1, "Fairshare adjusts priority according to policy and historical use.", "It is not simple equal time for every user."),
   q("What does quota usually express?", ["A limit on resource use", "A checksum type", "A cloud deployment model", "A cache level"], 0, "Quota constrains the amount of resource a user/project may consume.", "Do not confuse quota with fairshare priority."),
-  q("Which is the correct cloud-service mapping?", ["IaaS = application, SaaS = raw VM", "IaaS = infrastructure, PaaS = platform, SaaS = software application", "PaaS = power as a service", "SaaS = storage area service"], 1, "The course uses the standard IaaS/PaaS/SaaS split.", "IaaS is not just 'any cloud'."),
+  q("Which is the correct cloud-service mapping?", ["IaaS = application, SaaS = raw VM", "IaaS = infrastructure, PaaS = platform, SaaS = software application", "PaaS = power as a service", "SaaS = storage area service"], 1, "IaaS, PaaS and SaaS describe different abstraction levels.", "IaaS is not just 'any cloud'."),
   q("Why is cloud not just virtualization?", ["Cloud forbids VMs", "Cloud adds service models, provisioning, elasticity and abstraction", "Virtualization is always physical", "Cloud has no networks"], 1, "Virtualization is a component; cloud adds operational/service layers.", "A VM alone is not the full cloud concept."),
   q("What is PUE?", ["Protocol usage estimate", "Power Usage Effectiveness", "Public user endpoint", "Parallel unit efficiency"], 1, "PUE measures datacenter facility efficiency.", "It is power/cooling scope, not network scope."),
-  q("Which storage relation is correct?", ["DAS is directly attached storage", "NAS has no network", "SAN means server archive number", "TAN is a Docker feature"], 0, "DAS is direct; NAS/SAN/TAN are storage architecture terms in the course scope.", "Do not collapse all storage systems into 'disk'."),
+  q("Which storage relation is correct?", ["DAS is directly attached storage", "NAS has no network", "SAN means server archive number", "TAN is a Docker feature"], 0, "DAS, NAS, SAN and TAN describe different storage attachment/access architectures.", "Do not collapse all storage systems into 'disk'."),
   q("What is HTC optimized for?", ["Tightly coupled low-latency parallel jobs", "High throughput across many independent or loosely coupled tasks", "Single-thread latency only", "Filesystem formatting"], 1, "HTC maximizes throughput over many tasks.", "HTC is not HPC."),
   q("What is HPC optimized for?", ["Coordinated high-performance parallel computation", "Only web hosting", "Cold archives", "Identity federation"], 0, "HPC targets performance for tightly coupled or high-performance workloads.", "Do not define HPC as any cluster."),
   q("What does Amdahl's Law warn about?", ["Compression always helps", "Serial fractions limit parallel speedup", "OAuth authenticates users", "Containers need volumes"], 1, "Remaining serial work caps achievable speedup.", "Infinite processors do not give infinite speedup."),
   q("What is efficiency in parallel computing?", ["Speedup divided by number of processing elements", "Checksum divided by archive size", "Latency times bandwidth", "GPU memory size"], 0, "Efficiency tells how well added resources are used.", "High speedup can still have low efficiency."),
   q("What is UMA?", ["Uniform Memory Access", "Universal mount archive", "User managed authorization", "Untrusted machine account"], 0, "UMA means memory access time is uniform from processors.", "Do not confuse UMA/NUMA with cloud models."),
-  q("Why can GPU comparisons be misleading?", ["GPUs never accelerate code", "Comparisons may use different optimization levels or include data-transfer costs unfairly", "CPUs cannot run serial code", "GPU means grid protocol unit"], 1, "The professor warned against unfair CPU vs GPU comparisons.", "Compare optimized implementations and include data movement."),
+  q("Why can GPU comparisons be misleading?", ["GPUs never accelerate code", "Comparisons may use different optimization levels or include data-transfer costs unfairly", "CPUs cannot run serial code", "GPU means grid protocol unit"], 1, "CPU/GPU comparisons are only meaningful when optimization level, workload fit and data movement are considered.", "Compare optimized implementations and include data movement."),
   q("What is a workload management system?", ["A REST format", "Software that queues, schedules and manages jobs", "An archive utility", "A checksum store"], 1, "WMS handles job submission and execution policy.", "It is not merely a shell script."),
   q("Push versus pull job submission concerns what?", ["Who initiates work placement/execution", "How tar compresses files", "Which cache is closest", "Which IDP signs SAML"], 0, "It describes job/task dispatch strategy.", "It is not network push notifications."),
   q("What is a replica in data management?", ["An extra logical/physical copy used for access, policy or resilience", "A CPU thread", "A Dockerfile line", "A Kerberos ticket"], 0, "Replicas support availability, locality or policy.", "Replicas are not automatically backups unless managed as such."),
   q("What is disaster recovery about?", ["Recovering service/data after major failure", "Making a filesystem POSIX", "Opening Docker port 80", "Running chmod"], 0, "It concerns failover and recovery planning.", "It is broader than a single retry."),
   q("What is a Docker image?", ["A running process", "A packaged filesystem/runtime template used to start containers", "A mounted volume", "A subnet"], 1, "Images are templates; containers are running instances.", "Image and container are not synonyms."),
   q("What does a Dockerfile provide?", ["A reproducible recipe for building an image", "A checksum only", "A cloud billing account", "A Kerberos realm"], 0, "A Dockerfile records image build steps.", "It is not the same as the built image."),
-  q("What does Docker -v commonly do?", ["Maps persistence through a volume or bind mount", "Maps ports", "Deletes an image", "Starts Kubernetes"], 0, "The professor highlighted -v for persistence.", "Do not confuse -v with -p."),
+  q("What does Docker -v commonly do?", ["Maps persistence through a volume or bind mount", "Maps ports", "Deletes an image", "Starts Kubernetes"], 0, "The -v option maps a volume or bind mount for persistent or shared data.", "Do not confuse -v with -p."),
   q("What does Docker -p commonly do?", ["Maps host/container ports", "Creates a checksum", "Formats a filesystem", "Requests fairshare"], 0, "It exposes container service ports through host ports.", "Port mapping can still be blocked by firewall/security groups."),
-  q("What is Docker Compose best for in this course?", ["Defining and running multi-container stacks on one host", "Federated identity", "Replacing Kubernetes in production always", "Creating POSIX filesystems"], 0, "Compose uses YAML to describe services, networks and volumes.", "Compose is not the full cluster orchestration story."),
-  q("Why was udocker included?", ["Run containers in userspace where normal Docker privileges may not be available", "Replace checksums", "Create SAML tokens", "Measure PUE"], 0, "udocker supports user-space container execution.", "Singularity usage is low priority by Corso."),
-  q("What is object storage?", ["Key/object-based storage commonly accessed through APIs rather than POSIX paths", "Always a mounted NFS directory", "A CPU cache", "A Docker volume only"], 0, "Module 2 contrasts object storage with POSIX/NFS.", "Object storage is not automatically POSIX."),
+  q("What is Docker Compose best for?", ["Defining and running multi-container stacks on one host", "Federated identity", "Replacing Kubernetes in production always", "Creating POSIX filesystems"], 0, "Compose uses YAML to describe services, networks and volumes.", "Compose is not the full cluster orchestration story."),
+  q("Why is udocker useful?", ["Run containers in userspace where normal Docker privileges may not be available", "Replace checksums", "Create SAML tokens", "Measure PUE"], 0, "udocker supports user-space container execution.", "It does not replace understanding container images, volumes and runtime behavior."),
+  q("What is object storage?", ["Key/object-based storage commonly accessed through APIs rather than POSIX paths", "Always a mounted NFS directory", "A CPU cache", "A Docker volume only"], 0, "Object storage exposes data as objects through service APIs rather than ordinary POSIX file paths.", "Object storage is not automatically POSIX."),
   q("What is REST?", ["An architectural style for stateless resource-oriented APIs", "A data format", "A filesystem", "A batch queue"], 0, "REST describes API architecture.", "JSON is the data format often used with REST."),
   q("What is JSON?", ["A lightweight data interchange format", "A cloud deployment model", "A network switch", "A Kubernetes node"], 0, "JSON structures data as objects/arrays/values.", "REST and JSON are different layers."),
   q("What is NFS?", ["Network File System", "New function server", "Node filesystem scheduler", "Network federation service"], 0, "NFS provides remote filesystem access.", "Remote POSIX-like access can carry latency costs."),
@@ -243,17 +258,17 @@ const QUESTIONS = [
     "Checksum algorithms verify data integrity; Docker bridge membership is networking.",
     "Kubernetes deployment scaling is managed by Kubernetes objects, not by Docker bridge membership.",
   ]),
-  q("What does Docker NAT demonstrate in the container-networking lecture?", ["Outbound Internet access does not prove all container-to-container paths are open", "NAT turns a container into a Docker volume", "NAT replaces cloud security groups", "NAT is the same as OpenID Connect"], 0, "A container may reach the Internet through NAT while still being isolated from containers on other bridges or blocked from inbound access.", "Do not treat one successful ping as proof of full reachability.", "M2", [
+  q("What does Docker NAT demonstrate about container connectivity?", ["Outbound Internet access does not prove all container-to-container paths are open", "NAT turns a container into a Docker volume", "NAT replaces cloud security groups", "NAT is the same as OpenID Connect"], 0, "A container may reach the Internet through NAT while still being isolated from containers on other bridges or blocked from inbound access.", "Do not treat one successful ping as proof of full reachability.", "M2", [
     "Correct. NAT can enable outbound connectivity while other local or inbound paths remain blocked.",
     "Docker volumes are persistence mechanisms; NAT is network address translation.",
     "Cloud security groups can still block traffic even if Docker networking is configured correctly.",
     "OpenID Connect is an identity protocol layer over OAuth, unrelated to container NAT.",
   ]),
-  q("Why is Portainer not a replacement for learning Docker commands and concepts?", ["It exposes the same Docker objects through a graphical interface", "It converts Docker images into Kubernetes pods automatically", "It removes the need for security groups", "It stores SAML assertions"], 0, "Portainer is a GUI over Docker state such as containers, logs, stats and consoles.", "A GUI does not change the underlying model.", "M2", [
-    "Correct. Portainer visualizes and controls Docker concepts; it does not replace understanding them.",
-    "Kubernetes pod creation is an orchestration concern, not automatic Portainer image conversion.",
-    "Cloud firewall/security-group reachability still matters when Portainer maps ports.",
-    "SAML assertions belong to federated identity, not Docker GUI management.",
+  q("What is the conceptual role of a container-management GUI?", ["It exposes container-engine objects through a graphical interface", "It converts Docker images into Kubernetes pods automatically", "It removes the need for network access rules", "It stores SAML assertions"], 0, "A GUI can visualize containers, logs, stats and consoles, but the underlying container model is unchanged.", "A graphical interface does not replace understanding images, containers, ports, logs and volumes.", "M2", [
+    "Correct. The GUI is another interface to container-engine state and operations.",
+    "Kubernetes pod creation is an orchestration concern, not an automatic image conversion.",
+    "Firewalls, security groups and port exposure still matter even if a GUI is used.",
+    "SAML assertions belong to federated identity, not container GUI management.",
   ]),
   q("What is authentication?", ["Proving who or what an entity is", "Deciding permitted actions", "Compressing files", "Scheduling jobs"], 0, "Authentication establishes identity.", "Do not confuse with authorization."),
   q("What is authorization?", ["Deciding what an authenticated entity may do", "Proving password correctness only", "Archiving data", "Launching an EC2 VM"], 0, "Authorization uses identity/claims/policy to grant access.", "Authentication alone does not imply permission."),
@@ -265,7 +280,7 @@ const QUESTIONS = [
   q("What does OpenID Connect add?", ["Authentication layer and ID tokens on top of OAuth", "RAID parity", "NFS mounting", "Batch queues"], 0, "OIDC uses OAuth flows plus identity information.", "Do not answer OAuth when asked about authentication."),
   q("What role did INDIGO-IAM play?", ["Identity/access management service using federation and OIDC-style flows", "A Docker image registry", "A filesystem type", "An HPC benchmark"], 0, "It ties identity, groups and tokens for services.", "IAM is not only a login page."),
   q("Why are microservices useful?", ["They split an application into small focused services that can scale and evolve independently", "They eliminate networking", "They require no monitoring", "They are always simpler than monoliths"], 0, "Microservices help elasticity and specialization.", "They also add operational complexity."),
-  q("What is DevOps?", ["Combining development and operations practices with short feedback cycles", "A cloud storage protocol", "A checksum algorithm", "A Kerberos realm"], 0, "The course frames DevOps as a way of thinking and operating releases.", "Not just a tool name."),
+  q("What is DevOps?", ["Combining development and operations practices with short feedback cycles", "A cloud storage protocol", "A checksum algorithm", "A Kerberos realm"], 0, "DevOps connects software development, deployment, operation and feedback.", "Not just a tool name."),
   q("What is Kubernetes pod?", ["Basic deployable unit that encapsulates containerized application resources", "A public IP", "A Docker Hub token", "A RAID group"], 0, "Pods are core Kubernetes units and get cluster-level networking.", "A pod is not the whole cluster."),
   q("What does a Kubernetes deployment do?", ["Maintains desired replica state for pods", "Formats block devices", "Authenticates with SAML", "Compresses archives"], 0, "Deployments keep requested replicas running.", "Deleting a pod may cause replacement."),
   q("Why does Kubernetes use Services when pods already have IP addresses?", ["Pod IPs are private/changeable, while Services provide stable access policy", "Services are checksum files", "Services replace Dockerfiles", "Services are Italian identity providers"], 0, "A Service gives stable access to a logical set of pods whose individual IPs can change.", "Direct pod IP access is fragile.", "M2", [
@@ -275,7 +290,7 @@ const QUESTIONS = [
     "Identity providers belong to federation/AAI topics such as IDEM or eduGAIN, not Kubernetes Services.",
   ]),
   q("What is the right way to think about secrets versus configs?", ["Secrets hold sensitive data; configs hold non-sensitive configuration", "Configs are encrypted passwords and secrets are public notes", "Both are just Docker images", "Both are CPU scheduling policies"], 0, "Secrets protect passwords/tokens/keys; configs are for non-sensitive configuration files or values.", "Sensitive and non-sensitive runtime data should not be collapsed.", "M2", [
-    "Correct. The course separates secret material from ordinary configuration.",
+    "Correct. Sensitive runtime data and ordinary configuration have different security requirements.",
     "This reverses the distinction: configs are not the place for passwords.",
     "Images package runtime filesystems; secrets/configs are runtime configuration mechanisms.",
     "Scheduling policies such as fairshare belong to batch systems, not container secrets/configs.",
@@ -283,13 +298,13 @@ const QUESTIONS = [
   q("Which persistence/configuration choice is safest for a database password in a containerized stack?", ["A secret", "A Docker volume containing public data", "A plaintext value committed in docker-compose.yml", "A README sentence"], 0, "Passwords, tokens and keys should be handled as secrets rather than stored in source or images.", "Working once is not enough if credentials are exposed.", "M2", [
     "Correct. A secret is meant for sensitive runtime data such as passwords or tokens.",
     "A volume may persist data, but it is not automatically the right abstraction for protecting a password.",
-    "The cloud-automation slides explicitly call plaintext credentials in Compose files the anti-pattern.",
+    "Plaintext credentials in Compose files expose sensitive operational data.",
     "A README documents use; it must not contain operational secrets.",
   ]),
   q("What is Infrastructure as Code?", ["Machine-readable templates describing infrastructure and services", "Writing data inside Docker images", "Manual clicking only", "A checksum table"], 0, "IaC lets systems interpret templates and create resources.", "The template describes what; the platform handles how."),
   q("What does serverless mean?", ["Provider manages server provisioning while user supplies event-triggered code", "There are literally no servers", "It is only SaaS", "It means no cost"], 0, "Serverless abstracts server management.", "Servers still exist."),
   q("What is FaaS?", ["Event-triggered function execution as a cloud service", "Fairshare as a Service", "Filesystem archive access", "Federated authentication assertion"], 0, "FaaS runs functions in response to triggers.", "Do not confuse it with a long-running VM."),
-];
+].map(distributeCorrectOption);
 
 QUESTIONS.forEach((item, index) => {
   if (index >= 32) item.module = "M2";
@@ -377,19 +392,19 @@ const COMMAND_MEMORY = [
   ["Kubernetes/FaaS workflow", "Create manifests, apply with `kubectl`, inspect pods/deployments/services; FaaS attaches function code to events."],
 ];
 
-const PROFESSOR_NOTES = [
-  "The course is about infrastructure, not analytics or AI models.",
-  "Do not choose infrastructure before understanding the application and data access pattern.",
-  "IOPS and bandwidth are different exam concepts.",
-  "Cloud is not just virtualization; it adds service models, provisioning, elasticity and abstraction.",
-  "A Docker image, container, Dockerfile and volume are separate concepts.",
-  "OAuth is authorization; OpenID Connect adds authentication.",
-  "Kubernetes is operated through manifests and APIs; deleting one pod in a deployment is not the same as deleting the deployment.",
-  "Serverless does not mean there are no servers; it means the provider manages them for the function execution model.",
+const HIGH_YIELD_PRINCIPLES = [
+  "Infrastructure choices depend on workload shape: data size, access pattern, latency sensitivity, parallelism and reliability needs.",
+  "A better algorithm or application can reduce CPU, memory, storage and network pressure before hardware scaling begins.",
+  "IOPS, bandwidth and latency describe different bottlenecks and should not be used as synonyms.",
+  "Cloud computing combines virtualization with service models, provisioning, elasticity and operational abstraction.",
+  "Docker image, running container, Dockerfile, volume and port mapping are separate concepts.",
+  "OAuth delegates authorization; OpenID Connect adds an authentication layer and identity tokens.",
+  "A Kubernetes deployment manages desired pod replicas; a Service provides stable access to replaceable pods.",
+  "Serverless hides server provisioning from the user; servers still exist and the function still consumes resources.",
 ];
 
 const LAST_PASS = [
-  ["Big Data and application choice", "Use the 5 Vs, use-case class and scientific examples to explain why the infrastructure is needed.", "Trap: answering only 'large file' or ignoring whether the application really fits the infrastructure."],
+  ["Big Data and application choice", "Use the 5 Vs, workload type and data-access pattern to explain why the infrastructure is needed.", "Trap: answering only 'large file' or ignoring whether the application really fits the infrastructure."],
   ["Integrity, archives and volumes", "Checksum verifies integrity; tar groups files; tgz is tar plus gzip; cloud volumes need attach, filesystem creation and mount.", "Trap: treating checksum as encryption or mounting a raw/unattached block device."],
   ["Datacenter performance vocabulary", "CPU cores/threads/caches, memory latency, network bandwidth/latency and storage IOPS describe different bottlenecks.", "Trap: using bandwidth, latency and IOPS as interchangeable performance words."],
   ["Storage-system layers", "POSIX, RAID, DAS, NAS, SAN, TAN and parallel file systems describe interface, redundancy, attachment and access patterns.", "Trap: calling any disk POSIX or confusing networked file storage with block storage."],
@@ -556,9 +571,9 @@ export default function IBDPIExamPrepPage() {
             {COMMAND_MEMORY.map(([title, body]) => <div key={title} className="rounded-2xl border border-stone-200 bg-stone-50 p-4"><h3 className="font-black text-stone-950">{title}</h3><p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{body}</p></div>)}
           </div>
         </Section>
-        <Section eyebrow="Professor emphasis" title="Do not miss these">
+        <Section eyebrow="High-yield principles" title="Do not miss these">
           <div className="grid gap-3">
-            {PROFESSOR_NOTES.map((note) => <div key={note} className="rounded-2xl border border-sky-200 bg-sky-50 p-4 text-sm font-bold leading-6 text-sky-900">{note}</div>)}
+            {HIGH_YIELD_PRINCIPLES.map((note) => <div key={note} className="rounded-2xl border border-sky-200 bg-sky-50 p-4 text-sm font-bold leading-6 text-sky-900">{note}</div>)}
           </div>
         </Section>
       </div>

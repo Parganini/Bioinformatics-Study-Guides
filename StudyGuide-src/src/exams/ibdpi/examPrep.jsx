@@ -187,6 +187,18 @@ function q(question, options, correct, explanation, trap, module = "M1", optionF
   return { id: makeQuestionId(question), question, options, correct, explanation, trap, module, optionFeedback: feedback };
 }
 
+function qConcept(question, optionData, correct, explanation, trap, module = "BDP1") {
+  return q(
+    question,
+    optionData.map(([option]) => option),
+    correct,
+    explanation,
+    trap,
+    module,
+    optionData.map(([, feedback], optionIndex) => optionIndex === correct ? `Correct. ${explanation}` : feedback)
+  );
+}
+
 function distributeCorrectOption(item, index) {
   const offset = index % item.options.length;
   if (offset === 0) return item;
@@ -309,6 +321,237 @@ const QUESTIONS = [
 QUESTIONS.forEach((item, index) => {
   if (index >= 32) item.module = "M2";
 });
+
+const BDP1_PDF_EXAM_QUESTIONS = [
+  qConcept("What is the core computational problem in mapping sequencing reads to a genome?", [
+    ["Finding short substrings inside a very large reference string", "Not correct. This is not wrong as a phrase, but the key is matching many reads to a reference at scale; a single substring lookup misses the infrastructure pressure."],
+    ["Encrypting each read before storage", "Encryption protects confidentiality; it does not solve sequence alignment or mapping."],
+    ["Replacing the reference genome with a checksum", "A checksum verifies integrity; it cannot replace the data structure needed for alignment."],
+    ["Turning DNA sequences into network packets", "Packets are a networking concept, not the core read-mapping computation."],
+  ], 0, "Read mapping is essentially large-scale string matching against a reference, where algorithmic choices affect runtime and infrastructure needs.", "Do not confuse integrity tools or networking with the alignment problem."),
+  qConcept("Why can indexed sequence-search methods reduce infrastructure demand?", [
+    ["They reduce the search space or lookup cost before hardware scaling is considered", "Correct. Indexing changes the amount of work the system must perform."],
+    ["They make disk bandwidth irrelevant", "Indexing can reduce work, but storage and memory access still matter."],
+    ["They remove the need for data integrity checks", "Integrity checks remain necessary when data is stored or transferred."],
+    ["They convert genomic data into object storage automatically", "Object storage is a storage model; it is not the result of an alignment index."],
+  ], 0, "An index can make lookups much cheaper, so the same infrastructure can process larger data or finish sooner.", "More machines are not the only solution to a slow workload."),
+  qConcept("What does a checksum primarily verify?", [
+    ["Data integrity after storage or transfer", "Correct. Matching checksums indicate that the bytes are likely unchanged."],
+    ["User identity", "Identity is handled by authentication mechanisms, not checksums."],
+    ["File compression ratio", "Compression ratio measures size reduction; checksum verifies content."],
+    ["Network routing policy", "Routing policy decides paths; checksum verification checks data content."],
+  ], 0, "A checksum is a compact value used to detect accidental or malicious changes in data.", "A checksum is not encryption or authentication."),
+  qConcept("Which statement best distinguishes structured, semi-structured and unstructured data?", [
+    ["They differ by degree of schema and organization", "Correct. Tables, JSON/XML-like records and free text/images have different structural constraints."],
+    ["They differ only by file size", "Small or large data can be structured, semi-structured or unstructured."],
+    ["Only structured data can be processed", "Unstructured and semi-structured data can be processed, but often require different tools."],
+    ["Only unstructured data is Big Data", "Big Data can involve any of the three depending on scale and processing constraints."],
+  ], 0, "The categories describe how data is organized, not simply whether it is large.", "Do not reduce Big Data to unstructured files only."),
+  qConcept("What is the role of CPU cache in a processor hierarchy?", [
+    ["To reduce effective memory access latency for frequently used data", "Correct. Caches sit closer to the CPU than RAM and exploit locality."],
+    ["To permanently store all user files", "Persistent user files belong to storage devices, not CPU cache."],
+    ["To replace network bandwidth", "Cache affects CPU-memory access, not network throughput."],
+    ["To enforce cloud quotas", "Quota is a resource policy concept, not a CPU-cache function."],
+  ], 0, "Caches improve performance by keeping likely-needed data close to the processor.", "Cache is not RAM, disk or a scheduler policy."),
+  qConcept("What is the safest interpretation of cores and threads?", [
+    ["Cores are physical execution resources; threads may be logical execution contexts", "Correct. Hardware threads can improve utilization but do not equal extra physical cores."],
+    ["A thread is always a separate physical CPU", "A thread may be logical; counting it as a full core is a common mistake."],
+    ["Cores store files and threads route packets", "Storage and routing are different system layers."],
+    ["More threads always means linear speedup", "Speedup depends on workload, serial fraction, memory pressure and scheduling."],
+  ], 0, "Cores and threads describe processor execution capacity, but they are not interchangeable.", "Do not equate logical threads with physical cores."),
+  qConcept("What is the main difference between bandwidth and latency?", [
+    ["Bandwidth is amount per time; latency is delay before response or transfer", "Correct. High bandwidth does not automatically imply low latency."],
+    ["Bandwidth is delay; latency is amount per time", "This reverses the definitions."],
+    ["They are synonyms in networks but not in storage", "They are distinct in networks, storage and memory systems."],
+    ["Latency applies only to CPU caches", "Latency appears across memory, storage, networks and services."],
+  ], 0, "Bandwidth and latency describe different dimensions of performance.", "Do not use one as a substitute for the other."),
+  qConcept("Which layer distinction is correct for MAC and IP addresses?", [
+    ["MAC identifies a network interface at link layer; IP identifies a host/interface for network-layer routing", "Correct. MAC and IP operate at different layers and scopes."],
+    ["MAC is a cloud-storage identifier and IP is a checksum", "Neither definition matches networking."],
+    ["MAC and IP are both filesystem paths", "Filesystem paths are storage/OS concepts, not network addresses."],
+    ["IP replaces all local switching decisions", "Switching and routing are different network functions."],
+  ], 0, "MAC and IP addresses support communication at different networking layers.", "Do not collapse link-layer and network-layer addressing."),
+  qConcept("Which device behavior is most accurate?", [
+    ["A hub repeats traffic, a switch forwards frames, and a router connects networks", "Correct. The three devices operate with different intelligence and scope."],
+    ["A hub routes IP subnets", "Routing between networks is the router role, not hub behavior."],
+    ["A switch is a tape archive", "A switch is a network device."],
+    ["A router formats filesystems", "Formatting filesystems is storage administration, not routing."],
+  ], 0, "Hub, switch and router differ by how they move traffic and what addressing they understand.", "Do not treat all network boxes as equivalent."),
+  qConcept("What does a batch system mainly manage?", [
+    ["Queued non-interactive jobs and resource allocation policies", "Correct. Batch systems decide when and where jobs run."],
+    ["Only file compression", "Compression is a data-format operation, not workload scheduling."],
+    ["Only DNS names", "DNS is name resolution; batch systems manage jobs."],
+    ["Only Docker image layers", "Container images are packaging artifacts; batch systems manage execution."],
+  ], 0, "Batch systems manage workloads using queues, policies and resource constraints.", "A batch system is not just a command shell."),
+  qConcept("What is fairshare scheduling intended to balance?", [
+    ["Resource priority according to allocation and historical usage", "Correct. Fairshare adjusts priority so usage follows policy over time."],
+    ["Disk parity across RAID drives", "RAID parity belongs to storage redundancy, not scheduler priority."],
+    ["Checksum strength", "Checksum choice affects integrity detection, not scheduling fairness."],
+    ["Container port exposure", "Port exposure is a networking/runtime concern."],
+  ], 0, "Fairshare is a scheduling/accounting policy for shared compute resources.", "It is not the same thing as equal instant access for all users."),
+  qConcept("Which job component distinction matters in workload systems?", [
+    ["Executable, input data, output data, resource requests and environment are separate concerns", "Correct. Schedulers and users need to describe both what runs and what resources/data it needs."],
+    ["A job is only a filename", "A filename alone does not capture resources, input, output or execution context."],
+    ["A job is always a Docker image", "Containers may package jobs, but jobs are broader workload-management objects."],
+    ["A job is a storage RAID level", "RAID is storage layout, not workload description."],
+  ], 0, "A job is not just code; it includes inputs, outputs, requirements and execution context.", "Do not ignore data movement and resource requests."),
+  qConcept("What is RAID mainly used for?", [
+    ["Combining disks for redundancy, performance or both", "Correct. Different RAID levels trade capacity, fault tolerance and speed."],
+    ["Authenticating users", "Authentication belongs to AAI/security mechanisms."],
+    ["Running Kubernetes pods", "Pods are Kubernetes workload units, not RAID structures."],
+    ["Replacing all backups", "RAID can tolerate some disk failures but is not a full backup strategy."],
+  ], 0, "RAID organizes multiple disks to improve reliability and/or performance.", "RAID is not a substitute for backup or disaster recovery."),
+  qConcept("What makes a filesystem different from a raw block device?", [
+    ["A filesystem provides naming, directories, metadata and file access semantics", "Correct. A raw block device must be formatted before ordinary file operations are available."],
+    ["A filesystem is always remote", "Filesystems can be local, networked or distributed."],
+    ["A raw block device already has POSIX file paths", "A block device does not provide file paths until a filesystem exists."],
+    ["A filesystem is a checksum algorithm", "Checksums verify data; filesystems organize storage."],
+  ], 0, "Filesystems turn block storage into named files and directories with access semantics.", "Mounting a block device is not enough if it has no filesystem."),
+  qConcept("Which storage architecture relation is correct?", [
+    ["DAS is directly attached, NAS provides file access over a network, and SAN provides block-level storage over a network", "Correct. These architectures expose storage at different layers."],
+    ["NAS means no attached storage", "NAS is Network Attached Storage."],
+    ["SAN is only a Docker network", "SAN is a storage network concept, not Docker networking."],
+    ["DAS requires object APIs", "DAS is directly attached storage, not object storage."],
+  ], 0, "DAS, NAS and SAN differ by attachment model and access semantics.", "Do not collapse all networked storage into the same category."),
+  qConcept("Why are parallel filesystems useful in large compute infrastructures?", [
+    ["They allow concurrent high-throughput access from many clients or nodes", "Correct. Parallel filesystems are designed for aggregate I/O across many resources."],
+    ["They make CPU caches unnecessary", "CPU caches and parallel filesystems solve different bottlenecks."],
+    ["They encrypt all network packets automatically", "Encryption is a security feature, not the definition of a parallel filesystem."],
+    ["They replace workload schedulers", "Schedulers place jobs; filesystems serve data."],
+  ], 0, "Parallel filesystems address shared high-throughput data access.", "Do not confuse storage concurrency with compute scheduling."),
+  qConcept("What is tiered storage?", [
+    ["Placing data on storage classes with different cost, speed and access characteristics", "Correct. Hot, warm and cold data may belong on different media."],
+    ["Using only RAM for all data", "RAM is fast but expensive and volatile; tiering includes multiple storage classes."],
+    ["Running all jobs in priority order", "Job priority is scheduling, not storage tiering."],
+    ["Converting files into CPU threads", "Threads are execution contexts, not storage classes."],
+  ], 0, "Tiered storage matches data value and access frequency to appropriate media.", "Do not treat all storage as equivalent."),
+  qConcept("What does PUE measure?", [
+    ["Facility power efficiency: total facility energy divided by IT equipment energy", "Correct. Lower PUE means less overhead outside IT load."],
+    ["Processor utilization efficiency", "Processor utilization is not PUE."],
+    ["Packet usage estimate", "PUE is not a network metric."],
+    ["Parallel user entitlement", "Entitlements and quotas are policy concepts, not PUE."],
+  ], 0, "PUE quantifies datacenter power and cooling overhead relative to IT equipment.", "PUE is not about CPU speed or network use."),
+  qConcept("Which cloud-service model gives the user virtual infrastructure resources?", [
+    ["IaaS", "Correct. IaaS exposes infrastructure such as VMs, volumes and networks."],
+    ["SaaS", "SaaS exposes complete software applications."],
+    ["PaaS", "PaaS exposes an application platform, not raw infrastructure."],
+    ["RAID", "RAID is storage organization, not a cloud service model."],
+  ], 0, "IaaS provides infrastructure primitives that users configure and operate.", "Do not confuse service models with storage technologies."),
+  qConcept("Which statement best distinguishes virtualization from cloud computing?", [
+    ["Virtualization creates virtual resources; cloud adds service models, provisioning, elasticity and operational abstraction", "Correct. Virtualization can be a building block of cloud, but it is not the whole cloud model."],
+    ["Cloud computing forbids virtual machines", "VMs are common cloud resources."],
+    ["Virtualization is only a networking protocol", "Virtualization is broader than networking."],
+    ["Cloud computing means no operational choices remain", "Users still make choices about models, costs, security and architecture."],
+  ], 0, "Cloud computing often uses virtualization but adds managed access, automation and service abstraction.", "A VM alone is not the complete cloud concept."),
+  qConcept("What is a cloud-friendly application characteristic?", [
+    ["It can tolerate elasticity, failure and distributed deployment assumptions", "Correct. Cloud-friendly design expects resources to be provisioned, replaced and scaled."],
+    ["It requires one fixed physical server forever", "That assumption fights elasticity and replaceability."],
+    ["It stores all state inside one temporary VM disk only", "Ephemeral local state can be lost; persistent state needs explicit design."],
+    ["It cannot use APIs", "Cloud systems are heavily API-driven."],
+  ], 0, "Cloud-friendly applications are designed around elasticity, failure handling and externalized state.", "Do not simply lift a fragile single-host design into cloud and expect resilience."),
+  qConcept("What is the main difference between HTC and HPC?", [
+    ["HTC maximizes throughput across many tasks; HPC optimizes performance of tightly coupled computation", "Correct. HTC and HPC target different workload shapes."],
+    ["HTC is storage and HPC is networking", "Both are computing infrastructure models."],
+    ["HTC always uses GPUs and HPC never does", "Accelerators can appear in HPC, and hardware alone does not define the model."],
+    ["HTC means cloud SaaS", "HTC is a computing model, not a SaaS category."],
+  ], 0, "HTC and HPC differ by workload coupling and performance goal.", "Do not define them only by cluster size."),
+  qConcept("What does GFLOPS measure?", [
+    ["Billions of floating-point operations per second", "Correct. GFLOPS is a floating-point performance rate."],
+    ["Gigabytes of files opened per second", "That would be an I/O metric, not floating-point performance."],
+    ["Grid federation login protocol", "GFLOPS is a performance unit, not an identity protocol."],
+    ["General filesystem operations", "Filesystem operations are I/O, not floating-point arithmetic."],
+  ], 0, "GFLOPS is used to express computational performance for numeric workloads.", "Do not use it as a storage or authentication metric."),
+  qConcept("What does Amdahl's Law imply for parallel speedup?", [
+    ["The serial fraction limits maximum speedup no matter how many processors are added", "Correct. Parallel resources cannot accelerate work that remains serial."],
+    ["Speedup is always equal to the number of processors", "That ignores serial work and overhead."],
+    ["Adding GPUs removes all bottlenecks", "Accelerators help suitable parallel work but cannot erase serial fractions and data movement."],
+    ["Checksums determine speedup", "Checksums verify integrity; they do not define parallel speedup."],
+  ], 0, "Amdahl's Law explains why speedup eventually saturates when part of a program is serial.", "More processors do not guarantee linear speedup."),
+  qConcept("What is NUMA?", [
+    ["A memory architecture where memory access time depends on which CPU/socket owns the memory", "Correct. NUMA means non-uniform memory access."],
+    ["A cloud deployment model", "Cloud deployment models include public, private, hybrid and community."],
+    ["A checksum format", "NUMA is memory architecture, not data integrity."],
+    ["A Docker registry", "Registries store images; NUMA describes memory locality."],
+  ], 0, "NUMA affects performance because memory locality matters on multi-socket systems.", "Do not confuse memory topology with cloud or container terminology."),
+  qConcept("When are accelerators such as GPUs most useful?", [
+    ["When the workload exposes enough parallelism and data movement overhead is justified", "Correct. Accelerators help suitable kernels, not every workload."],
+    ["Whenever any program is slow", "Slow code may be serial, I/O-bound or poorly suited to acceleration."],
+    ["Only for authentication protocols", "Authentication is not the typical accelerator workload."],
+    ["Only for tape archives", "Tape archive access is storage-oriented, not GPU computation."],
+  ], 0, "Accelerators improve performance only when workload structure matches the hardware.", "Do not assume GPU equals automatic speedup."),
+  qConcept("What does a workload management system coordinate?", [
+    ["Submission, queuing, scheduling, execution and policy for jobs", "Correct. A WMS manages the lifecycle of jobs on resources."],
+    ["Only JSON serialization", "JSON is a data format, not a workload manager."],
+    ["Only RAID rebuilds", "RAID rebuilds are storage maintenance."],
+    ["Only cloud billing invoices", "Billing is accounting; WMS is job execution management."],
+  ], 0, "A WMS connects users, jobs, policies and compute resources.", "Do not reduce workload management to command execution only."),
+  qConcept("What is the difference between push and pilot/pull job strategies?", [
+    ["Push sends work to resources directly; pilot/pull starts an agent that later pulls tasks", "Correct. The initiator and timing of task acquisition differ."],
+    ["Push compresses files; pull encrypts files", "Compression and encryption are unrelated to job acquisition strategy."],
+    ["Push is for storage and pull is for GPUs", "Both describe scheduling/execution strategies."],
+    ["They are two names for the same DNS lookup", "DNS lookup is not job scheduling."],
+  ], 0, "Push and pilot/pull strategies differ in how tasks reach execution resources.", "Do not confuse job dispatch with data transfer commands."),
+  qConcept("What are input and output sandboxes in job execution?", [
+    ["Mechanisms for staging small input files to a job and collecting small output files afterward", "Correct. Sandboxes support job file staging around execution."],
+    ["Encrypted identity tokens only", "Tokens may authenticate access, but sandboxes are about job input/output files."],
+    ["CPU cache partitions", "CPU caches are hardware memory hierarchy."],
+    ["Permanent object storage buckets only", "Sandboxes are typically job-staging mechanisms, not the whole storage system."],
+  ], 0, "Sandboxes package the small files needed before and after a job.", "Do not use sandboxes as the answer for large-scale data-management strategy."),
+  qConcept("Why does data locality matter in distributed computing?", [
+    ["Moving computation near data can reduce transfer time, cost and bottlenecks", "Correct. Data movement can dominate large workflows."],
+    ["It makes all checksums unnecessary", "Checksums remain useful for integrity."],
+    ["It eliminates the need for scheduling", "Scheduling still decides where work runs."],
+    ["It turns RAM into tape", "RAM and tape remain different storage media."],
+  ], 0, "Data locality matters because networks and storage have finite bandwidth and latency.", "Do not ignore data movement when planning computation."),
+  qConcept("What is policy-driven data management?", [
+    ["Automatic data placement, replication or migration based on rules such as access, cost and reliability", "Correct. Policies encode how data should be managed over time."],
+    ["Manual file copying only", "Manual copying is not policy-driven automation."],
+    ["A CPU branch predictor", "Branch prediction is processor behavior, not data management."],
+    ["A Dockerfile instruction", "Dockerfiles build images; data-management policies govern data lifecycle."],
+  ], 0, "Policy-driven systems automate data handling according to declared rules.", "Do not confuse a policy with a one-time copy command."),
+  qConcept("What is a container at the operating-system level?", [
+    ["An isolated process environment sharing the host kernel", "Correct. Containers package runtime dependencies while relying on the host kernel."],
+    ["A full hardware emulator with its own kernel in every case", "That describes heavier virtualization, not the basic container model."],
+    ["A RAID array", "RAID is storage organization."],
+    ["A network router", "Routers forward traffic between networks."],
+  ], 0, "Containers isolate processes and filesystems while sharing the kernel.", "Do not confuse containers with full virtual machines."),
+  qConcept("What is the relationship between image and container?", [
+    ["An image is a template; a container is a running or created instance from that template", "Correct. Images are immutable-ish build artifacts; containers are runtime instances."],
+    ["A container builds a Dockerfile into a checksum", "A Dockerfile builds an image; checksums verify data."],
+    ["An image is always a network subnet", "Images package files and metadata, not subnets."],
+    ["They are exact synonyms", "The runtime instance and the template are different objects."],
+  ], 0, "Images and containers are related but distinct lifecycle objects.", "Do not call a running container an image."),
+  qConcept("What does a Dockerfile define?", [
+    ["A reproducible build recipe for a container image", "Correct. Dockerfiles declare base image, files, commands and configuration."],
+    ["A batch fairshare policy", "Fairshare belongs to scheduling policy."],
+    ["A physical disk layout", "Disk layout and RAID are storage concerns."],
+    ["A SAML federation assertion", "SAML assertions belong to identity federation."],
+  ], 0, "A Dockerfile records the steps needed to build an image.", "Do not confuse Dockerfile, image and running container."),
+  qConcept("Why are Docker volumes important?", [
+    ["They persist or share data outside the writable container layer", "Correct. Volumes avoid losing important state when containers are removed."],
+    ["They replace all network ports", "Ports and volumes solve different problems."],
+    ["They authenticate cloud users", "Authentication is handled by identity systems."],
+    ["They measure PUE", "PUE is a datacenter energy metric."],
+  ], 0, "Volumes are the normal abstraction for persistent container data.", "Writing inside the container layer is not the same as durable persistence."),
+  qConcept("What does Docker Compose describe?", [
+    ["A multi-service application stack with services, networks, volumes and configuration", "Correct. Compose coordinates related containers on a host or local environment."],
+    ["A checksum algorithm", "Checksums verify integrity; Compose defines services."],
+    ["A memory topology", "Memory topology is hardware architecture."],
+    ["A grid certificate authority", "Certificates and CAs belong to security infrastructure."],
+  ], 0, "Compose provides a declarative description of a containerized application stack.", "Compose is not the same as Kubernetes orchestration across a cluster."),
+  qConcept("Why can udocker be useful in shared computing environments?", [
+    ["It can run container images without requiring normal Docker daemon privileges", "Correct. Userspace execution can be practical where privileged Docker is unavailable."],
+    ["It turns containers into virtual machines with new kernels", "udocker does not change the basic userspace-container goal into full VM virtualization."],
+    ["It replaces all batch systems", "A container runner can be used by jobs, but it is not a scheduler by itself."],
+    ["It calculates datacenter PUE", "PUE is an energy-efficiency metric, not a container-runtime function."],
+  ], 0, "udocker targets container execution where ordinary Docker privileges are not available.", "Do not treat it as a scheduler, identity system or energy metric."),
+  qConcept("In IoT-style Big Data, what is the main infrastructure pressure?", [
+    ["Many distributed devices producing heterogeneous, often continuous data streams", "Correct. IoT stresses ingestion, networking, storage, security and processing pipelines."],
+    ["A single static spreadsheet", "A static spreadsheet does not capture IoT scale or streaming characteristics."],
+    ["Only CPU cache size", "CPU cache may matter locally, but IoT pressure is broader."],
+    ["Only RAID parity", "RAID may protect storage, but IoT stresses data ingestion and distributed operation."],
+  ], 0, "IoT data tends to be distributed, continuous and heterogeneous.", "Do not reduce IoT to one device or one file."),
+].map((item, index) => distributeCorrectOption(item, index + QUESTIONS.length));
 
 const GLOSSARY = [
   ["Big Data", "Data whose volume, velocity, variety, veracity or value extraction creates infrastructure pressure."],
@@ -490,6 +733,8 @@ export default function IBDPIExamPrepPage() {
   const [filter, setFilter] = useState("all");
   const [answers, setAnswers] = useState({});
   const [reviewMistakes, setReviewMistakes] = useState(false);
+  const [bdp1Answers, setBdp1Answers] = useState({});
+  const [bdp1ReviewMistakes, setBdp1ReviewMistakes] = useState(false);
   const answeredCount = Object.keys(answers).length;
   const score = useMemo(() => QUESTIONS.filter((item) => answers[item.id] === item.correct).length, [answers]);
   const filteredQuestions = useMemo(() => QUESTIONS.filter((item) => {
@@ -497,7 +742,13 @@ export default function IBDPIExamPrepPage() {
     const mistakeMatch = !reviewMistakes || answers[item.id] !== undefined && answers[item.id] !== item.correct;
     return moduleMatch && mistakeMatch;
   }), [answers, filter, reviewMistakes]);
+  const bdp1AnsweredCount = Object.keys(bdp1Answers).length;
+  const bdp1Score = useMemo(() => BDP1_PDF_EXAM_QUESTIONS.filter((item) => bdp1Answers[item.id] === item.correct).length, [bdp1Answers]);
+  const filteredBdp1Questions = useMemo(() => BDP1_PDF_EXAM_QUESTIONS.filter((item) => (
+    !bdp1ReviewMistakes || bdp1Answers[item.id] !== undefined && bdp1Answers[item.id] !== item.correct
+  )), [bdp1Answers, bdp1ReviewMistakes]);
   const setAnswer = (questionId, optionIndex) => setAnswers((current) => ({ ...current, [questionId]: optionIndex }));
+  const setBdp1Answer = (questionId, optionIndex) => setBdp1Answers((current) => ({ ...current, [questionId]: optionIndex }));
   return (
     <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12">
       <section className="rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/95 p-7 shadow-xl shadow-stone-900/5 md:p-9">
@@ -555,6 +806,30 @@ export default function IBDPIExamPrepPage() {
         <div className="grid gap-4">
           {filteredQuestions.map((item, index) => (
             <QuestionCard key={item.id} item={item} index={index} selected={answers[item.id]} onSelect={(optionIndex) => setAnswer(item.id, optionIndex)} />
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-8 rounded-[2rem] border border-stone-200 bg-white/85 p-6 shadow-sm">
+        <div className="mb-5 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-sky-700">BDP1 PDF concept exam</div>
+            <h2 className="text-3xl font-black tracking-tight text-stone-950">{BDP1_PDF_EXAM_QUESTIONS.length} questions from BDP1.pdf</h2>
+            <p className="mt-2 text-sm font-bold leading-6 text-stone-600">Concept-focused practice from the PDF: Big Data, datacenter components, networks, storage, cloud, HTC/HPC, distributed models and containers.</p>
+          </div>
+          <div className="flex flex-wrap gap-2 md:justify-end">
+            <button type="button" onClick={() => setBdp1ReviewMistakes((current) => !current)} disabled={bdp1AnsweredCount === 0} className={`rounded-full px-4 py-2 text-xs font-black disabled:opacity-50 ${bdp1ReviewMistakes ? "bg-red-700 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>Mistakes only</button>
+            <button type="button" onClick={() => { setBdp1Answers({}); setBdp1ReviewMistakes(false); }} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black text-stone-600">Reset</button>
+          </div>
+        </div>
+        <div className="mb-5 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-3xl border border-sky-200 bg-sky-50 p-4 text-sky-900"><div className="text-xs font-black uppercase tracking-[0.16em]">Answered</div><div className="mt-1 text-3xl font-black">{bdp1AnsweredCount}</div></div>
+          <div className="rounded-3xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-900"><div className="text-xs font-black uppercase tracking-[0.16em]">Correct</div><div className="mt-1 text-3xl font-black">{bdp1Score}</div></div>
+          <div className="rounded-3xl border border-stone-200 bg-stone-50 p-4 text-stone-900"><div className="text-xs font-black uppercase tracking-[0.16em]">Visible</div><div className="mt-1 text-3xl font-black">{filteredBdp1Questions.length}</div></div>
+        </div>
+        <div className="grid gap-4">
+          {filteredBdp1Questions.map((item, index) => (
+            <QuestionCard key={item.id} item={item} index={index} selected={bdp1Answers[item.id]} onSelect={(optionIndex) => setBdp1Answer(item.id, optionIndex)} />
           ))}
         </div>
       </section>

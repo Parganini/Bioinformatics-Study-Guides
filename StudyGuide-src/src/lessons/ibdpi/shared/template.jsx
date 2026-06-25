@@ -152,6 +152,37 @@ export function IBDPILessonTemplate({ lesson, content, interactions: Interaction
         </IBDPISection>
       </div>
 
+      {content.examEssentials ? (
+        <IBDPISection className="mt-8" eyebrow="Exam essentials" title="Keep ready for multiple choice">
+          <div className="grid gap-4 lg:grid-cols-3">
+            <article className="rounded-3xl border border-emerald-200 bg-emerald-50 p-5">
+              <h3 className="text-sm font-black uppercase tracking-[0.18em] text-emerald-800">Know cold</h3>
+              <ul className="mt-4 grid gap-3">
+                {content.examEssentials.highYield.map((item) => (
+                  <li key={item} className="text-sm font-bold leading-6 text-stone-700">{item}</li>
+                ))}
+              </ul>
+            </article>
+            <article className="rounded-3xl border border-red-200 bg-red-50 p-5">
+              <h3 className="text-sm font-black uppercase tracking-[0.18em] text-red-800">MC traps</h3>
+              <ul className="mt-4 grid gap-3">
+                {content.examEssentials.traps.map((item) => (
+                  <li key={item} className="text-sm font-bold leading-6 text-stone-700">{item}</li>
+                ))}
+              </ul>
+            </article>
+            <article className="rounded-3xl border border-sky-200 bg-sky-50 p-5">
+              <h3 className="text-sm font-black uppercase tracking-[0.18em] text-sky-800">Workflow memory</h3>
+              <ul className="mt-4 grid gap-3">
+                {content.examEssentials.workflowMemory.map((item) => (
+                  <li key={item} className="text-sm font-bold leading-6 text-stone-700">{item}</li>
+                ))}
+              </ul>
+            </article>
+          </div>
+        </IBDPISection>
+      ) : null}
+
       <IBDPISection className="mt-8" eyebrow="Key slide walkthrough" title="Important slides and professor comments">
         <div className="grid gap-5">
           {content.walkthroughSections.map((group) => (

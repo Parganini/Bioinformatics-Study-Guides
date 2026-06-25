@@ -388,6 +388,19 @@ const PROFESSOR_NOTES = [
   "Serverless does not mean there are no servers; it means the provider manages them for the function execution model.",
 ];
 
+const LAST_PASS = [
+  ["Big Data and application choice", "Use the 5 Vs, use-case class and scientific examples to explain why the infrastructure is needed.", "Trap: answering only 'large file' or ignoring whether the application really fits the infrastructure."],
+  ["Integrity, archives and volumes", "Checksum verifies integrity; tar groups files; tgz is tar plus gzip; cloud volumes need attach, filesystem creation and mount.", "Trap: treating checksum as encryption or mounting a raw/unattached block device."],
+  ["Datacenter performance vocabulary", "CPU cores/threads/caches, memory latency, network bandwidth/latency and storage IOPS describe different bottlenecks.", "Trap: using bandwidth, latency and IOPS as interchangeable performance words."],
+  ["Storage-system layers", "POSIX, RAID, DAS, NAS, SAN, TAN and parallel file systems describe interface, redundancy, attachment and access patterns.", "Trap: calling any disk POSIX or confusing networked file storage with block storage."],
+  ["Cloud models", "Cloud adds provisioning, service models, elasticity and operational abstraction on top of virtualization.", "Trap: reversing IaaS/PaaS/SaaS or saying cloud is just a VM."],
+  ["HTC, HPC and computing models", "HTC maximizes aggregate throughput; HPC optimizes tightly coupled performance, speedup, efficiency and resource topology.", "Trap: assuming GPUs or more processors always improve runtime despite Amdahl's Law and data movement."],
+  ["Containers", "Separate image, container, Dockerfile, registry, volume, port mapping, Compose stack and userspace execution with udocker.", "Trap: confusing a running container with its image or assuming container data persists automatically."],
+  ["Cloud storage and APIs", "NFS gives network file access; object storage uses object/key APIs; REST and JSON shape service interaction.", "Trap: treating object storage as a mounted POSIX filesystem by default."],
+  ["AAI", "Authentication proves identity; authorization decides permissions; LDAP, Kerberos, X.509, SAML, OAuth, OIDC and IAM occupy different layers.", "Trap: saying OAuth authenticates users by itself or merging authentication and authorization."],
+  ["Automation and orchestration", "DevOps, microservices, Swarm, Kubernetes, IaC, serverless and FaaS move from manual servers to declared and event-driven operations.", "Trap: saying serverless means no servers or Compose is the same as Kubernetes."],
+];
+
 function Section({ eyebrow, title, children }) {
   return (
     <section className="rounded-[2rem] border border-stone-200 bg-white/85 p-6 shadow-sm">
@@ -488,6 +501,20 @@ export default function IBDPIExamPrepPage() {
         <Section eyebrow="Lower priority" title="SKIP or contextual topics">
           <div className="grid gap-3">
             {IBDPI_SKIPPED_TOPICS.map((topic) => <div key={topic} className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm font-bold leading-6 text-amber-900">{topic}</div>)}
+          </div>
+        </Section>
+      </div>
+
+      <div className="mt-8">
+        <Section eyebrow="Last-pass radar" title="Concepts and exam traps">
+          <div className="grid gap-4 md:grid-cols-2">
+            {LAST_PASS.map(([title, body, trap]) => (
+              <article key={title} className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
+                <h3 className="text-base font-black text-stone-950">{title}</h3>
+                <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{body}</p>
+                <p className="mt-2 text-sm font-bold leading-6 text-amber-800">{trap}</p>
+              </article>
+            ))}
           </div>
         </Section>
       </div>

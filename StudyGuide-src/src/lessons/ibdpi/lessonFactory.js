@@ -40,6 +40,47 @@ function section(range, title, intro, slides) {
   return { range, title, intro, slides };
 }
 
+function compactSentence(text, maxLength = 190) {
+  const clean = String(text || "").replace(/\s+/g, " ").trim();
+  const firstSentence = clean.match(/^(.+?[.!?])(?:\s|$)/)?.[1] || clean;
+  if (firstSentence.length <= maxLength) return firstSentence;
+  return `${firstSentence.slice(0, maxLength).replace(/\s+\S*$/, "")}...`;
+}
+
+function uniqueCompact(items, limit) {
+  const seen = new Set();
+  const result = [];
+  for (const item of items) {
+    const clean = compactSentence(item);
+    if (!clean || seen.has(clean)) continue;
+    seen.add(clean);
+    result.push(clean);
+    if (result.length >= limit) break;
+  }
+  return result;
+}
+
+function makeExamEssentials(data) {
+  const slideTraps = data.walkthroughSections.flatMap((group) => group.slides.map((item) => item.trap).filter(Boolean));
+  const slideMemory = data.walkthroughSections.flatMap((group) => group.slides.map((item) => `${item.title}: ${item.remember}`));
+  const highYield = uniqueCompact(
+    data.examEssentials?.highYield || data.coreConcepts.map((item) => `${item.title}: ${item.body}`),
+    3
+  );
+  const traps = uniqueCompact(
+    data.examEssentials?.traps || [...data.examCheckpoints.map((item) => item.trap), ...slideTraps],
+    3
+  );
+  const workflowMemory = uniqueCompact(
+    data.examEssentials?.workflowMemory || [
+      ...data.handsOn.map((item) => `${item.title}: ${item.commands.slice(0, 3).join(" -> ")}`),
+      ...slideMemory,
+    ],
+    2
+  );
+  return { highYield, traps, workflowMemory };
+}
+
 const LESSONS = {
   "ibdpi-2026-04-22-course-intro-big-data": {
     objectives: [
@@ -1140,6 +1181,7 @@ export function createIBDPILessonContent(id) {
     extractionStatus: "source-based first pass",
     objectives: data.objectives,
     coreConcepts: data.coreConcepts,
+    examEssentials: makeExamEssentials(data),
     walkthroughSections: data.walkthroughSections,
     handsOn: data.handsOn,
     examCheckpoints: data.examCheckpoints,
